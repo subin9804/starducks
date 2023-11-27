@@ -3,12 +3,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
+    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
+          th:href="@{/{file}/style.css(file=${location})}">
+    <th:block layout:fragment="addCss"></th:block>
+
+    <script th:src="@{/commons/script.js}"></script>
+    <script th:each="jsFile : ${addScript}" th:src="@{/{file}/script.js(file=${loaction})}"></script>
+    <th:block layout:fragment="addScript"></th:block>
+
     <meta charset="UTF-8">
     <title>index</title>
 </head>
 <body>
 
-<h1>로그인 여부</h1>
+<!--로그인 여부-->
 <section class="right">
     <th:block sec:authorize="isAuthenticated()">
         로그인 성공
@@ -20,14 +30,14 @@
     <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
 </section>
 
-<h1> header 가져오기</h1>
+<!--header 가져오기-->
 <th:block th:replace="~{outlines/header::header}"></th:block>
 
-<h1>side 가져오기</h1>
+<!--side 가져오기-->
 <th:block th:replace="~{outlines/side::menu}"></th:block>
 
-<h1>메인은 여기에</h1>
-<div layout:fragment="content"></div>
+<!--메인은 여기에-->
+<main layout:fragment="content"></main>
 
 
 </body>
