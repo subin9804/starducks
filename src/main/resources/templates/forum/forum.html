@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+</head>
+<body>
+
+<div th:replace="layouts/main :: header"></div>
+
+<main>
+    <h1>게시판</h1>
+    <form th:action="@{/forum/post}" method="post">
+        <div>
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <div>
+            <button type="submit">포스트</button>
+        </div>
+    </form>
+</main>
+
+<div th:replace="layouts/main :: footer"></div>
+
+</body>
+</html>
