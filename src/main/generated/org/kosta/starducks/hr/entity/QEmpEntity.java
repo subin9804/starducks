@@ -23,7 +23,7 @@ public class QEmpEntity extends EntityPathBase<EmpEntity> {
 
     public final DatePath<java.time.LocalDate> birth = createDate("birth", java.time.LocalDate.class);
 
-    public final StringPath Daddr = createString("Daddr");
+    public final StringPath dAddr = createString("dAddr");
 
     public final StringPath email = createString("email");
 
@@ -43,7 +43,7 @@ public class QEmpEntity extends EntityPathBase<EmpEntity> {
 
     public final StringPath pwd = createString("pwd");
 
-    public final StringPath status = createString("status");
+    public final BooleanPath status = createBoolean("status");
 
     public QEmpEntity(String variable) {
         super(EmpEntity.class, forVariable(variable));
