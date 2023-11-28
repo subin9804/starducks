@@ -40,7 +40,7 @@ public class ForumPostRepositoryTest {
 
     // 검증
     assertNotNull(foundPost);
-    assertEquals("Test Post", foundPost.getPostTitle());
+    assertEquals("Test Post YAHOO", foundPost.getPostTitle());
     assertEquals("This is a test post content.", foundPost.getPostContent());
   }
 }
