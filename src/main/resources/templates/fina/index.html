@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      layout:decorate="~{fina/layouts/main}">
+<!--타이틀-->
+<title layout:fragment="title">제목입니다!</title>
 
+<!--내용-->
 <main layout:fragment="content">
-
+이 내용이 떠야 합니다.
 </main>
+
 </html>

@@ -3,18 +3,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/forum/style.css}">
+
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
-          th:href="@{/{file}/style.css(file=${location})}">
+          th:href="@{/fina/{file}.css(file=${file})}">
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/commons/script.js}"></script>
-    <script th:each="jsFile : ${addScript}" th:src="@{/{file}/script.js(file=${loaction})}"></script>
+    <script th:src="@{/forum/script.js}"></script>
+    <script th:each="jsFile : ${addScript}" th:src="@{/forum/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
     <meta charset="UTF-8">
-    <title>index</title>
+    <title layout:fragment="title">index</title>
 </head>
 <body>
 

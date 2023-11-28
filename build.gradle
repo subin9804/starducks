@@ -57,25 +57,9 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//// 쿼리DSL추가 빌드
-//def querydslDir = "$buildDir/generated/querydsl"
-//querydsl {
-//	jpa = true
-//	querydslSourcesDir = querydslDir
-//}
-//sourceSets {
-//	main.java.srcDir querydslDir
-//}
-//configurations {
-//	compileOnly {
-//		extendsFrom annotationProcessor
-//	}
-//	querydsl.extendsFrom compileClasspath
-//}
+
 clean {
 	delete file('src/main/generated')
 }
 
-//compileQuerydsl {
-//	options.annotationProcessorPath = configurations.querydsl
-//}
+

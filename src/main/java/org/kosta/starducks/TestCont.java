@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TestCont {
 
-    @GetMapping
+
+    @GetMapping("/auth")
     public String main() {
+
         return "forum/forum";
+
     }
 }
