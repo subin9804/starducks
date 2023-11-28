@@ -8,6 +8,6 @@ public class TestCont {
 
     @GetMapping
     public String main() {
-        return "index";
+        return "forum/forum";
     }
 }
