@@ -24,6 +24,69 @@ public class ForumPost {
   @JoinColumn(name = "empId")
   private EmpImpl empImpl;
 
-  private boolean postNotice; //공지로 쓸거니?
+  private boolean postNotice; //공지사항 여부
 
+  public Long getPostId() {
+    return postId;
+  }
+
+  public void setPostId(Long postId) {
+    this.postId = postId;
+  }
+
+  public String getPostTitle() {
+    return postTitle;
+  }
+
+  public void setPostTitle(String postTitle) {
+    this.postTitle = postTitle;
+  }
+
+  public String getPostContent() {
+    return postContent;
+  }
+
+  public void setPostContent(String postContent) {
+    this.postContent = postContent;
+  }
+
+  public LocalDateTime getPostDate() {
+    return postDate;
+  }
+
+  public void setPostDate(LocalDateTime postDate) {
+    this.postDate = postDate;
+  }
+
+  public int getPostView() {
+    return postView;
+  }
+
+  public void setPostView(int postView) {
+    this.postView = postView;
+  }
+
+  public boolean isPostDelete() {
+    return postDelete;
+  }
+
+  public void setPostDelete(boolean postDelete) {
+    this.postDelete = postDelete;
+  }
+
+  public EmpImpl getEmpImpl() {
+    return empImpl;
+  }
+
+  public void setEmpImpl(EmpImpl empImpl) {
+    this.empImpl = empImpl;
+  }
+
+  public boolean isPostNotice() {
+    return postNotice;
+  }
+
+  public void setPostNotice(boolean postNotice) {
+    this.postNotice = postNotice;
+  }
 }

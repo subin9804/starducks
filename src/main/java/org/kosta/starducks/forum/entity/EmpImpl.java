@@ -12,4 +12,11 @@ public class EmpImpl {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long empId; //사원 고유 ID
 
+  public Long getEmpId() {
+    return empId;
+  }
+
+  public void setEmpId(Long empId) {
+    this.empId = empId;
+  }
 }
