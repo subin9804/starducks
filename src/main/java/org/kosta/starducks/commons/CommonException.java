@@ -8,7 +8,7 @@ public class CommonException extends RuntimeException {
     protected static ResourceBundle bundleError;
     protected HttpStatus httpStatus;
 
-//    private HttpServletResponse response;
+//    protected HttpServletResponse response;
 
 
     static {
