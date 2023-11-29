@@ -48,14 +48,14 @@ public class ProductService {
         product1.setProductUnit(productUpdateDto.getProductUnit());
         product1.setProductPrice(productUpdateDto.getProductPrice());
 
-       productRepository.save(product1);
+        productRepository.save(product1);
 
         return "수정완료";
     }
-public String deleteProduct(Long productCode){
+    public String deleteProduct(Long productCode){
         productRepository.deleteById(productCode);
         return "삭제완료";
-}
+    }
 
 
 
