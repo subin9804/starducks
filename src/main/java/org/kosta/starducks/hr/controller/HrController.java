@@ -33,7 +33,7 @@ public class HrController {
         // 자동으로 저장되는 사번을 미리 알려줌
         Long id = service.getLastEmpId();
         model.addAttribute("id", id + 1);
-        model.addAttribute("position", Position.values());
+        model.addAttribute("positions", Position.values());
 
         return "hr/empRegister";
     }
