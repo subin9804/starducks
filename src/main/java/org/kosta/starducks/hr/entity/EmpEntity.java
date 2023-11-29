@@ -3,20 +3,23 @@ package org.kosta.starducks.hr.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.kosta.starducks.roles.Position;
 
 import java.time.LocalDate;
 
-@Entity @Getter @Setter
-@Builder
+@Entity @Data @Builder
 @NoArgsConstructor @AllArgsConstructor
+@Table(name = "emp_entity")
 public class EmpEntity {
 
     @Id
     @GeneratedValue
     private Long empId; // 사원번호
+
     private String empName;     // 사원이름
+
     private LocalDate birth;    // 생년월일
     private String gender;  // 성별
     private String empTel;  // 연락처
