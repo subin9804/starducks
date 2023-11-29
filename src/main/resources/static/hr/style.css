@@ -1,0 +1,90 @@
+ul {
+    list-style: none;
+    padding: 0; margin: 0;
+}
+li {
+    padding: 0; margin: 0;
+    display: block;
+}
+dl {
+    width: 550px;
+    margin: 0; padding: 20px 0;
+}
+dt {
+    margin: 0; padding: 0;
+    display: inline-block;
+}
+dd {
+    text-align: right;
+    margin: 0; padding: 0;
+    display: inline-block;
+}
+
+#formSection {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    padding: 40px;
+    display: inline-flex;
+    flex-direction: row;
+}
+#formSection section:first-child {
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#formSection section:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid blue;
+}
+
+/** 포지션 드롭다운 셀렉박스 */
+.selectbox {display:none;}
+.selectbox+label {
+    display: block;
+    border-radius: 10px;
+    width: 185px;
+    border: 1px solid #6B4D27;
+    height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.options {
+    height: 0;
+    display: none;
+    background-color: white;
+}
+
+
+
+/* 등록 */
+register-button {
+    width: 120px;
+    height: 50px;
+    background: #4A85F6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #FFFFFF;
+}
+
+/* 취소 */
+cancel-button {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #FFFFFF;
+    width: 120px;
+    height: 50px;
+
+    background: #999999;
+    border: 1px solid #999999;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+

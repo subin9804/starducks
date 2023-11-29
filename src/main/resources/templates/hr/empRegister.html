@@ -16,99 +16,100 @@
                 <p>도장사진</p>
             </div>
         </div>
+        <div id="formSection">
+            <section>
+                <dl>
+                    <dt>사원번호</dt>
+                    <dd><input type="text" th:value="${id}" disabled></dd>
+                </dl>
+                <dl>
+                    <dt>초기비밀번호</dt>
+                    <dd><input type="text" th:field="*{pwd}"></dd>
+                </dl>
+                <dl>
+                    <dt>사원이름</dt>
+                    <dd><input type="text" th:field="*{empName}"></dd>
+                </dl>
+                <dl>
+                    <dt>연락처</dt>
+                    <dd><input type="text" th:field="*{empTel}"></dd>
+                </dl>
+                <dl>
+                    <dt>이메일</dt>
+                    <dd><input type="text" th:field="*{email}"></dd>
+                </dl>
+                <dl>
+                    <dt>성별</dt>
+                    <dd>
+                        남 <input type="radio" name="a" value="man" th:field="*{gender}">
+                        여 <input type="radio" name="a" value="woman" th:field="*{gender}">
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>생년월일</dt>
+                    <dd>
+                        <input type="date" th:field="*{birth}">
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <dl>
+                    <dt>부서</dt>
+                    <dd>
+    <!--                    <select th:field="${employee.dept}">-->
+    <!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
+    <!--                    </select>-->
+                    </dd>
+                </dl>
 
-        <section>
-            <dl>
-                <dt>사원번호</dt>
-                <dd><input type="text" th:value="${id}" disabled></dd>
-            </dl>
-            <dl>
-                <dt>초기비밀번호</dt>
-                <dd><input type="text" th:field="*{pwd}"></dd>
-            </dl>
-            <dl>
-                <dt>사원이름</dt>
-                <dd><input type="text" th:field="*{empName}"></dd>
-            </dl>
-            <dl>
-                <dt>연락처</dt>
-                <dd><input type="text" th:field="*{empTel}"></dd>
-            </dl>
-            <dl>
-                <dt>이메일</dt>
-                <dd><input type="text" th:field="*{email}"></dd>
-            </dl>
-            <dl>
-                <dt>성별</dt>
-                <dd>
-                    남 <input type="radio" name="a" value="man" th:field="*{gender}">
-                    여 <input type="radio" name="a" value="woman" th:field="*{gender}">
-                </dd>
-            </dl>
-            <dl>
-                <dt>생년월일</dt>
-                <dd>
-                    <input type="date" th:field="*{birth}">
-                </dd>
-            </dl>
-        </section>
-        <section>
-            <dl>
-                <dt>부서</dt>
-                <dd>
-<!--                    <select th:field="${employee.dept}">-->
-<!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
-<!--                    </select>-->
-                </dd>
-            </dl>
+                <dl>
+                    <dt>직급</dt>
+                    <dd>
+                        <input type="checkbox" id="all" class="selectbox"><label for="all">전체</label>
+                        <ul class="options" th:each="position : ${positions}">
+                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'BOSS'}" th:text="사장"></li>
+                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></li>
+                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></li>
+                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></li>
+                        </ul>
+                        <input id="position" type="hidden" th:field="*{position}">
+                    </dd>
+                </dl>
 
-            <dl>
-                <dt>직급</dt>
-                <dd>
-                    <div class="selectbox">전체</div>
-                    <ul class="options" th:each="position : ${positions}">
-                        <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'BOSS'}" th:text="사장"></li>
-                        <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></li>
-                        <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></li>
-                        <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></li>
-                    </ul>
-                    <input id="position" type="hidden" th:field="*{position}">
-                </dd>
-            </dl>
+                <dl>
+                    <dt>입사일자</dt>
+                    <dd><input type="date" th:field="*{joinDate}"></dd>
+                </dl>
 
-            <dl>
-                <dt>입사일자</dt>
-                <dd><input type="date" th:field="*{joinDate}"></dd>
-            </dl>
+                <dl>
+                    <dt>퇴사여부</dt>
+                    <dd>
+                        퇴사 <input type="radio" name="a" value="true" th:field="*{status}">
+                        재직 <input type="radio" name="a" value="false" th:field="*{status}">
+                    </dd>
+                </dl>
 
-            <dl>
-                <dt>퇴사여부</dt>
-                <dd>
-                    퇴사 <input type="radio" name="a" value="true" th:field="*{status}">
-                    재직 <input type="radio" name="a" value="false" th:field="*{status}">
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>퇴사일자</dt>
-                <dd><input type="date" th:field="*{leaveDate}"></dd>
-            </dl>
-            <dl>
-                <dt>우편번호</dt>
-                <dd>
-                    <input type="text" th:field="*{postNo}">
-                    <button>우편번호 찾기</button> <!-- 우편번호 api 삽입 -->
-                </dd>
-            </dl>
-            <dl>
-                <dt>주소</dt>
-                <dd><input type="text" th:field="*{addr}"> </dd>
-            </dl>
-            <dl>
-                <dt>상세주소</dt>
-                <dd><input type="text" th:field="*{dAddr}"> </dd>
-            </dl>
-        </section>
+                <dl>
+                    <dt>퇴사일자</dt>
+                    <dd><input type="date" th:field="*{leaveDate}"></dd>
+                </dl>
+                <dl>
+                    <dt>우편번호</dt>
+                    <dd>
+                        <input type="text" th:field="*{postNo}">
+                        <button>우편번호 찾기</button> <!-- 우편번호 api 삽입 -->
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>주소</dt>
+                    <dd><input type="text" th:field="*{addr}"> </dd>
+                </dl>
+                <dl>
+                    <dt>상세주소</dt>
+                    <dd><input type="text" th:field="*{dAddr}"> </dd>
+                </dl>
+            </section>
+        </div>
         <button>제출</button>
     </form>
 </main>
