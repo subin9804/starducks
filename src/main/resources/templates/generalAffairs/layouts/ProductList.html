@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/mypage/style.css}">
+
+    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
+          th:href="@{/mypage/{file}.css(file=${file})}">
+    <th:block layout:fragment="addCss"></th:block>
+
+    <script th:src="@{/commons/script.js}"></script>
+    <script th:src="@{/mypage/script.js}"></script>
+    <script th:each="jsFile : ${addScript}" th:src="@{/mypage/{file}.js(file=${file})}"></script>
+    <th:block layout:fragment="addScript"></th:block>
+
+    <meta charset="UTF-8">
+    <title layout:fragment="title">index</title>
+</head>
+<body>
+
+<!--로그인 여부-->
+<section class="right">
+    <th:block sec:authorize="isAuthenticated()">
+        로그인 성공
+    </th:block>
+    <th:block sec:authorize="isAnonymous()">
+        로그인 해야함
+    </th:block>
+    <th:block sec:authorize="hasAuthority('A')">A권한이 있을 경우</th:block>
+    <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
+</section>
+
+<!--header 가져오기-->
+<th:block th:replace="~{outlines/header::header}"></th:block>
+
+<!--side 가져오기-->
+<th:block th:replace="~{outlines/side::sidebar}"></th:block>
+
+<!--메인은 여기에-->
+<main layout:fragment="content">
+
+
+    <main layout:fragment="content">
+
+        <!-- 검색 폼 추가 -->
+        <form th:action="@{/product/search}" method="get">
+            <input type="text" name="keyword" placeholder="검색어 입력">
+            <button type="submit">검색</button>
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>품목 Code</th><th>품목 이름</th><th>카테고리</th><th>단위</th><th>공급업체</th><th>거래여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${products}">
+                <td th:text="${p.productCode}">p.productCode</td>
+                <td>
+                    <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
+                </td>
+
+                <td th:text="${p.productCategory}">카테고리</td>
+                <td th:text="${p.productUnit}">p.price</td>
+                <td th:text="${p.getVendor().getVendorName()}">거래처 이름 </td>
+                <td th:text="${p.productSelling}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</main>
+
+
+</body>
+</html>
