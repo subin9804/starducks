@@ -1,35 +1,12 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html xmlns:th="http://www.thymleaf.org">
 <head>
     <meta charset='utf-8'/>
+    <title>마이페이지 - 일정관리</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="Calendar.css" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-    <style>
-        .fc-toolbar-chunk {
-            display: flex;
-            align-items: center;
-        }
-        #calendar {
-            width: 800px;
-            height: 800px;
-        }
-    </style>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: '',
-                headerToolbar: {
-                    start: 'dayGridMonth,timeGridWeek',
-                    center: 'prev title next',
-                    end: 'today'
-                },
-            });
-            calendar.render();
-        });
-
-    </script>
+    <script type="text/javascript" src="Calandar.js"></script>
 </head>
 <body>
 <div id='calendar'></div>
