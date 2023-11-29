@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * 게시판 게시글에 달리는 댓글 엔티티
+ */
 @Entity
 public class PostComment {
 
@@ -22,7 +25,7 @@ public class PostComment {
 
   @ManyToOne
   @JoinColumn(name = "empId")
-  private EmpImpl empImpl; //댓글 작성자 테이블 연결
+  private EmpImpl empImpl; //댓글 작성자 테이블 연결 외래키
 
   private boolean commentDelete; //댓글 삭제 여부
 

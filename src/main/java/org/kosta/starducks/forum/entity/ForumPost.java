@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * 게시판 작성글
+ */
 @Entity
 public class ForumPost {
 
