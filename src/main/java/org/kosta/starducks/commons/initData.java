@@ -1,33 +1,40 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.repository.EmpRepository;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
-//public class initData implements ApplicationListener<ApplicationReadyEvent> {
-public class initData {
+public class initData implements ApplicationListener<ApplicationReadyEvent> {
+//public class initData {
 
-//    private final EmpRepository empRepository;
+    private final EmpRepository repository;
 //
-//    @Override
-//    public void onApplicationEvent(ApplicationReadyEvent event) {
-////        List<EmpEntity> emps = new ArrayList<>();
-////         초기 데이터 입력 로직
-//            EmpEntity emp = new EmpEntity();
-//                    emp.setStatus(false);
-//                    emp.setBirth(LocalDate.parse("2023-12-21"));
-//                    emp.setEmpTel("010-9999-999");
-//                    emp.setGender("여");
-//                    emp.setEmail("sdf@Aasdf.com");
-//                    emp.setAddr("부천시");
-//                    emp.setDAddr("부천시소사구");
-//                    emp.setJoinDate(LocalDate.parse("2022-12-01"));
-//                    emp.setPwd("234jf");
-//
-////            emps.add(emp);
-//
-//        empRepository.saveAndFlush(emp);
-//    }
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+//         초기 데이터 입력 로직
+        for(int i = 0; i < 5; i++) {
+            Employee emp = new Employee();
+            emp.setEmpId((long) i);
+            emp.setStatus(false);
+            emp.setBirth(LocalDate.parse("2023-12-2"+i));
+            emp.setEmpTel("010-9999-999"+i);
+            emp.setGender("여");
+            emp.setEmail("sdf@Aasdf.com");
+            emp.setAddr("부천시");
+            emp.setEmpName("사원0"+i);
+            emp.setDAddr("용인시 오리구");
+            emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
+            emp.setPwd("234jf");
+
+            repository.saveAndFlush(emp);
+        }
+    }
 }
 

@@ -17,6 +17,8 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .anyRequest().permitAll();
 
+        http.csrf(csrf -> csrf.disable());  // form action에서 에러발생했을 때 추가함
+
         return http.build();
     }
 
