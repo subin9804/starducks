@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestCont {
 
 
-    @GetMapping("/auth")
+    @GetMapping("/forum")
     public String main() {
 
-        return "forum/forum";
+        return "forum/forum"; //템플릿 포럼/포럼.html이 출력되는 것
 
     }
 }
