@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{forum/layouts/main}">
+
+<title layout:fragment="title">게시글 작성</title>
+<main layout:fragment="content">
+    <h1>게시글 작성</h1>
+    <form th:action="@{/forum/add}" th:object="${post}" method="post">
+        <input type="text" th:field="*{postTitle}" placeholder="제목">
+        <textarea th:field="*{postContent}" placeholder="내용"></textarea>
+        <button type="submit">업로드</button>
+        <a href="/forum">취소</a>
+    </form>
+</main>
+</html>

@@ -26,21 +26,21 @@ public class ForumPostServiceImpl implements ForumPostService {
 
   @Override
   public ForumPost createOrUpdateForumPost(ForumPost forumPost) {
-    return null;
+    return forumPostRepository.save(forumPost);
   }
 
   @Override
   public void deleteForumPost(Long id) {
-
+    forumPostRepository.deleteById(id); // 삭제 전에 해당 ID의 게시글이 존재하는지 확인할 수 있습니다.
   }
 
   @Override
   public Optional<ForumPost> getPostById(Long id) {
-    return Optional.empty();
+    return forumPostRepository.findById(id); // 게시글 ID로 게시글 조회
   }
 
   @Override
   public List<ForumPost> getAllForumPosts() {
-    return null;
+    return forumPostRepository.findAll(); // 모든 게시글 조회
   }
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{forum/layouts/main}">
+
+<title layout:fragment="title">게시글 상세 페이지</title>
+<main layout:fragment="content">
+    <h1>게시글 상세 페이지</h1>
+    <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
+        <input type="text" th:field="*{postTitle}" placeholder="제목">
+        <textarea th:field="*{postContent}" placeholder="내용"></textarea>
+        <div>
+            <a th:href="@{/forum/edit/{id}(id=${post.postId})}">수정</a>
+            <a th:href="@{/forum/delete/{id}(id=${post.postId})}">삭제</a>
+        </div>
+    </form>
+</main>
+</html>
