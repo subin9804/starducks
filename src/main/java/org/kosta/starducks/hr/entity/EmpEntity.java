@@ -23,10 +23,10 @@ public class EmpEntity {
     private String email;       // 이메일
     private Position position;      // 직급
     private String addr;        // 주소
-    private String Daddr;       // 상세주소
+    private String dAddr;       // 상세주소
     private LocalDate joinDate;     // 입사일자
     private LocalDate leaceDate;        // 퇴사일자
-    private String status;      // 퇴사여부
+    private boolean status;      // 퇴사여부
     private String pwd;     // 비밀번호
 
 //    private 부서코드
