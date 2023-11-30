@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<meta charset="UTF-8">
 
 <style>
     table {
@@ -64,7 +64,6 @@
     <script th:each="jsFile : ${addScript}" th:src="@{/generalAffairs/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
-    <meta charset="UTF-8">
     <title layout:fragment="title">index</title>
 </head>
 <body>
