@@ -33,9 +33,18 @@ public class ProductController {
 
     @GetMapping("/list")
     public String getAllProducts(Model m,
-                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
+                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
+                                 String searchKeyword)
     {
-        Page<Product> allProducts = productService.getAllProducts(pageable);
+        Page<Product> allProducts = null;
+        if(searchKeyword == null){
+            allProducts = productService.getAllProducts(pageable);
+
+        }
+        else{
+            allProducts = productService.productSearchList(searchKeyword,pageable);
+
+        }
 
         int nowPage = allProducts.getPageable().getPageNumber()+1;
         //pageable에서 넘어온 현재 페이지를 가져온다.

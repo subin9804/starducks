@@ -21,10 +21,18 @@ public class ProductService {
     private final ProductRepository productRepository;
 
 
+    //품목 리스트 처리
     @Transactional(readOnly = true)
     public Page<Product> getAllProducts(Pageable pageable)
     {
         return productRepository.findAll(pageable);
+    }
+    //품목 검색기능 포함한 리스트
+    public Page<Product> productSearchList(String searchKeyword, Pageable pageable){
+        return productRepository.findByProductNameContaining(searchKeyword, pageable);
+
+
+
     }
 
     @Transactional(readOnly = true)

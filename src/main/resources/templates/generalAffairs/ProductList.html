@@ -6,8 +6,8 @@
 <main layout:fragment="content">
 
     <!-- 검색 폼 추가 -->
-    <form th:action="@{/product/search}" method="get">
-        <input type="text" name="keyword" placeholder="검색어 입력">
+    <form th:action="@{/products/list}" method="get">
+        <input type="text" name="searchKeyword" placeholder="품목 이름 입력">
         <button type="submit">검색</button>
     </form>
 
@@ -45,7 +45,9 @@
 
     <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
 
-        <a th:if="${page != nowPage}" th:href="@{/products/list(page = ${page - 1})}" th:text="${page}"></a>
+        <a th:if="${page != nowPage}" th:href="@{/products/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}" th:text="${page}"></a>
+<!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
+
 
         <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
 
