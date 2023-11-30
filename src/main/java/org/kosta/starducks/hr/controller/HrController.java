@@ -1,16 +1,16 @@
 package org.kosta.starducks.hr.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/hr")
@@ -20,28 +20,71 @@ public class HrController {
     private final EmpService service;
     private final EmpRepository repository;
 
+    /**
+     * 인사부 홈 (사원 전체조회 및 검색)
+     * @param model
+     * @return
+     */
     @GetMapping
-    public String index(Model model) {
-        System.out.println(service.getAllEmp().size());
-        System.out.println(service.getLastEmpId());
+    public String index(Model model, EmpSearchCond empSearch) {
 
-        return "hr/index";
+        List<Employee> emps = service.getAllEmp();
+        model.addAttribute(emps);
+
+        return "hr/hrIndex";
     }
 
+    /**
+     * 사원 등록 get
+     * @param employee
+     * @param model
+     * @return
+     */
     @GetMapping("/register")
     public String register (@ModelAttribute Employee employee, Model model) {
         // 자동으로 저장되는 사번을 미리 알려줌
         Long id = service.getLastEmpId();
         model.addAttribute("id", id + 1);
         model.addAttribute("positions", Position.values());
-
-        return "hr/empRegister";
+        model.addAttribute("name", "register");
+        return "hr/empWriter";
     }
 
+
+    /**
+     * 사원등록 post
+     * @param employee
+     * @return
+     */
     @PostMapping("/register")
     public String registerPs (@ModelAttribute Employee employee) {
         service.saveEmp(employee);
 
         return "redirect:/hr/register";
+    }
+
+    /**
+     * 개별 직원 조회
+     * @param empId
+     * @param model
+     * @return
+     */
+    @GetMapping("/emp/{empId}")
+    public String empDetail(@PathVariable("empId") Long empId, Model model) {
+        Employee employee = service.getEmp(empId);
+        model.addAttribute("employee", employee);
+
+        return "hr/empDetail";
+    }
+
+    @GetMapping("/emp/edit/{empId}")
+    public String empEdit (@PathVariable("empId") Long empId, Model model) {
+        Employee employee = service.getEmp(empId);
+        model.addAttribute("employee", employee);
+        model.addAttribute("positions", Position.values());
+
+        model.addAttribute("name", "edit");
+
+        return "hr/empWriter";
     }
 }

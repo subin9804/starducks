@@ -6,14 +6,14 @@
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/hr/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/hr/css/style.css}">
 
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
           th:href="@{/hr/{file}.css(file=${file})}">
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/commons/script.js}"></script>
-    <script th:src="@{/hr/script.js}"></script>
+    <script th:src="@{/hr/js/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/hr/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 

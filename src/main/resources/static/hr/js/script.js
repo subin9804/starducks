@@ -5,7 +5,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
     let position = document.getElementById("position");
     let options = document.getElementsByClassName("option");
-    let selectbox = document.getElementsByClassName("selectbox");
+    let allLabel = document.getElementById("allLabel");
 
     for(option of options) {
 
@@ -14,7 +14,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
             let value = e.target.getAttribute('value');
             console.log(value)
             position.value = value;
-            selectbox[0].innerText = text;
+            allLabel.innerText = text;
         })
     }
 

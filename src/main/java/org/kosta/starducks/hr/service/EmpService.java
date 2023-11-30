@@ -1,6 +1,7 @@
 package org.kosta.starducks.hr.service;
 
 import jakarta.transaction.Transactional;
+import org.kosta.starducks.commons.CommonException;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,37 @@ public class EmpService {
      */
     @Transactional
     public Employee saveEmp(Employee emp) {
-        Long id = getLastEmpId();
-        emp.setEmpId(id + 1);
 
-        return repository.save(emp);
+        System.out.println("NEW!!:" + emp);
+        if(emp.getEmpId() == null) {
+            // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
+            Long id = getLastEmpId();
+            emp.setEmpId(id + 1);
+            System.out.println("등록한다");
+            return repository.save(emp);
+
+
+        } else {
+
+            Employee employee = repository.findById(emp.getEmpId()).orElse(null);
+            employee.setEmpName(emp.getEmpName());
+            employee.setBirth(emp.getBirth());
+            employee.setGender(emp.getGender());
+            employee.setEmpTel(emp.getEmpTel());
+            employee.setEmail(emp.getEmail());
+            employee.setPosition(emp.getPosition());
+            employee.setPostNo(emp.getPostNo());
+            employee.setAddr(emp.getAddr());
+            employee.setDAddr(emp.getDAddr());
+            employee.setStatus(emp.isStatus());
+            employee.setDept(emp.getDept());
+
+
+
+            System.out.println("수정한다");
+            return repository.save(emp);
+
+        }
     }
 
 
@@ -54,15 +82,15 @@ public class EmpService {
      * @param empId
      */
     @Transactional
-//    public void delEmp (Long empId) {
-//        EmpEntity emp = repository.findById(empId).orElse(null);
-//
-//        if(emp != null) {
-//            if(!emp.isStatus()) {
-//                emp.setStatus(true);
-//            } else new CommonException("#{error.already.notexist}");
-//        } else new CommonException("해당하는 직원이 존재하지 않습니다.");
-//    }
+    public void delEmp (Long empId) {
+        Employee emp = repository.findById(empId).orElse(null);
+
+        if(emp != null) {
+            if(!emp.isStatus()) {
+                emp.setStatus(true);
+            } else new CommonException("#{error.already.notexist}");
+        } else new CommonException("해당하는 직원이 존재하지 않습니다.");
+    }
 
 
     /**

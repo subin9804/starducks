@@ -2,6 +2,9 @@
 *{
     box-sizing: border-box;
 }
+main {
+    width: 1100px;
+}
 
 input[type="text"],
 input[type="password"],
@@ -11,7 +14,49 @@ input[type="date"] {
     height: 30px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px;
-}
-button {
     display: block;
 }
+
+/** ----- 버튼 S------ */
+/* 버튼 공통 디자인 */
+.btn {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    width: 120px;
+    height: 50px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/* 등록 */
+.register-button {
+    background: #4A85F6;
+    color: #FFFFFF;
+}
+
+/* 목록 및 취소 */
+.cancel-button {
+    color: #FFFFFF;
+    background-color: #999;
+}
+
+/* 수정 */
+.edit-button {
+    color: #FFFFFF;
+    background-color: #43946f;
+}
+
+.register-button:hover {
+    background-color: #6a4af6;
+}
+.cancel-button:hover {
+    background-color: #555;
+}
+.edit-button:hover {
+    background-color: #316c52;
+}
+/** ----- 버튼 E ------ */

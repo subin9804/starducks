@@ -3,6 +3,7 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.roles.Position;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,9 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setEmail("sdf@Aasdf.com");
             emp.setAddr("부천시");
             emp.setEmpName("사원0"+i);
+            emp.setPostNo("00025");
             emp.setDAddr("용인시 오리구");
+            emp.setPosition(Position.EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
             emp.setPwd("234jf");
 

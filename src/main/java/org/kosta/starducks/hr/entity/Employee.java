@@ -22,7 +22,9 @@ public class Employee {
     private LocalDate birth;    // 생년월일
 
     private String gender;  // 성별
+
     private String empTel;  // 연락처
+
     private String email;       // 이메일
 
     @Enumerated(EnumType.STRING)
@@ -40,7 +42,6 @@ public class Employee {
 
     private String dept;    // 부서코드
 //    파일
-
 
 }
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{hr/layouts/main}">
+<title layout:fragment="title">Register</title>
+<main layout:fragment="content">
+    <th:block th:if="${name.equals('register')}">
+        <th:block th:replace="~{hr/_register}"></th:block>
+    </th:block>
+    <th:block th:if="${name.equals('edit')}">
+        <th:block th:replace="~{hr/_edit}"></th:block>
+    </th:block>
+</main>
+</html>

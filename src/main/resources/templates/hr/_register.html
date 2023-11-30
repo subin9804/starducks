@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{hr/layouts/main}">
-<title layout:fragment="title">Register</title>
-<main layout:fragment="content">
-    <h1>사원등록</h1>
-    <form th:action="@{/hr/register}" method="post" th:object="${employee}">
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="register">
+    <h1 th:text="사원등록"></h1>
+    <form id="form" th:action="@{/hr/register}" method="post" th:object="${employee}" autocomplete="off">
         <div class="photos">
-            <div class="profile">
+            <div class="photo">
                 <img src="#" />
                 <p>프로필사진</p>
             </div>
-            <div class="profile">
+            <div class="photo">
                 <img src="#" />
                 <p>도장사진</p>
             </div>
@@ -20,7 +17,9 @@
             <section>
                 <dl>
                     <dt>사원번호</dt>
-                    <dd><input type="text" th:value="${id}" disabled></dd>
+                    <dd>
+                        <input type="text" th:value="${id}" disabled>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>초기비밀번호</dt>
@@ -56,21 +55,25 @@
                 <dl>
                     <dt>부서</dt>
                     <dd>
-    <!--                    <select th:field="${employee.dept}">-->
-    <!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
-    <!--                    </select>-->
+                        <!--                    <select th:field="${employee.dept}">-->
+                        <!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
+                        <!--                    </select>-->
                     </dd>
                 </dl>
 
                 <dl>
                     <dt>직급</dt>
                     <dd>
-                        <input type="checkbox" id="all" class="selectbox"><label for="all">전체</label>
-                        <ul class="options" th:each="position : ${positions}">
-                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'BOSS'}" th:text="사장"></li>
-                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></li>
-                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></li>
-                            <li class="option" th:value="${position}" th:field="${position}" th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></li>
+                        <input type="checkbox" id="all" class="selectbox">
+                        <label for="all" id="allLabel">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+
+                        <ul class="options">
+                            <li class="option" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
+                                <th:block th:if="${position.toString() == 'BOSS'}" th:text="사장"></th:block>
+                                <th:block th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></th:block>
+                                <th:block th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></th:block>
+                                <th:block th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></th:block>
+                            </li>
                         </ul>
                         <input id="position" type="hidden" th:field="*{position}">
                     </dd>
@@ -96,8 +99,8 @@
                 <dl>
                     <dt>우편번호</dt>
                     <dd>
-                        <input type="text" th:field="*{postNo}">
-                        <button>우편번호 찾기</button> <!-- 우편번호 api 삽입 -->
+                        <input class="postNo" type="text" th:field="*{postNo}">
+                        <span>우편번호 찾기</span> <!-- 우편번호 api 삽입 -->
                     </dd>
                 </dl>
                 <dl>
@@ -110,7 +113,11 @@
                 </dl>
             </section>
         </div>
-        <button>제출</button>
+        <input type="hidden" name="method" id="method" value="register">
+        <div class="btns">
+            <button class="btn register-button">등록</button>
+            <button class="btn cancel-button">취소</button>
+        </div>
     </form>
-</main>
+</th:block>
 </html>
