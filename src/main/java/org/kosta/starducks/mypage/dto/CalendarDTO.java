@@ -3,10 +3,6 @@ package org.kosta.starducks.mypage.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.kosta.starducks.mypage.entity.ScheduleCategory;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,12 +19,14 @@ public class CalendarDTO {
 //  사원번호(fk)    emp_id                  (BIGINT)LONG
 //  일정유형        sche_cate               ENUM('PERSONAL', 'TEAM')
 
-    private Long scheNo;
-    private LocalDateTime scheCreateTime;
-    private LocalDate scheStartDate;
-    private LocalDate scheEndDate;
-    private String scheTitle;
-    private String scheDetail;
-    private Long empId;
-    private ScheduleCategory scheduleCategory;
+//    private Long scheNo;
+//    private LocalDateTime scheCreateTime;
+//    private LocalDate scheStartDate;
+//    private LocalDate scheEndDate;
+//    private String scheTitle;
+//    private String scheDetail;
+//    private Long empId;
+//    private ScheduleCategory scheduleCategory;
+
+
 }
