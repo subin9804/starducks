@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/mypage/style.css}" href="/static/mypage/mypage.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/mypage/style.css}" href="/mypage/attendance.css">
 
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
           th:href="@{/mypage/{file}.css(file=${file})}">
@@ -17,7 +17,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 
     <script th:src="@{/commons/script.js}"></script>
-    <script th:src="@{/mypage/script.js}" src="/static/mypage/script.js"></script>
+    <script th:src="@{/mypage/script.js}" src="/mypage/script.js"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/mypage/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
