@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        .sidebar-menu ul {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li:hover > ul {
+            display: block;
+        }
+
+        .sidebar-menu ul li {
+            padding-left: 15px;
+        }
+    </style>
+    <script th:inline="javascript">
+        function toggleSubMenu(menuName) {
+            var submenu = document.querySelector('.' + menuName + '-submenu');
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function handleSubMenuClick(menuName, subMenuName) {
+            // Add your logic for handling submenu clicks here
+            console.log('SubMenu Clicked:', menuName, subMenuName);
+        }
+
+        function handleMenuClick(menuName) {
+            // Add your logic for handling menu clicks here
+            console.log('Menu Clicked:', menuName);
+        }
+
+        function handleLogout() {
+            // Add your logic for handling logout here
+            console.log('Logout Clicked');
+        }
+    </script>
+</head>
+
+<aside th:fragment="sidebar">
+    <img th:src="@{/Starducks_Logo.png}" alt="Starducks Logo" class="sidebar-logo" />
+    <ul class="sidebar-menu">
+        <!-- 마이페이지 -->
+        <li th:class="${activeMenu == 'mypage' ? 'clicked' : ''}" th:onclick="${activeMenu == 'mypage'} ? '' : 'toggleSubMenu(\'mypage\')'"
+            th:onmouseover="${activeMenu == 'mypage'} ? 'toggleSubMenu(\'mypage\')' : ''" th:onmouseout="${activeMenu == 'mypage'} ? 'toggleSubMenu(\'mypage\')' : ''">
+            <a th:href="@{/mypage}">마이페이지</a>
+            <ul th:class="'mypage-submenu'" th:if="${activeMenu == 'mypage'}">
+                <li th:class="${activeSubMenu == 'mypage/attendance' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('mypage', 'attendance')" >
+                    <a th:href="@{/mypage/attendance}">근태관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'mypage/schedule' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('mypage', 'schedule')">
+                    <a th:href="@{/mypage/schedule}">일정관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'mypage/meeting-room' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('mypage', 'meeting-room')">
+                    <a th:href="@{/mypage/meeting-room}">회의실 예약</a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 전자결재 -->
+        <li th:class="${activeMenu == 'e-document' ? 'clicked' : ''}" th:onclick="${activeMenu == 'e-document'} ? '' : 'handleMenuClick(\'e-document\')'">
+            <a th:href="@{/e-document}">전자결재</a>
+            <ul th:if="${activeMenu == 'e-document'}">
+                <li th:class="${activeSubMenu == 'e-document/my' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('e-document', 'e-document/my')">
+                    <a th:href="@{/e-document/my}">나의 결재</a>
+                </li>
+                <li th:class="${activeSubMenu == 'e-document/create' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('e-document', 'e-document/create')">
+                    <a th:href="@{/e-document/create}">결재문서 작성</a>
+                </li>
+                <li th:class="${activeSubMenu == 'e-document/inbox' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('e-document', 'e-document/inbox')">
+                    <a th:href="@{/e-document/inbox}">수신함</a>
+                </li>
+                <li th:class="${activeSubMenu == 'e-document.drafts' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('e-document', 'e-document/drafts')">
+                    <a th:href="@{/e-document/drafts}">임시 저장함</a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 전사 게시판 -->
+        <li th:class="${activeMenu == 'forum' ? 'clicked' : ''}" th:onclick="${activeMenu == 'forum'} ? '' : 'handleMenuClick(\'forum\')'">
+            <a th:href="@{/forum}">전사 게시판</a>
+        </li>
+
+
+        <!-- 인사부 -->
+        <li th:class="${activeMenu == 'hr' ? 'clicked' : ''}" th:onclick="${activeMenu == 'hr'} ? '' : 'toggleSubMenu(\'hr\')'">
+            <div th:class="${activeMenu == 'hr' ? 'clicked' : ''}">인사부</div>
+            <ul th:if="${activeMenu == 'hr'}">
+                <li th:class="${activeSubMenu == 'hr/employee-management' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'employee-management')">
+                    <a th:href="@{/hr/employee-management}">사원 관리</a>
+                </li>
+
+                <li th:class="${activeSubMenu == 'hr/payroll' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'payroll')">
+                    <a th:href="@{/hr/payroll}">급여 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'hr/attendance' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'attendance')">
+                    <a th:href="@{/hr/attendance}">근태 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'hr/vacation' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'vacation')">
+                    <a th:href="@{/hr/vacation}">휴가 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'hr/department' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'department')">
+                    <a th:href="@{/hr/department}">부서 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'hr/documents' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('hr', 'documents')">
+                    <a th:href="@{/hr/documents}">문서 관리</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <!-- 물류유통부 -->
+        <li th:class="${activeMenu == 'logistics' ? 'clicked' : ''}" th:onclick="${activeMenu == 'logistics'} ? '' : 'toggleSubMenu(\'logistics\')'">
+            <div th:class="${activeMenu == 'logistics' ? 'clicked' : ''}">물류유통부</div>
+            <ul th:if="${activeMenu == 'logistics'}">
+                <li th:class="${activeSubMenu == 'logistics/incoming' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('logistics', 'incoming')">
+                    <a th:href="@{/logistics/incoming}">입고 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'logistics/outgoing' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('logistics', 'outgoing')">
+                    <a th:href="@{/logistics/outgoing}">출고 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'logistics/inventory' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('logistics', 'inventory')">
+                    <a th:href="@{/logistics/inventory}">재고 관리</a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 총무부 -->
+        <li th:class="${activeMenu == 'admin' ? 'clicked' : ''}" th:onclick="${activeMenu == 'admin'} ? '' : 'toggleSubMenu(\'admin\')'">
+            <div th:class="${activeMenu == 'admin' ? 'clicked' : ''}">총무부</div>
+            <ul th:if="${activeMenu == 'admin'}">
+                <li th:class="${activeSubMenu == 'general-affairs/schedule' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('admin', 'general-affairs/schedule')">
+                    <a th:href="@{/general-affairs/schedule}">일정 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'general-affairs/notice' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('admin', 'general-affairs/notice')">
+                    <a th:href="@{/general-affairs/notice}">게시판 공지 등록</a>
+                </li>
+                <li th:class="${activeSubMenu == 'general-affairs/meeting-room' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('admin', 'general-affairs/meeting-room')">
+                    <a th:href="@{/general-affairs/meeting-room}">회의실 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'general-affairs/items' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('admin', 'general-affairs/items')">
+                    <a th:href="@{/general-affairs/items}">품목 관리</a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 재무부 -->
+        <li th:class="${activeMenu == 'finance' ? 'clicked' : ''}" th:onclick="${activeMenu == 'finance'} ? '' : 'toggleSubMenu(\'finance\')'">
+            <div th:class="${activeMenu == 'finance' ? 'clicked' : ''}">재무부</div>
+            <ul th:if="${activeMenu == 'finance'}">
+                <li th:class="${activeSubMenu == 'finance/branch-info' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('finance', 'branch-info')">
+                    <a th:href="@{/finance/branch-info}">지점 정보 관리</a>
+                </li>
+                <li th:class="${activeSubMenu == 'finance/partner-info' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('finance', 'partner-info')">
+                    <a th:href="@{/finance/partner-info}">거래처 정보 관리</a>
+                </li>
+            </ul>
+        </li>
+
+            </ul>
+        </li>
+
+
+        <!-- 조직도 -->
+        <li th:class="${activeMenu == 'org-chart' ? 'clicked' : ''}" th:onclick="${activeMenu == 'org-chart'} ? '' : 'handleMenuClick(\'org-chart\')'">
+            <a th:href="@{/org-chart}">조직도</a>
+        </li>
+    </ul>
+    <button th:onclick="handleLogout()" class="logout-button">로그아웃</button>
+    <div class="sidebar-footer">
+        ©2023 STARDUCKS ERP
+    </div>
+</aside>
+</html>
+

@@ -3,6 +3,7 @@ package org.kosta.starducks.generalAffairs.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.kosta.starducks.generalAffairs.entity.ProductCategory;
 import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 
 @Getter
@@ -11,10 +12,13 @@ public class ProductUpdateDto {
 
     private Long productCode;
 
-    private String productName;
+    private ProductCategory productCategory;
+
     private ProductUnit productUnit;
 
     private Long productPrice;
+
+    private boolean productSelling;
 
 
 

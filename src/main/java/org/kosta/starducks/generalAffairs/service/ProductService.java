@@ -43,14 +43,21 @@ public class ProductService {
 
 
         Optional<Product> foundProduct = productRepository.findById(productUpdateDto.getProductCode());
-        Product product1 = foundProduct.get();
-        product1.setProductName(productUpdateDto.getProductName());
-        product1.setProductUnit(productUpdateDto.getProductUnit());
-        product1.setProductPrice(productUpdateDto.getProductPrice());
 
-        productRepository.save(product1);
+        if (foundProduct.isPresent()) {
+            Product product1 = foundProduct.get();
+            product1.setProductCategory(productUpdateDto.getProductCategory());
+            product1.setProductUnit(productUpdateDto.getProductUnit());
+            product1.setProductPrice(productUpdateDto.getProductPrice());
+            product1.setProductSelling(productUpdateDto.isProductSelling());
+            productRepository.save(product1);
 
-        return "수정완료";
+            return "수정완료";
+        }
+        else {
+            // 만약 찾는 제품이 없을 경우에 대한 예외 처리 로직 추가
+            return "해당 제품을 찾을 수 없습니다.";
+    }
     }
     public String deleteProduct(Long productCode){
         productRepository.deleteById(productCode);

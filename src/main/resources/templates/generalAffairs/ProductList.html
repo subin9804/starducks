@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{generalAffairs/layouts/main}">
+
+<main layout:fragment="content">
+
+    <!-- 검색 폼 추가 -->
+    <form th:action="@{/product/search}" method="get">
+        <input type="text" name="keyword" placeholder="검색어 입력">
+        <button type="submit">검색</button>
+    </form>
+
+
+    <a th:href="@{/products/add}" >
+        <button  type="submit"> 신규등록 </button>
+    </a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>품목 Code</th>
+            <th>품목 이름</th>
+            <th>카테고리</th>
+            <th>단위</th>
+            <th>공급업체</th>
+            <th>거래여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.productCode}">p.productCode</td>
+            <td>
+                <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
+            </td>
+            <td th:text="${p.productCategory}">카테고리</td>
+            <td th:text="${p.productUnit}">p.unit</td>
+            <td th:text="${p.vendor.vendorName}">거래처 이름</td>
+            <td>
+                <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+</main>
+</html>

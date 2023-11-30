@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.ProductCategory;
 import org.kosta.starducks.generalAffairs.entity.ProductUnit;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class ProductController {
     {
         List<Product> allProducts = productService.getAllProducts();
         m.addAttribute("products", allProducts);
-        return "generalAffairs/layouts/ProductList";
+        return "generalAffairs/ProductList";
 
 
     }
@@ -42,7 +43,7 @@ public class ProductController {
         Optional<Product> product = productService.getProduct(productCode);
         Product product1 = product.get();
         m.addAttribute("p", product1);
-        return "generalAffairs/layouts/ProductDetail";
+        return "generalAffairs/ProductDetail";
 
 
     }
@@ -55,14 +56,47 @@ public class ProductController {
         List<String> vendorNames = vendorService.getAllVendorNames();
         m.addAttribute("vendorNames", vendorNames);
 
-        return "generalAffairs/layouts/ProductForm";
+
+        return "generalAffairs/ProductForm";
     }
 
-//    @PostMapping("/add")
-//    public Object addProduct(@Validated @RequestBody Product product){
-//        return productService.addProduct(product);
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName) {
+        Vendor vendorByName = vendorService.getVendorByName(vendorName);
+
+        product.setVendor(vendorByName);
+        productService.addProduct(product);
+        return "redirect:/products/list";
+    }
+
+
+    @GetMapping("/update/{productCode}")
+    public String updateProduct(@PathVariable Long productCode, Model m) {
+        Optional<Product> product = productService.getProduct(productCode);
+
+        if (product.isPresent()) {
+            Product product1 = product.get();
+
+        m.addAttribute("product", product1);
+        m.addAttribute("productCategories",ProductCategory.values());
+        m.addAttribute("productUnit", ProductUnit.values());
+        m.addAttribute("productSelling", product1.isProductSelling());
+        return "generalAffairs/ProductUpdate";
+        }
+        else{
+            return "redirect:/products/list";
+        }
+    }
+
+//    @PostMapping("/update/{productCode}")
+//    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto) {
+//        //Validated만 적어주면, 바인딩을 안해준다.
+//        productService.updateProduct(productUpdateDto);
 //
+//        return "redirect:/product/list";
 //    }
+
 
 
 }

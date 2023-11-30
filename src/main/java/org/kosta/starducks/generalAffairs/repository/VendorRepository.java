@@ -11,5 +11,7 @@ public interface VendorRepository extends JpaRepository<Vendor,Integer> {
 
     @Query("select v.vendorName from Vendor v")
     List<String> findAllVendorNames();
-    //kjkkkkddd
+
+    Vendor findVendorByVendorName(String vendorName);
+
 }

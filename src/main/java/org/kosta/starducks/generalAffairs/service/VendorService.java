@@ -2,6 +2,7 @@ package org.kosta.starducks.generalAffairs.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,4 +21,8 @@ public class VendorService {
         List<String> vendorNames = vendorRepository.findAllVendorNames();
     return vendorNames;}
 
+    public Vendor getVendorByName(String vendorName) {
+        return vendorRepository.findVendorByVendorName(vendorName);
+
+    }
 }
