@@ -4,17 +4,50 @@
     align-items: center;
     padding: 20px;
     margin-bottom: 20px;
-    background-color: #f8f8f8; /* 헤더 배경색 추가 */
 }
 
+.view-all-posts a {
+    text-decoration: none;
+    color: black;
+}
+
+.view-all-posts a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.search-form {
+    display: flex;
+    justify-content: right; /* 검색 폼 오른쪽 정렬 */
+}
+
+/*검색칸 스타일*/
 .search-form input[type="text"] {
+    background-color: #6B4D27; /*입력칸 배경색*/
+    border-color: #6B4D27;
+    border-radius: 5px;
+    color: white; /* 입력되는 글씨색 */
     padding: 5px;
     margin-right: 10px;
 }
 
+.search-form input[type="text"], .search-form button {
+    box-shadow: none;
+}
+
+/* 플레이스홀더 스타일 변경 */
+.search-form input[type="text"]::placeholder {
+    color: white; /* 플레이스홀더 텍스트 색상 */
+    font-weight: bold; /* 플레이스홀더 글씨 굵기 */
+}
+
 .search-form button {
     padding: 5px 15px;
+    border-color: #AF9A63;
     cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
 }
 
 .forum-table {
@@ -24,10 +57,24 @@
     background-color: #fff; /* 테이블 배경색 추가 */
 }
 
+/*제목 링크 밑줄 제거*/
+.forum-table a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+}
+
+/* 마우스 오버 시 링크에 밑줄 표시  */
+.forum-table a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+
+/*게시글 목록 테이블 가운데 정렬*/
 .forum-table th, .forum-table td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 .forum-table th {
@@ -47,7 +94,7 @@
 
 .add-post a {
     padding: 5px 15px;
-    background-color: #4CAF50;
+    background-color: #4A85F6;
     color: white;
     text-decoration: none;
     border-radius: 5px;

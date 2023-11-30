@@ -43,4 +43,23 @@ public class ForumPostServiceImpl implements ForumPostService {
   public List<ForumPost> getAllForumPosts() {
     return forumPostRepository.findAll(); // 모든 게시글 조회
   }
+
+  @Override
+  public List<ForumPost> getAllForumPostsSorted() {
+    return forumPostRepository.findAllByOrderByPostDateDesc();
+  }
+
+  @Override //게시글 제목, 내용 검색 기능
+  public List<ForumPost> searchPosts(String keyword) {
+    return forumPostRepository.findByPostTitleContainingOrPostContentContaining(keyword, keyword);
+  }
+
+  @Override //게시글 조회수 증가 기능
+  public Optional<ForumPost> getPostByIdAndUpdateView(Long id) {
+    return forumPostRepository.findById(id).map(post -> {
+      post.setPostView(post.getPostView() + 1); // 조회수 증가
+      return forumPostRepository.save(post); //변경 사항 저장
+    });
+  }
+
 }

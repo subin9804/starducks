@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/forum")
 public class ForumPostController {
@@ -19,7 +21,7 @@ public class ForumPostController {
     // 게시판 메인 페이지
     @GetMapping
     public String listPosts(Model model) {
-        model.addAttribute("posts", forumPostService.getAllForumPosts());
+        model.addAttribute("posts", forumPostService.getAllForumPostsSorted());
         return "forum/forum"; // 게시판 메인 페이지 템플릿
     }
 
@@ -38,12 +40,12 @@ public class ForumPostController {
     }
 
     // 게시글 상세 페이지
-    @GetMapping("/forum/post/{id}") //   forum/id 가 페이지 주소
+    @GetMapping("/post/{id}") //   forum/id 가 페이지 주소
     public String getPostDetails(@PathVariable Long id, Model model) {
-        ForumPost post = forumPostService.getPostById(id)
+        ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
-        return "forum/forumPostDetail"; // 사용되는 템플릿
+        return "forum/forumPostDetail";
     }
 
     // 게시글 수정 페이지로 이동
@@ -68,5 +70,12 @@ public class ForumPostController {
     public String deletePost(@PathVariable Long id) {
         forumPostService.deleteForumPost(id);
         return "redirect:/forum";
+    }
+
+    @GetMapping("/search") //검색 기능 구현
+    public String searchPosts(@RequestParam String query, Model model) {
+        List<ForumPost> searchResults = forumPostService.searchPosts(query);
+        model.addAttribute("posts", searchResults);
+        return "forum/forum";
     }
 }
