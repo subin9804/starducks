@@ -9,7 +9,7 @@
   <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
     <input type="text" th:field="*{postTitle}" placeholder="제목">
     <textarea th:field="*{postContent}" placeholder="내용"></textarea>
-    <button type="submit">수정 완료</button>
+    <a href="/forum"><button type="submit">수정 완료</button></a>
     <a href="/forum">취소</a>
   </form>
 </main>

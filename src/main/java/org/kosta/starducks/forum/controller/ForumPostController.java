@@ -20,7 +20,7 @@ public class ForumPostController {
     @GetMapping
     public String listPosts(Model model) {
         model.addAttribute("posts", forumPostService.getAllForumPosts());
-        return "forum/forum"; // 게시판 메인 페이지 템플릿
+        return "/forum/forum"; // 게시판 메인 페이지 템플릿
     }
 
     // 게시글 작성 페이지로 이동
@@ -34,7 +34,16 @@ public class ForumPostController {
     @PostMapping("/add")
     public String addPost(@ModelAttribute ForumPost forumPost) {
         forumPostService.createOrUpdateForumPost(forumPost);
-        return "redirect:forum/forum";
+        return "redirect:/forum";
+    }
+
+    // 게시글 상세 페이지
+    @GetMapping("/{id}")
+    public String getPostDetails(@PathVariable Long id, Model model) {
+        ForumPost post = forumPostService.getPostById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
+        model.addAttribute("post", post);
+        return "forum/forumPostDetail"; // 게시글 상세 페이지의 Thymeleaf 템플릿 이름
     }
 
     // 게시글 수정 페이지로 이동
@@ -51,13 +60,13 @@ public class ForumPostController {
     public String editPost(@PathVariable Long id, @ModelAttribute ForumPost forumPost) {
         forumPost.setPostId(id);
         forumPostService.createOrUpdateForumPost(forumPost);
-        return "redirect:forum/forum";
+        return "redirect:/forum";
     }
 
     // 게시글 삭제
     @GetMapping("/delete/{id}")
     public String deletePost(@PathVariable Long id) {
         forumPostService.deleteForumPost(id);
-        return "redirect:forum/forum";
+        return "redirect:/forum";
     }
 }

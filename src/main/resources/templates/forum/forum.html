@@ -6,19 +6,28 @@
 <title layout:fragment="title">전사 게시판</title>
 <main layout:fragment="content">
     <h1>게시판</h1>
-    <form th:action="@{/forum/post}" method="post">
-        <div>
-            <label for="title">제목:제목입당</label>
-            <input type="text" id="title" name="title" required />
-        </div>
-        <div>
-            <label for="content">내용:</label>
-            <textarea id="content" name="content" required></textarea>
-        </div>
-        <div>
-            <button type="submit">포스트</button>
-        </div>
+
+    <!-- 검색창 -->
+    <form th:action="@{/forum/search}" method="get">
+        <input type="text" name="query" placeholder="검색어 입력">
+        <button type="submit">검색</button>
     </form>
+
+    <!-- 게시글 목록 -->
+    <div>
+        <ul>
+            <!-- Thymeleaf를 사용하여 게시글 목록을 반복하여 표시 -->
+            <li th:each="post : ${posts}" th:class="${post.postNotice} ? 'notice' : null">
+                <a th:href="@{/forum/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a>
+                <span th:text="${post.postDate}">게시일</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 게시글 추가 버튼 -->
+    <div>
+        <a href="/forum/add">게시글 추가</a>
+    </div>
 </main>
 </html>
 

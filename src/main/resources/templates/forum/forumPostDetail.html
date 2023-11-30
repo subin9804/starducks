@@ -7,12 +7,24 @@
 <main layout:fragment="content">
     <h1>게시글 상세 페이지</h1>
     <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
-        <input type="text" th:field="*{postTitle}" placeholder="제목">
-        <textarea th:field="*{postContent}" placeholder="내용"></textarea>
+        <input type="text" th:field="*{postTitle}" placeholder="제목" readonly>
+        <textarea th:field="*{postContent}" placeholder="내용" readonly></textarea>
         <div>
-            <a th:href="@{/forum/edit/{id}(id=${post.postId})}">수정</a>
+            <button type="button" id="editButton">수정</button>
+            <button type="submit" id="submitButton" style="display: none;">저장</button>
             <a th:href="@{/forum/delete/{id}(id=${post.postId})}">삭제</a>
         </div>
     </form>
+
+<!--  게시글 상세 페이지에서 읽기만 가능하도록 하는 코드 -->
+    <script>
+        document.getElementById('editButton').addEventListener('click', function() {
+            document.querySelectorAll('input, textarea').forEach(function(input) {
+                input.removeAttribute('readonly');
+            });
+            this.style.display = 'none'; // 수정 버튼 숨기기
+            document.getElementById('submitButton').style.display = 'inline'; // 저장 버튼 보이기
+        });
+    </script>
 </main>
 </html>
