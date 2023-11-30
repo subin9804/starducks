@@ -4,14 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 
 	// 쿼리DSL추가 빌드
-<<<<<<< HEAD
 //   id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"  // -- build시 Qclass 오류 발생. 삭제 후 배포할것
-=======
-
-//	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"  // -- build시 Qclass 오류 발생. 삭제 후 배포할것=======
-//   id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"  // -- build시 Qclass 오류 발생. 삭제 후 배포할것
-
->>>>>>> 2c140fbabcdb8c6fe3cd1c5d0e85785aaa38ccb8
 }
 
 group = 'org.kosta'
@@ -26,6 +19,7 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+
 
 repositories {
 	mavenCentral()
@@ -64,34 +58,6 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-<<<<<<< HEAD
-//// 쿼리DSL추가 빌드
-//def querydslDir = "$buildDir/generated/querydsl"
-//querydsl {
-//   jpa = true
-//   querydslSourcesDir = querydslDir
-//}
-//sourceSets {
-//   main.java.srcDir querydslDir
-//}
-//configurations {
-//   compileOnly {
-//      extendsFrom annotationProcessor
-//   }
-//   querydsl.extendsFrom compileClasspath
-//}
-=======
-
->>>>>>> 2c140fbabcdb8c6fe3cd1c5d0e85785aaa38ccb8
-clean {
-	delete file('src/main/generated')
-}
-
-<<<<<<< HEAD
-//compileQuerydsl {
-//   options.annotationProcessorPath = configurations.querydsl
-//}
-=======
 //// 쿼리DSL추가 빌드
 //def querydslDir = "$buildDir/generated/querydsl"
 //querydsl {
@@ -114,5 +80,3 @@ clean {
 //compileQuerydsl {
 //   options.annotationProcessorPath = configurations.querydsl
 //}
-
->>>>>>> 2c140fbabcdb8c6fe3cd1c5d0e85785aaa38ccb8
