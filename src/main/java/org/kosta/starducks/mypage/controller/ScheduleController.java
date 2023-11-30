@@ -1,17 +1,19 @@
 package org.kosta.starducks.mypage.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Slf4j
 @Controller
-@RequestMapping("/calendars")
+@RequestMapping("/schedules")
 @RequiredArgsConstructor
-public class CalendarController {
+public class ScheduleController {
 
-
+    @GetMapping("/show")
+    public String main() {
+        return "mypage/schedule/Schedule";
+    }
 
 
 }

@@ -9,41 +9,9 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 </head>
 <body>
-<!-- Thymeleaf로 변환된 모달 -->
-<div th:fragment="modal">
-    <div class="modal" th:style="'display: none'" th:id="modal">
-        <div class="modal-content">
-            <span class="close" th:text="'×'" onclick="closeModal()"></span>
-            <form th:action="@{/calendar}" method="post">
-                <label th:text="'일정명'"></label>
-                <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요"/>
 
-                <label th:text="'시작 일시'"></label>
-                <input type="datetime-local" name="scheStartDate"/>
-
-                <label th:text="'종료 일시'"></label>
-                <input type="datetime-local" name="scheEndDate"/>
-
-                <label th:text="'일정 종류'"></label>
-                <select name="calendarType">
-                    <option th:text="'개인 일정'"></option>
-                    <option th:text="'공식 일정'"></option>
-                </select>
-
-                <label th:text="'장소'"></label>
-                <select name="location">
-                    <option th:text="'회의실A'"></option>
-                    <option th:text="'회의실B'"></option>
-                </select>
-
-                <label th:text="'참고 사항'"></label>
-                <textarea name="note" placeholder="참고 사항"></textarea>
-
-                <button type="submit" th:text="'일정 추가'"></button>
-            </form>
-        </div>
-    </div>
-</div>
+<!-- Include the modal -->
+<div th:replace="~{mypage/schedule/modal::modal}"></div>
 
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {

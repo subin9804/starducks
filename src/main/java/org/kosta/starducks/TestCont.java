@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TestCont {
 
-
     @GetMapping("/auth")
     public String main() {
         return "hr/index";

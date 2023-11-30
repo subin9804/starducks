@@ -1,5 +1,5 @@
 package org.kosta.starducks.mypage.entity;
 
 public enum ScheduleCategory {
-    PERSONAL, TEAM
+    PERSONAL_SCHEDULE, TEAM_SCHEDULE
 }

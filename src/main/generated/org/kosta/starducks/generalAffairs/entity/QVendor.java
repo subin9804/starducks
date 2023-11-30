@@ -21,8 +21,6 @@ public class QVendor extends EntityPathBase<Vendor> {
 
     public final StringPath vendorAddress = createString("vendorAddress");
 
-    public final StringPath vendorEmail = createString("vendorEmail");
-
     public final NumberPath<Integer> vendorId = createNumber("vendorId", Integer.class);
 
     public final StringPath vendorName = createString("vendorName");
