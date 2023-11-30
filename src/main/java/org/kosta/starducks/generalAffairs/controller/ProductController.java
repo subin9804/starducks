@@ -2,6 +2,7 @@ package org.kosta.starducks.generalAffairs.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.ProductCategory;
 import org.kosta.starducks.generalAffairs.entity.ProductUnit;
@@ -87,6 +88,15 @@ public class ProductController {
         else{
             return "redirect:/products/list";
         }
+    }
+
+    @PostMapping("/update/{productCode}")
+    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto) {
+        //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
+
+        productService.updateProduct(productUpdateDto);
+
+        return "redirect:/products/list";
     }
 
 //    @PostMapping("/update/{productCode}")
