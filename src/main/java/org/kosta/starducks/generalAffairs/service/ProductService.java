@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,9 @@ public class ProductService {
 
 
     @Transactional(readOnly = true)
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(Pageable pageable)
+    {
+        return productRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)

@@ -9,6 +9,10 @@ import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -28,10 +32,20 @@ public class ProductController {
 
 
     @GetMapping("/list")
-    public String getAllProducts(Model m)
+    public String getAllProducts(Model m,
+                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
     {
-        List<Product> allProducts = productService.getAllProducts();
+        Page<Product> allProducts = productService.getAllProducts(pageable);
+
+        int nowPage = allProducts.getPageable().getPageNumber()+1;
+        //pageable에서 넘어온 현재 페이지를 가져온다.
+        int startPage= Math.max(nowPage-4,1);
+        int endPage= Math.min(nowPage+5,allProducts.getTotalPages());
+
         m.addAttribute("products", allProducts);
+        m.addAttribute("nowPage",nowPage);
+        m.addAttribute("startPage",startPage);
+        m.addAttribute("endPage",endPage);
         return "generalAffairs/ProductList";
 
 
