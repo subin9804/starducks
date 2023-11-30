@@ -1,31 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html layout:decorate="~{forum/layouts/main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{forum/layouts/main}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <title layout:fragment="title">전사 게시판</title>
 <main layout:fragment="content">
     <h1>게시판</h1>
-
-    <!-- 검색창 -->
-    <form th:action="@{/forum/search}" method="get">
-        <input type="text" name="query" placeholder="검색어 입력">
+    <form class="search-form" method="get" th:action="@{/forum/search}">
+        <input name="query" placeholder="검색어 입력" type="text">
         <button type="submit">검색</button>
     </form>
 
-    <!-- 게시글 목록 -->
-    <div>
-        <ul>
-            <!-- Thymeleaf를 사용하여 게시글 목록을 반복하여 표시 -->
-            <li th:each="post : ${posts}" th:class="${post.postNotice} ? 'notice' : null">
-                <a th:href="@{/forum/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a>
-                <span th:text="${post.postDate}">게시일</span>
-            </li>
-        </ul>
-    </div>
+    <table class="forum-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf 반복문을 사용하여 게시글 목록을 표시 -->
+        <tr th:class="${post.postNotice}? 'notice' : ''" th:each="post, iterStat : ${posts}">
+            <td th:text="${iterStat.count}">1</td>
+            <!-- postNotice 값에 따라 '공지' 또는 '일반' 표시-->
+            <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리명</td>
+            <td><a th:href="@{/forum/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a></td>
+            <!-- 작성자 정보가 아직 없으므로 '정보 없음' 또는 빈 문자열 표시 -->
+            <td th:text="${post.empImpl}? ${post.empImpl.empId} : '모름'">정보X</td>
+            <td th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd')}">작성일</td>
+            <td th:text="${post.postView}">조회수</td>
+        </tr>
+        </tbody>
+    </table>
 
-    <!-- 게시글 추가 버튼 -->
-    <div>
+    <div class="add-post">
         <a href="/forum/add">게시글 추가</a>
     </div>
 </main>

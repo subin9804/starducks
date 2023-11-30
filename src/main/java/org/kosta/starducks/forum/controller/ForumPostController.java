@@ -38,7 +38,7 @@ public class ForumPostController {
     }
 
     // 게시글 상세 페이지
-    @GetMapping("/{id}") //   forum/id 가 페이지 주소
+    @GetMapping("/forum/post/{id}") //   forum/id 가 페이지 주소
     public String getPostDetails(@PathVariable Long id, Model model) {
         ForumPost post = forumPostService.getPostById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
