@@ -18,7 +18,6 @@ public class Vendor {
     private String vendorRegistNum;
     private String vendorRepreName;
     private int vendorTelephone;
-    private String vendorEmail;
     private Date vendorStartDate;
     private String vendorAddress;
 

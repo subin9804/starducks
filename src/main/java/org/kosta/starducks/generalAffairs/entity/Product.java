@@ -12,23 +12,33 @@ public class Product {
     @Column(name = "product_code")
     private Long productCode;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "product_category")
-    private ProductCategory productCategory;
-
+    @Column(nullable = false)
     private String productName;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "product_unit")
-    private ProductUnit productUnit;
-
+    /*
+    품목을 등록할 때 수량은 0이다.
+     */
+    @Column(columnDefinition = "int default 0")
+    private int productCnt;
+    /*
+    품목의 단위당 가격을 표시한다.
+     */
+    @Column(nullable = false)
     private Long productPrice;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "product_category",nullable = false)
+    private ProductCategory productCategory;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "product_unit",nullable = false)
+    private ProductUnit productUnit;
+
+    @Column(nullable = false)
+    private boolean productSelling;
+
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_id",nullable = false)
     private Vendor vendor;
-
-
-
 
 }

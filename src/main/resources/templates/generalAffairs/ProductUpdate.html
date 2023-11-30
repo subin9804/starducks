@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{generalAffairs/layouts/main}">
+
+<main layout:fragment="content">
+
+    <form th:action="@{/products/update/{productCode}(productCode=${product.productCode})}" th:method="post">
+
+        <div>
+            물품 ID : <input type="text" th:value="${product.productCode}" readonly>
+            <br>
+            물품 이름 : <input type="text" th:value="${product.productName}" readonly>
+            <br>
+
+            <label for="productCategory">카테고리:</label>
+            <select id="productCategory" name="productCategory">
+                <option th:each="category : ${productCategories}"
+                        th:value="${category}" th:text="${category}"
+                        th:selected="${category == product.productCategory}">
+
+                </option>
+            </select>
+            <br>
+
+            판매 가격 : <input type="number" th:value="${product.productPrice}" name="productPrice" > 원
+            <br>
+            <label for="productUnit">단위:</label>
+            <select id="productUnit" name="productUnit">
+                <option th:each="unit : ${productUnit}"
+                        th:value="${unit}" th:text="${unit}"
+                        th:selected="${unit == product.productUnit}"></option>
+            </select>
+            <br>
+
+            공급 업체 : <input type="text" th:value="${product.getVendor().getVendorName()}" readonly>
+            <br>
+            전화 번호 : <input type="text" th:value="${product.getVendor().getVendorTelephone()}" readonly>
+            <br>
+
+            <!-- 거래 여부 체크박스 -->
+            <input type="checkbox" id="productSelling" name="productSelling" th:checked="${productSelling}" />
+            <label for="productSelling">거래 중</label>
+            <br>
+
+        </div>
+
+        <input type="submit" value="수정완료">
+    </form>
+
+
+
+</main>
+</html>

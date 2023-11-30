@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +21,23 @@ public class ProductService {
     private final ProductRepository productRepository;
 
 
+    //품목 리스트 처리
     @Transactional(readOnly = true)
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(Pageable pageable)
+    {
+        return productRepository.findAll(pageable);
+    }
+    //품목 검색기능 포함한 리스트
+    public Page<Product> productSearchList(String searchKeyword, Pageable pageable){
+        return productRepository.findByProductNameContaining(searchKeyword, pageable);
+
+
+
     }
 
     @Transactional(readOnly = true)
-    public Optional<Product> getProductById(Long id){
-        Optional<Product> byId = productRepository.findById(id);
+    public Optional<Product> getProduct(Long productCode){
+        Optional<Product> byId = productRepository.findById(productCode);
         return byId;
     }
 
@@ -43,19 +54,26 @@ public class ProductService {
 
 
         Optional<Product> foundProduct = productRepository.findById(productUpdateDto.getProductCode());
-        Product product1 = foundProduct.get();
-        product1.setProductName(productUpdateDto.getProductName());
-        product1.setProductUnit(productUpdateDto.getProductUnit());
-        product1.setProductPrice(productUpdateDto.getProductPrice());
 
-       productRepository.save(product1);
+        if (foundProduct.isPresent()) {
+            Product product1 = foundProduct.get();
+            product1.setProductCategory(productUpdateDto.getProductCategory());
+            product1.setProductUnit(productUpdateDto.getProductUnit());
+            product1.setProductPrice(productUpdateDto.getProductPrice());
+            product1.setProductSelling(productUpdateDto.isProductSelling());
+            productRepository.save(product1);
 
-        return "수정완료";
+            return "수정완료";
+        }
+        else {
+            // 만약 찾는 제품이 없을 경우에 대한 예외 처리 로직 추가
+            return "해당 제품을 찾을 수 없습니다.";
     }
-public String deleteProduct(Long productCode){
+    }
+    public String deleteProduct(Long productCode){
         productRepository.deleteById(productCode);
         return "삭제완료";
-}
+    }
 
 
 
