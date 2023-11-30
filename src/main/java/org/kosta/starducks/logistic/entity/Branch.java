@@ -10,6 +10,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Branch{
+    //지점정보 entity
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
