@@ -5,13 +5,13 @@
     <title>일정관리</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="../../../static/mypage/Calendar.css"/>
+    <link rel="stylesheet" th:href="@{/mypage/Calendar.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 </head>
 <body>
 
 <!-- Include the modal -->
-<div th:replace="~{mypage/schedule/modal::modal}"></div>
+<div th:replace="~{mypage/schedule/registModal::modal}"></div>
 
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {
