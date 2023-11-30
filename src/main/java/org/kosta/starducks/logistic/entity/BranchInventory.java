@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Data
 public class BranchInventory {
-
+    //지점 재고 entity
     @Id
     private Long inventoryCode;
 
