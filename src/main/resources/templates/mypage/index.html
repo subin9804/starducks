@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<meta charset="UTF-8" >
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!--      layout:decorate="~{mypage/layouts/main}">-->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mypage/layouts/main}">
 
 <main layout:fragment="content">
     <p th:text="'test. ' + ${data}" >test. test!</p>
+
 </main>
 </html>
