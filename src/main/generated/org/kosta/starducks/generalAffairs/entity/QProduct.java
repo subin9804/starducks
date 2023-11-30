@@ -24,11 +24,16 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final EnumPath<ProductCategory> productCategory = createEnum("productCategory", ProductCategory.class);
 
+    public final NumberPath<Integer> productCnt = createNumber("productCnt", Integer.class);
+
     public final NumberPath<Long> productCode = createNumber("productCode", Long.class);
 
     public final StringPath productName = createString("productName");
 
     public final NumberPath<Long> productPrice = createNumber("productPrice", Long.class);
+
+    public final BooleanPath productSelling = createBoolean("productSelling");
+
 
     public final EnumPath<ProductUnit> productUnit = createEnum("productUnit", ProductUnit.class);
 
