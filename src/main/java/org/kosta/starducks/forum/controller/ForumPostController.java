@@ -20,7 +20,7 @@ public class ForumPostController {
     @GetMapping
     public String listPosts(Model model) {
         model.addAttribute("posts", forumPostService.getAllForumPosts());
-        return "/forum/forum"; // 게시판 메인 페이지 템플릿
+        return "forum/forum"; // 게시판 메인 페이지 템플릿
     }
 
     // 게시글 작성 페이지로 이동
@@ -38,12 +38,12 @@ public class ForumPostController {
     }
 
     // 게시글 상세 페이지
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //   forum/id 가 페이지 주소
     public String getPostDetails(@PathVariable Long id, Model model) {
         ForumPost post = forumPostService.getPostById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
-        return "forum/forumPostDetail"; // 게시글 상세 페이지의 Thymeleaf 템플릿 이름
+        return "forum/forumPostDetail"; // 사용되는 템플릿
     }
 
     // 게시글 수정 페이지로 이동

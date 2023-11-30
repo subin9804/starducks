@@ -1,6 +1,8 @@
 package org.kosta.starducks.forum.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +21,12 @@ public class ForumPost {
   @Lob
   private String postContent; //게시글 내용
 
-  private LocalDateTime postDate; //게시글 최초 작성일
+  @CreationTimestamp
+  private LocalDateTime postDate; //게시글 최초 작성 시간
+
+  @UpdateTimestamp
+  private LocalDateTime updateDate; //게시글 수정 시간
+
   private int postView; //조회수. 로직 추가해서 동일한 사용자면 조회수 카운트 방지 가능
   private boolean postDelete; //삭제 여부. 기본적으로 삭제 아님(false)
 
@@ -28,6 +35,9 @@ public class ForumPost {
   private EmpImpl empImpl;
 
   private boolean postNotice; //공지사항 여부
+
+  public ForumPost() {
+  }
 
   public Long getPostId() {
     return postId;
@@ -59,6 +69,14 @@ public class ForumPost {
 
   public void setPostDate(LocalDateTime postDate) {
     this.postDate = postDate;
+  }
+
+  public LocalDateTime getUpdateDate() {
+    return updateDate;
+  }
+
+  public void setUpdateDate(LocalDateTime updateDate) {
+    this.updateDate = updateDate;
   }
 
   public int getPostView() {
