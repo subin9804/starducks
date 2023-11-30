@@ -23,7 +23,7 @@ public class BranchInventory {
     private Branch branch;
 
 
-    //지점재고
+    //지점재고입니다
     private int inventoryQuantity;
     private Date LastUpdateDate;
 
