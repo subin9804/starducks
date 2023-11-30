@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ScheduleController {
 
-    @GetMapping("/sche")
+    @GetMapping("/schedule")
     public String showSchedule() {
         return "mypage/schedule/Schedule";
     }
