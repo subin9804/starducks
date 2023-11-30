@@ -1,0 +1,36 @@
+/* 캘린더 */
+.fc-toolbar-chunk {
+    display: flex;
+align-items: center;
+}
+.fc .fc-button-primary, .fc:hover .fc-button-primary:hover {
+    background-color: rgba(1, 1, 1, 0);
+    border-color: rgba(1, 1, 1, 0);
+    color: #6B4D27;
+}
+.fc-toolbar-title {
+    color: #6B4D27;
+}
+#calendar {
+    width: 800px;
+    height: 800px;
+}
+
+.attd-check-box {
+    display: inline-block;
+    width: 264px;
+    height: 225px;
+    border: #6B4D27 1px solid;
+    border-radius: 20px;
+}
+.attd-btn {
+    width: 200px;
+    height: 70px;
+    background-color: #6B4D27;
+    /*border: none;*/
+    color: #ffffff;
+    border-radius: 20px;
+}
+.attd-btn:hover {
+    cursor: pointer;
+}

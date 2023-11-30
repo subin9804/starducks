@@ -1,17 +1,21 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
 <main layout:fragment="content">
     <div>
+
+    </div>
+    <div>
         <button th:if="${startTime == null}">출근</button>
-        <button th:if="${endTime != null}">퇴근</button>
+<!--        <button th:if="${endTime != null}">퇴근</button>-->
     </div>
 
     <div>
-        출근&emsp;|&emsp;<input type="text" th:value="${startTime}" readonly>
-        퇴근&emsp;|&emsp;<input type="text" th:value="${endTime}" readonly>
+        출근&emsp;|&emsp;<p type="text" th:value="${startTime}"></p>
+        퇴근&emsp;|&emsp;<p type="text" th:value="${endTime}"></p>
     </div>
 </main>
 </html>
