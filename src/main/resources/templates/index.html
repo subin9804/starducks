@@ -3,6 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <th:block th:layout="title">메인 </th:block>
+<th:block th:layout="addMore">
+    <!-- head에 추가할 스크립트나 css링크-->
+</th:block>
+
 <main layout:fragment="content">
     <h1>이건 제목입니다.</h1>
     <div class="content">
