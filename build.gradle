@@ -83,8 +83,8 @@ clean {
     delete file('src/main/generated')
 }
 
-compileQuerydsl {
-   options.annotationProcessorPath = configurations.querydsl
-}
+//compileQuerydsl {
+//   options.annotationProcessorPath = configurations.querydsl
+//}
 
 
