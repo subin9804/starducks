@@ -5,7 +5,9 @@
 main {
     width: 1100px;
 }
-
+a {
+    text-decoration: none;
+}
 input[type="text"],
 input[type="password"],
 input[type="date"] {
@@ -19,7 +21,7 @@ input[type="date"] {
 
 /** ----- 버튼 S------ */
 /* 버튼 공통 디자인 */
-.btn {
+.commonBtn {
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
@@ -30,6 +32,12 @@ input[type="date"] {
     border-radius: 10px;
     cursor: pointer;
 
+}
+
+/*취소 버튼을 부득이하게 p태그로 사용할 경우 */
+a p.commonBtn {
+    line-height: 50px;
+    display: inline-block;
 }
 
 /* 등록 */

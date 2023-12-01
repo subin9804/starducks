@@ -1,7 +1,6 @@
 package org.kosta.starducks.hr.service;
 
 import jakarta.transaction.Transactional;
-import org.kosta.starducks.commons.CommonException;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,16 +80,16 @@ public class EmpService {
      * 직원 퇴사처리
      * @param empId
      */
-    @Transactional
-    public void delEmp (Long empId) {
-        Employee emp = repository.findById(empId).orElse(null);
-
-        if(emp != null) {
-            if(!emp.isStatus()) {
-                emp.setStatus(true);
-            } else new CommonException("#{error.already.notexist}");
-        } else new CommonException("해당하는 직원이 존재하지 않습니다.");
-    }
+//    @Transactional
+//    public void delEmp (Long empId) {
+//        Employee emp = repository.findById(empId).orElse(null);
+//
+//        if(emp != null) {
+//            if(!emp.isStatus()) {
+//                emp.setStatus(true);
+//            } else new CommonException("#{error.already.notexist}");
+//        } else new CommonException("해당하는 직원이 존재하지 않습니다.");
+//    }
 
 
     /**

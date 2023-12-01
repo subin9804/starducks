@@ -130,3 +130,7 @@ button {
 .btns {
     text-align: center;
 }
+a p.commonBtn {
+    line-height: 50px;
+    display: inline-block;
+}

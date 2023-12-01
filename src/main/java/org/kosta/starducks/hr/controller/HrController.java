@@ -29,7 +29,7 @@ public class HrController {
     public String index(Model model, EmpSearchCond empSearch) {
 
         List<Employee> emps = service.getAllEmp();
-        model.addAttribute(emps);
+        model.addAttribute("employees", emps);
 
         return "hr/hrIndex";
     }
@@ -40,7 +40,7 @@ public class HrController {
      * @param model
      * @return
      */
-    @GetMapping("/register")
+    @GetMapping("/emp/register")
     public String register (@ModelAttribute Employee employee, Model model) {
         // 자동으로 저장되는 사번을 미리 알려줌
         Long id = service.getLastEmpId();
@@ -56,11 +56,11 @@ public class HrController {
      * @param employee
      * @return
      */
-    @PostMapping("/register")
+    @PostMapping("/emp/register")
     public String registerPs (@ModelAttribute Employee employee) {
         service.saveEmp(employee);
 
-        return "redirect:/hr/register";
+        return "redirect:/hr";
     }
 
     /**
@@ -77,6 +77,12 @@ public class HrController {
         return "hr/empDetail";
     }
 
+    /**
+     * 직원 정보 수정
+     * @param empId  수정할 직원 사번
+     * @param model
+     * @return
+     */
     @GetMapping("/emp/edit/{empId}")
     public String empEdit (@PathVariable("empId") Long empId, Model model) {
         Employee employee = service.getEmp(empId);

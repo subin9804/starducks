@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{hr/layouts/main}">
 
-</body>
+<main layout:fragment="content">
+    <h1>사원관리</h1>
+    <div class="search">
+        <input type="text">
+        <div>
+            All <input type="checkbox">
+            재직 <input type="checkbox">
+            퇴사 <input type="checkbox">
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>사번</th>
+                <th>이름</th>
+                <th>부서</th>
+                <th>직급</th>
+                <th>연락처</th>
+                <th>이메일</th>
+            </tr>
+        </thead>
+        <tbody th:each="emp : ${employees}" th:object="${emp}">
+
+            <tr>
+
+                <td th:text="*{empId}"></td>
+                <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
+                <td th:text="*{dept}"></td>
+                <td th:text="*{position}"></td>
+                <td th:text="*{empTel}"></td>
+                <td th:text="*{email}"></td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a th:href="@{/hr/emp/register}"><button class="commonBtn register-button">사원등록</button></a>
+</main>
 </html>
