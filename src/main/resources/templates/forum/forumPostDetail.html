@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{forum/layouts/main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<title layout:fragment="title">게시글 상세</title>
+<main layout:fragment="content">
+    <div class="detail-page-container" th:object="${post}">
+        <p class="detail-page-title">게시글 상세</p>
+        <div class="detail-content-section">
+            <div class="detail-title" th:text="${post.postTitle}">제목</div>
+            <div class="detail-info">
+                <div class="detail-author" th:text="${post.employee != null ? post.employee.empName : '작성자 정보 없음'}">
+                    작성자
+                </div>
+                <div class="detail-views" th:text="${post.postView}">조회수</div>
+                <div class="detail-timestamp" th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd HH:mm')}">작성 시간
+                </div>
+            </div>
+            <div class="detail-post-content" th:text="${post.postContent}">글 내용</div>
+
+            <!--            댓글 입력 폼        -->
+            <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
+                <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
+                <button type="submit" class="detail-comment-submit">등록</button>
+            </form>
+
+            <!--            댓글 목록         -->
+            <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
+                <div th:each="comment : ${post.comments}" class="detail-comment-block">
+                    <p th:text="${comment.commentContent}">댓글 내용</p>
+                    <div class="detail-comment-actions">
+                        <button class="detail-edit-comment">수정하기</button>
+                        <button class="detail-delete-comment">삭제하기</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글이 없을 경우 표시할 메시지 -->
+            <div class="no-comments" th:if="${post.comments == null or #lists.isEmpty(post.comments)}">
+                아직 댓글이 없습니다.
+            </div>
+        </div>
+
+        <!-- 게시글 수정 및 삭제 링크 -->
+        <a th:href="@{/forum/edit/{id}(id=${post.postId})}">수정하기</a>
+        <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">삭제하기</a>
+        <a href="/forum">취소</a>
+    </div>
+</main>
+</html>

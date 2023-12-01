@@ -55,6 +55,9 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             vendorRepository.saveAndFlush(vendor);
         }
+
+        // 초기 게시글 데이터
+
     }
 }
 

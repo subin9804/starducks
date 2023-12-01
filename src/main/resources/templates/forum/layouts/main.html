@@ -3,11 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <script src="https://code.jquery.com/jquery-3.x.x.min.js"></script>
+<!--    j쿼리 스크립트 태그-->
+
+    <!--    quill 위지윅 사용 불러오기 링크-->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/forum/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/forum/style.css}" href="/forum/style.css">
+<!--    여기 위에 href를 추가해줬음-->
 
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
           th:href="@{/fina/{file}.css(file=${file})}">
@@ -18,7 +27,9 @@
     <script th:each="jsFile : ${addScript}" th:src="@{/forum/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
-    <meta charset="UTF-8">
+
+
+
     <title layout:fragment="title">index</title>
 </head>
 <body>
@@ -39,7 +50,7 @@
 <th:block th:replace="~{outlines/header::header}"></th:block>
 
 <!--side 가져오기-->
-<th:block th:replace="~{outlines/side::sidebar}"></th:block>
+<th:block th:replace="outlines/side :: sidebar"></th:block>
 
 <!--메인은 여기에-->
 <main layout:fragment="content"></main>
