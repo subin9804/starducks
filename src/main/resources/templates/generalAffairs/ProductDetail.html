@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{generalAffairs/layouts/main}">
+
+<main layout:fragment="content">
+
+
+    <div >
+        물품 ID : <input type="text" th:value="${p.productCode}" readonly>
+        <br>
+        물품 이름 : <input type="text" th:value="${p.productName}" readonly>
+        <br>
+        카테고리 : <input type="text" th:value="${p.productCategory}" readonly>
+        <br>
+
+        판매 가격 : <input type="text" th:value="${p.productPrice}" readonly> 원
+        <br>
+        단위 : <input type="text" th:value="${p.productUnit}" readonly>
+        <br>
+        공급 업체 : <input type="text" th:value="${p.getVendor().getVendorName()}" readonly>
+        <br>
+        전화 번호 : <input type="text" th:value="${p.getVendor().getVendorTelephone()}" readonly>
+        <br>
+        거래 여부 : <input type="text" th:value="${p.productSelling}" readonly>
+
+    </div>
+
+    <div>
+        <a th:href="@{/products/update/{id}(id=${p.productCode})}">
+            <button > 수정하기</button>
+        </a>
+
+    </div>
+
+
+
+</main>
+</html>
