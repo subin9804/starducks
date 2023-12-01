@@ -1,24 +1,25 @@
 package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
-import org.springframework.core.SpringVersion;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
 public class Vendor {
 
     @Id
+    @GeneratedValue
     private int vendorId;
 
     private String vendorName;
     private String vendorRegistNum;
     private String vendorRepreName;
-    private int vendorTelephone;
-    private Date vendorStartDate;
+    private String vendorTelephone;
+    private LocalDate vendorStartDate;
     private String vendorAddress;
 
 

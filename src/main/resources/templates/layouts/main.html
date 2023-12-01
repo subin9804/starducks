@@ -3,32 +3,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
-          th:href="@{/{file}/style.css(file=${location})}">
-    <th:block layout:fragment="addCss"></th:block>
+    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}" th:href="@{/{file}/style.css(file=${location})}">
 
     <script th:src="@{/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/{file}/script.js(file=${loaction})}"></script>
-    <th:block layout:fragment="addScript"></th:block>
 
     <meta charset="UTF-8">
-    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title layout:fragment="title">index</title>
+
+<!--    head 추가사항-->
+    <th:block layout:fragment="addMore"></th:block>
+
 </head>
 <body>
 
-<!--로그인 여부-->
-<section class="right">
+<!--
+<div class="right">
     <th:block sec:authorize="isAuthenticated()">
-        로그인 성공
+        로그인을 했을 때
     </th:block>
     <th:block sec:authorize="isAnonymous()">
-        로그인 해야함
+        로그인을 안 했을 때
     </th:block>
     <th:block sec:authorize="hasAuthority('A')">A권한이 있을 경우</th:block>
     <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
-</section>
+</div>
+-->
 
 <!--header 가져오기-->
 <th:block th:replace="~{outlines/header::header}"></th:block>
@@ -39,6 +47,10 @@
 <!--메인은 여기에-->
 <main layout:fragment="content"></main>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 </body>
 </html>
