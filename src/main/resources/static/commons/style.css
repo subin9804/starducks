@@ -1,19 +1,37 @@
 body {
     display: grid;
     grid-template-areas:
-    'header header'
-    'sidebar content';
-    grid-template-columns: 1fr 6fr; /* 사이드바와 컨텐츠 사이의 비율 조정 */
-    height: 100vh; /* 뷰포트의 전체 높이 */
+    'sidebar header'
+    'sidebar main';
+    grid-template-columns: 220px 1fr; /* 사이드바와 컨텐츠 사이의 비율 조정 */
+    grid-template-rows: 60px 1fr; /* 헤더와 컨텐츠 사이의 비율 조정 */
+    min-height: 1250px;
+    padding-right: 40px;
 }
 *{
     box-sizing: border-box;
 }
 main {
-    width: 1100px;
+    padding: 0 40px 40px;
+    grid-area: main;
+}
+.content {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    width: 1300px;
 }
 a {
     text-decoration: none;
+    color: black;
+}
+ul {
+    list-style: none;
+    padding: 0; margin: 0;
+}
+li {
+    padding: 0;
+    margin: 0;
+    display: block;
 }
 input[type="text"],
 input[type="password"],
@@ -32,30 +50,67 @@ input[type="date"] {
     background-color:#6B4D27;
     border: 1px solid #333333;
 }
-.sidebar-menu ul {
-    display: none;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-menu li:hover > ul {
+label {
     display: block;
 }
-
-.sidebar-menu ul li {
-    padding-left: 15px;
+.sidebar-logo {
+    width: 150px;
+    margin: 20px auto;
+    display: block;
+}
+/* 라디오 토글 */
+.accro {
+    width: 220px;
+    padding-left: 30px;
+    border-radius: 20px;
+    margin: 20px 0;
+}
+.accro .head > label{
+    color: white;
+    padding: 20px 20px 0;
+    border-radius: 20px 0 0 20px;
+    font-weight: bold;
+}
+.head input[type=radio] {
+    display: none;
+}
+.head input[type=radio]:checked~label {
+    background-color: #ffffff;
+    color: black;
+    border-radius: 20px 0 0 0;
+}
+.only input[type=radio]:checked~label {
+    border-radius: 20px 0 0 20px;
+    padding: 20px;
+}
+.head+ul {
+    background-color: #fff;
+    border-radius: 0 0 0 20px;
+    text-align: right;
+    padding: 20px;
+}
+.head+ul li {
+    padding: 10px 0;
+}
+.sidebar-footer {
+    color: #fff;
+    font-width: bold;
+    text-align: center;
+    margin: 200px auto 0;
 }
 /* ------ 사이드바 E --------*/
 
 
 /* ------ 헤더 S --------*/
-.header {
+header {
     grid-area: header;
+    display: flex;
+    justify-content: flex-end;
 }
-
-.content {
-    grid-area: content;
+header a {
+    font-size: 25px;
+    padding-left: 20px;
+    line-height: 60px;
 }
 /* ------ 헤더 E --------*/
 

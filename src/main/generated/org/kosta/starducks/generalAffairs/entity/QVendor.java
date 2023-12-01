@@ -29,9 +29,9 @@ public class QVendor extends EntityPathBase<Vendor> {
 
     public final StringPath vendorRepreName = createString("vendorRepreName");
 
-    public final DateTimePath<java.util.Date> vendorStartDate = createDateTime("vendorStartDate", java.util.Date.class);
+    public final DatePath<java.time.LocalDate> vendorStartDate = createDate("vendorStartDate", java.time.LocalDate.class);
 
-    public final NumberPath<Integer> vendorTelephone = createNumber("vendorTelephone", Integer.class);
+    public final StringPath vendorTelephone = createString("vendorTelephone");
 
     public QVendor(String variable) {
         super(Vendor.class, forVariable(variable));

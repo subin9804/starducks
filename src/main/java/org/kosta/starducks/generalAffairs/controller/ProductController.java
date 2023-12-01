@@ -60,7 +60,7 @@ public class ProductController {
     }
 
     @GetMapping("/info/{productCode}")
-    public String getProductInfo(@PathVariable Long productCode,
+    public String getProductInfo(@PathVariable("productCode") Long productCode,
                                  Model m)
     {
         Optional<Product> product = productService.getProduct(productCode);
@@ -95,7 +95,7 @@ public class ProductController {
 
 
     @GetMapping("/update/{productCode}")
-    public String updateProduct(@PathVariable Long productCode, Model m) {
+    public String updateProduct(@PathVariable("productCode") Long productCode, Model m) {
         Optional<Product> product = productService.getProduct(productCode);
 
         if (product.isPresent()) {
@@ -113,7 +113,8 @@ public class ProductController {
     }
 
     @PostMapping("/update/{productCode}")
-    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto) {
+    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto,
+                                @PathVariable("productCode") Long productCode) {
         //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
 
         productService.updateProduct(productUpdateDto);
