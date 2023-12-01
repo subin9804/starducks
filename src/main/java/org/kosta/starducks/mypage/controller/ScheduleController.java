@@ -1,6 +1,7 @@
 package org.kosta.starducks.mypage.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.service.ScheduleService;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ScheduleController {
@@ -21,10 +23,12 @@ public class ScheduleController {
         return "mypage/schedule/registModal2";
     }
 
-    @PostMapping("/schedule/plz")
+    @PostMapping("/schedule/success")
     public String successMethod(ScheduleDTO scheduleDTO) {
         System.out.println("scheduleDTO.toString() ==> " + scheduleDTO.toString()); /** DTO에 폼 데이터가 잘 담겼는지 확인*/
-        return "";
+
+
+        return "/mypage/schedule/success";
     }
 
 
