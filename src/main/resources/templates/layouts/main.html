@@ -14,6 +14,9 @@
     <script th:src="@{/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/{file}/script.js(file=${loaction})}"></script>
 
+<!--    sweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
