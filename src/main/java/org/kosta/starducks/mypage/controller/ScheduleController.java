@@ -26,9 +26,7 @@ public class ScheduleController {
     @PostMapping("/schedule/success")
     public String successMethod(ScheduleDTO scheduleDTO) {
         System.out.println("scheduleDTO.toString() ==> " + scheduleDTO.toString()); /** DTO에 폼 데이터가 잘 담겼는지 확인*/
-
-
-        return "/mypage/schedule/success";
+        return "redirect:/mypage/schedule/success";
     }
 
 
