@@ -1,16 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<div th:fragment="modal">
-    <div class="modal" th:style="'display: none'" th:id="modal">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mypage/layouts/main}">
+
+<main layout:fragment="content">
         <div class="modal-content">
+            <span class="close" th:text="'×'" onclick="closeModal()"></span>
             <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
                 <label th:text="'일정명'"></label>
                 <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
@@ -39,7 +34,5 @@
                 <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
             </form>
         </div>
-    </div>
-</div>
-</body>
+    </main>
 </html>

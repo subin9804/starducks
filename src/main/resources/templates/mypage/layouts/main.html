@@ -3,18 +3,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/mypage/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/mypage/attendance.css}" href="/static/mypage/attendance.css">
 
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
           th:href="@{/mypage/{file}.css(file=${file})}">
     <th:block layout:fragment="addCss"></th:block>
 
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+
     <script th:src="@{/commons/script.js}"></script>
 <!--    <script th:src="@{/mypage/js/ScheduleScript.js}"></script>-->
+    <script th:src="@{/mypage/attendance.js}" src="/mypage/script.js"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/mypage/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
@@ -23,6 +27,7 @@
     <link rel="stylesheet" href="../../../static/mypage/Calendar.css" th:href="@{mypage/Schedule.css}"/>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title layout:fragment="title">index</title>
 </head>
 <body>

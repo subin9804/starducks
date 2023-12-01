@@ -10,20 +10,22 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QEmpEntity is a Querydsl query type for EmpEntity
+ * QEmployee is a Querydsl query type for Employee
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QEmpEntity extends EntityPathBase<EmpEntity> {
+public class QEmployee extends EntityPathBase<Employee> {
 
-    private static final long serialVersionUID = 983584098L;
+    private static final long serialVersionUID = -347861705L;
 
-    public static final QEmpEntity empEntity = new QEmpEntity("empEntity");
+    public static final QEmployee employee = new QEmployee("employee");
 
     public final StringPath addr = createString("addr");
 
     public final DatePath<java.time.LocalDate> birth = createDate("birth", java.time.LocalDate.class);
 
     public final StringPath dAddr = createString("dAddr");
+
+    public final StringPath dept = createString("dept");
 
     public final StringPath email = createString("email");
 
@@ -37,24 +39,26 @@ public class QEmpEntity extends EntityPathBase<EmpEntity> {
 
     public final DatePath<java.time.LocalDate> joinDate = createDate("joinDate", java.time.LocalDate.class);
 
-    public final DatePath<java.time.LocalDate> leaceDate = createDate("leaceDate", java.time.LocalDate.class);
+    public final DatePath<java.time.LocalDate> leaveDate = createDate("leaveDate", java.time.LocalDate.class);
 
     public final EnumPath<org.kosta.starducks.roles.Position> position = createEnum("position", org.kosta.starducks.roles.Position.class);
+
+    public final StringPath postNo = createString("postNo");
 
     public final StringPath pwd = createString("pwd");
 
     public final BooleanPath status = createBoolean("status");
 
-    public QEmpEntity(String variable) {
-        super(EmpEntity.class, forVariable(variable));
+    public QEmployee(String variable) {
+        super(Employee.class, forVariable(variable));
     }
 
-    public QEmpEntity(Path<? extends EmpEntity> path) {
+    public QEmployee(Path<? extends Employee> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QEmpEntity(PathMetadata metadata) {
-        super(EmpEntity.class, metadata);
+    public QEmployee(PathMetadata metadata) {
+        super(Employee.class, metadata);
     }
 
 }
