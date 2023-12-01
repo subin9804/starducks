@@ -1,7 +1,7 @@
 package org.kosta.starducks.mypage.dto;
 
 import lombok.Data;
-import org.kosta.starducks.hr.entity.EmpEntity;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +23,6 @@ public class ScheduleDTO {
     private ScheduleType scheduleType;
     private Location location;
     private String notes;
-    private EmpEntity emp;
+    private Employee emp;
 
 }

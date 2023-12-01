@@ -33,7 +33,7 @@ public class ProductController {
     @GetMapping("/list")
     public String getAllProducts(Model m,
                                  @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                 String searchKeyword)
+                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
     {
         Page<Product> allProducts = null;
         if(searchKeyword == null){

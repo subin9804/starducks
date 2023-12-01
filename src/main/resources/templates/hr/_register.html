@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="register">
+    <h1 th:text="사원등록"></h1>
+    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" autocomplete="off">
+        <div class="photos">
+            <div class="photo">
+                <img src="#" />
+                <p>프로필사진</p>
+            </div>
+            <div class="photo">
+                <img src="#" />
+                <p>도장사진</p>
+            </div>
+        </div>
+        <div id="formSection">
+            <section>
+                <dl>
+                    <dt>사원번호</dt>
+                    <dd>
+                        <input type="text" th:value="${id}" disabled>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>초기비밀번호</dt>
+                    <dd><input type="text" th:field="*{pwd}"></dd>
+                </dl>
+                <dl>
+                    <dt>사원이름</dt>
+                    <dd><input type="text" th:field="*{empName}"></dd>
+                </dl>
+                <dl>
+                    <dt>연락처</dt>
+                    <dd><input type="text" th:field="*{empTel}"></dd>
+                </dl>
+                <dl>
+                    <dt>이메일</dt>
+                    <dd><input type="text" th:field="*{email}"></dd>
+                </dl>
+                <dl>
+                    <dt>성별</dt>
+                    <dd>
+                        남 <input type="radio" name="a" value="man" th:field="*{gender}">
+                        여 <input type="radio" name="a" value="woman" th:field="*{gender}">
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>생년월일</dt>
+                    <dd>
+                        <input type="date" th:field="*{birth}">
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <dl>
+                    <dt>부서</dt>
+                    <dd>
+                        <!--                    <select th:field="${employee.dept}">-->
+                        <!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
+                        <!--                    </select>-->
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>직급</dt>
+                    <dd>
+                        <input type="checkbox" id="all" class="selectbox">
+                        <label for="all" id="allLabel">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+
+                        <ul class="options">
+                            <li class="option" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
+                                <th:block th:if="${position.toString() == 'BOSS'}" th:text="사장"></th:block>
+                                <th:block th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></th:block>
+                                <th:block th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></th:block>
+                                <th:block th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></th:block>
+                            </li>
+                        </ul>
+                        <input id="position" type="hidden" th:field="*{position}">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>입사일자</dt>
+                    <dd><input type="date" th:field="*{joinDate}"></dd>
+                </dl>
+
+                <dl>
+                    <dt>퇴사여부</dt>
+                    <dd>
+                        퇴사 <input type="radio" name="a" value="true" th:field="*{status}">
+                        재직 <input type="radio" name="a" value="false" th:field="*{status}">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>퇴사일자</dt>
+                    <dd><input type="date" th:field="*{leaveDate}"></dd>
+                </dl>
+                <dl>
+                    <dt>우편번호</dt>
+                    <dd>
+                        <input class="postNo" type="text" th:field="*{postNo}">
+                        <span>우편번호 찾기</span> <!-- 우편번호 api 삽입 -->
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>주소</dt>
+                    <dd><input type="text" th:field="*{addr}"> </dd>
+                </dl>
+                <dl>
+                    <dt>상세주소</dt>
+                    <dd><input type="text" th:field="*{dAddr}"> </dd>
+                </dl>
+            </section>
+        </div>
+        <div class="btns">
+            <button class="commonBtn register-button">등록</button>
+            <a th:href="@{/hr}"><p class="commonBtn cancel-button">취소</p></a>
+        </div>
+    </form>
+</th:block>
+</html>

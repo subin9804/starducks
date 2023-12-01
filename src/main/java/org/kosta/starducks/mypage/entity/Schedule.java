@@ -13,7 +13,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.kosta.starducks.hr.entity.EmpEntity;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.mypage.dto.ScheduleType;
 import org.kosta.starducks.mypage.dto.Location;
 
@@ -52,6 +52,6 @@ public class Schedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id", nullable = false)
-    private EmpEntity emp;
+    private Employee emp;
 
 }
