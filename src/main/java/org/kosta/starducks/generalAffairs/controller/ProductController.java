@@ -55,8 +55,6 @@ public class ProductController {
         m.addAttribute("startPage",startPage);
         m.addAttribute("endPage",endPage);
         return "generalAffairs/ProductList";
-
-
     }
 
     @GetMapping("/info/{productCode}")

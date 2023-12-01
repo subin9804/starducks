@@ -11,7 +11,6 @@
 <div th:fragment="modal">
     <div class="modal" th:style="'display: none'" th:id="modal">
         <div class="modal-content">
-            <span class="close" th:text="'×'" onclick="closeModal()"></span>
             <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
                 <label th:text="'일정명'"></label>
                 <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mypage/layouts/main}">
+
+<main layout:fragment="content">
+    <!-- Include the modal -->
+    <div th:replace="~{mypage/schedule/Form::modal}"></div>
+    <div id='calendar'></div>
+</main>
+</html>
