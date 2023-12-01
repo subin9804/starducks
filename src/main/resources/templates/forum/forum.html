@@ -36,7 +36,7 @@
             <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리명</td>
             <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a></td>
             <!-- 작성자 정보가 아직 없으므로 '정보 없음' 또는 빈 문자열 표시 -->
-            <td th:text="${post.empImpl}? ${post.empImpl.empId} : '모름'">정보X</td>
+            <td th:text="${post.employee}? ${post.employee.empName} : '모름'">작성자</td>
             <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
             <td th:text="${post.postView}">조회수</td>
         </tr>

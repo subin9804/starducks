@@ -26,7 +26,7 @@ public class PostCommentServiceImpl implements PostCommentService{
 
   @Override
   public PostComment createOrUpdateComment(PostComment postComment) {
-    return null;
+    return postCommentRepository.save(postComment);
   }
 
   @Override

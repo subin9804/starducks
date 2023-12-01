@@ -64,6 +64,8 @@ window.onload = function() {
     quilljsediterInit();
 };
 
+
+/**
 $(document).ready(function() {
     var content = $("#content").html(); // 여기서 'content'는 실제 요소의 ID에 맞게 변경해야 합니다.
 
@@ -77,3 +79,4 @@ $(document).ready(function() {
 
     $("#content").html(content);
 });
+*/

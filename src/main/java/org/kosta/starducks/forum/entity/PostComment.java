@@ -1,6 +1,7 @@
 package org.kosta.starducks.forum.entity;
 
 import jakarta.persistence.*;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
 
@@ -14,18 +15,18 @@ public class PostComment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long commentId; //댓글 고유 ID
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "postId")
+  private ForumPost forumPost; // 연결된 게시글
+
   @Lob
   private String commentContent; //댓글 내용
 
   private LocalDateTime commentDate; //댓글 작성일
 
   @ManyToOne
-  @JoinColumn(name = "postId")
-  private ForumPost forumPost; //연결된 게시글
-
-  @ManyToOne
   @JoinColumn(name = "empId")
-  private EmpImpl empImpl; //댓글 작성자 테이블 연결 외래키
+  private Employee employee; //댓글 작성자 테이블 연결 외래키
 
   private boolean commentDelete; //댓글 삭제 여부
 
@@ -62,12 +63,12 @@ public class PostComment {
     this.forumPost = forumPost;
   }
 
-  public EmpImpl getEmpImpl() {
-    return empImpl;
+  public Employee getEmployee() {
+    return employee;
   }
 
-  public void setEmpImpl(EmpImpl empImpl) {
-    this.empImpl = empImpl;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
   public boolean isCommentDelete() {

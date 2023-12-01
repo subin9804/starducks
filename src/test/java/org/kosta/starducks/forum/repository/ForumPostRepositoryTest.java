@@ -30,7 +30,6 @@ public class ForumPostRepositoryTest {
     newPost.setPostView(0);
     newPost.setPostDelete(false);
     newPost.setPostNotice(false);
-    // EmpImpl 객체 설정 필요한 경우 추가
 
     // 더미 데이터 저장
     ForumPost savedPost = forumPostRepository.save(newPost);

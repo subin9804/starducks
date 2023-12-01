@@ -1,7 +1,9 @@
 package org.kosta.starducks.forum.controller;
 
 import org.kosta.starducks.forum.entity.ForumPost;
+import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.service.ForumPostService;
+import org.kosta.starducks.forum.service.PostCommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,11 @@ import java.util.List;
 public class ForumPostController {
 
     private final ForumPostService forumPostService;
+    private final PostCommentService postCommentService;
 
-    public ForumPostController(ForumPostService forumPostService) {
+    public ForumPostController(ForumPostService forumPostService, PostCommentService postCommentService) {
         this.forumPostService = forumPostService;
+        this.postCommentService = postCommentService;
     }
 
     // 게시판 메인 페이지
@@ -77,5 +81,15 @@ public class ForumPostController {
         List<ForumPost> searchResults = forumPostService.searchPosts(query);
         model.addAttribute("posts", searchResults);
         return "forum/forum";
+    }
+
+    // 댓글 추가 엔드포인트
+    @PostMapping("/post/{id}/addComment")
+    public String addComment(@PathVariable Long id, @RequestParam String commentContent) {
+        PostComment comment = new PostComment();
+        comment.setCommentContent(commentContent);
+        comment.setForumPost(forumPostService.getPostById(id).orElseThrow());
+        postCommentService.createOrUpdateComment(comment);
+        return "redirect:/forum/post/" + id;
     }
 }

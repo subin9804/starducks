@@ -3,8 +3,11 @@ package org.kosta.starducks.forum.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 게시판 작성글
@@ -28,13 +31,27 @@ public class ForumPost {
   private LocalDateTime updateDate; //게시글 수정 시간
 
   private int postView; //조회수. 로직 추가해서 동일한 사용자면 조회수 카운트 방지 가능
+
   private boolean postDelete; //삭제 여부. 기본적으로 삭제 아님(false)
 
   @ManyToOne
   @JoinColumn(name = "empId")
-  private EmpImpl empImpl;
+  private Employee employee; //연결된 사원 아이디
 
   private boolean postNotice; //공지사항 여부
+
+  @OneToMany(mappedBy = "forumPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<PostComment> comments = new ArrayList<>(); // 게시글에 달린 댓글 목록. 댓글이 하나도 없을 때를 위해 초기값 설정
+
+  public List<PostComment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<PostComment> comments) {
+    this.comments = comments;
+  }
+
+
 
   public ForumPost() {
   }
@@ -95,12 +112,12 @@ public class ForumPost {
     this.postDelete = postDelete;
   }
 
-  public EmpImpl getEmpImpl() {
-    return empImpl;
+  public Employee getEmployee() {
+    return employee;
   }
 
-  public void setEmpImpl(EmpImpl empImpl) {
-    this.empImpl = empImpl;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
   public boolean isPostNotice() {
