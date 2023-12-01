@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{hr/layouts/main}">
-<title layout:fragment="title">사원정보조회</title>
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">사원정보</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
 
 <main layout:fragment="content">
     <h1>사원정보조회</h1>

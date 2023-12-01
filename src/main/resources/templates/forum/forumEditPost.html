@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{forum/layouts/main}">
+      layout:decorate="~{layouts/main}">
 
-<title layout:fragment="title">게시글 작성</title>
+<!--title-->
+<th:block layout:fragment="title">게시글 수정</th:block>
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
+  <!--    여기 위에 href를 추가해줬음-->
+  <script th:src="@{/js/forum/script.js}"></script>
+
+  <!--    quill 위지윅 사용 불러오기 링크-->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+</th:block>
+
 <main layout:fragment="content">
   <h1>게시글 수정</h1>
   <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">

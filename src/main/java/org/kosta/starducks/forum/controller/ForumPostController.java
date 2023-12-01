@@ -45,7 +45,7 @@ public class ForumPostController {
 
     // 게시글 상세 페이지
     @GetMapping("/post/{id}") //   forum/id 가 페이지 주소
-    public String getPostDetails(@PathVariable Long id, Model model) {
+    public String getPostDetails(@PathVariable("id") Long id, Model model) {
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -54,7 +54,7 @@ public class ForumPostController {
 
     // 게시글 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String editPostForm(@PathVariable Long id, Model model) {
+    public String editPostForm(@PathVariable("id") Long id, Model model) {
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -63,7 +63,7 @@ public class ForumPostController {
 
     // 게시글 수정 완료 및 업로드
     @PostMapping("/edit/{id}")
-    public String editPost(@PathVariable Long id, @ModelAttribute ForumPost forumPost) {
+    public String editPost(@PathVariable("id") Long id, @ModelAttribute ForumPost forumPost) {
         forumPost.setPostId(id);
         forumPostService.createOrUpdateForumPost(forumPost);
         return "redirect:/forum";
@@ -71,7 +71,7 @@ public class ForumPostController {
 
     // 게시글 삭제
     @GetMapping("/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
+    public String deletePost(@PathVariable("id") Long id) {
         forumPostService.deleteForumPost(id);
         return "redirect:/forum";
     }
@@ -85,7 +85,7 @@ public class ForumPostController {
 
     // 댓글 추가 엔드포인트
     @PostMapping("/post/{id}/addComment")
-    public String addComment(@PathVariable Long id, @RequestParam String commentContent) {
+    public String addComment(@PathVariable("id") Long id, @RequestParam String commentContent) {
         PostComment comment = new PostComment();
         comment.setCommentContent(commentContent);
         comment.setForumPost(forumPostService.getPostById(id).orElseThrow());
