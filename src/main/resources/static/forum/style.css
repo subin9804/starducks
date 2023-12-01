@@ -1,0 +1,197 @@
+.forum-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.view-all-posts a {
+    text-decoration: none;
+    color: black;
+}
+
+.view-all-posts a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.search-form {
+    display: flex;
+    justify-content: right; /* 검색 폼 오른쪽 정렬 */
+}
+
+/*검색칸 스타일*/
+.search-form input[type="text"] {
+    background-color: #6B4D27; /*입력칸 배경색*/
+    border-color: #6B4D27;
+    border-radius: 5px;
+    color: white; /* 입력되는 글씨색 */
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.search-form input[type="text"], .search-form button {
+    box-shadow: none;
+}
+
+/* 플레이스홀더 스타일 변경 */
+.search-form input[type="text"]::placeholder {
+    color: white; /* 플레이스홀더 텍스트 색상 */
+    font-weight: bold; /* 플레이스홀더 글씨 굵기 */
+}
+
+.search-form button {
+    padding: 5px 15px;
+    border-color: #AF9A63;
+    cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
+}
+
+.forum-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff; /* 테이블 배경색 추가 */
+}
+
+/*제목 링크 밑줄 제거*/
+.forum-table a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+}
+
+/* 마우스 오버 시 링크에 밑줄 표시  */
+.forum-table a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+
+/*게시글 목록 테이블 가운데 정렬*/
+.forum-table th, .forum-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.forum-table th {
+    background-color: #f2f2f2;
+}
+
+.notice {
+    font-weight: bold;
+    background-color: #ffffe0; /* 공지사항 배경색 */
+}
+
+.add-post {
+    text-align: right;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.add-post a {
+    padding: 5px 15px;
+    background-color: #4A85F6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 테이블 행에 마우스 오버 시 배경색 변경 */
+.forum-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+/*게시글 상세 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.detail-page-container {
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px;
+    width: 100%;
+}
+
+.detail-page-title {
+    color: #6b4d27;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.detail-content-section {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.detail-info {
+    margin-bottom: 20px;
+}
+
+.detail-author, .detail-views, .detail-timestamp {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.detail-post-content {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-comment-section {
+    margin-top: 20px;
+}
+
+.detail-comment-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.detail-comment-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detail-comment-block {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.detail-comment-actions {
+    margin-top: 10px;
+}
+
+.detail-edit-comment, .detail-delete-comment {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

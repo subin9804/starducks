@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{forum/layouts/main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<title layout:fragment="title">전사 게시판</title>
+<main layout:fragment="content">
+    <h1>게시판</h1>
+    <!-- 전체 글 보기 링크 -->
+    <div class="forum-header">
+        <div class="view-all-posts">
+            <a href="/forum" th:href="@{/forum}">전체 글 보기</a>
+        </div>
+        <form class="search-form" method="get" th:action="@{/forum/search}">
+            <input name="query" placeholder="검색어 입력" type="text">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <table class="forum-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf 반복문을 사용하여 게시글 목록을 표시 -->
+        <tr th:class="${post.postNotice}? 'notice' : ''" th:each="post, iterStat : ${posts}">
+            <td th:text="${post.postId}">게시글 ID</td>
+            <!-- postNotice 값에 따라 '공지' 또는 '일반' 표시-->
+            <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리명</td>
+            <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a></td>
+            <!-- 작성자 정보가 아직 없으므로 '정보 없음' 또는 빈 문자열 표시 -->
+            <td th:text="${post.employee}? ${post.employee.empName} : '모름'">작성자</td>
+            <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
+            <td th:text="${post.postView}">조회수</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="add-post">
+        <a href="/forum/add">+글쓰기</a>
+    </div>
+</main>
+</html>
+

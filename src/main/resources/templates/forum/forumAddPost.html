@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{forum/layouts/main}">
+
+<title layout:fragment="title">게시글 작성</title>
+<main layout:fragment="content">
+    <h1>글쓰기</h1>
+    <form th:action="@{/forum/add}" method="post">
+        <!-- 제목 입력란 -->
+        <input type="text" th:field="*{post.postTitle}" placeholder="제목">
+
+        <!-- Quill 에디터의 메인 컨테이너 -->
+        <div id="editor"></div>
+
+        <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
+        <input type="hidden" id="quill_html" th:field="*{post.postContent}">
+
+        <!-- 제출 버튼 -->
+        <button type="submit">작성</button>
+        <a href="/forum">취소</a>
+    </form>
+</main>
+</html>
