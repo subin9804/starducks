@@ -13,9 +13,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.kosta.starducks.hr.entity.Employee;
-import org.kosta.starducks.mypage.dto.ScheduleType;
 import org.kosta.starducks.mypage.dto.Location;
+import org.kosta.starducks.mypage.dto.ScheduleType;
 
 import java.time.LocalDateTime;
 
@@ -50,8 +49,7 @@ public class Schedule {
     @Column(name = "notes")
     private String notes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", nullable = false)
-    private Employee emp;
+    @Column(name = "emp_id")
+    private Long empId;
 
 }

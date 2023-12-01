@@ -17,9 +17,14 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 
     <script th:src="@{/commons/script.js}"></script>
+<!--    <script th:src="@{/mypage/js/ScheduleScript.js}"></script>-->
     <script th:src="@{/mypage/attendance.js}" src="/mypage/script.js"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/mypage/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <link rel="stylesheet" href="../../../static/mypage/Calendar.css" th:href="@{mypage/Schedule.css}"/>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

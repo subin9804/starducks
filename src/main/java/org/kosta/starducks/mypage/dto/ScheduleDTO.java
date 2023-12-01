@@ -1,21 +1,19 @@
 package org.kosta.starducks.mypage.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.kosta.starducks.hr.entity.Employee;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.kosta.starducks.mypage.entity.Schedule;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@ToString
 public class ScheduleDTO {
 
-    //  개인일정(PERSONAL_SCHEDULE)
-//  일정번호        scheNo             (INT) Long
-//  일정명          scheTitle          VARCHAR
-//  시작일시        scheStartDate       DATE
-//  종료일시        scheEndDate         DATE
-//  일정종류        calendarType        VARCHAR
-//  장소           location            VARCHAR
-//  참고 사항       notes               VARCHAR
     private Long scheNo;
     private String scheTitle;
     private LocalDateTime scheStartDate;
@@ -23,6 +21,19 @@ public class ScheduleDTO {
     private ScheduleType scheduleType;
     private Location location;
     private String notes;
-    private Employee emp;
+    private Long empId;
 
+    /**
+     * Schedule 객체를 매핑하는 생성자 직접 작성
+     */
+    public ScheduleDTO(Schedule schedule) {
+        this.scheNo = schedule.getScheNo();
+        this.scheTitle = schedule.getScheTitle();
+        this.scheStartDate = schedule.getScheStartDate();
+        this.scheEndDate = schedule.getScheEndDate();
+        this.scheduleType = schedule.getScheduleType();
+        this.location = schedule.getLocation();
+        this.notes = schedule.getNotes();
+        this.empId = schedule.getEmpId();
+    }
 }
