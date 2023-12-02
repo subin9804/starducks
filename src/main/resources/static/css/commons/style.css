@@ -157,6 +157,12 @@ a p.commonBtn {
     background-color: #43946f;
 }
 
+/*삭제 버튼 */
+.delete-button {
+    color: #fdf5f5;
+    background-color: #FF5B5B;
+}
+
 .register-button:hover {
     background-color: #6a4af6;
 }
@@ -165,6 +171,10 @@ a p.commonBtn {
 }
 .edit-button:hover {
     background-color: #316c52;
+}
+
+.delete-button:hover {
+    background-color: #d91717;
 }
 /** ----- 버튼 E ------ */
 
