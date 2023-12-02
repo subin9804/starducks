@@ -41,22 +41,17 @@
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
                     <p th:text="${comment.commentContent}">댓글 내용</p>
                     <div class="detail-comment-actions">
-                        <button class="edit-button">수정하기</button>
-                        <button class="detail-delete-comment">삭제하기</button>
+                        <button class="commonBtn edit-button">수정</button>
+                        <button class="commonBtn delete-button">삭제</button>
                     </div>
                 </div>
-            </div>
-
-            <!-- 댓글이 없을 경우 표시할 메시지 -->
-            <div class="no-comments" th:if="${post.comments == null or #lists.isEmpty(post.comments)}">
-                아직 댓글이 없습니다.
             </div>
         </div>
 
         <!-- 게시글 수정 및 삭제 링크 -->
-        <a th:href="@{/forum/edit/{id}(id=${post.postId})}">수정하기</a>
-        <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">삭제하기</a>
-        <a href="/forum">취소</a>
+        <a th:href="@{/forum/edit/{id}(id=${post.postId})}"><button class="commonBtn edit-button">수정</button></a>
+        <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'"><button class="commonBtn delete-button">삭제</button></a>
+        <a href="/forum"><button class="commonBtn cancel-button">목록</button></a>
     </div>
 </main>
 </html>
