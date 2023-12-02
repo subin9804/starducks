@@ -1,6 +1,8 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.forum.entity.ForumPost;
+import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
 import org.kosta.starducks.hr.entity.Employee;
@@ -11,6 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
+    private final ForumPostRepository forumPostRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -57,7 +61,16 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         }
 
         // 초기 게시글 데이터
+        for (int i = 0; i < 13; i++) {
+            ForumPost forumPost = new ForumPost();
+            forumPost.setPostDate(LocalDateTime.now());
+            forumPost.setPostTitle("제목"+i);
+            forumPost.setPostContent("내용"+i);
+            forumPost.setPostId((long) i);
+            forumPost.setPostView(i);
 
+            forumPostRepository.saveAndFlush(forumPost);
+        }
     }
 }
 
