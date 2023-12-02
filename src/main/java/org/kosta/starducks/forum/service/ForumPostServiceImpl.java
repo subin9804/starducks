@@ -3,6 +3,8 @@ package org.kosta.starducks.forum.service;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,15 +41,13 @@ public class ForumPostServiceImpl implements ForumPostService {
     return forumPostRepository.findById(id); // 게시글 ID로 게시글 조회
   }
 
+
+  //페이지 기능 구현
   @Override
-  public List<ForumPost> getAllForumPosts() {
-    return forumPostRepository.findAll(); // 모든 게시글 조회
+  public Page<ForumPost> postList(Pageable pageable) {
+    return forumPostRepository.findAll(pageable);
   }
 
-  @Override
-  public List<ForumPost> getAllForumPostsSorted() {
-    return forumPostRepository.findAllByOrderByPostDateDesc();
-  }
 
   @Override //게시글 제목, 내용 검색 기능
   public List<ForumPost> searchPosts(String keyword) {

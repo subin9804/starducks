@@ -48,10 +48,11 @@
             </div>
         </div>
 
-        <!-- 게시글 수정 및 삭제 링크 -->
-        <a th:href="@{/forum/edit/{id}(id=${post.postId})}"><button class="commonBtn edit-button">수정</button></a>
-        <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'"><button class="commonBtn delete-button">삭제</button></a>
-        <a href="/forum"><button class="commonBtn cancel-button">목록</button></a>
+        <div class="button-group">
+            <a th:href="@{/forum/edit/{id}(id=${post.postId})}"><button class="commonBtn edit-button">수정</button></a>
+            <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'"><button class="commonBtn delete-button">삭제</button></a>
+            <a href="/forum"><button class="commonBtn cancel-button">목록</button></a>
+        </div>
     </div>
 </main>
 </html>

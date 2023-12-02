@@ -55,8 +55,29 @@
     </table>
 
     <div class="add-post">
-        <a href="/forum/add" class="register-button">+글쓰기</a>
+        <a href="/forum/add" class="commonBtn register-button">+글쓰기</a>
     </div>
+    <div class="pagination">
+        <!-- Link to the first page -->
+        <a th:href="@{/forum(page=0)}"> << </a>
+
+        <!-- Link to the previous page -->
+        <a th:href="@{/forum(page=${nowPage - 2})}"
+           th:classappend="${nowPage == 1} ? 'disabled' : ''"> < </a>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" class="current-page"></strong>
+        </th:block>
+
+        <!-- Link to the next page -->
+        <a th:href="@{/forum(page=${nowPage})}"
+           th:classappend="${nowPage == totalPages} ? 'disabled' : ''"> > </a>
+
+        <!-- Link to the last page -->
+        <a th:href="@{/forum(page=${totalPages - 1})}"> >> </a>
+    </div>
+
 </main>
 </html>
 

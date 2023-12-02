@@ -21,6 +21,12 @@
         <!-- 제목 입력란 -->
         <input type="text" th:field="*{post.postTitle}" placeholder="제목">
 
+        <!-- 공지사항 체크박스 -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="postNotice" name="postNotice" th:checked="${post.postNotice}">
+            <label for="postNotice">공지로 등록</label>
+        </div>
+
         <!-- Quill 에디터의 메인 컨테이너 -->
         <div id="editor"></div>
 
@@ -28,8 +34,10 @@
         <input type="hidden" id="quill_html" th:field="*{post.postContent}">
 
         <!-- 제출 버튼 -->
-        <button type="submit">작성</button>
-        <a href="/forum">취소</a>
+        <button type="submit" class="commonBtn register-button">작성</button>
+        <a href="/forum">
+            <p class="commonBtn cancel-button">취소</p>
+        </a>
     </form>
 </main>
 </html>
