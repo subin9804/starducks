@@ -32,16 +32,16 @@
 
             <!--            댓글 입력 폼        -->
             <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
-                <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
-                <button type="submit" class="detail-comment-submit">등록</button>
-            </form>
+            <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
+            <button type="submit" class="detail-comment-submit">등록</button>
+        </form>
 
             <!--            댓글 목록         -->
             <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
                     <p th:text="${comment.commentContent}">댓글 내용</p>
                     <div class="detail-comment-actions">
-                        <button class="detail-edit-comment">수정하기</button>
+                        <button class="edit-button">수정하기</button>
                         <button class="detail-delete-comment">삭제하기</button>
                     </div>
                 </div>
