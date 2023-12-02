@@ -46,8 +46,10 @@
         </div>
         <div class="accro">
             <div class="head only">
-                <input class="" type="radio" id="forum" name="nav">
-                <label for="forum">전사 게시판</label>
+                <input class="" type="radio" id="forum" name="nav" aria-controls="flush-hr">
+                <label for="forum">
+                    <a th:href="@{/forum}">전사 게시판</a>
+                </label>
             </div>
         </div>
         <div class="accro">
