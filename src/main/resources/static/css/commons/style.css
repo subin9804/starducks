@@ -137,6 +137,8 @@ header a {
 a p.commonBtn {
     line-height: 50px;
     display: inline-block;
+    text-align: center;
+    /* 글자 가운데 정렬 추가 */
 }
 
 /* 등록 */

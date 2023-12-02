@@ -1,6 +1,8 @@
 package org.kosta.starducks.forum.service;
 
 import org.kosta.starducks.forum.entity.ForumPost;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +17,7 @@ public interface ForumPostService {
 
   Optional<ForumPost> getPostById(Long id); // 게시글 상세 정보로 가기 위한 식별 수단
 
-  List<ForumPost> getAllForumPosts(); // 게시글 목록 생성을 위해 모두 가져오기 **최신순 정렬만 필요하면 나중에 없애기**
-
-  List<ForumPost> getAllForumPostsSorted(); //게시글 정렬해서 가져오기
+  Page<ForumPost> postList(Pageable pageable); //게시글 리스트 처리
 
   List<ForumPost> searchPosts(String keyword); //제목과 내용 검색 기능
 

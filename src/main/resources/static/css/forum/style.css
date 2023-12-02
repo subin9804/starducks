@@ -106,7 +106,17 @@
     background-color: #f5f5f5;
 }
 
+/*게시글 작성 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.checkbox-container {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 세로축(center)으로 정렬 */
+    gap: 10px; /* 체크박스와 라벨 사이의 간격 */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 
+
+/*게시글 작성 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*게시글 상세 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .detail-page-container {
     align-items: center;
@@ -194,4 +204,70 @@
     margin-right: 5px;
 }
 
+/*수정, 삭제, 목록 버튼이 좌우로 보이도록 묶음 */
+.button-group {
+    display: flex;
+    justify-content: space-between; /* 버튼들 사이에 균일한 간격을 두기 위함 */
+    margin-top: 20px; /* 추가적인 상단 여백을 위함 */
+}
+
+.button-group a {
+    margin-right: 10px; /* 각 링크(버튼) 사이의 간격 */
+}
+
 /*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/*페이지네이션 스타일 ~~~~~~~~~~~~~~~~~~*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination a,
+.pagination strong {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #f4f4f4;
+}
+
+.pagination .current-page,
+.pagination a:hover {
+    background-color: #f0f0f0;
+    border-color: #666;
+}
+
+/* Style for current page */
+.pagination .current-page {
+    background-color: #fff;
+    border-color: #666;
+    color: red;
+    font-weight: bold;
+}
+
+/* Custom styles for first and last page links */
+.pagination a:first-child,
+.pagination a:last-child {
+    background-color: #ddd;
+}
+
+/* Styles for disabled previous and next links */
+.pagination a[disabled] {
+    color: grey;
+    pointer-events: none;
+}
+
+.disabled {
+    color: grey;
+    pointer-events: none;
+    cursor: default;
+}
+
+/*페이지네이션 스타일 끝~~~~~~~~~~~~*/

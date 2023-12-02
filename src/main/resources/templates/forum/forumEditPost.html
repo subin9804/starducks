@@ -18,10 +18,26 @@
 <main layout:fragment="content">
   <h1>게시글 수정</h1>
   <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
+    <!-- 제목 입력란 -->
     <input type="text" th:field="*{postTitle}" placeholder="제목">
-    <textarea th:field="*{postContent}" placeholder="내용"></textarea>
-    <a href="/forum"><button type="submit">수정 완료</button></a>
-    <a href="/forum">취소</a>
+
+    <!-- 공지사항 체크박스 -->
+    <div class="checkbox-container">
+      <input type="checkbox" id="postNotice" name="postNotice" th:checked="${post.postNotice}">
+      <label for="postNotice">공지로 등록</label>
+    </div>
+
+    <!-- Quill 에디터의 메인 컨테이너 -->
+    <div id="editor"></div>
+
+    <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
+    <input type="hidden" id="quill_html" th:field="*{postContent}">
+
+    <!-- 수정, 취소 버튼 -->
+    <button type="submit" class="commonBtn register-button">수정 완료</button>
+    <a th:href="@{/forum/post/{id}(id=${post.postId})}">
+      <p class="commonBtn cancel-button">취소</p>
+    </a>
   </form>
 </main>
 </html>
