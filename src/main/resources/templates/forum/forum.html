@@ -22,8 +22,8 @@
         <div class="view-all-posts">
             <a href="/forum" th:href="@{/forum}">전체 글 보기</a>
         </div>
-        <form class="search-form" method="get" th:action="@{/forum/search}">
-            <input name="query" placeholder="검색어 입력" type="text">
+        <form class="search-form" method="get" th:action="@{/forum}">
+            <input name="searchKeyword" placeholder="검색어 입력" type="text">
             <button type="submit">검색</button>
         </form>
     </div>
@@ -66,7 +66,7 @@
            th:classappend="${nowPage == 1} ? 'disabled' : ''"> < </a>
 
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1})}" th:text="${page}"></a>
+            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
             <strong th:if="${page == nowPage}" th:text="${page}" class="current-page"></strong>
         </th:block>
 
