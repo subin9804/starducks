@@ -120,37 +120,37 @@ document.addEventListener('DOMContentLoaded', function () {
         form.appendChild(notesInput);
 
         var submitButton = document.createElement('button');
-        // submitButton.textContent = '일정 추가';
-        // submitButton.addEventListener('click', function (event) {
-        //     event.preventDefault();
-        //
-        //     var scheTitle = scheTitleInput.value;
-        //     var scheStartDate = scheStartDateInput.value;
-        //     var scheEndDate = scheEndDateInput.value;
-        //     var calendarType = calendarDropdown.value;
-        //     var location = locationDropdown.value;
-        //     var notes = notesInput.value;
-        //
-        //     var start = new Date(scheStartDate);
-        //     var end = new Date(scheEndDate);
-        //
-        //     if (scheTitle.trim() !== '' && start && end) {
-        //         calendar.addEvent({
-        //             title: scheTitle,
-        //             start: start,
-        //             end: end,
-        //             extendedProps: {
-        //                 calendar: calendarType,
-        //                 location: location,
-        //                 notes: notes
-        //             }
-        //         });
-        //         alert('일정이 추가되었습니다.');
-        //         modal.style.display = 'none'; // 일정 추가 후 모달을 닫음
-        //     } else {
-        //         alert('잘못된 입력입니다. 일정명과 날짜를 확인해주세요.');
-        //     }
-        // });
+        submitButton.textContent = '일정 추가';
+        submitButton.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var scheTitle = scheTitleInput.value;
+            var scheStartDate = scheStartDateInput.value;
+            var scheEndDate = scheEndDateInput.value;
+            var calendarType = calendarDropdown.value;
+            var location = locationDropdown.value;
+            var notes = notesInput.value;
+
+            var start = new Date(scheStartDate);
+            var end = new Date(scheEndDate);
+
+            if (scheTitle.trim() !== '' && start && end) {
+                calendar.addEvent({
+                    title: scheTitle,
+                    start: start,
+                    end: end,
+                    extendedProps: {
+                        calendar: calendarType,
+                        location: location,
+                        notes: notes
+                    }
+                });
+                alert('일정이 추가되었습니다.');
+                modal.style.display = 'none'; // 일정 추가 후 모달을 닫음
+            } else {
+                alert('잘못된 입력입니다. 일정명과 날짜를 확인해주세요.');
+            }
+        });
         form.appendChild(submitButton);
 
         modalContent.appendChild(form);
