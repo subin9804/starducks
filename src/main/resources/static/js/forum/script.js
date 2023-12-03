@@ -67,8 +67,13 @@ function quilljsediterInit(postContent) {
 
 // 페이지 로드 완료 시 에디터 초기화
 window.onload = function() {
-    var postContent = document.getElementById('quill_html').value; // 숨겨진 필드에서 내용을 가져옴
-    quilljsediterInit(postContent); // 에디터 초기화 함수에 내용 전달
+    var quillHtmlElement = document.getElementById('quill_html');
+
+    // quill_html 요소가 존재하는 경우에만 에디터 초기화를 실행
+    if (quillHtmlElement) {
+        var postContent = quillHtmlElement.value;
+        quilljsediterInit(postContent);
+    }
 };
 
 

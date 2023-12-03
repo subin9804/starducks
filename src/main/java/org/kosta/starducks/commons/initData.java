@@ -61,7 +61,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         }
 
         // 초기 게시글 데이터
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 33; i++) {
             ForumPost forumPost = new ForumPost();
             forumPost.setPostDate(LocalDateTime.now());
             forumPost.setPostTitle("제목"+i);

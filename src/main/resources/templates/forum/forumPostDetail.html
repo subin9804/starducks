@@ -36,7 +36,7 @@
             <button type="submit" class="detail-comment-submit">등록</button>
         </form>
 
-            <!--            댓글 목록         -->
+            <!--            댓글 목록  댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
             <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
                     <p th:text="${comment.commentContent}">댓글 내용</p>
