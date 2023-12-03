@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">게시글 상세</th:block>
+<th:block layout:fragment="title">페이지 탭 제목</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
     <!--    여기 위에 href를 추가해줬음-->
@@ -32,17 +32,26 @@
 
             <!--            댓글 입력 폼        -->
             <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
-            <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
-            <button type="submit" class="detail-comment-submit">등록</button>
-        </form>
+                <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
+                <button type="submit" class="detail-comment-submit">등록</button>
+            </form>
 
             <!--            댓글 목록  댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
             <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
-                    <p th:text="${comment.commentContent}">댓글 내용</p>
+                    <!-- 댓글 내용 -->
+                    <p th:text="${comment.commentContent}" th:id="'comment-content-' + ${comment.commentId}">댓글 내용</p>
+
+                    <!-- 숨겨진 댓글 수정 폼 -->
+                    <form th:id="'edit-comment-form-' + ${comment.commentId}" style="display: none;">
+                        <textarea th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
+                        <button type="button" th:onclick="'updateComment(' + ${comment.commentId} + ');'">저장</button>
+                    </form>
+
+                    <!-- 댓글 수정/삭제 버튼 -->
                     <div class="detail-comment-actions">
-                        <button class="commonBtn edit-button">수정</button>
-                        <button class="commonBtn delete-button">삭제</button>
+                        <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'">수정</button>
+                        <button th:href="@{/forum/post/{postId}/deleteComment/{commentId}(postId=${post.postId}, commentId=${comment.commentId})}">삭제</button>
                     </div>
                 </div>
             </div>
