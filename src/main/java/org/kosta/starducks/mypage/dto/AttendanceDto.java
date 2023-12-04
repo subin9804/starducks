@@ -15,4 +15,5 @@ public class AttendanceDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Employee emp;
+    private boolean isVacation;
 }
