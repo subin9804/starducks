@@ -22,8 +22,15 @@
     <div class="calendar-side">
         <div class="attd-check-box">
             <div>
-                <form th:action="@{/attendance/submit}" method="post">
+<!--                <form th:action="@{/attendance/startSubmit}" method="post">-->
+<!--                    <button class="attd-btn" type="submit">출근</button>-->
+<!--                </form>-->
+
+                <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance.startTime == null}">
                     <button class="attd-btn" type="submit">출근</button>
+                </form>
+                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance.startTime != null}">
+                    <button class="attd-btn" type="submit">퇴근</button>
                 </form>
 
 <!--                <button class="attd-btn" th:if="${startTime == null}">출근</button>-->
@@ -31,10 +38,10 @@
             </div>
             <div>
                 <div>
-                    출근&emsp;|&emsp;<p type="text" th:value="${startTime}"></p>
+                    출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></span>
                 </div>
                 <div>
-                    퇴근&emsp;|&emsp;<p type="text" th:value="${endTime}"></p>
+                    퇴근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></span>
                 </div>
             </div>
         </div>

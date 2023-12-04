@@ -37,6 +37,10 @@ public class AttendanceService {
         return result;
     }
 
+    public Attendance getAttendanceForToday() {
+        LocalDate today = LocalDate.now();
+        return attendanceRepository.findByWorkDate(today).orElse(null);
+    }
 
     public List<Attendance> getAllAttendance(){
         return attendanceRepository.findAll();
