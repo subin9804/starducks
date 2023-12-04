@@ -10,17 +10,28 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         // eventContent: 'some text',
 
+        eventContent: function (arg) {
+            return {
+                html: '<div>&ensp;출근 | ' + timeFormat(arg.event.extendedProps.startTime) +
+                    '<br>&ensp;퇴근 | ' + timeFormat(arg.event.extendedProps.endTime) +
+                    '</div>'
+            };
+        },
+
         events: function (fetchInfo, successCallback, failureCallback) {
             // var empId = getEmpId();
             var empId = 1;
             fetchDailyAttendance(empId).then(function (data) {
                 var events = data.map(function (attendance) {
                     return {
-                        title: '출근 | ' + timeFormat(attendance.startTime)
-                            + '퇴근 | ' + timeFormat(attendance.endTime),
+                        title: '',
                         color: 'rgba(1,1,1,0)',
                         textColor: 'black',
-                        start: attendance.workDate
+                        start: attendance.workDate,
+                        extendedProps: {
+                            startTime: attendance.startTime,
+                            endTime: attendance.endTime
+                        }
                     };
                 });
                 successCallback(events);
