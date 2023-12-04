@@ -22,7 +22,11 @@
     <div class="calendar-side">
         <div class="attd-check-box">
             <div>
-                <button class="attd-btn" th:if="${startTime == null}">출근</button>
+                <form th:action="@{/attendance/submit}" method="post">
+                    <button class="attd-btn" type="submit">출근</button>
+                </form>
+
+<!--                <button class="attd-btn" th:if="${startTime == null}">출근</button>-->
                 <!--        <button th:if="${endTime != null}">퇴근</button>-->
             </div>
             <div>
