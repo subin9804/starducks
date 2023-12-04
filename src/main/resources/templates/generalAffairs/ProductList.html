@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{generalAffairs/layouts/main}">
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">품목조회</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/generalAffairs/style.css}">
+    <script th:src="@{/js/generalAffairs/script.js}"></script>
+</th:block>
 
 <main layout:fragment="content">
-W
+
     <!-- 검색 폼 추가 -->
     <form th:action="@{/products/list}" method="get">
         <input type="text" name="searchKeyword" placeholder="품목 이름 입력">
@@ -52,4 +59,4 @@ W
     </th:block>
 
 </main>
-</html>W
+</html>

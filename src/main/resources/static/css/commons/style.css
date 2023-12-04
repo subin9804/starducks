@@ -1,0 +1,182 @@
+#item { border: 1px solid red}
+body {
+    display: grid;
+    grid-template-areas:
+    'sidebar header'
+    'sidebar main';
+    grid-template-columns: 220px 1fr; /* 사이드바와 컨텐츠 사이의 비율 조정 */
+    grid-template-rows: 60px 1fr; /* 헤더와 컨텐츠 사이의 비율 조정 */
+    min-height: 1250px;
+    padding-right: 40px;
+}
+*{
+    box-sizing: border-box;
+}
+main {
+    padding: 0 40px 40px;
+    grid-area: main;
+}
+.content {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    width: 1300px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+ul {
+    list-style: none;
+    padding: 0; margin: 0;
+}
+li {
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    display: block;
+}
+
+/* ------ 사이드바 S --------*/
+.sidebar {
+    grid-area: sidebar; /* 그리드 영역 할당 */
+    background-color:#6B4D27;
+    border: 1px solid #333333;
+}
+label {
+    display: block;
+}
+.sidebar-logo {
+    width: 150px;
+    margin: 20px auto;
+    display: block;
+}
+/* 라디오 토글 */
+.accro {
+    width: 220px;
+    padding-left: 30px;
+    border-radius: 20px;
+    margin: 20px 0;
+}
+.accro .head > label{
+    color: white;
+    padding: 20px 20px 0;
+    border-radius: 20px 0 0 20px;
+    font-weight: bold;
+}
+.head input[type=radio] {
+    display: none;
+}
+.head input[type=radio]:checked~label {
+    background-color: #ffffff;
+    color: black;
+    border-radius: 20px 0 0 0;
+}
+.only input[type=radio]:checked~label {
+    border-radius: 20px 0 0 20px;
+    padding: 20px;
+}
+.head+ul {
+    background-color: #fff;
+    border-radius: 0 0 0 20px;
+    text-align: right;
+    padding: 20px;
+}
+.head+ul li {
+    padding: 10px 0;
+}
+.sidebar-footer {
+    color: #fff;
+    font-width: bold;
+    text-align: center;
+    margin: 200px auto 0;
+}
+/* ------ 사이드바 E --------*/
+
+
+/* ------ 헤더 S --------*/
+header {
+    grid-area: header;
+    display: flex;
+    justify-content: flex-end;
+}
+header a {
+    font-size: 25px;
+    padding-left: 20px;
+    line-height: 60px;
+}
+/* ------ 헤더 E --------*/
+
+
+
+
+/** ----- 버튼 S------ */
+/* 버튼 공통 디자인 */
+.commonBtn {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    width: 120px;
+    height: 50px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/*취소 버튼을 부득이하게 p태그로 사용할 경우 */
+a p.commonBtn {
+    line-height: 50px;
+    display: inline-block;
+    text-align: center;
+    /* 글자 가운데 정렬 추가 */
+}
+
+/* 등록 */
+.register-button {
+    background: #4A85F6;
+    color: #FFFFFF;
+}
+
+/* 목록 및 취소 */
+.cancel-button {
+    color: #FFFFFF;
+    background-color: #999;
+}
+
+/* 수정 */
+.edit-button {
+    color: #FFFFFF;
+    background-color: #43946f;
+}
+
+/*삭제 버튼 */
+.delete-button {
+    color: #fdf5f5;
+    background-color: #FF5B5B;
+}
+
+.register-button:hover {
+    background-color: #6a4af6;
+}
+.cancel-button:hover {
+    background-color: #555;
+}
+.edit-button:hover {
+    background-color: #316c52;
+}
+
+.delete-button:hover {
+    background-color: #d91717;
+}
+/** ----- 버튼 E ------ */
+

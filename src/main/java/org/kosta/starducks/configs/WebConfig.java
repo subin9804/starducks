@@ -1,5 +1,7 @@
 package org.kosta.starducks.configs;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${file.upload.url}")
     private String fileUploadUrl;
 
+    private EntityManager em;
+    private EntityTransaction tx;
 
     @Bean
     public MessageSource messageSource () {
@@ -39,4 +43,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("classpath:/static/images/");
     }
+
 }

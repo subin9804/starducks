@@ -1,69 +1,121 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <style>
-        .sidebar-menu ul {
-            display: none;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
 
-        .sidebar-menu li:hover > ul {
-            display: block;
-        }
-
-        .sidebar-menu ul li {
-            padding-left: 15px;
-        }
-    </style>
-    <script th:inline="javascript">
-        /* Add your existing scripts here */
-
-        function toggleSubMenu(menuName) {
-            var submenu = document.querySelector('.' + menuName + '-submenu');
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function handleSubMenuClick(menuName, subMenuName) {
-            // Add your logic for handling submenu clicks here
-            console.log('SubMenu Clicked:', menuName, subMenuName);
-        }
-
-        function handleMenuClick(menuName) {
-            // Add your logic for handling menu clicks here
-            console.log('Menu Clicked:', menuName);
-        }
-
-        function handleLogout() {
-            // Add your logic for handling logout here
-            console.log('Logout Clicked');
-        }
-    </script>
-</head>
-
-<body>
-<aside th:fragment="sidebar">
-    <img th:src="@{/Starducks_Logo.png}" alt="Starducks Logo" class="sidebar-logo" width="70px"/>
-    <ul class="sidebar-menu">
-        <!-- 총무부 -->
-        <li th:class="${activeMenu == 'admin' ? 'clicked' : ''}" th:onclick="${activeMenu == 'admin'} ? '' : 'toggleSubMenu(\'admin\')'">
-            <a th:href="@{/products/list}">총무부</a>
-            <ul th:class="'admin-submenu'" th:if="${activeMenu == 'admin'}">
-                <li th:class="${activeSubMenu == 'general-affairs/items' ? 'active-submenu' : ''}" th:onclick="handleSubMenuClick('admin', 'general-affairs/items')">
-                    <a th:href="@{/products/add}">품목 관리</a>
+<aside th:fragment="sidebar" class="sidebar">
+    <a th:href="@{/}">
+        <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="sidebar-logo" />
+    </a>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="myPage" name="nav" aria-controls="flush-myPage" checked>
+                <label for="myPage">마이페이지</label>
+            </div>
+            <ul id="flush-myPage">
+                <li>
+                    <a href="/mypage/attendance">근태관리</a>
                 </li>
-                <!-- Add other submenu items for '총무부' as needed -->
+                <li onClick={handleSubMenuClick('mypage', 'schedule')}>
+                    <a href="/mypage/schedule">일정관리</a>
+                </li>
+                <li onClick={handleSubMenuClick('mypage', 'meeting-room')}>
+                    <a href=="/mypage/meeting-room">회의실 예약</a>
+                </li>
             </ul>
-        </li>
-        <!-- Add other menu items and their submenus -->
+        </div>
 
-    </ul>
-    <button th:onclick="handleLogout()" class="logout-button">로그아웃</button>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="check" name="nav" aria-controls="flush-check">
+                <label for="check">전자결재</label>
+            </div>
+            <ul id="flush-check" style="display: none;">
+                <li onClick={handleSubMenuClick('e-document', 'e-document/my')}>
+                <a href="/e-document/my">나의 결재</a>
+                </li>
+                <li onClick={handleSubMenuClick('e-document', 'e-document/create')}>
+                <a href="/e-document/create">결재문서 작성</a>
+                </li>
+                <li onClick={(handleSubMenuClick('e-document', 'e-document/inbox')}>
+                <a href="/e-document/inbox">수신함</a>
+                </li>
+                <li onClick={handleSubMenuClick('e-document', 'e-document/drafts')}>
+                <a href="/e-document/drafts">임시 저장함</a>
+                </li>
+            </ul>
+        </div>
+        <div class="accro">
+            <div class="head only">
+                <input class="" type="radio" id="forum" name="nav" aria-controls="flush-hr">
+                <label for="forum">
+                    <a th:href="@{/forum}">전사 게시판</a>
+                </label>
+            </div>
+        </div>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="hr" name="nav" aria-controls="flush-hr">
+                <label for="hr">인사부</label>
+            </div>
+            <ul id="flush-hr" style="display: none;">
+                <li><a th:href="@{/hr}">사원 관리</a></li>
+                <li><a href="/hr/payroll">급여 관리</a></li>
+                <li><a href="/hr/attendance">근태 관리</a></li>
+                <li><a href="/hr/vacation">휴가 관리</a></li>
+                <li><a href="/hr/department">부서 관리</a></li>
+                <li><a href="/hr/documents">문서 관리</a></li>
+            </ul>
+        </div>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic">
+                <label for="logistic">물류유통부</label>
+            </div>
+            <ul id="flush-logistic" style="display: none;">
+                <li><a href="#">입고 관리</a></li>
+                <li><a href="/logistics/outgoing">출고 관리</a></li>
+                <li><a href="/logistics/inventory">재고 관리</a></li>
+            </ul>
+        </div>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="general" name="nav" aria-controls="flush-general">
+                <label for="general">총무부</label>
+            </div>
+            <ul id="flush-general" style="display: none;">
+                <li><a href="/general-affairs/schedule">일정 관리</a></li>
+                <li><a href="/general-affairs/notice">게시판 공지 등록</a></li>
+                <li><a href="/general-affairs/meeting-room">회의실 관리</a></li>
+                <li><a th:href="@{/products/list}">품목 관리</a></li>
+            </ul>
+        </div>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina">
+                <label for="fina">재무부</label>
+            </div>
+            <ul id="flush-fina" style="display: none;">
+                <li><a href="/finance/branch-info">지점 정보 관리</a></li>
+                <li><a href="/finance/partner-info">거래처 정보 관리</a></li>
+            </ul>
+        </div>
+        <div class="accro">
+            <div class="head only">
+                <input class="" type="radio" id="map" name="nav">
+                <label for="map">조직도</label>
+            </div>
+        </div>
+
+
+
     <div class="sidebar-footer">
-        ©2023 STARDUCKS ERP
+        <button class="commonBtn">Logout</button>
+        <p>©2023 STARDUCKS ERP</p>
     </div>
+
 </aside>
-</body>
+
+
+
+
 </html>

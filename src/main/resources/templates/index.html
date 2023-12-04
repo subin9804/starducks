@@ -2,10 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
+<<<<<<< HEAD
+
+        <!--title-->
+<th:block layout:fragment="title">메인 </th:block>
+<th:block layout:fragment="addMore">
+=======
+<th:block th:layout="title">메인 </th:block>
+<th:block th:layout="addMore">
+>>>>>>> a274a6b6c1666fba8c7e3a6d9a3ed2a6a644c4e0
+    <!-- head에 추가할 스크립트나 css링크-->
+</th:block>
 
 <main layout:fragment="content">
-    <h3>메인입니다!!!이게 메인이에요!!</h3>
-    <p id="item">css/js적용 확인</p>
+    <h1>이건 제목입니다.</h1>
+    <div class="content">
+        <h3>메인입니다!!!이게 메인이에요!!</h3>
+        <p id="item">css/js적용 확인</p>
+    </div>
 </main>
 
 </html>
