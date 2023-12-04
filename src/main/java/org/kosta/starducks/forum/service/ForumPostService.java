@@ -24,4 +24,6 @@ public interface ForumPostService {
 
   Optional<ForumPost> getPostByIdAndUpdateView(Long id); //조회수 기능
 
+  List<ForumPost> getTopNotice();
+
 }
