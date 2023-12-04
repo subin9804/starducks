@@ -61,10 +61,10 @@ public class EmpController {
      * @return
      */
     @PostMapping("/emp/save")
-    public String save (@ModelAttribute Employee employee) {
+    public String save (@ModelAttribute Employee employee, Model model) {
         service.saveEmp(employee);
-
-        return "redirect:/hr";
+        model.addAttribute("result", true);
+        return "hr/hrIndex";
     }
 
     /**
