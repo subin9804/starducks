@@ -8,15 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
+@RequestMapping("/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {
-
     private final ScheduleService scheduleService;
 
-    @GetMapping("/schedule")
+    @GetMapping("/show/{empId}")
     public String showSchedule(Model model) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
