@@ -25,8 +25,6 @@ public class AttendanceController {
     public String Attendance(Model model) {
         model.addAttribute("data", "hello!!");
         return "mypage/attendance/attendance";
-
-
     }
 
     @GetMapping("/form")
