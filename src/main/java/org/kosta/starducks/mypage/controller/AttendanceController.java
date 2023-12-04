@@ -1,5 +1,6 @@
 package org.kosta.starducks.mypage.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +11,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/attendance")
+@RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
 
-    public AttendanceController(AttendanceService attendanceService) {
-        this.attendanceService = attendanceService;
-    }
-
     @GetMapping("/daily/{empId}")
     @ResponseBody
-    public List<Map<String, Object>> getDailyAttendance(@PathVariable Long empId) {
+    public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId) {
         return attendanceService.getDailyAttendance(empId);
     }
 
