@@ -11,20 +11,24 @@
 </th:block>
 
 <main layout:fragment="content">
-    <script th:if="${result}">
-        // SweetAlert을 사용하여 성공 알림을 표시합니다.
-        swal("성공!", "사원 정보가 저장되었습니다.", "success");
-    </script>
+    <script th:if="${result}" th:utext="${result}"></script>
 
     <h1>사원관리</h1>
-    <div class="search">
-        <input type="text">
+    <form method="get" th:action="@{/hr}" class="search" th:object="${empSearch}">
+        <select name="sopt">
+            <option value=null th:field="*{sopt}" selected>전체</option>
+            <option value="dept" th:field="*{sopt}">부서명</option>
+            <option value="empName" th:field="*{sopt}">사원명</option>
+            <option value="email" th:field="*{sopt}">아이디</option>
+        </select>
         <div>
-            All <input type="checkbox">
-            재직 <input type="checkbox">
-            퇴사 <input type="checkbox">
+            All <input type="checkbox" name="status" value="all" th:field="*{status}">
+            재직 <input type="checkbox" name="status" value="running" th:field="*{status}">
+            퇴사 <input type="checkbox" name="status" value="stopped" th:field="*{status}">
         </div>
-    </div>
+        <input type="text" th:field="*{text}">
+        <button class="search-button">조회</button>
+    </form>
     <table>
         <thead>
             <tr>

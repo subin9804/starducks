@@ -9,6 +9,9 @@ import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +36,13 @@ public class EmpController {
     @GetMapping
     public String index(Model model, EmpSearchCond empSearch) {
         MenuService.commonProcess(request, model, "hr");
-        List<Employee> emps = service.getAllEmp();
-        model.addAttribute("employees", emps);
+        model.addAttribute("empSearch", empSearch);
+        System.out.println(empSearch);
+//        if(empSearch != null) {
+        Page<Employee> emps = service.toSearchEmp(empSearch);
+        System.out.println(emps);
+//        model.addAttribute("employees", emps);
+
 
         return "hr/hrIndex";
     }

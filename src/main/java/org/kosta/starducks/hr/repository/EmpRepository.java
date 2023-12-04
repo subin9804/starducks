@@ -31,22 +31,35 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         /** 검색 조건 처리 */
         BooleanBuilder builder = new BooleanBuilder();
         QEmployee employee = QEmployee.employee;
-        QDepartment dept = QDepartment.department;
+        String sopt = empSearch.getSopt();
         String text = empSearch.getText();
         String status = empSearch.getStatus();
 
-        builder.andAnyOf(employee.empName.contains(text),
-                employee.empId.eq((long)Integer.parseInt(text)),
-                employee.empTel.contains(text),
-                employee.email.contains(text),
-                employee.dept.deptName.contains(text));
+        if(sopt != null && !sopt.isBlank() && text != null && !text.isBlank()) {
+            if(sopt.equals("dept")) {
+                builder.or(employee.dept.deptName.contains(text));
+            } else if(sopt.equals("empName")) {
+                builder.or(employee.empName.contains(text));
+            } else if(sopt.equals("email")) {
+                builder.or(employee.email.contains(text));
+            } else {
+                builder.andAnyOf(employee.dept.deptName.contains(text),
+                        employee.empName.contains(text),
+                        employee.email.contains(text));
+            }
+        }
 
         /** 퇴사여부 옵션 선택 시 */
-        if(status.equals("running")) {
-            builder.and(employee.status.eq(false));
-        } else if(status.equals("stopped")) {
-            builder.and(employee.status.eq(true));
+        if (status != null && !status.isBlank()) { // 대여 상태 조회
+            List<Employee> statuses = Arrays.stream(status).map(RentalStatus::valueOf).toList();
+            builder.and(rentalBook.status.in(statuses));
         }
+//        else {
+//            andBuilder.andAnyOf(employee.status.eq(false),
+//                    employee.status.eq(true));
+//        }
+
+        builder.and(andBuilder);
 
         Page<Employee> data = findAll(builder, pageable);
         return data;
