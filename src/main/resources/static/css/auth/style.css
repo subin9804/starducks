@@ -1,0 +1,31 @@
+.login-container {
+    text-align: center;
+}
+
+.logo {
+    margin: 50px auto;
+    display: block;
+}
+
+input[type="text"],
+input[type="password"],
+button {
+    width: 300px;
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 20px;
+    color: #666;
+    text-decoration: none;
+}

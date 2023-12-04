@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+
+title
+<th:block layout:fragment="title">로그인 페이지</th:block>
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/auth/style.css}">
+  <script th:src="@{/js/auth/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+  <div class="login-container">
+    <img th:src="@{/images/Starducs_Logo.png}" alt="Starducks Logo" class="logo">
+    <form th:action="@{/login}" method="post">
+      <input type="text"  placeholder="사번" name="empId" required>
+      <input type="password" placeholder="비밀번호" name="password" required>
+      <button type="submit">로그인</button>
+    </form>
+    <a href="/forgot-password" class="forgot-password">비밀번호 찾기</a>
+  </div>
+</main>
+
+</html>
