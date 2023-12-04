@@ -2,8 +2,10 @@ package org.kosta.starducks.mypage.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.kosta.starducks.hr.entity.EmpEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +29,7 @@ public class Attendance {
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "emp_id", nullable = false)
-        private EmpEntity emp;
+        private Employee emp;
 
         public Long getEmpId() {
                 return emp != null ? emp.getEmpId() : null;
@@ -35,7 +37,7 @@ public class Attendance {
 
         public void setEmpId(Long empId) {
                 if (emp == null) {
-                        emp = new EmpEntity();
+                        emp = new Employee();
                 }
                 emp.setEmpId(empId);
         }

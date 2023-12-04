@@ -1,6 +1,8 @@
 package org.kosta.starducks.mypage.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,21 +16,25 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
+    private final HttpServletRequest request;
 
     @GetMapping("/daily/{empId}")
     @ResponseBody
-    public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId) {
+    public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId, Model model) {
+        MenuService.commonProcess(request, model, "mypage");
         return attendanceService.getDailyAttendance(empId);
     }
 
     @GetMapping
     public String Attendance(Model model) {
+        MenuService.commonProcess(request, model, "mypage");
         model.addAttribute("data", "hello!!");
         return "mypage/attendance/attendance";
     }
 
     @GetMapping("/form")
-    public String showAttendanceForm() {
+    public String showAttendanceForm(Model model) {
+        MenuService.commonProcess(request, model, "mypage");
         return "mypage/attendance/form";
     }
 
