@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<main>
+    <div>
+        <p>출근하시겠습니까?</p>
+        <p th:text="|현재시각 : ${#dates.format(#dates.createNow(), 'HH:mm:ss')}|"></p>
+    </div>
+    <button>아니오</button>
+    <button>네</button>
+</main>
+</html>
