@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
@@ -22,6 +23,7 @@ public class EmpController {
     private final EmpService service;
     private final EmpRepository repository;
     private final HttpServletRequest request;
+    private final DeptRepository deptRepository;
 
     /**
      * 인사부 홈 (사원 전체조회 및 검색)
@@ -50,6 +52,7 @@ public class EmpController {
         Long id = service.getLastEmpId();
         model.addAttribute("id", id + 1);
         model.addAttribute("positions", Position.values());
+        model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "register");
         return "hr/empWriter";
     }
@@ -63,8 +66,9 @@ public class EmpController {
     @PostMapping("/emp/save")
     public String save (@ModelAttribute Employee employee, Model model) {
         service.saveEmp(employee);
-        model.addAttribute("result", true);
-        return "hr/hrIndex";
+//        model.addAttribute("result", true);
+//        return ResponseEntity.ok("Employee information saved successfully.");
+        return "redirect:/hr";
     }
 
     /**

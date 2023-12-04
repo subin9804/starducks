@@ -3,6 +3,7 @@ package org.kosta.starducks.hr.repository;
 import com.querydsl.core.BooleanBuilder;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.entity.QDepartment;
 import org.kosta.starducks.hr.entity.QEmployee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,7 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         /** 검색 조건 처리 */
         BooleanBuilder builder = new BooleanBuilder();
         QEmployee employee = QEmployee.employee;
+        QDepartment dept = QDepartment.department;
         String text = empSearch.getText();
         String status = empSearch.getStatus();
 
@@ -37,7 +39,7 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
                 employee.empId.eq((long)Integer.parseInt(text)),
                 employee.empTel.contains(text),
                 employee.email.contains(text),
-                employee.dept.contains(text));
+                employee.dept.deptName.contains(text));
 
         /** 퇴사여부 옵션 선택 시 */
         if(status.equals("running")) {

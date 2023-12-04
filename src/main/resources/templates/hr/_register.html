@@ -23,7 +23,7 @@
                 </dl>
                 <dl>
                     <dt>초기비밀번호</dt>
-                    <dd><input type="text" th:field="*{pwd}"></dd>
+                    <dd><input type="text" th:field="*{pwd}" name="pwd" id="pwd"></dd>
                 </dl>
                 <dl>
                     <dt>사원이름</dt>
@@ -55,20 +55,26 @@
                 <dl>
                     <dt>부서</dt>
                     <dd>
-                        <!--                    <select th:field="${employee.dept}">-->
-                        <!--                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}">-->
-                        <!--                    </select>-->
+                        <input type="checkbox" id="all1" class="selectbox box1">
+                        <label for="all1" id="allLabel1">전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
+
+                        <ul class="options1">
+                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept}">
+                                <th:block th:text="${dept.deptName}"></th:block>
+                            </li>
+                        </ul>
+                        <input id="dept" type="hidden" th:field="*{dept}">
                     </dd>
                 </dl>
 
                 <dl>
                     <dt>직급</dt>
                     <dd>
-                        <input type="checkbox" id="all" class="selectbox">
-                        <label for="all" id="allLabel">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+                        <input type="checkbox" id="all2" class="selectbox box2">
+                        <label for="all2" id="allLabel2">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
 
-                        <ul class="options">
-                            <li class="option" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
+                        <ul class="options2">
+                            <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
                                 <th:block th:if="${position.toString() == 'BOSS'}" th:text="사장"></th:block>
                                 <th:block th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></th:block>
                                 <th:block th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></th:block>

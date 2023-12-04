@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,6 +18,8 @@ public class QEmployee extends EntityPathBase<Employee> {
 
     private static final long serialVersionUID = -347861705L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QEmployee employee = new QEmployee("employee");
 
     public final StringPath addr = createString("addr");
@@ -25,7 +28,7 @@ public class QEmployee extends EntityPathBase<Employee> {
 
     public final StringPath dAddr = createString("dAddr");
 
-    public final StringPath dept = createString("dept");
+    public final QDepartment dept;
 
     public final StringPath email = createString("email");
 
@@ -50,15 +53,24 @@ public class QEmployee extends EntityPathBase<Employee> {
     public final BooleanPath status = createBoolean("status");
 
     public QEmployee(String variable) {
-        super(Employee.class, forVariable(variable));
+        this(Employee.class, forVariable(variable), INITS);
     }
 
     public QEmployee(Path<? extends Employee> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QEmployee(PathMetadata metadata) {
-        super(Employee.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QEmployee(PathMetadata metadata, PathInits inits) {
+        this(Employee.class, metadata, inits);
+    }
+
+    public QEmployee(Class<? extends Employee> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.dept = inits.isInitialized("dept") ? new QDepartment(forProperty("dept")) : null;
     }
 
 }

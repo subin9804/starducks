@@ -60,7 +60,7 @@ public class QForumPost extends EntityPathBase<ForumPost> {
 
     public QForumPost(Class<? extends ForumPost> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee")) : null;
+        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
     }
 
 }

@@ -11,6 +11,11 @@
 </th:block>
 
 <main layout:fragment="content">
+    <script th:if="${result}">
+        // SweetAlert을 사용하여 성공 알림을 표시합니다.
+        swal("성공!", "사원 정보가 저장되었습니다.", "success");
+    </script>
+
     <h1>사원관리</h1>
     <div class="search">
         <input type="text">
@@ -37,7 +42,7 @@
 
                 <td th:text="*{empId}"></td>
                 <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
-                <td th:text="*{dept}"></td>
+                <td th:text="*{dept.getDeptName()}"></td>
                 <td th:text="*{position}"></td>
                 <td th:text="*{empTel}"></td>
                 <td th:text="*{email}"></td>
