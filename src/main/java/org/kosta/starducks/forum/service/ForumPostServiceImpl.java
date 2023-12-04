@@ -48,10 +48,10 @@ public class ForumPostServiceImpl implements ForumPostService {
     return forumPostRepository.findAll(pageable);
   }
 
-
-  @Override //게시글 제목, 내용 검색 기능
-  public List<ForumPost> searchPosts(String keyword) {
-    return forumPostRepository.findByPostTitleContainingOrPostContentContaining(keyword, keyword);
+  //페이지 검색 기능 구현
+  @Override
+  public Page<ForumPost> postSearchList(String keyword, Pageable pageable) {
+    return forumPostRepository.findByPostTitleContainingOrPostContentContaining(keyword, keyword, pageable);
   }
 
   @Override //게시글 조회수 증가 기능
