@@ -29,7 +29,7 @@ public class WarehouseInbound {
     private EmpEntity empEntity;
 
 
-    @OneToMany(mappedBy = "warehouse_inbound",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "warehouseInbound",cascade = CascadeType.ALL)
     private List<WarehouseInboundProduct> inboundProducts = new ArrayList<>();
     //연관관계의 주인인 Orderproduct 엔티티에서 order라는 이름으로 저장된 변수가 이 엔티티를 관리한다.
     //배열에는 orderProduct의 엔터티 객체를 담고 있다.
