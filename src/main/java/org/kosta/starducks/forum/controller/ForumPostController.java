@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/forum")
-public class ForumPostController {
+    @Controller
+    @RequestMapping("/forum")
+    public class ForumPostController {
 
-    private final ForumPostService forumPostService;
-    private final PostCommentService postCommentService;
+        private final ForumPostService forumPostService;
+        private final PostCommentService postCommentService;
 
     public ForumPostController(ForumPostService forumPostService, PostCommentService postCommentService) {
-        this.forumPostService = forumPostService;
-        this.postCommentService = postCommentService;
-    }
+            this.forumPostService = forumPostService;
+            this.postCommentService = postCommentService;
+        }
 
-    // 게시판 메인 페이지
-    @GetMapping
-    public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+        // 게시판 메인 페이지
+        @GetMapping
+        public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<ForumPost> posts = forumPostService.postList(pageable);
 
