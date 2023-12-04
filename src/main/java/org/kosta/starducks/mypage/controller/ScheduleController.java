@@ -20,14 +20,14 @@ public class ScheduleController {
     public String showSchedule(Model model) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
-        return "mypage/schedule/registModal2";
+        return "mypage/schedule/schedule";
     }
 
     @PostMapping("/schedule")
-    public String scheduleTest(ScheduleDTO scheduleDTO) {
+    public String addSchedule(ScheduleDTO scheduleDTO) {
         System.out.println("scheduleDTO.toString() ==> " + scheduleDTO.toString()); /** DTO에 폼 데이터가 잘 담겼는지 확인*/
-
-        return "redirect:/mypage/schedule/schedule";
+        return "redirect:/mypage/schedule/registModal";
     }
+
 
 }

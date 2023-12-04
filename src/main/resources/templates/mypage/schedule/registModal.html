@@ -3,17 +3,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<th:block layout:fragment="title">메인</th:block>
-
 <!--여기는 헤드(메인에 없는 헤드 추가하기)-->
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
-    <!--    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>-->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<!--    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>-->
 </th:block>
 
-<!--여기는 바디-->
+
 <main layout:fragment="content">
+
     <div th:fragment="modal">
         <div class="modal" th:style="'display: none'" th:id="modal">
             <div class="modal-content">
@@ -22,31 +21,47 @@
                     <label th:text="'일정명'"></label>
                     <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
 
-                    <label th:text="'시작 일시'"></label>
-                    <input type="datetime-local" name="scheStartDate" th:field="*{scheStartDate}"/>
 
-                    <label th:text="'종료 일시'"></label>
-                    <input type="datetime-local" name="scheEndDate" th:field="*{scheEndDate}"/>
+                    <!--여기는 바디-->
+                    <div th:fragment="modal">
+                        <div class="modal" th:style="'display: none'" th:id="modal">
+                            <div class="modal-content">
+                                <span class="close" th:text="'×'" onclick="closeModal()"></span>
+                                <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
+                                    <label th:text="'일정명'"></label>
+                                    <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요"
+                                           th:field="*{scheTitle}"/>
 
-                    <label th:text="'일정 종류'"></label>
-                    <select name="calendarType" th:field="*{scheduleType}">
-                        <option value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></option>
-                        <option value="TEAM_SCHEDULE" th:text="'공식 일정'"></option>
-                    </select>
+                                    <label th:text="'시작 일시'"></label>
+                                    <input type="datetime-local" name="scheStartDate" th:field="*{scheStartDate}"/>
 
-                    <label th:text="'장소'"></label>
-                    <select name="location" th:field="*{location}">
-                        <option value="CONFERENCE_ROOM_A" th:text="'회의실A'"></option>
-                        <option value="CONFERENCE_ROOM_B" th:text="'회의실B'"></option>
-                    </select>
+                                    <label th:text="'종료 일시'"></label>
+                                    <input type="datetime-local" name="scheEndDate" th:field="*{scheEndDate}"/>
 
-                    <label th:text="'참고 사항'"></label>
-                    <textarea name="notes" placeholder="참고 사항" th:field="*{notes}"></textarea>
+                                    <label th:text="'일정 종류'"></label>
+                                    <select name="calendarType" th:field="*{scheduleType}">
+                                        <option value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></option>
+                                        <option value="TEAM_SCHEDULE" th:text="'공식 일정'"></option>
+                                    </select>
 
-                    <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
+                                    <label th:text="'장소'"></label>
+                                    <select name="location" th:field="*{location}">
+                                        <option value="CONFERENCE_ROOM_A" th:text="'회의실A'"></option>
+                                        <option value="CONFERENCE_ROOM_B" th:text="'회의실B'"></option>
+                                    </select>
+
+                                    <label th:text="'참고 사항'"></label>
+                                    <textarea name="notes" placeholder="참고 사항" th:field="*{notes}"></textarea>
+
+                                    <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </main>
+</body>
 </html>
