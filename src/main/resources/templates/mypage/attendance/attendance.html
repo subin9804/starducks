@@ -26,10 +26,10 @@
 <!--                    <button class="attd-btn" type="submit">출근</button>-->
 <!--                </form>-->
 
-                <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance.startTime == null}">
+                <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
                     <button class="attd-btn" type="submit">출근</button>
                 </form>
-                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance.startTime != null}">
+                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null}">
                     <button class="attd-btn" type="submit">퇴근</button>
                 </form>
 
@@ -38,15 +38,15 @@
             </div>
             <div>
                 <div>
-                    출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></span>
+                    출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
                 </div>
                 <div>
-                    퇴근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></span>
+                    퇴근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
                 </div>
             </div>
         </div>
         <div class="attd-sum-box">
-            <h3>2019년 3월</h3>
+<!--            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>-->
 
             <div>
                 <div class="attd-sum-num-box">18</div>
