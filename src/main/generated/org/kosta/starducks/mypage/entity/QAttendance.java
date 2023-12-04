@@ -22,7 +22,7 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     public static final QAttendance attendance = new QAttendance("attendance");
 
-    public final org.kosta.starducks.hr.entity.QEmpEntity emp;
+    public final org.kosta.starducks.hr.entity.QEmployee emp;
 
     public final DateTimePath<java.time.LocalDateTime> endTime = createDateTime("endTime", java.time.LocalDateTime.class);
 
@@ -50,7 +50,7 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     public QAttendance(Class<? extends Attendance> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.emp = inits.isInitialized("emp") ? new org.kosta.starducks.hr.entity.QEmpEntity(forProperty("emp")) : null;
+        this.emp = inits.isInitialized("emp") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("emp")) : null;
     }
 
 }

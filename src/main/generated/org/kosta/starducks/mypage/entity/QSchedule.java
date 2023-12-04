@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,9 +18,11 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     private static final long serialVersionUID = -128236719L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QSchedule schedule = new QSchedule("schedule");
 
-    public final NumberPath<Long> empId = createNumber("empId", Long.class);
+    public final org.kosta.starducks.hr.entity.QEmployee employee;
 
     public final EnumPath<org.kosta.starducks.mypage.dto.Location> location = createEnum("location", org.kosta.starducks.mypage.dto.Location.class);
 
@@ -36,15 +39,24 @@ public class QSchedule extends EntityPathBase<Schedule> {
     public final StringPath scheTitle = createString("scheTitle");
 
     public QSchedule(String variable) {
-        super(Schedule.class, forVariable(variable));
+        this(Schedule.class, forVariable(variable), INITS);
     }
 
     public QSchedule(Path<? extends Schedule> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QSchedule(PathMetadata metadata) {
-        super(Schedule.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QSchedule(PathMetadata metadata, PathInits inits) {
+        this(Schedule.class, metadata, inits);
+    }
+
+    public QSchedule(Class<? extends Schedule> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee")) : null;
     }
 
 }

@@ -1,18 +1,10 @@
 package org.kosta.starducks.mypage.entity;
 
-//  개인일정(PERSONAL_SCHEDULE)
-//  일정번호        scheNo             (INT) Long
-//  일정명          scheTitle          VARCHAR
-//  시작일시        scheStartDate       DATE
-//  종료일시        scheEndDate         DATE
-//  일정종류        calendarType        VARCHAR
-//  장소           location            VARCHAR
-//  참고 사항       notes               VARCHAR
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.mypage.dto.Location;
 import org.kosta.starducks.mypage.dto.ScheduleType;
 
@@ -49,7 +41,8 @@ public class Schedule {
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "emp_id")
-    private Long empId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_id", nullable = false)
+    private Employee employee;
 
 }
