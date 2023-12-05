@@ -49,7 +49,7 @@
                 <dl>
                     <dt>생년월일</dt>
                     <dd>
-                        <input type="date" th:field="*{birth}">
+                        <input type="date" th:value="*{birth}" th:field="*{birth}">
                     </dd>
                 </dl>
             </section>
@@ -58,10 +58,10 @@
                     <dt>부서</dt>
                     <dd>
                         <input type="checkbox" id="all1" class="selectbox box1">
-                        <label for="all1" id="allLabel1">전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
+                        <label for="all1" id="allLabel1" th:text="*{dept.deptName}">전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
 
                         <ul class="options1">
-                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept}">
+                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept.deptId}">
                                 <th:block th:text="${dept.deptName}"></th:block>
                             </li>
                         </ul>
@@ -73,7 +73,7 @@
                     <dt>직급</dt>
                     <dd>
                         <input type="checkbox" id="all2" class="selectbox box2">
-                        <label for="all2" id="allLabel2">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+                        <label for="all2" id="allLabel2" th:text="*{position.toString()}">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
 
                         <ul class="options2">
                             <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
@@ -89,7 +89,10 @@
 
                 <dl>
                     <dt>입사일자</dt>
-                    <dd><p th:text="*{joinDate}"></dd>
+                    <dd>
+                        <p th:text="*{joinDate}">
+                        <input type="hidden" th:field="*{joinDate}">
+                    </dd>
                 </dl>
 
                 <dl>
@@ -103,8 +106,8 @@
                 <dl>
                     <dt>퇴사일자</dt>
                     <dd>
-                        <p th:if="*{leaveDate != null}" th:text="*{leaveDate}">
-                        <p th:if="*{leaveDate == null}" th:text="|0000-00-00|">
+                        <p th:text="*{leaveDate != null} ? *{leaveDate} : '|0000-00-00|'">
+<!--                        <p th:if="*{leaveDate == null}" th:text="">-->
                     </dd>
                 </dl>
                 <dl>

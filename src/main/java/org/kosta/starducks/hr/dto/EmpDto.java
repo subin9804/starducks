@@ -1,11 +1,13 @@
 package org.kosta.starducks.hr.dto;
 
 import lombok.Data;
+import org.kosta.starducks.hr.entity.Department;
+import org.kosta.starducks.roles.Position;
 
 import java.time.LocalDate;
 
 @Data
-public class empDto {
+public class EmpDto {
 
     private String empName;     // 사원이름
 
@@ -17,7 +19,7 @@ public class empDto {
 
     private String email;       // 이메일
 
-    private String position;      // 직급
+    private Position position;      // 직급
 
     private String postNo;      //우편번호
     private String addr;        // 주소
@@ -26,5 +28,5 @@ public class empDto {
 
     private boolean status;      // 퇴사여부
 
-    private String dept;    // 부서코드
+    private Department dept;    // 부서코드
 }

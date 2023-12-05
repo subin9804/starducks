@@ -3,7 +3,6 @@ package org.kosta.starducks.hr.repository;
 import com.querydsl.core.BooleanBuilder;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
-import org.kosta.starducks.hr.entity.QDepartment;
 import org.kosta.starducks.hr.entity.QEmployee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,11 +36,11 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
         if(sopt != null && !sopt.isBlank() && text != null && !text.isBlank()) {
             if(sopt.equals("dept")) {
-                builder.or(employee.dept.deptName.contains(text));
+                builder.and(employee.dept.deptName.contains(text));
             } else if(sopt.equals("empName")) {
-                builder.or(employee.empName.contains(text));
+                builder.and(employee.empName.contains(text));
             } else if(sopt.equals("email")) {
-                builder.or(employee.email.contains(text));
+                builder.and(employee.email.contains(text));
             } else {
                 builder.andAnyOf(employee.dept.deptName.contains(text),
                         employee.empName.contains(text),
@@ -50,16 +49,20 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         }
 
         /** 퇴사여부 옵션 선택 시 */
-        if (status != null && !status.isBlank()) { // 대여 상태 조회
-            List<Employee> statuses = Arrays.stream(status).map(RentalStatus::valueOf).toList();
-            builder.and(rentalBook.status.in(statuses));
-        }
-//        else {
-//            andBuilder.andAnyOf(employee.status.eq(false),
-//                    employee.status.eq(true));
-//        }
 
-        builder.and(andBuilder);
+        if (status != null && !status.isBlank()) {
+            if ("stopped".equals(status)) {
+                builder.and(employee.status.isTrue());
+            } else if ("running".equals(status)) {
+                builder.and(employee.status.isFalse());
+            }
+        }
+        else {
+            builder.andAnyOf(employee.status.isFalse(),
+                    employee.status.isTrue());
+        }
+
+//        builder.and(andBuilder);
 
         Page<Employee> data = findAll(builder, pageable);
         return data;

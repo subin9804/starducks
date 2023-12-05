@@ -22,9 +22,9 @@
             <option value="email" th:field="*{sopt}">아이디</option>
         </select>
         <div>
-            All <input type="checkbox" name="status" value="all" th:field="*{status}">
-            재직 <input type="checkbox" name="status" value="running" th:field="*{status}">
-            퇴사 <input type="checkbox" name="status" value="stopped" th:field="*{status}">
+            All <input type="radio" name="status" value="all" th:field="*{status}" checked>
+            재직 <input type="radio" name="status" value="running" th:field="*{status}">
+            퇴사 <input type="radio" name="status" value="stopped" th:field="*{status}">
         </div>
         <input type="text" th:field="*{text}">
         <button class="search-button">조회</button>
@@ -43,14 +43,12 @@
         <tbody th:each="emp : ${employees}" th:object="${emp}">
 
             <tr>
-
                 <td th:text="*{empId}"></td>
                 <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
-                <td th:text="*{dept.getDeptName()}"></td>
+                <td th:text="*{dept.deptName}"></td>
                 <td th:text="*{position}"></td>
                 <td th:text="*{empTel}"></td>
                 <td th:text="*{email}"></td>
-
             </tr>
 
         </tbody>

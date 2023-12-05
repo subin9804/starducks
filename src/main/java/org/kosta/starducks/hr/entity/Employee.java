@@ -1,15 +1,12 @@
 package org.kosta.starducks.hr.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.kosta.starducks.roles.Position;
 
 import java.time.LocalDate;
 
-@Entity @Data @Builder
+@Entity @Getter @Setter @Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "employee")
 public class Employee {

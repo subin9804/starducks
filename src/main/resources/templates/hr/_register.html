@@ -59,7 +59,7 @@
                         <label for="all1" id="allLabel1">전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
 
                         <ul class="options1">
-                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept}">
+                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept.deptId}">
                                 <th:block th:text="${dept.deptName}"></th:block>
                             </li>
                         </ul>
@@ -71,7 +71,7 @@
                     <dt>직급</dt>
                     <dd>
                         <input type="checkbox" id="all2" class="selectbox box2">
-                        <label for="all2" id="allLabel2">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+                        <label for="all2" id="allLabel2" >전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
 
                         <ul class="options2">
                             <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">

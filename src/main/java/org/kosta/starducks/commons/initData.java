@@ -51,7 +51,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setStatus(false);
             emp.setBirth(LocalDate.parse("2023-12-2"+i));
             emp.setEmpTel("010-9999-999"+i);
-            emp.setGender("여");
+            emp.setGender("woman");
             emp.setEmail("sdf@Aasdf.com");
             emp.setAddr("부천시");
             emp.setEmpName("사원0"+i);

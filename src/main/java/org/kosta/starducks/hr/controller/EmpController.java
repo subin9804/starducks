@@ -10,13 +10,9 @@ import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/hr")
@@ -30,6 +26,7 @@ public class EmpController {
 
     /**
      * 인사부 홈 (사원 전체조회 및 검색)
+     *
      * @param model
      * @return
      */
@@ -38,10 +35,10 @@ public class EmpController {
         MenuService.commonProcess(request, model, "hr");
         model.addAttribute("empSearch", empSearch);
         System.out.println(empSearch);
-//        if(empSearch != null) {
+
         Page<Employee> emps = service.toSearchEmp(empSearch);
-        System.out.println(emps);
-//        model.addAttribute("employees", emps);
+        System.out.println(emps.stream().toList());
+        model.addAttribute("employees", emps);
 
 
         return "hr/hrIndex";
@@ -49,12 +46,13 @@ public class EmpController {
 
     /**
      * 사원 등록 get
+     *
      * @param employee
      * @param model
      * @return
      */
     @GetMapping("/emp/register")
-    public String register (@ModelAttribute Employee employee, Model model) {
+    public String register(@ModelAttribute Employee employee, Model model) {
         MenuService.commonProcess(request, model, "hr");
         // 자동으로 저장되는 사번을 미리 알려줌
         Long id = service.getLastEmpId();
@@ -68,19 +66,25 @@ public class EmpController {
 
     /**
      * 사원등록 post
+     *
      * @param employee
      * @return
      */
     @PostMapping("/emp/save")
-    public String save (@ModelAttribute Employee employee, Model model) {
+    public String save(@ModelAttribute Employee employee, Model model) {
+        // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
+        Long id = service.getLastEmpId();
+
         service.saveEmp(employee);
 //        model.addAttribute("result", true);
 //        return ResponseEntity.ok("Employee information saved successfully.");
-        return "redirect:/hr";
+
+        return "redirect:/hr/emp/" + (id + 1);
     }
 
     /**
      * 개별 직원 조회
+     *
      * @param empId
      * @param model
      * @return
@@ -96,7 +100,8 @@ public class EmpController {
 
     /**
      * 직원 정보 수정
-     * @param empId  수정할 직원 사번
+     *
+     * @param empId 수정할 직원 사번
      * @param model
      * @return
      */
@@ -106,12 +111,10 @@ public class EmpController {
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
         model.addAttribute("positions", Position.values());
-
+        model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "edit");
 
         return "hr/empWriter";
     }
-
-
-
 }
+

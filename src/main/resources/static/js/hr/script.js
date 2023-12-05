@@ -54,28 +54,28 @@ window.document.addEventListener("DOMContentLoaded", function() {
     })
 
 
-    $(document).ready(function () {
-        // Form이 성공적으로 제출되면 Ajax를 사용하여 서버로부터 메시지를 받아 SweetAlert을 표시
-        $("#form").submit(function (event) {
-            event.preventDefault();
-
-            $.ajax({
-                type: "POST",
-                url: "/hr/emp/save",
-                data: $(this).serializeArray(),
-                contentType: "application/json; charset=UTF-8", // 폼 데이터를 전송할 때의 content type
-
-                success: function (response) {
-                    // 서버로부터 받은 응답을 확인하고 SweetAlert을 표시
-                    swal("Success!", response, "success");
-                    redirect("/hr")
-                },
-                error: function (error) {
-                    // 실패한 경우에 대한 처리를 추가
-                    console.log("Error:", error);
-                }
-            });
-        });
-    });
+    // $(document).ready(function () {
+    //     // Form이 성공적으로 제출되면 Ajax를 사용하여 서버로부터 메시지를 받아 SweetAlert을 표시
+    //     $("#form").submit(function (event) {
+    //         event.preventDefault();
+    //
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "/hr/emp/save",
+    //             data: $(this).serializeArray(),
+    //             contentType: "application/json; charset=UTF-8", // 폼 데이터를 전송할 때의 content type
+    //
+    //             success: function (response) {
+    //                 // 서버로부터 받은 응답을 확인하고 SweetAlert을 표시
+    //                 swal("Success!", response, "success");
+    //                 redirect("/hr")
+    //             },
+    //             error: function (error) {
+    //                 // 실패한 경우에 대한 처리를 추가
+    //                 console.log("Error:", error);
+    //             }
+    //         });
+    //     });
+    // });
 
 })

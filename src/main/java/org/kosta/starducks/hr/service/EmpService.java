@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,10 +88,7 @@ public class EmpService {
             return repository.save(emp);
 
         }
-
-
     }
-
 
     /**
      * 직원 퇴사처리
