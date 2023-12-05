@@ -10,11 +10,14 @@ window.document.addEventListener("DOMContentLoaded", function() {
     const quantityInput = document.getElementById("quantity");
     const employeeSelect = document.getElementById("employee");
 
+    add.removeEventListener("click", handleClick);
     add.addEventListener("click", handleClick);
+    submit.removeEventListener("click", handleSubmitClick);
     submit.addEventListener("click", handleSubmitClick);
 
     function handleClick(e) {
-        e.preventDefault();
+        e.preventDefault()
+        console.log("버튼 눌림")
 
         let item = {
             empId: employeeSelect.value,
@@ -22,16 +25,15 @@ window.document.addEventListener("DOMContentLoaded", function() {
             inboundQuantity: quantityInput.value
         };
 
-        list.push(item);
-        //리스트추가...
+        if (!isProductCodeInList(item.productCode)) {
+            list.push(item);
 
-        let li = document.createElement("li");
-        let selectedOption = productSelect.options[productSelect.selectedIndex]
-        let itemName = selectedOption.getAttribute("data-name")
-        let item2 = { order: num, name: itemName, quantity: quantityInput.value }
-        li.innerHTML = item2.order + item2.name  + item2.quantity;
-        contentList.appendChild(li);
-        num++;
+            let li = document.createElement("li");
+            let selectedOption = productSelect.options[productSelect.selectedIndex]
+            let itemName = selectedOption.getAttribute("data-name")
+            li.innerHTML = list.length + "." + itemName + "|수량 : "  + quantityInput.value;
+            contentList.appendChild(li);
+        }
     }
 
     function handleSubmitClick(e) {
@@ -72,5 +74,11 @@ window.document.addEventListener("DOMContentLoaded", function() {
         });
 
     }
+
+    function isProductCodeInList(productCode) {
+        return list.some(existingItem => existingItem.productCode == productCode);
+    }
+
+
 
 });
