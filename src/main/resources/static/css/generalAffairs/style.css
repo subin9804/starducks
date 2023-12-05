@@ -1,0 +1,80 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #f9f9f9;
+    color: #333333;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+.status {
+    padding: 5px 10px;
+    color: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.status.completed {
+    background-color: #4CAF50;
+}
+
+.status.pending {
+    background-color: #FFC107;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+    color: #333333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.pagination a:hover {
+    background-color: #dddddd;
+}
+
+/* 사이드바에 대한 스타일 */
+/*.sidebar {*/
+/*    width: 200px; !* 사이드바의 고정된 너비 *!*/
+/*    background-color: #ffffff;*/
+/*    padding: 20px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*!* 메인 콘텐츠에 대한 스타일 *!*/
+/*.content {*/
+/*    flex-grow: 1; !* 콘텐츠가 남은 공간을 차지하도록 함 *!*/
+/*    padding: 20px;*/
+/*    background-color: #ffffff;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/

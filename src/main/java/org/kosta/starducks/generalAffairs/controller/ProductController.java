@@ -33,7 +33,7 @@ public class ProductController {
     @GetMapping("/list")
     public String getAllProducts(Model m,
                                  @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                 String searchKeyword)
+                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
     {
         Page<Product> allProducts = null;
         if(searchKeyword == null){
@@ -55,12 +55,10 @@ public class ProductController {
         m.addAttribute("startPage",startPage);
         m.addAttribute("endPage",endPage);
         return "generalAffairs/ProductList";
-
-
     }
 
     @GetMapping("/info/{productCode}")
-    public String getProductInfo(@PathVariable Long productCode,
+    public String getProductInfo(@PathVariable("productCode") Long productCode,
                                  Model m)
     {
         Optional<Product> product = productService.getProduct(productCode);
@@ -95,7 +93,7 @@ public class ProductController {
 
 
     @GetMapping("/update/{productCode}")
-    public String updateProduct(@PathVariable Long productCode, Model m) {
+    public String updateProduct(@PathVariable("productCode") Long productCode, Model m) {
         Optional<Product> product = productService.getProduct(productCode);
 
         if (product.isPresent()) {
@@ -113,7 +111,8 @@ public class ProductController {
     }
 
     @PostMapping("/update/{productCode}")
-    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto) {
+    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto,
+                                @PathVariable("productCode") Long productCode) {
         //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
 
         productService.updateProduct(productUpdateDto);

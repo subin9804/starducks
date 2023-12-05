@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="title">메인 </th:block>
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" href="../../../static/mypage/Calendar.css" th:href="@{/css/mypage/Schedule.css}"/>
+    <!--    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+</th:block>
+
+<main layout:fragment="content">
+    <!-- Include the modal -->
+    <div th:replace="~{mypage/schedule/registModal2::modal}"></div>
+    <div id='calendar'></div>
+</main>
+</html>

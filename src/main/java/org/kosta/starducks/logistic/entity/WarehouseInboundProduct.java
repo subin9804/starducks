@@ -25,10 +25,31 @@ public class WarehouseInboundProduct {
     private Product product;
 
 
+    private long inboundPrice;
 
-    @Column(name = "order_quantity")
-    private int warehouseInboundProductQuantity;
-    //몇개 샀는가
+    private int inboundQuantity;
+    //몇개 입고 시켰는가?
+
+
+    public static WarehouseInboundProduct createWarehouseProduct(Product product, int inboundQuantity) {
+
+        // 입고 상품 생성
+        WarehouseInboundProduct wiProduct = new WarehouseInboundProduct();
+
+
+        wiProduct.setProduct(product);
+        wiProduct.setInboundPrice(product.getProductPrice()*inboundQuantity);
+        wiProduct.setInboundQuantity(inboundQuantity);
+
+        //재고 증가 로직
+        product.increaseCnt(inboundQuantity);
+        return wiProduct;
+
+    }
+
+
+
+
 
 
 }

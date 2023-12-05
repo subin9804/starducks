@@ -3,7 +3,8 @@ package org.kosta.starducks.logistic.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.kosta.starducks.hr.entity.EmpEntity;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.logistic.repository.WarehouseInboundRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class WarehouseInbound {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id",nullable = false)
-    private EmpEntity empEntity;
+    private Employee employee;
 
 
     @OneToMany(mappedBy = "warehouseInbound",cascade = CascadeType.ALL)
@@ -44,6 +45,57 @@ public class WarehouseInbound {
     private long totalPrice;
     private int totalQuantity;
 
+
+
+    public void addOrderProduct(WarehouseInboundProduct wiproduct) {
+        inboundProducts.add(wiproduct);
+        //리스트에 받아온 product을 넣는다.
+        wiproduct.setWarehouseInbound(this);
+        //입고에 넣어줘라!!!
+
+    }
+
+
+    public static WarehouseInbound createInbound(Employee employee, WarehouseInboundProduct... wiproducts) {
+
+        //order 생성
+        Long totalPrice = 0L;
+        int totalQuantity = 0;
+
+        WarehouseInbound warehouseInbound = new WarehouseInbound();
+        warehouseInbound.setEmployee(employee);
+
+        warehouseInbound.setWarehouseInboundDate(LocalDateTime.now());
+
+
+        for(WarehouseInboundProduct wiProduct :wiproducts) {
+            totalPrice += wiProduct.getInboundPrice();
+            totalQuantity += wiProduct.getInboundQuantity();
+            warehouseInbound.addOrderProduct(wiProduct);
+        }
+
+        warehouseInbound.setTotalPrice(totalPrice);
+        warehouseInbound.setTotalQuantity(totalQuantity);
+
+
+
+
+
+
+//        for(OrderProduct orderProduct : orderProducts) {
+//            totalPrice += orderProduct.getOrderPrice();
+//            totalQuantity += orderProduct.getOrderQuantity();
+//            order.addOrderProduct(orderProduct);
+//        }
+//        order.setTotalPrice(totalPrice);
+//        order.setTotalQuantity(totalQuantity);
+
+
+
+
+        return warehouseInbound;
+
+    }
 
 
 }

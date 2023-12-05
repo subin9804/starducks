@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">게시글 작성</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
+    <!--    여기 위에 href를 추가해줬음-->
+    <script th:src="@{/js/forum/script.js}"></script>
+
+    <!--    quill 위지윅 사용 불러오기 링크-->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>글쓰기</h1>
+    <form th:action="@{/forum/add}" method="post">
+        <!-- 제목 입력란 -->
+        <input type="text" th:field="*{post.postTitle}" placeholder="제목">
+
+        <!-- 공지사항 체크박스 -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="postNotice" name="postNotice" th:checked="${post.postNotice}">
+            <label for="postNotice">공지로 등록</label>
+        </div>
+
+        <!-- Quill 에디터의 메인 컨테이너 -->
+        <div id="editor"></div>
+
+        <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
+        <input type="hidden" id="quill_html" th:field="*{post.postContent}">
+
+        <!-- 제출 버튼 -->
+        <button type="submit" class="commonBtn register-button">작성</button>
+        <a href="/forum">
+            <p class="commonBtn cancel-button">취소</p>
+        </a>
+    </form>
+</main>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">전사게시판</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
+    <!--    여기 위에 href를 추가해줬음-->
+    <script th:src="@{/js/forum/script.js}"></script>
+
+    <!--    quill 위지윅 사용 불러오기 링크-->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>게시판</h1>
+    <!-- 전체 글 보기 링크 -->
+    <div class="forum-header">
+        <div class="view-all-posts">
+            <a href="/forum" th:href="@{/forum}">전체 글 보기</a>
+        </div>
+        <form class="search-form" method="get" th:action="@{/forum}">
+            <input name="searchKeyword" placeholder="검색어 입력" type="text">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <table class="forum-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf 반복문을 사용하여 게시글 목록을 표시 -->
+        <tr th:class="${post.postNotice}? 'notice' : ''" th:each="post, iterStat : ${posts}">
+            <td th:text="${post.postId}">게시글 ID</td>
+            <!-- postNotice 값에 따라 '공지' 또는 '일반' 표시-->
+            <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리명</td>
+            <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a></td>
+            <!-- 작성자 정보가 아직 없으므로 '정보 없음' 또는 빈 문자열 표시 -->
+            <td th:text="${post.employee}? ${post.employee.empName} : '모름'">작성자</td>
+            <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
+            <td th:text="${post.postView}">조회수</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="add-post">
+        <a href="/forum/add" class="commonBtn register-button">+글쓰기</a>
+    </div>
+    <div class="pagination">
+        <!-- Link to the first page -->
+        <a th:href="@{/forum(page=0)}"> << </a>
+
+        <!-- Link to the previous page -->
+        <a th:href="@{/forum(page=${nowPage - 2})}"
+           th:classappend="${nowPage == 1} ? 'disabled' : ''"> < </a>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" class="current-page"></strong>
+        </th:block>
+
+        <!-- Link to the next page -->
+        <a th:href="@{/forum(page=${nowPage})}"
+           th:classappend="${nowPage == totalPages} ? 'disabled' : ''"> > </a>
+
+        <!-- Link to the last page -->
+        <a th:href="@{/forum(page=${totalPages - 1})}"> >> </a>
+    </div>
+
+</main>
+</html>
+
