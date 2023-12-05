@@ -62,4 +62,10 @@ public class ForumPostServiceImpl implements ForumPostService {
     });
   }
 
+//  공지사항 2개 고정하기
+  @Override
+  public List<ForumPost> getTopNotice() {
+    return forumPostRepository.findTop2ByPostNoticeTrueOrderByPostDateDesc();
+  }
+
 }

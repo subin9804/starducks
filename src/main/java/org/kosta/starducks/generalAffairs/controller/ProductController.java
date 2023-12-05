@@ -1,7 +1,9 @@
 package org.kosta.starducks.generalAffairs.controller;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.ProductCategory;
@@ -22,12 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/logistic/products")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final VendorService vendorService;
+    private final HttpServletRequest request;
 
 
     @GetMapping("/list")
@@ -35,6 +38,7 @@ public class ProductController {
                                  @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(name="searchKeyword", required = false) String searchKeyword)
     {
+        MenuService.commonProcess(request, m, "general");
         Page<Product> allProducts = null;
         if(searchKeyword == null){
             allProducts = productService.getAllProducts(pageable);
@@ -61,6 +65,7 @@ public class ProductController {
     public String getProductInfo(@PathVariable("productCode") Long productCode,
                                  Model m)
     {
+        MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
         Product product1 = product.get();
         m.addAttribute("p", product1);
@@ -71,6 +76,7 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model m) {
+        MenuService.commonProcess(request, m, "general");
         m.addAttribute("productCategories", ProductCategory.values());
         m.addAttribute("productUnit", ProductUnit.values());
 
@@ -94,6 +100,7 @@ public class ProductController {
 
     @GetMapping("/update/{productCode}")
     public String updateProduct(@PathVariable("productCode") Long productCode, Model m) {
+        MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
 
         if (product.isPresent()) {

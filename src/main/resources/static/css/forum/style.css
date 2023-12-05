@@ -18,7 +18,7 @@
 
 .search-form {
     display: flex;
-    justify-content: right; /* 검색 폼 오른쪽 정렬 */
+    justify-content: flex-end;
 }
 
 /*검색칸 스타일*/
@@ -214,7 +214,6 @@
 .button-group a {
     margin-right: 10px; /* 각 링크(버튼) 사이의 간격 */
 }
-
 /*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
@@ -259,11 +258,7 @@
 }
 
 /* Styles for disabled previous and next links */
-.pagination a[disabled] {
-    color: grey;
-    pointer-events: none;
-}
-
+.pagination a[disabled],
 .disabled {
     color: grey;
     pointer-events: none;
