@@ -41,4 +41,12 @@ public class Product {
     @JoinColumn(name = "vendor_id",nullable = false)
     private Vendor vendor;
 
+
+
+    public void increaseCnt(int inboundQuantity){
+        int totalQuantity = this.productCnt + inboundQuantity;
+
+        this.productCnt = totalQuantity;
+    }
+
 }
