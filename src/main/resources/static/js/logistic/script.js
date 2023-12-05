@@ -23,7 +23,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         };
 
         list.push(item);
-        //리스트추가
+        //리스트추가...
 
         let li = document.createElement("li");
         let selectedOption = productSelect.options[productSelect.selectedIndex]
