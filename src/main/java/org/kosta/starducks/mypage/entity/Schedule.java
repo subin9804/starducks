@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.kosta.starducks.hr.entity.Employee;
-import org.kosta.starducks.mypage.dto.Location;
-import org.kosta.starducks.mypage.dto.ScheduleType;
 
 import java.time.LocalDateTime;
 

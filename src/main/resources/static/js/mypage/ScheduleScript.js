@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         events: function (fetchInfo, successCallback, errorCallback) {
-// fetchShowSingleSchedule(empId)가 어디서 오는지 확인하세요.
             fetchShowSingleSchedule().then(function (data) {
                 var events = data.map(function (schedule) {
                     return {

@@ -24,11 +24,11 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final org.kosta.starducks.hr.entity.QEmployee employee;
 
-    public final EnumPath<org.kosta.starducks.mypage.dto.Location> location = createEnum("location", org.kosta.starducks.mypage.dto.Location.class);
+    public final EnumPath<Location> location = createEnum("location", Location.class);
 
     public final StringPath notes = createString("notes");
 
-    public final EnumPath<org.kosta.starducks.mypage.dto.ScheduleType> scheduleType = createEnum("scheduleType", org.kosta.starducks.mypage.dto.ScheduleType.class);
+    public final EnumPath<ScheduleType> scheduleType = createEnum("scheduleType", ScheduleType.class);
 
     public final DateTimePath<java.time.LocalDateTime> scheEndDate = createDateTime("scheEndDate", java.time.LocalDateTime.class);
 

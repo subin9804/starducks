@@ -22,8 +22,4 @@ public class ScheduleService {
     public List<Schedule> findByEmployeeEmpId(Long empId) {
         return scheduleRepository.findByEmployeeEmpId(empId);
     }
-
-
-
-
 }
