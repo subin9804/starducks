@@ -72,14 +72,14 @@ public class EmpController {
      */
     @PostMapping("/emp/save")
     public String save(@ModelAttribute Employee employee, Model model) {
-        // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
-        Long id = service.getLastEmpId();
 
-        service.saveEmp(employee);
+        Employee savedEmp = service.saveEmp(employee);
 //        model.addAttribute("result", true);
 //        return ResponseEntity.ok("Employee information saved successfully.");
 
-        return "redirect:/hr/emp/" + (id + 1);
+        Long id = savedEmp.getEmpId();
+
+        return "redirect:/hr/emp/" + id;
     }
 
     /**

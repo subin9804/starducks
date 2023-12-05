@@ -64,6 +64,7 @@ public class EmpService {
             Long id = getLastEmpId();
             emp.setEmpId(id + 1);
             System.out.println("등록한다");
+
             return repository.save(emp);
 
 

@@ -5,6 +5,7 @@ import org.kosta.starducks.mypage.entity.ConfRoom;
 import org.kosta.starducks.mypage.repository.ConfRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,10 +28,10 @@ public class ConfRoomService {
      * @param day
      * @return
      */
-//    public List<ConfRoom> getDayList(LocalDate day) {
-//
-////        return confRepository.getAllByRunningDay();
-//    }
+    public List<ConfRoom> getDayList(LocalDate day) {
+
+        return confRepository.findByRunningDay(day);
+    }
 
     /**
      * 회의 예약

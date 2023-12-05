@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity @Builder
 @Getter @Setter
@@ -25,13 +26,13 @@ public class ConfRoom {
 
     private String confName;    // 회의 이름
 
-    private LocalDate RunningDay;  // 진행 일자
+    private LocalDate runningDay;  // 진행 일자
 
     @DateTimeFormat(pattern="HH:mm:ss")
-    private LocalDateTime StartTime;    // 시작 시간
+    private LocalTime StartTime;    // 시작 시간
 
     @DateTimeFormat(pattern="HH:mm:ss")
-    private LocalDateTime endTime;  // 종료 시간
+    private LocalTime endTime;  // 종료 시간
 
     private String status;  // 회의 상태
 

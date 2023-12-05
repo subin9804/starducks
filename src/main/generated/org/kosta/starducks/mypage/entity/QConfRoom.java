@@ -28,15 +28,15 @@ public class QConfRoom extends EntityPathBase<ConfRoom> {
 
     public final StringPath confName = createString("confName");
 
-    public final DateTimePath<java.time.LocalDateTime> endTime = createDateTime("endTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> endTime = createTime("endTime", java.time.LocalTime.class);
 
     public final DateTimePath<java.time.LocalDateTime> recordDay = createDateTime("recordDay", java.time.LocalDateTime.class);
 
     public final EnumPath<ConfRoomEN> room = createEnum("room", ConfRoomEN.class);
 
-    public final DatePath<java.time.LocalDate> RunningDay = createDate("RunningDay", java.time.LocalDate.class);
+    public final DatePath<java.time.LocalDate> runningDay = createDate("runningDay", java.time.LocalDate.class);
 
-    public final DateTimePath<java.time.LocalDateTime> StartTime = createDateTime("StartTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> StartTime = createTime("StartTime", java.time.LocalTime.class);
 
     public final StringPath status = createString("status");
 
