@@ -1,5 +1,6 @@
 package org.kosta.starducks.mypage.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final HttpServletRequest request;
 
     /**
      * 로그인을 한 사원의 일정 조회
@@ -68,6 +70,7 @@ public class ScheduleController {
      */
     @GetMapping("/show")
     public String showSchedule(Model model) {
+//        MenuService.commonProcess(request, model, "mypage");
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
         return "mypage/schedule/schedule";
