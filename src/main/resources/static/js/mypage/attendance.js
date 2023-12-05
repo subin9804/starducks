@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
             var contentText;
             if (arg.event.extendedProps.isVacation) {
                 contentText = '휴가';
+            } else if(arg.event.extendedProps.startTime === null && arg.event.extendedProps.endTime === null ) {
+                contentText = '결근'
             } else {
                 contentText = '&ensp;출근 | ' + timeFormat(arg.event.extendedProps.startTime) +
                     '<br>&ensp;퇴근 | ' + timeFormat(arg.event.extendedProps.endTime);

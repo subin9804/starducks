@@ -23,12 +23,14 @@
         <div class="attd-check-box">
             <div>
                 <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
-                    <button class="attd-btn" type="submit">출근</button>
+                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
                 </form>
-                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null}">
-                    <button class="attd-btn" type="submit">퇴근</button>
+                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
                 </form>
             </div>
+<!--            <button class="attd-btn"  th:text="근태 기록 완료">근태 기록 완료</button>-->
+            <p class="complete-attd" th:if="${attendance?.endTime != null}">근태 기록 완료</p>
 
             <div>
                 <div>

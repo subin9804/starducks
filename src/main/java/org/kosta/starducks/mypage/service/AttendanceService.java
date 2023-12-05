@@ -86,6 +86,5 @@ public class AttendanceService {
             existAttendance.setEndTime(LocalDateTime.now());
             attendanceRepository.save(existAttendance);
         }
-        // 오늘의 근태 기록을 이미 완료했다는 모달 안내창(sweetAlert) 연결
     }
 }
