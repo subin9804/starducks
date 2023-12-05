@@ -64,10 +64,16 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         for (int i = 0; i < 33; i++) {
             ForumPost forumPost = new ForumPost();
             forumPost.setPostDate(LocalDateTime.now());
-            forumPost.setPostTitle("제목"+i);
-            forumPost.setPostContent("내용"+i);
-            forumPost.setPostId((long) i);
+            forumPost.setPostTitle("제목" + i);
+            forumPost.setPostContent("내용" + i);
             forumPost.setPostView(i);
+
+            //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
+            if (i < 5) {
+                forumPost.setPostNotice(true);
+            } else {
+                forumPost.setPostNotice(false);
+            }
 
             forumPostRepository.saveAndFlush(forumPost);
         }

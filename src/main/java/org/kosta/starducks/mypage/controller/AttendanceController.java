@@ -7,6 +7,7 @@ import org.kosta.starducks.mypage.entity.Attendance;
 
 import org.kosta.starducks.commons.MenuService;
 
+
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +53,11 @@ public class AttendanceController {
 //        model.addAttribute("isVacation", attendanceService.getIsVacation);
 
         return "mypage/attendance/attendance";
+        MenuService.commonProcess(request, model, "mypage");
+        return attendanceService.getDailyAttendance(empId);
     }
+
+
 
     /**
      * 출근 기록 & 성공 페이지 리턴 함수
