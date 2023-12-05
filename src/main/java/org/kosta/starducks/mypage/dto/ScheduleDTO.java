@@ -1,28 +1,36 @@
 package org.kosta.starducks.mypage.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.kosta.starducks.hr.entity.EmpEntity;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.mypage.entity.Schedule;
+import org.kosta.starducks.mypage.entity.ScheduleType;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@ToString
 public class ScheduleDTO {
 
-    //  개인일정(PERSONAL_SCHEDULE)
-//  일정번호        scheNo             (INT) Long
-//  일정명          scheTitle          VARCHAR
-//  시작일시        scheStartDate       DATE
-//  종료일시        scheEndDate         DATE
-//  일정종류        calendarType        VARCHAR
-//  장소           location            VARCHAR
-//  참고 사항       notes               VARCHAR
     private Long scheNo;
     private String scheTitle;
     private LocalDateTime scheStartDate;
     private LocalDateTime scheEndDate;
     private ScheduleType scheduleType;
-    private Location location;
-    private String notes;
-    private EmpEntity emp;
 
+    private String notes;
+    private Employee employee;
+
+    /**
+     * DTO를 Entity로 변환하는 메서드
+     * @return
+     */
+    public Schedule toEntity() {
+        return new Schedule(scheNo, scheTitle, scheStartDate, scheEndDate,
+                scheduleType, notes, employee);
+    }
 }

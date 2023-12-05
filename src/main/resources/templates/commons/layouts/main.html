@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -16,7 +17,6 @@
     <script th:each="jsFile : ${addScript}" th:src="@{/commons/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
-    <meta charset="UTF-8">
     <title layout:fragment="title">index</title>
 </head>
 <body>
@@ -37,7 +37,7 @@
 <th:block th:replace="~{outlines/header::header}"></th:block>
 
 <!--side 가져오기-->
-<th:block th:replace="~{outlines/side::sidebar}"></th:block>
+<th:block th:replace="~{outlines/sidebar::sidebar}"></th:block>
 
 <!--메인은 여기에-->
 <main layout:fragment="content"></main>

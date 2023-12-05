@@ -1,0 +1,268 @@
+.forum-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.view-all-posts a {
+    text-decoration: none;
+    color: black;
+}
+
+.view-all-posts a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.search-form {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*검색칸 스타일*/
+.search-form input[type="text"] {
+    background-color: #6B4D27; /*입력칸 배경색*/
+    border-color: #6B4D27;
+    border-radius: 5px;
+    color: white; /* 입력되는 글씨색 */
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.search-form input[type="text"], .search-form button {
+    box-shadow: none;
+}
+
+/* 플레이스홀더 스타일 변경 */
+.search-form input[type="text"]::placeholder {
+    color: white; /* 플레이스홀더 텍스트 색상 */
+    font-weight: bold; /* 플레이스홀더 글씨 굵기 */
+}
+
+.search-form button {
+    padding: 5px 15px;
+    border-color: #AF9A63;
+    cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
+}
+
+.forum-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff; /* 테이블 배경색 추가 */
+}
+
+/*제목 링크 밑줄 제거*/
+.forum-table a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+}
+
+/* 마우스 오버 시 링크에 밑줄 표시  */
+.forum-table a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+
+/*게시글 목록 테이블 가운데 정렬*/
+.forum-table th, .forum-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.forum-table th {
+    background-color: #f2f2f2;
+}
+
+.notice {
+    font-weight: bold;
+    background-color: #ffffe0; /* 공지사항 배경색 */
+}
+
+.add-post {
+    text-align: right;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.add-post a {
+    padding: 5px 15px;
+    background-color: #4A85F6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 테이블 행에 마우스 오버 시 배경색 변경 */
+.forum-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/*게시글 작성 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.checkbox-container {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 세로축(center)으로 정렬 */
+    gap: 10px; /* 체크박스와 라벨 사이의 간격 */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+/*게시글 작성 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*게시글 상세 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.detail-page-container {
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px;
+    width: 100%;
+}
+
+.detail-page-title {
+    color: #6b4d27;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.detail-content-section {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.detail-info {
+    margin-bottom: 20px;
+}
+
+.detail-author, .detail-views, .detail-timestamp {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.detail-post-content {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-comment-section {
+    margin-top: 20px;
+}
+
+.detail-comment-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.detail-comment-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detail-comment-block {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.detail-comment-actions {
+    margin-top: 10px;
+}
+
+.detail-edit-comment, .detail-delete-comment {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/*수정, 삭제, 목록 버튼이 좌우로 보이도록 묶음 */
+.button-group {
+    display: flex;
+    justify-content: space-between; /* 버튼들 사이에 균일한 간격을 두기 위함 */
+    margin-top: 20px; /* 추가적인 상단 여백을 위함 */
+}
+
+.button-group a {
+    margin-right: 10px; /* 각 링크(버튼) 사이의 간격 */
+}
+/*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/*페이지네이션 스타일 ~~~~~~~~~~~~~~~~~~*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination a,
+.pagination strong {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #f4f4f4;
+}
+
+.pagination .current-page,
+.pagination a:hover {
+    background-color: #f0f0f0;
+    border-color: #666;
+}
+
+/* Style for current page */
+.pagination .current-page {
+    background-color: #fff;
+    border-color: #666;
+    color: red;
+    font-weight: bold;
+}
+
+/* Custom styles for first and last page links */
+.pagination a:first-child,
+.pagination a:last-child {
+    background-color: #ddd;
+}
+
+/* Styles for disabled previous and next links */
+.pagination a[disabled],
+.disabled {
+    color: grey;
+    pointer-events: none;
+    cursor: default;
+}
+
+/*페이지네이션 스타일 끝~~~~~~~~~~~~*/

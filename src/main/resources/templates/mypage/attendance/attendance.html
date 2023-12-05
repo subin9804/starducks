@@ -1,34 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{mypage/layouts/main}">
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="title">메인 </th:block>
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
+    <script th:src="@{/js/mypage/attendance.js}" src="/mypage/script.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+</th:block>
+
+<th:block th:layout="title">메인 </th:block>
+<th:block th:layout="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+</th:block>
 
 <main layout:fragment="content">
     <h2>근태관리</h2>
     <div class="calendar-side">
         <div class="attd-check-box">
             <div>
-                <button class="attd-btn" th:if="${startTime == null}">출근</button>
-                <!--        <button th:if="${endTime != null}">퇴근</button>-->
+                <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
+                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
+                </form>
+                <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+                </form>
             </div>
+<!--            <button class="attd-btn"  th:text="근태 기록 완료">근태 기록 완료</button>-->
+            <p class="complete-attd" th:if="${attendance?.endTime != null}">근태 기록 완료</p>
+
             <div>
                 <div>
-                    출근&emsp;|&emsp;<p type="text" th:value="${startTime}"></p>
+                    출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
                 </div>
                 <div>
-                    퇴근&emsp;|&emsp;<p type="text" th:value="${endTime}"></p>
+                    퇴근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
                 </div>
             </div>
         </div>
+
         <div class="attd-sum-box">
-            <h3>2019년 3월</h3>
+            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
             <div>
-                <div class="attd-sum-num-box">18</div>
+                <div class="attd-sum-num-box" th:text="${workDays}">18</div>
                 <div>근무</div>
             </div>
             <div>
-                <div class="attd-sum-num-box">0</div>
+                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
                 <div>지각</div>
             </div>
             <div>
@@ -36,8 +58,8 @@
                 <div>결근</div>
             </div>
             <div>
-                <div class="attd-sum-num-box">18</div>
-                <div>근무</div>
+                <div class="attd-sum-num-box">12/15</div>
+                <div>연차</div>
             </div>
         </div>
     </div>

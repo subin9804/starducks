@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">전사게시판</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
+    <!--    여기 위에 href를 추가해줬음-->
+    <script th:src="@{/js/forum/script.js}"></script>
+
+    <!--    quill 위지윅 사용 불러오기 링크-->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>게시판</h1>
+
+    <!-- 전체 글 보기 링크 -->
+    <div class="forum-header">
+        <div class="view-all-posts">
+            <a href="/forum" th:href="@{/forum}">전체 글 보기</a>
+        </div>
+        <form class="search-form" method="get" th:action="@{/forum}">
+            <input name="searchKeyword" placeholder="검색어 입력" type="text">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <table class="forum-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 최신 공지사항 2개 표시 -->
+        <th:block th:each="notice : ${topNotices}">
+            <tr class="notice">
+                <td th:text="${notice.postId}">ID</td>
+                <td>공지</td>
+                <td><a th:href="@{/forum/post/{id}(id=${notice.postId})}" th:text="${notice.postTitle}">제목</a></td>
+                <td th:text="${notice.employee?.empName} ?: '로그인 필요'">작성자</td>
+                <td th:text="${#temporals.format(notice.postDate, 'yyyy.MM.dd')}">작성일</td>
+                <td th:text="${notice.postView}">조회수</td>
+            </tr>
+        </th:block>
+        <!-- 전체 게시글 목록 (공지 포함) -->
+        <th:block th:each="post : ${posts}">
+            <tr>
+                <td th:text="${post.postId}">ID</td>
+                <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리</td>
+                <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">제목</a></td>
+                <td th:text="${post.employee?.empName} ?: '로그인 필요'">작성자</td>
+                <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
+                <td th:text="${post.postView}">조회수</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <div class="add-post">
+        <a href="/forum/add" class="commonBtn register-button">+글쓰기</a>
+    </div>
+
+<!--    페이지 만들기~ -->
+    <div class="pagination">
+        <!-- 첫 번째 페이지로 이동 -->
+        <a th:href="@{/forum(page=0)}"> << </a>
+
+        <!-- 이전 페이지로 이동 -->
+        <a th:href="@{/forum(page=${nowPage - 2})}"
+           th:classappend="${nowPage == 1} ? 'disabled' : ''"> < </a>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}"
+               th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" class="current-page"></strong>
+        </th:block>
+
+        <!-- 다음 페이지 이동 -->
+        <a th:href="@{/forum(page=${nowPage})}"
+           th:classappend="${nowPage == totalPages} ? 'disabled' : ''"> > </a>
+
+        <!-- 마지막 페이지로 이동 -->
+        <a th:href="@{/forum(page=${totalPages - 1})}"> >> </a>
+    </div>
+
+</main>
+</html>
+

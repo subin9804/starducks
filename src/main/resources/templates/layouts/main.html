@@ -3,42 +3,71 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/commons/style.css}">
-    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
-          th:href="@{/{file}/style.css(file=${location})}">
-    <th:block layout:fragment="addCss"></th:block>
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- font awesome-->
+    <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+    <!-- sweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script th:src="@{/commons/script.js}"></script>
-    <script th:each="jsFile : ${addScript}" th:src="@{/{file}/script.js(file=${loaction})}"></script>
-    <th:block layout:fragment="addScript"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons/style.css}">
+    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}" th:href="@{/{file}/style.css(file=${cssFile})}">
+
+    <script th:src="@{/js/commons/script.js}"></script>
+    <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${jsFile})}"></script>
 
     <meta charset="UTF-8">
-    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    title-->
+    <title layout:fragment="title">index</title>
+
+    <!--    head 추가사항-->
+    <th:block layout:fragment="addMore"></th:block>
+    <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}" th:href="@{/{file}/style.css(file=${location})}">
+
+    <script th:src="@{/js/commons/script.js}"></script>
+    <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${file})}"></script>
+
+    <!--    head 추가사항-->
+    <th:block layout:fragment="addMore"></th:block>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title layout:fragment="title">index</title>
 </head>
+
 <body>
+    <!--controller에서 model로 script에 간단한 설정 가능-->
+    <script th:if="${script != null}" th:utext="${script}"></script>
 
-<!--로그인 여부-->
-<section class="right">
-    <th:block sec:authorize="isAuthenticated()">
-        로그인 성공
-    </th:block>
-    <th:block sec:authorize="isAnonymous()">
-        로그인 해야함
-    </th:block>
-    <th:block sec:authorize="hasAuthority('A')">A권한이 있을 경우</th:block>
-    <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
-</section>
+    <!--
+    <div class="right">
+        <th:block sec:authorize="isAuthenticated()">
+            로그인을 했을 때
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+            로그인을 안 했을 때
+        </th:block>
+        <th:block sec:authorize="hasAuthority('A')">A권한이 있을 경우</th:block>
+        <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
+    </div>
+    -->
 
-<!--header 가져오기-->
-<th:block th:replace="~{outlines/header::header}"></th:block>
+    <!--header 가져오기-->
+    <th:block th:replace="~{outlines/header::header}"></th:block>
 
-<!--side 가져오기-->
-<th:block th:replace="~{outlines/side::sidebar}"></th:block>
+    <!--side 가져오기-->
+    <th:block th:replace="~{outlines/side::sidebar}"></th:block>
 
-<!--메인은 여기에-->
-<main layout:fragment="content"></main>
+    <!--메인은 여기에-->
+    <main layout:fragment="content"></main>
 
 
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -34,7 +34,6 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final BooleanPath productSelling = createBoolean("productSelling");
 
-
     public final EnumPath<ProductUnit> productUnit = createEnum("productUnit", ProductUnit.class);
 
     public final QVendor vendor;
