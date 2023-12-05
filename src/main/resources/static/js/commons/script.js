@@ -27,12 +27,12 @@ window.document.addEventListener("DOMContentLoaded", function() {
         radio.addEventListener('change', function () {
             // 모든 패널 숨김
             document.querySelectorAll('ul').forEach((ul) => {
-                console.log(ul)
                 ul.style.display = 'none';
             });
 
             // 현재 선택된 라디오 버튼에 해당하는 패널 보임
             const panelId = this.getAttribute('aria-controls');
+            console.log(panelId)
             document.getElementById(panelId).style.display = 'block';
         });
     });
