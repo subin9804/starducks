@@ -1,28 +1,25 @@
 package org.kosta.starducks.auth.service;
 
+import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
+/**
+ * db에서 사원 데이터가 empId를 통해서 가져와지는지 확인하는 서비스
+ * /auth/dto/CustomUserDetails에서 가져오는 걸 정해서 여기로 옴
+ */
 @Service
 public class AccountService implements UserDetailsService {
 
-  private final PasswordEncoder passwordEncoder;
   private final EmpRepository empRepository;
 
   @Autowired
-  public AccountService(@Lazy PasswordEncoder passwordEncoder, EmpRepository empRepository) {
-    this.passwordEncoder = passwordEncoder;
+  public AccountService(EmpRepository empRepository) {
     this.empRepository = empRepository;
   }
 
@@ -40,15 +37,6 @@ public class AccountService implements UserDetailsService {
     Employee employee = empRepository.findById(empId)
         .orElseThrow(() -> new UsernameNotFoundException("Employee not found with empId: " + empId));
 
-    // UserDetails 객체 생성
-    return User.builder()
-        .username(employee.getEmpId().toString())
-        .password(employee.getPwd())
-        .authorities(Collections.singletonList(new SimpleGrantedAuthority(employee.getPosition().name())))
-        .accountExpired(false)
-        .accountLocked(false)
-        .credentialsExpired(false)
-        .disabled(!employee.isStatus()) // status가 true면 퇴사한 것이므로 disabled 처리
-        .build();
+    return new CustomUserDetails(employee);
   }
 }

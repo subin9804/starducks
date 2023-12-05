@@ -1,6 +1,5 @@
 package org.kosta.starducks.auth.controller;
 
-import org.kosta.starducks.auth.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +17,6 @@ public class LoginController {
     }
     return "auth/loginPage";
   }
-//  //  로그인 페이지
-//  @GetMapping("/login")
-//  public String login() {
-//            return "auth/loginPage1";
-//  }
 
   // 비밀번호 찾기 페이지로 이동
   @GetMapping("/forgot-password")
