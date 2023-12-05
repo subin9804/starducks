@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.mypage.entity.Schedule;
+import org.kosta.starducks.mypage.entity.ScheduleType;
 
 import java.time.LocalDateTime;
 
@@ -19,21 +21,16 @@ public class ScheduleDTO {
     private LocalDateTime scheStartDate;
     private LocalDateTime scheEndDate;
     private ScheduleType scheduleType;
-    private Location location;
+
     private String notes;
-    private Long empId;
+    private Employee employee;
 
     /**
-     * Schedule 객체를 매핑하는 생성자 직접 작성
+     * DTO를 Entity로 변환하는 메서드
+     * @return
      */
-    public ScheduleDTO(Schedule schedule) {
-        this.scheNo = schedule.getScheNo();
-        this.scheTitle = schedule.getScheTitle();
-        this.scheStartDate = schedule.getScheStartDate();
-        this.scheEndDate = schedule.getScheEndDate();
-        this.scheduleType = schedule.getScheduleType();
-        this.location = schedule.getLocation();
-        this.notes = schedule.getNotes();
-        this.empId = schedule.getEmpId();
+    public Schedule toEntity() {
+        return new Schedule(scheNo, scheTitle, scheStartDate, scheEndDate,
+                scheduleType, notes, employee);
     }
 }

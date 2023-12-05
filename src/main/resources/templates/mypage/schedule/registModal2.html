@@ -5,16 +5,18 @@
 
 <th:block layout:fragment="title">메인 </th:block>
 
+<!--여기는 헤드(메인에 없는 헤드 추가하기)-->
 <th:block layout:fragment="addMore">
-    <link rel="stylesheet" href="../../../static/mypage/Calendar.css" th:href="@{/css/mypage/Schedule.css}"/>
-    <!--    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>-->
+    <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
+<!--        <script th:src="@{/js/mypage/ScheduleScript.js}"></script>-->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </th:block>
 
-<main layout:fragment="content">
-        <div class="modal-content">
-            <span class="close" th:text="'×'" onclick="closeModal()"></span>
-            <form th:action="@{/schedule/success}" method="post" th:object="${scheduleDTO}">
+<!--여기는 바디-->
+<span class="close" th:text="'×'" onclick="closeModal()"></span>
+            <main layout:fragment="content">
+                <div class="modal-content">
+                    <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
                 <label th:text="'일정명'"></label>
                 <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
 

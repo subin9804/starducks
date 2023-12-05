@@ -20,6 +20,7 @@ public class SecurityConfig {
 
     @Bean //로그인 유지 기능 rememberMe 나중에 추가하기
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
             .csrf(AbstractHttpConfigurer::disable) //나중에 지워주면 좋음  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
             .authorizeHttpRequests(auth -> auth
@@ -33,6 +34,7 @@ public class SecurityConfig {
                 .failureUrl("/login/securityPassFailed") // 로그인 실패 시 리디렉션할 URL
                 .permitAll())
             .logout(LogoutConfigurer::permitAll);
+
         return http.build();
     }
 
