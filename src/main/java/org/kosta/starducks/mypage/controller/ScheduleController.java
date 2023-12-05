@@ -74,7 +74,8 @@ public class ScheduleController {
 
     @PostMapping("/schedule")
     public String addSchedule(ScheduleDTO scheduleDTO) {
-        System.out.println("scheduleDTO.toString() ==> " + scheduleDTO.toString()); /** DTO에 폼 데이터가 잘 담겼는지 확인*/
+        /** DTO에 폼 데이터가 잘 담겼는지 확인*/
+        log.info("scheduleDTO.toString() ==> " + scheduleDTO.toString());
         return "redirect:/mypage/schedule/registModal";
     }
 }
