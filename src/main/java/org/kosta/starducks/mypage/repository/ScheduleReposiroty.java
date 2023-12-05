@@ -1,4 +1,7 @@
 package org.kosta.starducks.mypage.repository;
 
-//public interface ScheduleReposiroty extends JpaRepository<Schedule, Long> {
-//}
+import org.kosta.starducks.mypage.entity.Schedule;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ScheduleReposiroty extends JpaRepository<Schedule, Long> {
+}
