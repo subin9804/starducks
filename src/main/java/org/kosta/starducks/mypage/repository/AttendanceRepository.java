@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AttendanceRepository  extends JpaRepository<Attendance, Long> {
-
     @Query("SELECT a.workDate, a.startTime, a.endTime FROM Attendance a WHERE a.emp.empId = :empId")
     List<Object[]> findDailyAttendanceByEmpId(@Param("empId") Long empId);
-    Optional<Attendance> findByWorkIdOrderByWorkDate(Long workId);
-    Optional<Attendance> findByWorkDate(LocalDate workDate);
+    Optional<Attendance> findByWorkDateAndEmp_EmpId(LocalDate workDate, Long empId);
 }

@@ -22,20 +22,14 @@
     <div class="calendar-side">
         <div class="attd-check-box">
             <div>
-<!--                <form th:action="@{/attendance/startSubmit}" method="post">-->
-<!--                    <button class="attd-btn" type="submit">출근</button>-->
-<!--                </form>-->
-
                 <form th:action="@{/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
                     <button class="attd-btn" type="submit">출근</button>
                 </form>
                 <form th:action="@{/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null}">
                     <button class="attd-btn" type="submit">퇴근</button>
                 </form>
-
-<!--                <button class="attd-btn" th:if="${startTime == null}">출근</button>-->
-                <!--        <button th:if="${endTime != null}">퇴근</button>-->
             </div>
+
             <div>
                 <div>
                     출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
@@ -45,8 +39,9 @@
                 </div>
             </div>
         </div>
+
         <div class="attd-sum-box">
-<!--            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>-->
+            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
             <div>
                 <div class="attd-sum-num-box">18</div>
@@ -61,8 +56,8 @@
                 <div>결근</div>
             </div>
             <div>
-                <div class="attd-sum-num-box">18</div>
-                <div>근무</div>
+                <div class="attd-sum-num-box">12/15</div>
+                <div>연차</div>
             </div>
         </div>
     </div>

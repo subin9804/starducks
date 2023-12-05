@@ -16,45 +16,45 @@ import java.util.Map;
 public class AttendanceController {
     private final AttendanceService attendanceService;
 
-    @GetMapping("/daily/{empId}") //json api endPoint
+    /**
+     * 일별 출근 정보 Json List API
+     */
+    @GetMapping("/daily/{empId}") // json api endPoint
     @ResponseBody
     public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId) {
         return attendanceService.getDailyAttendance(empId);
     }
 
-    @GetMapping
-    public String Attendance(Model model) {
-        Attendance attendanceForToday = attendanceService.getAttendanceForToday();
+    /**
+     * 마이페이지 근태기록 컨트롤러 함수
+     */
+    @GetMapping("/{empId}")
+    public String Attendance(Model model, @PathVariable("empId") Long empId) {
+        Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
         System.out.println(attendanceForToday);
         return "mypage/attendance/attendance";
     }
 
-    @GetMapping("/form")
-    public String showAttendanceForm() {
-        return "mypage/attendance/form";
-    }
-
+    /**
+     * 출근 기록 & 성공 페이지 리턴 함수
+     */
     @PostMapping("/startSubmit")
     public String submitStartTime() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달
-        Long empId = 1L; // 예제에서는 EmpId를 1로 가정
+        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
+        Long empId = 1L;
         attendanceService.saveStartTime(empId);
         return "mypage/attendance/startSuccess";
     }
 
+    /**
+     * 퇴근 기록 & 성공 페이지 리턴 함수
+     */
     @PostMapping("/endSubmit")
     public String submitEndTime() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달
-        Long empId = 1L; // 예제에서는 EmpId를 1로 가정
+        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
+        Long empId = 1L;
         attendanceService.saveEndTime(empId);
         return "mypage/attendance/endSuccess";
     }
-
-//    @GetMapping("/daily/{empId}")
-//    public List<AttendanceDTO> getDailyAttendance(@PathVariable Long empId) {
-//        // AttendanceService를 통해 일별 출근 정보를 조회
-//        List<AttendanceDTO> dailyAttendanceList = attendanceService.getDailyAttendance(empId);
-//        return dailyAttendanceList;
-//    }
 }
