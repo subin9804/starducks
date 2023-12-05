@@ -77,19 +77,18 @@ public class ScheduleController {
      * 일정 등록하기
      * @param scheduleDTO
      * @return
-     *
-     * JS를 ajax로 하고 requestBody를 매개변수로 ResponseBody를 메서드러??
      */
     @PostMapping("/add")
-    @ResponseBody
-    public ResponseEntity<String> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+    public ResponseEntity<Map<String, String>> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+        Map<String, String> response = new HashMap<>();
         try {
-            log.info("여기는 컨트롤러2");
             Schedule schedule = scheduleDTO.toEntity();
             scheduleService.saveSchedule(schedule);
-            return ResponseEntity.ok("일정이 성공적으로 저장되었습니다.");
+            response.put("message", "일정이 성공적으로 저장되었습니다.");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일덩 저장 중 오류 발생: " + e.getMessage());
+            response.put("error", "일정 저장 중 오류 발생: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }

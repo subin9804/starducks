@@ -176,13 +176,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(function(data) {
                     // 서버로부터 받은 응답 처리
-                    alert(data); // 성공 또는 오류 메시지
+                    alert(data.message); // 객체의 특정 속성을 출력하도록 수정
                     modal.style.display = 'none'; // 일정 추가 후 모달을 닫음
                 })
-                .catch(function(error) {
-                    // 오류 처리
-                    alert('일정 추가 중 오류 발생: ' + error.message);
-                });
         });
 
         form.appendChild(submitButton);
