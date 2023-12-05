@@ -1,8 +1,12 @@
 package org.kosta.starducks.mypage.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.eclipse.jdt.internal.compiler.ast.TrueLiteral;
+
 import org.kosta.starducks.mypage.entity.Attendance;
+
+import org.kosta.starducks.commons.MenuService;
+
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +22,14 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
+    private final HttpServletRequest request;
 
     /**
      * 일별 출근 정보 Json List API
      */
     @GetMapping("/daily/{empId}") // json api endPoint
     @ResponseBody
-    public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId) {
+    public List<Map<String, Object>> getDailyAttendance(@PathVariable("empId") Long empId, Model model) {
         return attendanceService.getDailyAttendance(empId);
     }
 
@@ -33,6 +38,7 @@ public class AttendanceController {
      */
     @GetMapping("/{empId}")
     public String Attendance(Model model, @PathVariable("empId") Long empId) {
+        MenuService.commonProcess(request, model, "mypage");
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
 
