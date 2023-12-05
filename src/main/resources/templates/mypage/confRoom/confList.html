@@ -2,28 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
-
 <!--title-->
-<th:block layout:fragment="title">메인 </th:block>
+<!--<th:block layout:fragment="title">메인 </th:block>-->
 <th:block layout:fragment="addMore">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="js/daypilot/daypilot-all.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        const dp = new DayPilot.Scheduler("dp");
-        dp.startDate = DayPilot.Date.today().firstDayOfMonth();
-        dp.days = DayPilot.Date.today().daysInMonth();
-        dp.scale = "Day";
-        dp.timeHeaders = [
-            {groupBy: "Month"},
-            {groupBy: "Day", format: "d"}
-        ];
-        dp.init();
-    </script>
+    <script th:src="@{/js/mypage/daypilot/daypilot-all.min.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
     <h1>이건 제목입니다.</h1>
     <div id="dp"></div>
+
+    <script>
+
+        const dp = new DayPilot.Calendar("dp", {
+            viewType: "Resources",
+            // ...
+        });
+        dp.init();
+    </script>
+
 </main>
 
 </html>
