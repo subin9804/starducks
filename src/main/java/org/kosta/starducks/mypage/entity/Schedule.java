@@ -32,10 +32,6 @@ public class Schedule {
     @Column(name = "calendar_type")
     private ScheduleType scheduleType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "location")
-    private Location location;
-
     @Column(name = "notes")
     private String notes;
 

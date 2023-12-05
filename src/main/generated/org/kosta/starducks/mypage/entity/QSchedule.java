@@ -24,8 +24,6 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final org.kosta.starducks.hr.entity.QEmployee employee;
 
-    public final EnumPath<Location> location = createEnum("location", Location.class);
-
     public final StringPath notes = createString("notes");
 
     public final EnumPath<ScheduleType> scheduleType = createEnum("scheduleType", ScheduleType.class);
