@@ -34,6 +34,7 @@ public class AttendanceService {
             entry.put("workDate", attendance[0]);
             entry.put("startTime", attendance[1]);
             entry.put("endTime", attendance[2]);
+            entry.put("isVacation", attendance[3]);
             result.add(entry);
         }
         return result;
