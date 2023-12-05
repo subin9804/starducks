@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.mypage.entity.Schedule;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 public class ScheduleDTO {
-
     private Long scheNo;
     private String scheTitle;
     private LocalDateTime scheStartDate;
@@ -20,5 +21,10 @@ public class ScheduleDTO {
     private ScheduleType scheduleType;
     private Location location;
     private String notes;
-    private Long empId;
+    private Employee employee;
+
+    public Schedule toEntity() {
+        return new Schedule(scheNo, scheTitle, scheStartDate,
+                scheEndDate, scheduleType, location, notes, employee);
+    }
 }

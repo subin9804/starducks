@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var modal;
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         events: function (fetchInfo, successCallback, errorCallback) {
-// fetchShowSingleSchedule(empId)가 어디서 오는지 확인하세요.
             fetchShowSingleSchedule().then(function (data) {
                 var events = data.map(function (schedule) {
                     return {
@@ -59,11 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
         modal = document.createElement('div');
         modal.className = 'modal';
         modal.style.display = 'none'; // 초기에는 모달을 숨김
-
         // 모달 내용 생성
         var modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
-
         var closeButton = document.createElement('span');
         closeButton.className = 'close';
         closeButton.textContent = '×';
@@ -71,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none'; // 닫기 버튼을 누르면 모달을 숨김
         });
         modalContent.appendChild(closeButton);
-
         var form = document.createElement('form');
-
         /**
          * 일정명
          * @type {HTMLInputElement}
@@ -85,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
         scheTitleInput.setAttribute('placeholder', '일정명을 입력해주세요');
         form.appendChild(scheTitleLabel);
         form.appendChild(scheTitleInput);
-
         /**
          * 시작일시
          * @type {HTMLInputElement}
@@ -95,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var scheStartDateInput = document.createElement('input');
         scheStartDateInput.setAttribute('type', 'datetime-local');
         form.appendChild(scheStartDateInput);
-
         /**
          * 종료일시
          * @type {HTMLLabelElement}
@@ -105,25 +97,21 @@ document.addEventListener('DOMContentLoaded', function () {
         var scheEndDateInput = document.createElement('input');
         scheEndDateInput.setAttribute('type', 'datetime-local');
         form.appendChild(scheEndDateInput);
-
         /** 일정 종류
          * - 개인일정, 공식일정 선택
          * @type {HTMLLabelElement}
          */
         var calendarTypeLabel = document.createElement('label');
         calendarTypeLabel.textContent = '일정 종류';
-
         var calendarDropdown = document.createElement('select');
         var myCalendarOption = document.createElement('option');
         myCalendarOption.textContent = '개인 일정';
-
         var generalCalendarOption = document.createElement('option');
         generalCalendarOption.textContent = '공식 일정';
         calendarDropdown.appendChild(myCalendarOption);
         calendarDropdown.appendChild(generalCalendarOption);
         form.appendChild(calendarTypeLabel);
         form.appendChild(calendarDropdown);
-
         /**
          * 장소
          * @type {HTMLLabelElement}
@@ -139,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
         locationDropdown.appendChild(conferenceRoomBOption);
         form.appendChild(locationLabel);
         form.appendChild(locationDropdown);
-
         /**
          * 참고사항
          * @type {HTMLTextAreaElement}
@@ -150,22 +137,18 @@ document.addEventListener('DOMContentLoaded', function () {
         notesInput.setAttribute('placeholder', '참고 사항');
         form.appendChild(notesLabel);
         form.appendChild(notesInput);
-
         var submitButton = document.createElement('button');
         submitButton.textContent = '일정 추가';
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
-
             var scheTitle = scheTitleInput.value;
             var scheStartDate = scheStartDateInput.value;
             var scheEndDate = scheEndDateInput.value;
             var calendarType = calendarDropdown.value;
             var location = locationDropdown.value;
             var notes = notesInput.value;
-
             var start = new Date(scheStartDate);
             var end = new Date(scheEndDate);
-
             if (scheTitle.trim() !== '' && start && end) {
                 calendar.addEvent({
                     title: scheTitle,
@@ -184,10 +167,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
         form.appendChild(submitButton);
-
         modalContent.appendChild(form);
         modal.appendChild(modalContent);
-
         document.body.appendChild(modal);
     }
 

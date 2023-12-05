@@ -1,5 +1,6 @@
 package org.kosta.starducks.mypage.service;
 
+import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,15 @@ public class ScheduleService {
         return scheduleRepository.findByEmployeeEmpId(empId);
     }
 
+    public void saveSchedule(ScheduleDTO scheduleDTO) {
+        /**
+         * ScheduleDTO로부터 Schedule 엔티티 생성
+         */
+        Schedule schedule = scheduleDTO.toEntity();
 
-
-
+        /**
+         * 생성된 Schedule 엔티티를 DB에 저장
+         */
+        scheduleRepository.save(schedule);
+    }
 }

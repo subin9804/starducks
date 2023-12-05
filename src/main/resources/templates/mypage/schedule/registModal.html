@@ -2,32 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
-
-<!--여기는 헤드(메인에 없는 헤드 추가하기)-->
-<th:block layout:fragment="addMore">
-    <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>
-</th:block>
-
-
+<head>
+    <!-- 여기는 헤드(메인에 없는 헤드 추가하기) -->
+    <th:block layout:fragment="addMore">
+        <!-- 추가할 CSS 파일 링크 -->
+        <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
+        <!-- FullCalendar 라이브러리 스크립트 -->
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+        <!-- 스케줄 조회에 대한 자바스크립트 -->
+        <script th:src="@{/js/mypage/ScheduleScript.js}"></script>
+    </th:block>
+</head>
+<body>
 <main layout:fragment="content">
-
+    <!-- 일정 추가를 위한 모달 -->
     <div th:fragment="modal">
         <div class="modal" th:style="'display: none'" th:id="modal">
             <div class="modal-content">
+                <!-- 모달 닫기 버튼 -->
                 <span class="close" th:text="'×'" onclick="closeModal()"></span>
-                <form th:action="@{/schedule/show}" method="post" th:object="${scheduleDTO}">
+                <!-- 일정 추가 폼 -->
+                <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
+                    <!-- 일정명 입력 -->
                     <label th:text="'일정명'"></label>
                     <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
 
-
                     <!--여기는 바디-->
-                    <div th:fragment="modal">
                         <div class="modal" th:style="'display: none'" th:id="modal">
-                            <div class="modal-content">
+                            <div class="modal-content" style="width: 50%; height: 50%;">
                                 <span class="close" th:text="'×'" onclick="closeModal()"></span>
-                                <form th:action="@{/schedule}" method="post" th:object="${scheduleDTO}">
+                                <form th:action="@{/schedule/add}" method="post" th:object="${scheduleDTO}">
                                     <label th:text="'일정명'"></label>
                                     <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요"
                                            th:field="*{scheTitle}"/>
@@ -57,7 +61,6 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>
