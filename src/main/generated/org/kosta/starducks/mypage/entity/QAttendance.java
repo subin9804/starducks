@@ -26,6 +26,8 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     public final DateTimePath<java.time.LocalDateTime> endTime = createDateTime("endTime", java.time.LocalDateTime.class);
 
+    public final BooleanPath isVacation = createBoolean("isVacation");
+
     public final DateTimePath<java.time.LocalDateTime> startTime = createDateTime("startTime", java.time.LocalDateTime.class);
 
     public final DatePath<java.time.LocalDate> workDate = createDate("workDate", java.time.LocalDate.class);

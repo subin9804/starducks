@@ -40,6 +40,18 @@ align-items: center;
     /*border: none;*/
     color: #ffffff;
     border-radius: 20px;
+    margin: auto
+}
+.complete-attd {
+    width: 200px;
+    height: 70px;
+    background-color: #d9d9d9;
+    /*border: none;*/
+    color: #ffffff;
+    border-radius: 20px;
+    text-align: center;
+    /*margin: auto;*/
+    /*align-items: center*/
 }
 .attd-btn:hover {
     cursor: pointer;

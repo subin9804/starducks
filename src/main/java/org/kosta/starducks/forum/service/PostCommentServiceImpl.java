@@ -1,5 +1,6 @@
 package org.kosta.starducks.forum.service;
 
+import org.kosta.starducks.forum.dto.PostCommentDto;
 import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.repository.PostCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,24 @@ public class PostCommentServiceImpl implements PostCommentService{
 
   @Override
   public void deleteComment(Long id) {
-
+    postCommentRepository.deleteById(id);
   }
+
+
 
   @Override
   public Optional<PostComment> getCommentById(Long id) {
-    return Optional.empty();
+    return postCommentRepository.findById(id);
   }
+
+  @Override
+  public PostComment updateCommentContent(PostCommentDto postCommentDto) {
+    PostComment existingComment = postCommentRepository.findById(postCommentDto.getCommentId())
+        .orElseThrow(() -> new IllegalArgumentException("Invalid comment Id:" + postCommentDto.getCommentId()));
+    existingComment.setCommentContent(postCommentDto.getCommentContent());
+    return postCommentRepository.save(existingComment);
+  }
+
 
   @Override
   public List<PostComment> getAllComments() {

@@ -17,6 +17,7 @@
 
 <main layout:fragment="content">
     <h1>게시판</h1>
+
     <!-- 전체 글 보기 링크 -->
     <div class="forum-header">
         <div class="view-all-posts">
@@ -40,41 +41,55 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Thymeleaf 반복문을 사용하여 게시글 목록을 표시 -->
-        <tr th:class="${post.postNotice}? 'notice' : ''" th:each="post, iterStat : ${posts}">
-            <td th:text="${post.postId}">게시글 ID</td>
-            <!-- postNotice 값에 따라 '공지' 또는 '일반' 표시-->
-            <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리명</td>
-            <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">게시글 제목</a></td>
-            <!-- 작성자 정보가 아직 없으므로 '정보 없음' 또는 빈 문자열 표시 -->
-            <td th:text="${post.employee}? ${post.employee.empName} : '모름'">작성자</td>
-            <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
-            <td th:text="${post.postView}">조회수</td>
-        </tr>
+        <!-- 최신 공지사항 2개 표시 -->
+        <th:block th:each="notice : ${topNotices}">
+            <tr class="notice">
+                <td th:text="${notice.postId}">ID</td>
+                <td>공지</td>
+                <td><a th:href="@{/forum/post/{id}(id=${notice.postId})}" th:text="${notice.postTitle}">제목</a></td>
+                <td th:text="${notice.employee?.empName} ?: '로그인 필요'">작성자</td>
+                <td th:text="${#temporals.format(notice.postDate, 'yyyy.MM.dd')}">작성일</td>
+                <td th:text="${notice.postView}">조회수</td>
+            </tr>
+        </th:block>
+        <!-- 전체 게시글 목록 (공지 포함) -->
+        <th:block th:each="post : ${posts}">
+            <tr>
+                <td th:text="${post.postId}">ID</td>
+                <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리</td>
+                <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">제목</a></td>
+                <td th:text="${post.employee?.empName} ?: '로그인 필요'">작성자</td>
+                <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
+                <td th:text="${post.postView}">조회수</td>
+            </tr>
+        </th:block>
         </tbody>
     </table>
 
     <div class="add-post">
         <a href="/forum/add" class="commonBtn register-button">+글쓰기</a>
     </div>
+
+<!--    페이지 만들기~ -->
     <div class="pagination">
-        <!-- Link to the first page -->
+        <!-- 첫 번째 페이지로 이동 -->
         <a th:href="@{/forum(page=0)}"> << </a>
 
-        <!-- Link to the previous page -->
+        <!-- 이전 페이지로 이동 -->
         <a th:href="@{/forum(page=${nowPage - 2})}"
            th:classappend="${nowPage == 1} ? 'disabled' : ''"> < </a>
 
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+            <a th:if="${page != nowPage}" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}"
+               th:text="${page}"></a>
             <strong th:if="${page == nowPage}" th:text="${page}" class="current-page"></strong>
         </th:block>
 
-        <!-- Link to the next page -->
+        <!-- 다음 페이지 이동 -->
         <a th:href="@{/forum(page=${nowPage})}"
            th:classappend="${nowPage == totalPages} ? 'disabled' : ''"> > </a>
 
-        <!-- Link to the last page -->
+        <!-- 마지막 페이지로 이동 -->
         <a th:href="@{/forum(page=${totalPages - 1})}"> >> </a>
     </div>
 

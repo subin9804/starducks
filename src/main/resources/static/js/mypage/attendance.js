@@ -11,10 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // eventContent: 'some text',
 
         eventContent: function (arg) {
+            var contentText;
+            if (arg.event.extendedProps.isVacation) {
+                contentText = '휴가';
+            } else if(arg.event.extendedProps.startTime === null && arg.event.extendedProps.endTime === null ) {
+                contentText = '결근'
+            } else {
+                contentText = '&ensp;출근 | ' + timeFormat(arg.event.extendedProps.startTime) +
+                    '<br>&ensp;퇴근 | ' + timeFormat(arg.event.extendedProps.endTime);
+            }
+
             return {
-                html: '<div>&ensp;출근 | ' + timeFormat(arg.event.extendedProps.startTime) +
-                    '<br>&ensp;퇴근 | ' + timeFormat(arg.event.extendedProps.endTime) +
-                    '</div>'
+                html: '<div>' + contentText + '</div>'
             };
         },
 
@@ -24,13 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchDailyAttendance(empId).then(function (data) {
                 var events = data.map(function (attendance) {
                     return {
-                        title: '',
+                        title: attendance.isVacation ? '휴가' : '',
                         color: 'rgba(1,1,1,0)',
                         textColor: 'black',
                         start: attendance.workDate,
                         extendedProps: {
                             startTime: attendance.startTime,
-                            endTime: attendance.endTime
+                            endTime: attendance.endTime,
+                            isVacation: attendance.isVacation
                         }
                     };
                 });
