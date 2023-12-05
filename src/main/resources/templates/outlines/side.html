@@ -79,8 +79,7 @@
         </div>
         <div class="accro">
             <div class="head">
-                <input class="" type="radio" id="general" name="nav" aria-controls="flush-general" th:checked="${menuCode.equals('general
-                ')}? true">
+                <input class="" type="radio" id="general" name="nav" aria-controls="flush-general" th:checked="${menuCode.equals('general')}? true">
                 <label for="general"><a th:href="@{/general}">총무부</a></label>
             </div>
             <ul id="flush-general" th:style="${!menuCode.equals('logistic')}? 'display: none;'">

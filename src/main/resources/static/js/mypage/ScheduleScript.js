@@ -113,21 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
         calendarDropdown.appendChild(generalCalendarOption);
         form.appendChild(calendarTypeLabel);
         form.appendChild(calendarDropdown);
-        /**
-         * 장소
-         * @type {HTMLLabelElement}
-         */
-        // var locationLabel = document.createElement('label');
-        // locationLabel.textContent = '장소';
-        // var locationDropdown = document.createElement('select');
-        // var conferenceRoomAOption = document.createElement('option');
-        // conferenceRoomAOption.textContent = '회의실A';
-        // var conferenceRoomBOption = document.createElement('option');
-        // conferenceRoomBOption.textContent = '회의실B';
-        // locationDropdown.appendChild(conferenceRoomAOption);
-        // locationDropdown.appendChild(conferenceRoomBOption);
-        // form.appendChild(locationLabel);
-        // form.appendChild(locationDropdown);
+
         /**
          * 참고사항
          * @type {HTMLTextAreaElement}
