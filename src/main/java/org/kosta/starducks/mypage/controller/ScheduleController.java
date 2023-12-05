@@ -83,7 +83,6 @@ public class ScheduleController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<String> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        log.info("여기는 컨트롤러");
         try {
             log.info("여기는 컨트롤러2");
             Schedule schedule = scheduleDTO.toEntity();
