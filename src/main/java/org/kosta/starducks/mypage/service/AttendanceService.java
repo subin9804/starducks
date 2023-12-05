@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +40,22 @@ public class AttendanceService {
     }
 
     /**
-     * 일별 출근 정보 조회 함수
+     * 오늘의 출근 정보 조회 함수
      */
     public Attendance getAttendanceForToday(Long empId) {
         LocalDate today = LocalDate.now();
         return attendanceRepository.findByWorkDateAndEmp_EmpId(today, empId).orElse(null);
     }
+
+    /**
+     * 이번 달의 출근 정보 조회 함수
+     */
+    public List<Attendance> getAttendanceForMonth(Long empId) {
+        LocalDate firstDay = YearMonth.now().atDay(1);
+        LocalDate lastDay = YearMonth.now().atEndOfMonth();
+        return attendanceRepository.findByWorkDateBetweenAndEmp_EmpId(firstDay, lastDay, empId);
+    }
+
 
     public List<Attendance> getAllAttendance(){
         return attendanceRepository.findAll();

@@ -34,6 +34,8 @@ public class Attendance {
         @ColumnDefault(value = "false")
         private boolean isVacation;
 
+        //연차테이블 총연차일수 칼럼 가져와서 컨트롤러에 삽입, 화면 연결
+
         public Long getEmpId() {
                 return emp != null ? emp.getEmpId() : null;
         }

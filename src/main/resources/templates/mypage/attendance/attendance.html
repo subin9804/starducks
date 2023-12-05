@@ -44,11 +44,11 @@
             <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
             <div>
-                <div class="attd-sum-num-box">18</div>
+                <div class="attd-sum-num-box" th:text="${workDays}">18</div>
                 <div>근무</div>
             </div>
             <div>
-                <div class="attd-sum-num-box">0</div>
+                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
                 <div>지각</div>
             </div>
             <div>

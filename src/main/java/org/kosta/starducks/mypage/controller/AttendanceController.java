@@ -1,14 +1,17 @@
 package org.kosta.starducks.mypage.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.eclipse.jdt.internal.compiler.ast.TrueLiteral;
 import org.kosta.starducks.mypage.entity.Attendance;
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/attendance")
@@ -32,7 +35,16 @@ public class AttendanceController {
     public String Attendance(Model model, @PathVariable("empId") Long empId) {
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
-        System.out.println(attendanceForToday);
+
+        List<Attendance> attendanceForMonth = attendanceService.getAttendanceForMonth(empId);
+        int absentDays =  (int)attendanceForMonth.stream()
+                .filter(Objects::isNull)
+                .count();
+        int workDays = (int)attendanceForMonth.stream().count() - absentDays;
+        model.addAttribute("absentDays", absentDays);
+        model.addAttribute("workDays", workDays);
+//        model.addAttribute("isVacation", attendanceService.getIsVacation);
+
         return "mypage/attendance/attendance";
     }
 
