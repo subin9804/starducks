@@ -53,8 +53,6 @@ public class AttendanceController {
 //        model.addAttribute("isVacation", attendanceService.getIsVacation);
 
         return "mypage/attendance/attendance";
-        MenuService.commonProcess(request, model, "mypage");
-        return attendanceService.getDailyAttendance(empId);
     }
 
 
