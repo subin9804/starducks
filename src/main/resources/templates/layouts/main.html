@@ -28,7 +28,7 @@
     <th:block layout:fragment="addMore"></th:block>
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}" th:href="@{/{file}/style.css(file=${location})}">
 
-    <script th:src="@{js/commons/script.js}"></script>
+    <script th:src="@{/js/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${file})}"></script>
 
     <!--    head 추가사항-->
