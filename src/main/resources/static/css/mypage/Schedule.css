@@ -24,7 +24,5 @@ html, body {
 
 #calendar {
     max-width: 1100px;
-    margin: auto;
-    width: 80%;
-    color: #616161;
+    margin: 40px auto;
 }

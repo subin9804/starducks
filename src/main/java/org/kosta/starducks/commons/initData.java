@@ -27,6 +27,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
     private final ForumPostRepository forumPostRepository;
+
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
 
@@ -84,7 +85,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
 
-
         //초기 vendor 데이터
         for(int i = 0; i < 5; i++) {
             Vendor vendor = new Vendor();
@@ -115,6 +115,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             forumPostRepository.saveAndFlush(forumPost);
         }
+
 
 
     }
