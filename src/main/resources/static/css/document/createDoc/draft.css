@@ -1,4 +1,14 @@
-table, tr, th {
-    border: 1px solid red;
+#print-div {
+    width: 500px;
+}
+table {
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
     border-collapse: collapse;
+}
+th {
+    background-color: #dddddd;
+    -webkit-print-color-adjust:exact;
 }
