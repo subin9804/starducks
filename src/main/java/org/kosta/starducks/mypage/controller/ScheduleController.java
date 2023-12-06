@@ -27,7 +27,7 @@ public class ScheduleController {
     private final HttpServletRequest request;
 
     /**
-     * 로그인을 한 사원의 일정 조회S
+     * 로그인을 한 사원의 일정 조회
      *
      * 정보를 던져주는 용도의 GetMapping
      * @param

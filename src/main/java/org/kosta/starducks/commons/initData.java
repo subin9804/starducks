@@ -7,6 +7,7 @@ import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.kosta.starducks.roles.Position;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -23,6 +24,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
     private final ForumPostRepository forumPostRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
