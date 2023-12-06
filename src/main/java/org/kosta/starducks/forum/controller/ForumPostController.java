@@ -1,8 +1,9 @@
 package org.kosta.starducks.forum.controller;
 
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.commons.MenuService;
-import org.kosta.starducks.forum.dto.ForumPostUpdateDTO;
+import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.service.ForumPostService;
@@ -14,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 게시판 관련 컨트롤러
@@ -35,9 +38,16 @@ public class ForumPostController {
 
     // 게시판 메인 페이지
     @GetMapping
+
     public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
         MenuService.commonProcess(request, model, "forum");
+
         Page<ForumPost> posts = null;
+
+        List<ForumPost> topNotices = forumPostService.getTopNotice(); // 최신 공지 2개 조회
+
+        model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
+
 
 //        검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
         if(searchKeyword == null) {
@@ -46,6 +56,7 @@ public class ForumPostController {
             posts = forumPostService.postSearchList(searchKeyword,pageable);
         }
 
+        model.addAttribute("posts", posts.getContent()); // 모든 게시글 데이터 추가
 
         // 페이지 조건 생성
         int nowPage = posts.getPageable().getPageNumber()+1;
@@ -54,6 +65,7 @@ public class ForumPostController {
         int totalPages = posts.getTotalPages();
 
         model.addAttribute("posts", posts );
+        model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
@@ -100,7 +112,7 @@ public class ForumPostController {
 
     //게시글 수정 완료될 때 로직
     @PostMapping("/edit/{id}")
-    public String editPost(@PathVariable("id") Long id, @ModelAttribute ForumPostUpdateDTO postDTO) {
+    public String editPost(@PathVariable("id") Long id, @ModelAttribute ForumPostUpdateDto postDTO) {
         // 기존 게시글 객체를 불러옵니다.
         ForumPost existingPost = forumPostService.getPostById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
@@ -113,7 +125,7 @@ public class ForumPostController {
         // 게시글을 업데이트합니다.
         forumPostService.createOrUpdateForumPost(existingPost);
 
-        return "redirect:/forum";
+        return "redirect:/forum/post/{id}";
     }
 
     // 게시글 삭제

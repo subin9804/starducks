@@ -1,62 +1,31 @@
 package org.kosta.starducks.mypage.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.kosta.starducks.mypage.entity.Schedule;
+import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ScheduleService {
 
-//    private final ScheduleReposiroty scheduleReposiroty;
+    private final ScheduleRepository scheduleRepository;
 
     /**
-     * 자체 매핑 메서드 생성(ModelMapper를 안쓰기 위해서)
+     * 특정 사원의 모든 일정 정보 가져오기
      * @return
      */
-//    public List<ScheduleDTO> findMySchedule() {
-//        List<Schedule> scheduleList = scheduleReposiroty.findAll();
-//        List<ScheduleDTO> scheduleDTOList = new ArrayList<>();
-//
-//        for(Schedule schedule : scheduleList) {
-//            ScheduleDTO scheduleDTO = new ScheduleDTO(schedule);
-//            scheduleDTOList.add(scheduleDTO);
-//        }
-//        return scheduleDTOList;
-//    }
+    public List<Schedule> findByEmployeeEmpId(Long empId) {
+        return scheduleRepository.findByEmployeeEmpId(empId);
+    }
 
-//    private ScheduleDTO scheduleDTO(Schedule schedule) {
-//        ScheduleDTO scheduleDTO = new ScheduleDTO();
-//        scheduleDTO.setScheNo(schedule.getScheNo());
-//        scheduleDTO.setScheStartDate(schedule.getScheStartDate());
-//        scheduleDTO.setScheEndDate(schedule.getScheEndDate());
-//        scheduleDTO.setScheduleType(schedule.getScheduleType());
-//        scheduleDTO.setLocation(schedule.getLocation());
-//        scheduleDTO.setNotes(schedule.getNotes());
-//        scheduleDTO.setEmpId(schedule.getEmpId());
-//
-//        return scheduleDTO;
-//
-//    }
-
-    /**
-     * Schedule 객체 저장
-     * @param schedule
-     */
-//    public Schedule saveSchedule(Schedule schedule) {
-//        return scheduleReposiroty.save(schedule);
-//    }
-
-//    public List<ScheduleDTO> getAllSchedules() {
-//        List<Schedule> scheduleList = scheduleReposiroty.findAll();
-//        List<ScheduleDTO> scheduleDTOList = new ArrayList<>();
-//
-//        for (Schedule schedule : scheduleList) {
-//            ScheduleDTO scheduleDTO = new ScheduleDTO((schedule));
-//            scheduleDTOList.add(scheduleDTO);
-//        }
-//
-//        return scheduleDTOList;
-//    }
+    public void saveSchedule(Schedule schedule) {
+        scheduleRepository.save(schedule);
+    }
 }

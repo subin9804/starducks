@@ -1,69 +1,55 @@
-function quilljsediterInit(postContent) {
-    var options = {
-        modules: {
-            toolbar: [
-                [{ header: [1, 2, false] }],
-                ['bold', 'italic', 'underline'],
-                ['image', 'code-block'],
-                [{ list: 'ordered' }, { list: 'bullet' }]
-            ]
-        },
-        placeholder: '자세한 내용을 입력해 주세요!',
-        theme: 'snow'
-    };
+var productIndex = 0;
 
-    var quill = new Quill('#editor', options);
+/* 상품 추가 버튼 클릭 시 동적으로 상품 입력 필드 추가 */
+function addProductField() {
+    var productFields = document.getElementById('productFields');
 
-    // 수정 페이지에서 게시글 내용을 보이도록 에디터에 설정
-    if (postContent) {
-        quill.clipboard.dangerouslyPasteHTML(postContent);
+    var productField = document.createElement('div');
+    productField.appendChild(document.createElement('label'));
+    productField.lastChild.htmlFor = 'product';
+    productField.lastChild.textContent = '입고상품 : ';
+
+    var selectElement = document.createElement('select');
+    selectElement.id = 'product';
+    selectElement.name = 'productCodes[' + productIndex + ']';
+
+    var defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.text = '상품 선택하세요';
+    selectElement.appendChild(defaultOption);
+
+    /* JavaScript로 서버에서 전달한 데이터 사용 */
+    /* products는 서버에서 전달한 상품 목록 데이터로 가정 */
+    var products = JSON.parse(document.getElementById('productFields').getAttribute('data-products'));
+
+    for (var i = 0; i < products.length; i++) {
+        var optionElement = document.createElement('option');
+        optionElement.value = products[i].productCode;
+        optionElement.text = products[i].productName;
+        selectElement.appendChild(optionElement);
     }
 
+    productField.appendChild(selectElement);
 
-    // 에디터 내용이 변경될 때마다 숨겨진 입력 필드에 값을 업데이트
-    quill.on('text-change', function() {
-        document.getElementById("quill_html").value = quill.root.innerHTML;
-    });
+    productField.appendChild(document.createElement('label'));
+    productField.lastChild.htmlFor = 'quantity';
+    productField.lastChild.textContent = ' 입고수량';
 
-    // 이미지 업로드 핸들러
-    quill.getModule('toolbar').addHandler('image', function() {
-        selectLocalImage();
-    });
+    var inputElement = document.createElement('input');
+    inputElement.type = 'number';
+    inputElement.id = 'quantity';
+    inputElement.name = 'inboundQuantities[' + productIndex + ']';
+    inputElement.required = true;
 
-    // 이미지 업로드 함수
-    function selectLocalImage() {
-        const fileInput = document.createElement('input');
-        fileInput.setAttribute('type', 'file');
-        fileInput.click();
+    productField.appendChild(inputElement);
 
-        fileInput.addEventListener("change", function() {
-            const formData = new FormData();
-            const file = fileInput.files[0];
-            formData.append('uploadFile', file);
+    productField.appendChild(document.createElement('br'));
 
-            // 이미지 파일을 서버에 업로드하는 AJAX 요청
-            $.ajax({
-                type: 'post',
-                enctype: 'multipart/form-data',
-                url: '/board/register/imageUpload',
-                data: formData,
-                processData: false, // processData와 contentType을 false로 설정
-                contentType: false, // 파일 업로드 시 이 옵션이 필요
-                dataType: 'json',
-                success: function (data) {
-                    // 업로드된 이미지를 에디터에 삽입
-                    const range = quill.getSelection();
-                    data.uploadPath = data.uploadPath.replace(/\\/g, '/');
-                    quill.insertEmbed(range.index, 'image', "/board/display?fileName=" + data.uploadPath + "/" + data.uuid + "_" + data.fileName);
-                },
-                error: function (err) {
-                    console.error("이미지 업로드 실패:", err);
-                }
-            });
-        });
-    }
-
+    productFields.appendChild(productField);
+    productIndex++;
 }
+<<<<<<< HEAD
+=======
 
 // 페이지 로드 완료 시 에디터 초기화
 window.onload = function() {
@@ -75,6 +61,78 @@ window.onload = function() {
         quilljsediterInit(postContent);
     }
 };
+
+// 댓글 수정 폼을 표시하고, 수정된 내용을 AJAX 요청으로 전송
+function showEditForm(commentId) {
+    // 댓글 내용과 수정 폼을 토글
+    var content = document.getElementById('comment-content-' + commentId);
+    var editForm = document.getElementById('edit-comment-form-' + commentId);
+    content.style.display = content.style.display === 'none' ? '' : 'none';
+    editForm.style.display = editForm.style.display === 'none' ? '' : 'none';
+}
+
+function updateComment(commentId) {
+    var commentContent = document.getElementById('edit-comment-textarea-' + commentId).value;
+    var url = '/api/comments/' + commentId; // RESTful API 엔드포인트
+
+    // AJAX 요청
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content: commentContent })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 요청 성공 시, 댓글 내용 업데이트 및 수정 폼 숨기기
+            document.getElementById('comment-content-' + commentId).innerText = commentContent;
+            showEditForm(commentId); // 수정 폼 숨김
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// 댓글 수정 이벤트 리스너
+document.querySelectorAll('.edit-comment').forEach(button => {
+    button.addEventListener('click', function() {
+        let commentId = this.dataset.commentId;
+        let commentContent = document.querySelector(`#comment-content-${commentId}`).innerText;
+        // 기존 내용을 입력 필드에 설정
+        document.querySelector(`#edit-comment-input-${commentId}`).value = commentContent;
+        // 수정 모드 활성화 (UI 변경 등)
+    });
+});
+
+// 댓글 저장 이벤트 리스너
+document.querySelectorAll('.save-comment').forEach(button => {
+    button.addEventListener('click', function() {
+        let commentId = this.dataset.commentId;
+        let updatedContent = document.querySelector(`#edit-comment-input-${commentId}`).value;
+        // AJAX 요청으로 수정된 내용 전송
+        fetch(`/api/comments/${commentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: updatedContent })
+        }).then(response => {
+            // 처리 결과에 따른 UI 업데이트
+        });
+    });
+});
+
+// 댓글 삭제 이벤트 리스너
+document.querySelectorAll('.delete-comment').forEach(button => {
+    button.addEventListener('click', function() {
+        let commentId = this.dataset.commentId;
+        // AJAX 요청으로 삭제 요청 전송
+        fetch(`/api/comments/${commentId}`, {
+            method: 'DELETE'
+        }).then(response => {
+            // 처리 결과에 따른 UI 업데이트
+        });
+    });
+});
 
 
 /** 콘텐츠 내용에서 <p>태그가 자꾸 보여서 없애려는 수단 나중에 시도해보기
@@ -92,3 +150,4 @@ $(document).ready(function() {
     $("#content").html(content);
 });
 */
+>>>>>>> master

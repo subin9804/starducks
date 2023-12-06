@@ -17,7 +17,6 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 //    List<Employee> dynamicSearch(EmpSearchCond empSearch);
 //    Page<Employee> pagination(EmpSearchCond empSearch, Pageable pageable);
 
-
     default Page<Employee> getEmployees(EmpSearchCond empSearch) {
         /** 페이징 처리 */
         int page = empSearch.getPage();

@@ -18,7 +18,7 @@
     <script th:src="@{/js/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${jsFile})}"></script>
 
-    <!--    title-->
+    <!--    title 사용 x...-->
     <title layout:fragment="title">index</title>
 
     <!--    head 추가사항-->

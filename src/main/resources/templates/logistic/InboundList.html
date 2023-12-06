@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>입고 목록</h1>
+    <div class="content">
+
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>입고번호</th><th>입고일자</th><th>담당자</th><th>총입고수량</th><th>구분</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i:${inbounds}">
+
+                    <td>
+                        <a th:text="${i.getWarehouseInboundId()}" th:href="@{/warehouseInbound/info/{Id}(Id=${i.getWarehouseInboundId()})}">
+                            주문 Id
+                        </a>
+                    </td>
+
+                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
+                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
+                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                    <td >비고</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+<!--            <td>-->
+<!--                <a th:if="${o.orderStatus.name()=='CREATED'}"-->
+<!--                   th:text="취소"-->
+<!--                   th:href="@{/order/cancel/{orderId}(orderId=${o.orderId})}">-->
+<!--                    취소하기-->
+<!--                </a>-->
+<!--            </td>-->
+
+
+
+    </div>
+</main>
+
+
+</html>
