@@ -43,7 +43,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
-            emp.setPwd("234jf");
+            emp.setPwd(passwordEncoder.encode("1q"));
 
             repository.saveAndFlush(emp);
         }

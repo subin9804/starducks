@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class EmpService {
 
     @Autowired
     private EmpRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 모든 직원 조회
@@ -48,6 +52,11 @@ public class EmpService {
             // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
             Long id = getLastEmpId();
             emp.setEmpId(id + 1);
+
+//            비밀번호 암호화해서 사원 등록~~~
+            String encodedPassword = passwordEncoder.encode(emp.getPwd());
+            emp.setPwd(encodedPassword);
+
             System.out.println("등록한다");
             return repository.save(emp);
 
