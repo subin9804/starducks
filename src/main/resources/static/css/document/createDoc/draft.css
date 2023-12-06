@@ -6,9 +6,13 @@
     height: 1122.66px;
 }
 #print-div {
+    position: relative;
     border: 1px solid yellowgreen;
     /*margin: 10mm;*/
     margin: 38.7px;
+}
+.doc-form-name {
+    text-align: center;
 }
 table {
     width: 100%;
@@ -24,20 +28,35 @@ th, .col-th {
 .col-th {
     width: 80px;
 }
+.top-box {
+    height: 120px;
+}
 .drafter-box {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 100%;
+    height: 100%;
     width: 90px;
     height: 90px;
 }
 .approver-box {
-    width: 150px;
+    position: absolute;
+    top: 100px;
+    right: 110px;
+    width: 160px;
     height: 90px;
 }
+.stamp-box {
+    width: 65px;
+    height: 70px;
+}
 .doc-info-box {
-
+    margin: 20px 0;
 }
 .doc-content-box {
-
+    margin: 20px 0;
 }
 .attached-files-box {
-
+    margin: 20px 0;
 }
