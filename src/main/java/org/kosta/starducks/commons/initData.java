@@ -9,7 +9,6 @@ import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.kosta.starducks.roles.Position;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -86,7 +85,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
 
-
         //초기 vendor 데이터
         for(int i = 0; i < 5; i++) {
             Vendor vendor = new Vendor();
@@ -117,6 +115,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             forumPostRepository.saveAndFlush(forumPost);
         }
+
 
 
     }
