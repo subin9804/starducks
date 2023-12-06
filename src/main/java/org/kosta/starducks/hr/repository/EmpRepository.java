@@ -29,21 +29,39 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         /** 검색 조건 처리 */
         BooleanBuilder builder = new BooleanBuilder();
         QEmployee employee = QEmployee.employee;
+        String sopt = empSearch.getSopt();
         String text = empSearch.getText();
         String status = empSearch.getStatus();
 
-        builder.andAnyOf(employee.empName.contains(text),
-                employee.empId.eq((long)Integer.parseInt(text)),
-                employee.empTel.contains(text),
-                employee.email.contains(text),
-                employee.dept.contains(text));
+        if(sopt != null && !sopt.isBlank() && text != null && !text.isBlank()) {
+            if(sopt.equals("dept")) {
+                builder.and(employee.dept.deptName.contains(text));
+            } else if(sopt.equals("empName")) {
+                builder.and(employee.empName.contains(text));
+            } else if(sopt.equals("email")) {
+                builder.and(employee.email.contains(text));
+            } else {
+                builder.andAnyOf(employee.dept.deptName.contains(text),
+                        employee.empName.contains(text),
+                        employee.email.contains(text));
+            }
+        }
 
         /** 퇴사여부 옵션 선택 시 */
-        if(status.equals("running")) {
-            builder.and(employee.status.eq(false));
-        } else if(status.equals("stopped")) {
-            builder.and(employee.status.eq(true));
+
+        if (status != null && !status.isBlank()) {
+            if ("stopped".equals(status)) {
+                builder.and(employee.status.isTrue());
+            } else if ("running".equals(status)) {
+                builder.and(employee.status.isFalse());
+            }
         }
+        else {
+            builder.andAnyOf(employee.status.isFalse(),
+                    employee.status.isTrue());
+        }
+
+//        builder.and(andBuilder);
 
         Page<Employee> data = findAll(builder, pageable);
         return data;

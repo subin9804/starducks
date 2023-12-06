@@ -1,15 +1,12 @@
 package org.kosta.starducks.hr.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.kosta.starducks.roles.Position;
 
 import java.time.LocalDate;
 
-@Entity @Data @Builder
+@Entity @Getter @Setter @Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "employee")
 public class Employee {
@@ -40,7 +37,9 @@ public class Employee {
     private boolean status;      // 퇴사여부
     private String pwd;     // 비밀번호
 
-    private String dept;    // 부서코드
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dept_id")
+    private Department dept;    // 부서코드
 //    파일
 
 }

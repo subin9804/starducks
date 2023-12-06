@@ -17,16 +17,14 @@
     <script th:src="@{/js/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${jsFile})}"></script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--    title-->
+    <!--    title 사용 x...-->
     <title layout:fragment="title">index</title>
 
     <!--    head 추가사항-->
     <th:block layout:fragment="addMore"></th:block>
 
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
