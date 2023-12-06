@@ -1,4 +1,5 @@
-package org.kosta.starducks.document.entity;
-
-public class Document {
-}
+//package org.kosta.starducks.document.entity;
+//
+//
+//public class Document {
+//}

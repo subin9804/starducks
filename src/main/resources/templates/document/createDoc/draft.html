@@ -1,20 +1,24 @@
 <!DOCTYPE html>
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layouts/main}">-->
+<html lang="en">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+<!--<th:block layout:fragment="addMore">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">-->
+<!--    <script th:src="@{draft.js}" src="/js/document/createDoc/draft.js"></script>-->
+<!--</th:block>-->
+
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/document/createDoc/draft.css">
+    <script src="/static/js/document/createDoc/draft.js"></script>
+    <meta charset="UTF-8">로
     <title>Title</title>
 </head>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
 
-<!--title-->
-<!--<th:block layout:fragment="title">title</th:block>-->
-<th:block layout:fragment="addMore">
-    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">
-    <script th:src="@{ddraft.js}" src="/js/document/createDoc/draft.js"></script>
-</th:block>
-
-<main layout:fragment="content">
+<!--<main layout:fragment="content">-->
+    <body>
     <h1>시작</h1>
     <div id="print-div">
 <!--        <table class="test-table" border="1px" bordercolor="black" width ="500" height="300" cellspacing="0" >-->
@@ -38,5 +42,6 @@
     </div>
     <h1>끝</h1>
     <button onclick="startPrint('print-div');">print</button>
-</main>
+    </body>
+<!--</main>-->
 </html>

@@ -1,4 +1,4 @@
-package org.kosta.starducks.document.entity;
-
-public class Approver {
-}
+//package org.kosta.starducks.document.entity;
+//
+//public class Approver {
+//}
