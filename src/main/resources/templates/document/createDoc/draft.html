@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<!--<th:block layout:fragment="title">title</th:block>-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">
+    <script th:src="@{ddraft.js}" src="/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>시작</h1>
+    <div id="print-div">
+<!--        <table class="test-table" border="1px" bordercolor="black" width ="500" height="300" cellspacing="0" >-->
+        <table class="test-table">
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+        </table>
+    </div>
+    <h1>끝</h1>
+    <button onclick="startPrint('print-div');">print</button>
+</main>
+</html>
