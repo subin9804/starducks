@@ -11,6 +11,8 @@
 </th:block>
 
 <main layout:fragment="content">
+    <h1>품목 상세 페이지</h1>
+    <div class="content">
     <div >
         물품 ID : <input type="text" th:value="${p.productCode}" readonly>
         <br>
@@ -32,13 +34,13 @@
     </div>
 
     <div>
-        <a th:href="@{/products/update/{id}(id=${p.productCode})}">
+        <a th:href="@{/general/products/update/{id}(id=${p.productCode})}">
             <button > 수정하기</button>
         </a>
 
     </div>
 
 
-
+</div>
 </main>
 </html>

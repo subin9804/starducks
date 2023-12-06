@@ -14,6 +14,10 @@
     <h1>입고 목록</h1>
     <div class="content">
 
+        <a th:href="@{/logistic/warehouseinbound/add}" >
+            <button  type="submit"> 입고 등록 </button>
+        </a>
+
             <table class="styled-table">
                 <thead>
                 <tr>
@@ -24,7 +28,7 @@
                 <tr th:each="i:${inbounds}">
 
                     <td>
-                        <a th:text="${i.getWarehouseInboundId()}" th:href="@{/warehouseInbound/info/{Id}(Id=${i.getWarehouseInboundId()})}">
+                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
                             주문 Id
                         </a>
                     </td>

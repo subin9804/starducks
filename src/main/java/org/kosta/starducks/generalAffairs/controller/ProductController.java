@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/logistic/products")
+@RequestMapping("/general/products")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -94,7 +94,7 @@ public class ProductController {
 
         product.setVendor(vendorByName);
         productService.addProduct(product);
-        return "redirect:/products/list";
+        return "redirect:/general/products/list";
     }
 
 
@@ -113,7 +113,7 @@ public class ProductController {
         return "generalAffairs/ProductUpdate";
         }
         else{
-            return "redirect:/products/list";
+            return "redirect:/general/products/list";
         }
     }
 
@@ -124,7 +124,7 @@ public class ProductController {
 
         productService.updateProduct(productUpdateDto);
 
-        return "redirect:/products/list";
+        return "redirect:/general/products/list";
     }
 
 //    @PostMapping("/update/{productCode}")
