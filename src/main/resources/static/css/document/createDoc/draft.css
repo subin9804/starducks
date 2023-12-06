@@ -34,7 +34,7 @@ th, .col-th {
 .drafter-box {
     position: absolute;
     top: 100px;
-    right: 0;
+    right: 180px;
     width: 100%;
     height: 100%;
     width: 90px;
@@ -43,7 +43,7 @@ th, .col-th {
 .approver-box {
     position: absolute;
     top: 100px;
-    right: 110px;
+    right: 0px;
     width: 160px;
     height: 90px;
 }
@@ -59,4 +59,8 @@ th, .col-th {
 }
 .attached-files-box {
     margin: 20px 0;
+}
+.border-delete {
+    border-bottom: solid 1px rgba(0,0,0,0);
+    border-right: solid 1px rgba(0,0,0,0);
 }
