@@ -1,5 +1,14 @@
+.a4-box {
+    border: 1px solid cadetblue;
+    /*width: 210mm;*/
+    /*height: 297mm;*/
+    width: 794.52px;
+    height: 1122.66px;
+}
 #print-div {
-    width: 500px;
+    border: 1px solid yellowgreen;
+    /*margin: 10mm;*/
+    margin: 38.7px;
 }
 table {
     width: 100%;
@@ -11,4 +20,24 @@ table, th, td {
 th, .col-th {
     background-color: #dddddd;
     -webkit-print-color-adjust:exact;
+}
+.col-th {
+    width: 80px;
+}
+.drafter-box {
+    width: 90px;
+    height: 90px;
+}
+.approver-box {
+    width: 150px;
+    height: 90px;
+}
+.doc-info-box {
+
+}
+.doc-content-box {
+
+}
+.attached-files-box {
+
 }

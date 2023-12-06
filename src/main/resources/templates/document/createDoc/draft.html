@@ -20,26 +20,73 @@
 <!--<main layout:fragment="content">-->
     <body>
     <h1>시작</h1>
-    <div id="print-div">
-<!--        <table class="test-table" border="1px" bordercolor="black" width ="500" height="300" cellspacing="0" >-->
-        <table class="test-table">
-            <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-            </tr>
-            <tr>
-                <td class="col-th">Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td class="col-th">Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
-        </table>
+
+    <div class="a4-box">
+        <div id="print-div">
+            <h1>업 무 기 안 서</h1>
+            <table class="drafter-box">
+                <tr>
+                    <th rowspan="2">신청</th>
+                    <th>사원</th>
+                </tr>
+                <tr>
+                    <td>(홍길동인)</td>
+                </tr>
+            </table>
+            <table class="approver-box">
+                <tr>
+                    <th rowspan="2">승인</th>
+                    <th>직급</th>
+                    <th>직급</th>
+                </tr>
+                <tr>
+                    <td>(김팀장인)</td>
+                    <td>(김사장인)</td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+            <table class="doc-info-box">
+                <tr class="approver">
+                    <td class="col-th">기안자</td>
+                    <td>내용</td>
+                </tr>
+                <tr class="doc-info">
+                    <td class="col-th">소속</td>
+                    <td>내용</td>
+                </tr>
+                <tr class="doc-content">
+                    <td class="col-th">기안일</td>
+                    <td>내용</td>
+                </tr>
+                <tr class="doc-content">
+                    <td class="col-th">문서번호</td>
+                    <td>내용</td>
+                </tr>
+                <tr class="doc-content">
+                    <td class="col-th">참조인</td>
+                    <td>내용</td>
+                </tr>
+            </table>
+            <table class="doc-content-box">
+                <tr class="approver">
+                    <td class="col-th">제목</td>
+                    <td>내용</td>
+                </tr>
+                <tr class="doc-info">
+                    <td class="col-th">내용</td>
+                    <td>내용</td>
+                </tr>
+            </table>
+            <table class="attached-files-box">
+                <tr class="attached-files">
+                    <td class="col-th">첨부파일</td>
+                    <td>내용</td>
+                </tr>
+            </table>
+        </div>
     </div>
+
     <h1>끝</h1>
     <button onclick="startPrint('print-div');">print</button>
     </body>
