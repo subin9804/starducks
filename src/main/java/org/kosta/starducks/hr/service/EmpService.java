@@ -1,18 +1,22 @@
 package org.kosta.starducks.hr.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmpService {
 
-    @Autowired
-    private EmpRepository repository;
+    private final EmpRepository repository;
+    private final EntityManager em;
 
     /**
      * 모든 직원 조회
@@ -21,6 +25,16 @@ public class EmpService {
     @Transactional
     public List<Employee> getAllEmp() {
         List<Employee> emps = repository.findAll();
+        return emps;
+    }
+
+    /**
+     * 직원 검색
+     */
+    @Transactional
+    public Page<Employee> toSearchEmp (EmpSearchCond cond) {
+        Page<Employee> emps = repository.getEmployees(cond);
+        emps.stream().forEach(em::detach);  // 영속성 분리
         return emps;
     }
 
@@ -34,6 +48,7 @@ public class EmpService {
 
         return repository.findById(empId).orElse(null);
     }
+
 
     /**
      * 직원 추가
@@ -49,6 +64,7 @@ public class EmpService {
             Long id = getLastEmpId();
             emp.setEmpId(id + 1);
             System.out.println("등록한다");
+
             return repository.save(emp);
 
 
@@ -74,7 +90,6 @@ public class EmpService {
 
         }
     }
-
 
     /**
      * 직원 퇴사처리

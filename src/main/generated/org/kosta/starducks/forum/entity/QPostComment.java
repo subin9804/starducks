@@ -52,7 +52,7 @@ public class QPostComment extends EntityPathBase<PostComment> {
 
     public QPostComment(Class<? extends PostComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee")) : null;
+        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
         this.forumPost = inits.isInitialized("forumPost") ? new QForumPost(forProperty("forumPost"), inits.get("forumPost")) : null;
     }
 

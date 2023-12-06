@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>입고 등록</h1>
+    <div class="content">
+            <form action="/warehouseinbound/add" method="post">
+
+                <div>
+                    <label for="employee">담당자명 : </label>
+                    <select id="employee" name="empId">
+                        <option value="">담당자를 선택하세요</option>
+                        <option th:each="e : ${employees}" th:value="${e.getEmpId()}" th:text="${e.getEmpName()}"></option>
+                    </select>
+                </div>
+                <div>
+                    <input type="submit" value="입고등록">
+                </div>
+
+            </form>
+            <form id="addForm" >
+
+            <label for="product">입고상품 : </label>
+            <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
+            <select  id="product" name="productCode">
+            <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
+                <option value="">상품 선택하세요</option>
+                <option th:each="p :${products}"
+                        th:value="${p.productCode}"
+                        th:data-name="${p.productName}"
+                        th:text="${p.productName}">
+                    고객명
+                </option>
+            </select>
+
+            <label for="quantity"> 입고 수량</label>
+            <input type="number" id="quantity" name="inboundQuantity">
+
+<!--            <p>가격 * 수량 <span id="result"></span></p>-->
+            <button id="addBtn">추가</button>
+
+
+        </form>
+
+        <ul id="contentList">
+
+        </ul>
+    </div>
+
+</main>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--                            <label for="product">입고상품 : </label>-->
+<!--                            &lt;!&ndash; 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.&ndash;&gt;-->
+<!--                            <select  id="product" name="productCode">-->
+<!--                                &lt;!&ndash; Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.&ndash;&gt;-->
+<!--                                <option value="">상품 선택하세요</option>-->
+<!--                                <option th:each="p :${products}"-->
+<!--                                        th:value="${p.productCode}"-->
+<!--                                        th:text="${p.productName}">-->
+<!--                                    고객명-->
+<!--                            </select>-->

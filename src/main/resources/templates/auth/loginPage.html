@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="/css/auth/style.css" rel="stylesheet" type="text/css">
+<!--  <script src="/static/js/auth/script.js"></script>-->
+</head>
+<body>
+<div class="login-container">
+  <div th:if="${loginError}" class="error-message" th:text="${loginError}"></div>
+  <!-- 오류 확인 용    -->
+
+  <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="logo">
+  <form th:action="@{/login}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <div class="form-floating">
+      <input type="text" id="empId" name="empId" required>
+      <label for="empId">사번</label>
+      <!-- 예시 오류 메시지 -->
+<!--      <span id="empIdError" class="error-message">사번이 일치하지 않습니다.</span>-->
+    </div>
+
+    <div class="form-floating">
+      <input type="password" id="password" name="password" required>
+      <label for="password">비밀번호</label>
+      <!-- 예시 오류 메시지 -->
+      <span id="passwordError" class="error-message">비밀번호가 일치하지 않습니다.</span>
+    </div>
+
+    <button type="submit">로그인</button>
+  </form>
+
+  <a href="/forgot-password" class="forgot-password">비밀번호 찾기</a>
+</div>
+</body>
+</html>

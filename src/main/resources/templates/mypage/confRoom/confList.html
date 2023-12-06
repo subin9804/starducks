@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<!--title-->
+<!--<th:block layout:fragment="title">메인 </th:block>-->
+<th:block layout:fragment="addMore">
+    <script th:src="@{/js/mypage/daypilot/daypilot-all.min.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>이건 제목입니다.</h1>
+    <div id="dp"></div>
+
+    <script>
+
+        const dp = new DayPilot.Calendar("dp", {
+            viewType: "Resources",
+            // ...
+        });
+        dp.init();
+    </script>
+
+    <form>
+
+
+    </form>
+
+</main>
+
+</html>

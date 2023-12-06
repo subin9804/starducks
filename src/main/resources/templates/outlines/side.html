@@ -25,23 +25,22 @@
             <!--                </li>-->
         </ul>
     </div>
-
-    <div class="accro">
-        <div class="head">
-            <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu"
-                   th:checked="${menuCode.equals('docu')} ? true">
-            <label for="docu">전자결재</label>
+        <div class="accro">
+            <div class="head">
+                <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu" th:checked="${menuCode.equals('document')} ? true">
+                <label for="docu">전자결재</label>
+            </div>
+            <ul id="flush-docu"  th:style="${!menuCode.equals('document')}? 'display: none;'">
+                <li th:each="submenu : ${submenus}" th:object="${submenu}">
+                    <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>
+                </li>
+<!--                <li><a href="/e-document/my">나의 결재</a></li>-->
+<!--                <li><a href="/e-document/create">결재문서 작성</a></li>-->
+<!--                <li><a href="/e-document/inbox">수신함</a></li>-->
+<!--                <li><a href="/e-document/drafts">임시 저장함</a></li>-->
+            </ul>
         </div>
-        <ul id="flush-docu" th:style="${!menuCode.equals('document')}? 'display: none;'">
-            <li th:each="submenu : ${submenus}" th:object="${submenu}">
-                <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>
-            </li>
-            <!--                <li><a href="/e-document/my">나의 결재</a></li>-->
-            <!--                <li><a href="/e-document/create">결재문서 작성</a></li>-->
-            <!--                <li><a href="/e-document/inbox">수신함</a></li>-->
-            <!--                <li><a href="/e-document/drafts">임시 저장함</a></li>-->
-        </ul>
-    </div>
+
     <div class="accro">
         <div class="head only">
             <input class="" type="radio" id="forum" name="nav" th:checked="${menuCode.equals('forum')} ? true">
@@ -79,10 +78,11 @@
             <!--                <li><a href="/logistics/inventory">재고 관리</a></li>-->
         </ul>
     </div>
+
     <div class="accro">
         <div class="head">
-            <input class="" type="radio" id="general" name="nav" aria-controls="flush-general" th:checked="${menuCode.equals('general
-                ')}? true">
+            <input class="" type="radio" id="general" name="nav" aria-controls="flush-general"
+                   th:checked="${menuCode.equals('general')}? true">
             <label for="general"><a th:href="@{/general}">총무부</a></label>
         </div>
         <ul id="flush-general" th:style="${!menuCode.equals('logistic')}? 'display: none;'">
@@ -95,6 +95,7 @@
             <!--                <li><a th:href="@{/products/list}">품목 관리</a></li>-->
         </ul>
     </div>
+
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina"

@@ -90,25 +90,23 @@ input[type='checkbox'].selectbox {display: none;}
     top: 5px;
     right: 10px;
 }
-.options {
+.options1, .options2 {
     position: absolute;
-    height: 130px;
+    height: 150px;
     width: 185px;
     display: none;
     background-color: white;
+    text-align: center;
     border-radius: 10px;
     border: 1px solid #6B4D27;
+    z-index: 5;
  }
-.option {
+.option1, .option2 {
     padding: 5px;
     text-align: center;
 }
-.option:hover {
+.option1:hover, .option2:hover {
     background-color: #ddd;
-}
-input[type='checkbox'].selectbox:checked~.options {
-    display: block;
-    height: 130px;
 }
 
 .postNo {
