@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-
     function fetchShowSingleSchedule() {
         var empId = 1;
         return fetch('/schedule/show/' + empId)
@@ -53,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             });
     }
-
     function createModal() {
         modal = document.createElement('div');
         modal.className = 'modal';
@@ -138,10 +136,8 @@ document.addEventListener('DOMContentLoaded', function () {
         notesInput.setAttribute('placeholder', '참고 사항');
         form.appendChild(notesLabel);
         form.appendChild(notesInput);
-
         var submitButton = document.createElement('button');
         submitButton.textContent = '일정 추가';
-
 // 일정 추가 버튼 클릭 시 이벤트 처리
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -150,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var scheEndDate = scheEndDateInput.value;
             var calendarType = calendarDropdown.value;
             var notes = notesInput.value;
-
             // 데이터 객체 생성
             var data = {
                 scheTitle: scheTitle,
@@ -159,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 calendarType: calendarType,
                 notes: notes
             };
-
             // 서버로 데이터 전송
             fetch('/schedule/add', {
                 method: 'POST',
