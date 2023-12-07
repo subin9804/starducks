@@ -13,6 +13,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
 
     Employee findTopByOrderByEmpIdDesc();
+    Employee findByEmpName(String empName);
 
 //    List<Employee> dynamicSearch(EmpSearchCond empSearch);
 //    Page<Employee> pagination(EmpSearchCond empSearch, Pageable pageable);
