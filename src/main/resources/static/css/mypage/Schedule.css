@@ -11,15 +11,17 @@ html, body {
 }
 
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute; /* fixed 대신 absolute로 변경 */
+    top: 20%; /* 원하는 상단 위치로 조정 */
+    left: 20%; /* 원하는 왼쪽 위치로 조정 */
+    width: 60%; /* 원하는 너비로 설정 */
+    max-height: 40%; /* 최대 높이 설정 */
+    overflow-y: auto; /* 필요 시 수직 스크롤 추가 */
     background-color: white;
     padding: 20px;
     border: 1px solid #ccc;
     z-index: 1000;
-    display: none; /* 초기에는 숨김 */
+    display: none;
 }
 
 #calendar {
