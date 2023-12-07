@@ -23,7 +23,7 @@ public class CommentApiController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-    // 댓글 삭제 로직
+    postCommentService.deleteComment(id);
     return ResponseEntity.ok().build();
   }
 }

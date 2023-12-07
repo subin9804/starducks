@@ -73,11 +73,20 @@ window.onload = function() {
 
 // 댓글 수정 폼을 표시하고, 수정된 내용을 AJAX 요청으로 전송
 function showEditForm(commentId) {
-    // 댓글 내용과 수정 폼을 토글
-    var content = document.getElementById('comment-content-' + commentId);
+    var contentElement = document.getElementById('comment-content-' + commentId);
     var editForm = document.getElementById('edit-comment-form-' + commentId);
-    content.style.display = content.style.display === 'none' ? '' : 'none';
-    editForm.style.display = editForm.style.display === 'none' ? '' : 'none';
+    var editTextarea = document.getElementById('edit-comment-textarea-' + commentId);
+
+    // 기존 댓글 내용을 수정 폼의 textarea에 설정
+    if (contentElement && editTextarea) {
+        editTextarea.value = contentElement.innerText;
+    }
+
+    // 댓글 내용과 수정 폼을 토글
+    if (contentElement && editForm) {
+        contentElement.style.display = contentElement.style.display === 'none' ? '' : 'none';
+        editForm.style.display = editForm.style.display === 'none' ? '' : 'none';
+    }
 }
 
 function updateComment(commentId) {
@@ -130,18 +139,24 @@ document.querySelectorAll('.save-comment').forEach(button => {
     });
 });
 
-// 댓글 삭제 이벤트 리스너
-document.querySelectorAll('.delete-comment').forEach(button => {
-    button.addEventListener('click', function() {
-        let commentId = this.dataset.commentId;
-        // AJAX 요청으로 삭제 요청 전송
+function deleteComment(postId, commentId) {
+    if (confirm('정말 삭제하시겠습니까?')) {
+        // AJAX 요청으로 삭제 처리
         fetch(`/api/comments/${commentId}`, {
             method: 'DELETE'
         }).then(response => {
-            // 처리 결과에 따른 UI 업데이트
+            if (response.ok) {
+                // 성공적으로 삭제된 경우, UI 업데이트
+                document.getElementById('comment-block-' + commentId).remove();
+            } else {
+                alert('댓글 삭제에 실패했습니다.');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         });
-    });
-});
+    }
+}
 
 
 /** 콘텐츠 내용에서 <p>태그가 자꾸 보여서 없애려는 수단 나중에 시도해보기
