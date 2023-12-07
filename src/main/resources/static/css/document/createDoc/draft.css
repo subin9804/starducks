@@ -1,4 +1,12 @@
+.inputs-div {
+    float: left;
+    border: 1px solid #6B4D27;
+    height: 900px;
+    width: 560px;
+    border-radius: 20px;
+}
 .a4-box {
+    float: right;
     border: 1px solid cadetblue;
     /*width: 210mm;*/
     /*height: 297mm;*/
@@ -11,7 +19,7 @@
     /*margin: 10mm;*/
     margin: 38.7px;
 }
-.doc-form-name {
+.doc-type-name {
     text-align: center;
 }
 table {
@@ -34,7 +42,7 @@ th, .col-th {
 .drafter-box {
     position: absolute;
     top: 100px;
-    right: 0;
+    right: 180px;
     width: 100%;
     height: 100%;
     width: 90px;
@@ -43,7 +51,7 @@ th, .col-th {
 .approver-box {
     position: absolute;
     top: 100px;
-    right: 110px;
+    right: 0;
     width: 160px;
     height: 90px;
 }
