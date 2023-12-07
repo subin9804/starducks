@@ -6,8 +6,8 @@
 <!--title-->
 <th:block layout:fragment="title">페이지 탭 제목</th:block>
 <th:block layout:fragment="addMore">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
-    <!--    여기 위에 href를 추가해줬음-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}">
     <script th:src="@{/js/forum/script.js}"></script>
 
     <!--    quill 위지윅 사용 불러오기 링크-->
@@ -33,7 +33,7 @@
             <!--            댓글 입력 폼          -->
             <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
                 <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
-                <button type="submit" class="detail-comment-submit">등록</button>
+                <button type="submit" class="fcommonBtn fregister-button">등록</button>
             </form>
 
             <!--            댓글 목록  댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
@@ -52,17 +52,17 @@
                     <!-- 숨겨진 댓글 수정 폼 -->
                     <form th:id="'edit-comment-form-' + ${comment.commentId}" style="display: none;">
                         <textarea th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
-                        <button type="button" th:onclick="'updateComment(' + ${comment.commentId} + ');'">저장</button>
+                        <button type="button" class="fcommonBtn fregister-button" th:onclick="'updateComment(' + ${comment.commentId} + ');'">저장</button>
                     </form>
 
                     <!-- 댓글 수정/삭제 버튼. 로그인한 사용자와 댓글 작성자가 일치할 때만 표시 -->
                     <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
                         <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
                         <div th:if="${comment.employee.empId == #authentication.principal.empId}" class="detail-comment-actions">
-                            <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'">
+                            <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'" class="fcommonBtn fedit-button">
                                 수정
                             </button>
-                            <button th:onclick="'deleteComment(' + ${post.postId} + ',' + ${comment.commentId} + ');'">
+                            <button th:onclick="'deletePostComment(' + ${comment.commentId} + ');'" class="fcommonBtn fdelete-button">
                                 삭제
                             </button>
                         </div>

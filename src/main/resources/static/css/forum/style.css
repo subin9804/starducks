@@ -223,6 +223,65 @@
     justify-content: center;
 }
 
+
+.fcommonBtn {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 27px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/*취소 버튼을 부득이하게 p태그로 사용할 경우 */
+a p.fcommonBtn {
+    line-height: 30px;
+    display: inline-block;
+    text-align: center;
+    /* 글자 가운데 정렬 추가 */
+}
+
+/* 등록 */
+.fregister-button {
+    background: #4A85F6;
+    color: #FFFFFF;
+}
+
+/* 목록 및 취소 */
+.fcancel-button {
+    color: #FFFFFF;
+    background-color: #999;
+}
+
+/* 수정 */
+.fedit-button {
+    color: #FFFFFF;
+    background-color: #43946f;
+}
+
+/*삭제 버튼 */
+.fdelete-button {
+    color: #fdf5f5;
+    background-color: #FF5B5B;
+}
+
+.fregister-button:hover {
+    background-color: #6a4af6;
+}
+.fcancel-button:hover {
+    background-color: #555;
+}
+.fedit-button:hover {
+    background-color: #316c52;
+}
+
+.fdelete-button:hover {
+    background-color: #d91717;
+}
 /* '목록' 버튼에 대한 스타일 */
 /*.button-group > a {*/
 /*    flex: 1; !* 필요한 경우 flex 속성을 사용하여 조정 *!*/

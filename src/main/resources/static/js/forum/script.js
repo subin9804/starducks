@@ -71,6 +71,29 @@ window.onload = function() {
     }
 };
 
+function deletePostComment(commentId) {
+    if (confirm('정말 삭제하시겠습니까?')) {
+        fetch(`/api/comments/${commentId}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                var elementToRemove = document.getElementById('comment-block-' + commentId);
+                if (elementToRemove) {
+                    elementToRemove.remove();
+
+                } else {
+                    console.error('삭제할 댓글 요소를 찾을 수 없습니다.');
+                }location.reload();
+            } else {
+                alert('댓글 삭제에 실패했습니다.');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다: ' + error.message);
+        });
+    }
+}
+
 // 댓글 수정 폼을 표시하고, 수정된 내용을 AJAX 요청으로 전송
 function showEditForm(commentId) {
     var contentElement = document.getElementById('comment-content-' + commentId);
@@ -88,6 +111,9 @@ function showEditForm(commentId) {
         editForm.style.display = editForm.style.display === 'none' ? '' : 'none';
     }
 }
+
+
+
 
 function updateComment(commentId) {
     var commentContent = document.getElementById('edit-comment-textarea-' + commentId).value;
@@ -139,24 +165,7 @@ document.querySelectorAll('.save-comment').forEach(button => {
     });
 });
 
-function deleteComment(postId, commentId) {
-    if (confirm('정말 삭제하시겠습니까?')) {
-        // AJAX 요청으로 삭제 처리
-        fetch(`/api/comments/${commentId}`, {
-            method: 'DELETE'
-        }).then(response => {
-            if (response.ok) {
-                // 성공적으로 삭제된 경우, UI 업데이트
-                document.getElementById('comment-block-' + commentId).remove();
-            } else {
-                alert('댓글 삭제에 실패했습니다.');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-        });
-    }
-}
+
 
 
 /** 콘텐츠 내용에서 <p>태그가 자꾸 보여서 없애려는 수단 나중에 시도해보기
