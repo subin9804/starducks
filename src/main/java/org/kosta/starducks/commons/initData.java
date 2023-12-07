@@ -116,8 +116,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPostRepository.saveAndFlush(forumPost);
         }
 
-
-
     }
 }
 
