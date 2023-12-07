@@ -3,6 +3,8 @@ package org.kosta.starducks.logistic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.groovy.ast.tools.MethodNodeUtils;
+import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
@@ -30,6 +32,7 @@ public class WarehouseInboundController {
     private final VendorService vendorService;
     private final EmpService employeeService;
     private final WarehouseInboundService warehouseInboundService;
+    private final HttpServletRequest request;
 
 
     //재고 목록 조회
@@ -73,6 +76,8 @@ public class WarehouseInboundController {
     public String addOrder(Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
 
     {
+
+        MenuService.commonProcess(request,m,"logistic");
         m.addAttribute("employees",employeeService.getAllEmp());
         Page<Product> products = productService.getAllProducts(pageable);
         m.addAttribute("products",products);

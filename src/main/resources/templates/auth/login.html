@@ -4,13 +4,10 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <link href="/css/auth/style.css" rel="stylesheet" type="text/css">
-<!--  <script src="/static/js/auth/script.js"></script>-->
+  <script th:src="@{/js/auth/script.js}"></script>
 </head>
 <body>
 <div class="login-container">
-  <div th:if="${loginError}" class="error-message" th:text="${loginError}"></div>
-  <!-- 오류 확인 용    -->
-
   <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="logo">
   <form th:action="@{/login}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -31,7 +28,7 @@
     <button type="submit">로그인</button>
   </form>
 
-  <a href="/forgot-password" class="forgot-password">비밀번호 찾기</a>
+  <a href="/forgotPwd" class="forgot-password">비밀번호 찾기</a>
 </div>
 </body>
 </html>

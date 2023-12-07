@@ -61,7 +61,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
-            emp.setPwd("234jf");
+            emp.setPwd(passwordEncoder.encode("1q"));
             emp.setDept(deptRepository.findById(i).orElse(null));
 
             repository.saveAndFlush(emp);
@@ -73,12 +73,12 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setStatus(false);
         specificEmp.setBirth(LocalDate.parse("2023-12-20"));
         specificEmp.setEmpTel("010-9999-9990");
-        specificEmp.setGender("여");
-        specificEmp.setEmail("sdf@Aasdf.com");
+        specificEmp.setGender("남");
+        specificEmp.setEmail("lhg0529@gmail.com");
         specificEmp.setAddr("부천시");
-        specificEmp.setEmpName("사원11");
+        specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
-        specificEmp.setDAddr("용인시 오리구");
+        specificEmp.setDAddr("수원시");
         specificEmp.setPosition(Position.ROLE_EMPLOYEE);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
