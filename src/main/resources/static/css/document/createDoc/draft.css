@@ -1,4 +1,12 @@
+.inputs-div {
+    display: inline-block;
+    border: 1px solid #6B4D27;
+    height: 900px;
+    width: 560px;
+    border-radius: 20px;
+}
 .a4-box {
+    display: inline-block;
     border: 1px solid cadetblue;
     /*width: 210mm;*/
     /*height: 297mm;*/
@@ -11,7 +19,7 @@
     /*margin: 10mm;*/
     margin: 38.7px;
 }
-.doc-form-name {
+.doc-type-name {
     text-align: center;
 }
 table {
