@@ -2,10 +2,10 @@ package org.kosta.starducks.logistic.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.forum.repository.EmployeeRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.logistic.dto.WarehouseInboundDto;
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
 import org.kosta.starducks.logistic.entity.WarehouseInboundProduct;
@@ -23,7 +23,7 @@ public class WarehouseInboundService {
 
 
     private final WarehouseInboundRepository wiRepository;
-    private final EmployeeRepository empRepository;
+    private final EmpRepository empRepository;
     private final ProductRepository productRepository;
 
     //모든 입고 사항 가져오기

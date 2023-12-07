@@ -61,7 +61,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
-            emp.setPwd(passwordEncoder.encode("1q"));
+            emp.setPwd(passwordEncoder.encode("1"));
             emp.setDept(deptRepository.findById(i).orElse(null));
 
             repository.saveAndFlush(emp);
@@ -105,6 +105,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setPostTitle("제목" + i);
             forumPost.setPostContent("내용" + i);
             forumPost.setPostView(i);
+            forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
             if (i < 5) {

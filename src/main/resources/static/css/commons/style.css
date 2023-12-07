@@ -8,6 +8,14 @@ body {
     grid-template-rows: 60px 1fr; /* 헤더와 컨텐츠 사이의 비율 조정 */
     min-height: 1250px;
     padding-right: 40px;
+
+    /*배경으로 파도 이미지 추가*/
+    background-image: url('/images/wave.png');
+    background-size: 90%; /* 배경 이미지를 크기 조절 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-attachment: fixed; /* 스크롤 시 이미지 고정 */
+    background-position: 80% 120% /* x축 숫자 올리면 오른쪽, y축 숫자 올리면 더 밑으로  */
+
 }
 *{
     box-sizing: border-box;
