@@ -44,7 +44,7 @@ public class LoginController {
 
 
   @PostMapping("/forgotPwd")
-  public String processForgotPwd(@RequestParam("email") String email, RedirectAttributes redirectAttributes){
+  public String processForgotPwd(@RequestParam("email") String email){
     // 이메일 주소에 해당하는 사용자 찾기
     Employee emp = userService.findByEmail(email);
     if (emp != null) {
@@ -58,9 +58,7 @@ public class LoginController {
       String text = "귀하의 임시 비밀번호는 " + tempPwd + " 입니다. 로그인 후 비밀번호를 변경해 주세요.";
     emailService.sendTempPwdEmail(email, subject, text);
       // 리다이렉트 시 메시지 추가
-      redirectAttributes.addFlashAttribute("message", "임시 비밀번호가 전송되었습니다.");
     } else {
-      redirectAttributes.addFlashAttribute("error", "No user found with this email.");
     }
     return "redirect:/login";
   }

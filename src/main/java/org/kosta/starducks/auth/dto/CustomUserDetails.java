@@ -38,6 +38,12 @@ public class CustomUserDetails implements UserDetails {
     return employee.getEmpName();
   }
 
+  public Long getEmpId() {
+    return employee.getEmpId();
+  }
+
+
+
   @Override //계정이 만료되었는가? 우리는 안 필요할듯
   public boolean isAccountNonExpired() {
     return true;
