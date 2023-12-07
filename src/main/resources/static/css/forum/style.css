@@ -209,13 +209,31 @@
 /*수정, 삭제, 목록 버튼이 좌우로 보이도록 묶음 */
 .button-group {
     display: flex;
-    justify-content: space-between; /* 버튼들 사이에 균일한 간격을 두기 위함 */
+    justify-content: center; /* 버튼들 사이에 균일한 간격을 두기 위함 */
     margin-top: 20px; /* 추가적인 상단 여백을 위함 */
+    align-items: center;
 }
 
 .button-group a {
     margin-right: 10px; /* 각 링크(버튼) 사이의 간격 */
 }
+
+.button-group > div{
+    display: flex;
+    justify-content: center;
+}
+
+/* '목록' 버튼에 대한 스타일 */
+/*.button-group > a {*/
+/*    flex: 1; !* 필요한 경우 flex 속성을 사용하여 조정 *!*/
+/*}*/
+
+/* '수정'과 '삭제' 버튼이 없을 때 '목록' 버튼을 중앙에 배치 */
+/*.button-group > a:last-child {*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*}*/
+
 /*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 

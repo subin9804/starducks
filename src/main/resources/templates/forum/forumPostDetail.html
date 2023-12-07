@@ -39,11 +39,13 @@
             <!--            댓글 목록  댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
             <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
+
                     <!-- 댓글 작성자 이름과 작성 시간 -->
                     <div class="detail-comment-author">
                         <span th:text="${comment.employee != null ? comment.employee.empName : '익명'}">작성자</span>
                         <span th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
                     </div>
+
                     <!-- 댓글 내용 -->
                     <p th:text="${comment.commentContent}" th:id="'comment-content-' + ${comment.commentId}">댓글 내용</p>
 
@@ -53,20 +55,35 @@
                         <button type="button" th:onclick="'updateComment(' + ${comment.commentId} + ');'">저장</button>
                     </form>
 
-                    <!-- 댓글 수정/삭제 버튼 -->
-                    <div class="detail-comment-actions">
-                        <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'">수정</button>
-                        <button th:href="@{/forum/post/{postId}/deleteComment/{commentId}(postId=${post.postId}, commentId=${comment.commentId})}">삭제</button>
+                    <!-- 댓글 수정/삭제 버튼. 로그인한 사용자와 댓글 작성자가 일치할 때만 표시 -->
+                    <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
+                        <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
+                        <div th:if="${comment.employee.empId == #authentication.principal.empId}" class="detail-comment-actions">
+                            <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'">수정</button>
+                            <button th:href="@{/forum/post/{postId}/deleteComment/{commentId}(postId=${post.postId}, commentId=${comment.commentId})}">
+                                삭제
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <!-- 버튼 그룹 -->
         <div class="button-group">
-            <a th:href="@{/forum/edit/{id}(id=${post.postId})}"><button class="commonBtn edit-button">수정</button></a>
-            <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'"><button class="commonBtn delete-button">삭제</button></a>
-            <a href="/forum"><button class="commonBtn cancel-button">목록</button></a>
+            <!-- 현재 로그인한 사용자가 작성자인 경우에만 수정/삭제 버튼 표시 -->
+            <div th:if="${post.employee != null and #authentication != null and #authentication.principal != null and post.employee.empId == #authentication.principal.empId}">
+                <a th:href="@{/forum/edit/{id}(id=${post.postId})}">
+                    <button class="commonBtn edit-button">수정</button>
+                </a>
+                <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
+                    <button class="commonBtn delete-button">삭제</button>
+                </a>
+            </div>
+            <a href="/forum">
+                <button class="commonBtn cancel-button">목록</button>
+            </a>
         </div>
+    </div>
     </div>
 </main>
 </html>

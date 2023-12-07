@@ -153,7 +153,7 @@ public class ForumPostController {
         comment.setCommentContent(commentContent);
 
         // 현재 인증된 사용자의 Employee 정보를 설정
-        Employee employee = empService.getEmp(userDetails.getEmpId());
+        Employee employee = userDetails.getEmployee();
         if (employee == null) {
             throw new IllegalArgumentException("Invalid employee Id: " + userDetails.getEmpId());
         }
