@@ -36,7 +36,7 @@ public class Schedule {
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", nullable = false)
+    @JoinColumn(name = "emp_id")
     private Employee employee;
 
 }

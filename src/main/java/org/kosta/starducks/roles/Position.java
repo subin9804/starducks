@@ -1,8 +1,8 @@
 package org.kosta.starducks.roles;
 
 public enum Position {
-    BOSS,
-    DEPTLEADER,
-    TEAMLEADER,
-    EMPLOYEE
+    ROLE_BOSS,
+    ROLE_DEPTLEADER,
+    ROLE_TEAMLEADER,
+    ROLE_EMPLOYEE
 }
