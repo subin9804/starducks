@@ -75,11 +75,12 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setGender("여");
         specificEmp.setEmail("sdf@Aasdf.com");
         specificEmp.setAddr("부천시");
-        specificEmp.setEmpName("사원01");
+        specificEmp.setEmpName("사원11");
         specificEmp.setPostNo("00025");
         specificEmp.setDAddr("용인시 오리구");
         specificEmp.setPosition(Position.ROLE_EMPLOYEE);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
+        specificEmp.setDept(deptRepository.findById(2).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
 
