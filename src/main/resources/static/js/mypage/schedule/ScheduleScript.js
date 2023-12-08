@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
                     console.log(schedule.url)
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        title: schedule.url,
+                        title: schedule.title,
                         start: schedule.start,
                         url: schedule.url,   // 해당 일정의 상세 페이지로 이동
                         end: schedule.end,

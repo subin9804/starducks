@@ -37,10 +37,7 @@ public class ScheduleController {
     @ResponseBody
     public List<Map<String, Object>> showSingleSchedule(@PathVariable("empId") Long empId, Model model) {
         // scheduleService를 통해 모든 일정을 가져옴
-
-        System.out.println("아이디!!!!!" + empId);
         List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
-        System.out.println("스케쥴리스트" + scheduleList);
         // JSON 배열을 담을 리스트를 생성
         List<Map<String, Object>> scheduleDataList = new ArrayList<>();
         // 각 일정의 정보를 해시맵에 담고 JSON 객체로 변환하여 리스트에 추가

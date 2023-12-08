@@ -11,14 +11,14 @@
 
 <main layout:fragment="content">
     <ul>
-        <li id="ROOM1">ROOM1</li>
-        <li id="ROOM2">ROOM2</li>
-        <li id="ROOM3">ROOM3</li>
-        <li id="ROOM4">ROOM4</li>
+        <li class="rooms" id="ROOM1">ROOM1</li>
+        <li class="rooms" id="ROOM2">ROOM2</li>
+        <li class="rooms" id="ROOM3">ROOM3</li>
+        <li class="rooms" id="ROOM4">ROOM4</li>
     </ul>
     <div id='scheduler'></div>
 
-    <div id="bookingModal" style="display: none;">
+    <div class="customModal" id="bookingModal" style="display: none;">
         <form id="bookingForm">
             회의실 선택
             <select id="room" name="room">
@@ -55,8 +55,40 @@
         </form>
     </div>
 
-    <div id="showModal" style="display: none;">
+    <div class="customModal" id="showModal" style="display: none;">
+        <div>
+            <h2>회의실 예약 관리</h2>
+            <dl>
+                <dt>회의실 선택</dt>
+                <dd><p id="sRoom"></p></dd>
+            </dl>
+            <dl>
+                <dt>신청 부서</dt>
+                <dd><p id="dept"></p></dd>
 
+                <dt>신청자</dt>
+                <dd><p id="empName"></p></dd>
+            </dl>
+            <dl>
+                <dt>사용 일자</dt>
+                <dd><p id="sRunningDay"></p></dd>
+
+                <dt>Time Slot</dt>
+                <dd>
+                    <p id="sStartT"></p>
+                    <p id="sEndT"></p>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>회의명</dt>
+                <dd id="sConfName"></dd>
+            </dl>
+            <dl>
+                <dt>사용 목적</dt>
+                <dd><p id="sMemo"></p></dd>
+            </dl>
+        </div>
     </div>
 
     <script>
@@ -104,9 +136,10 @@
 
                 // FullCalendar 라이브러리 사용
                 var calendar = new FullCalendar.Calendar($('#scheduler')[0], {
-                    // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                     initialView: 'timeGridWeek', // 기본 뷰 설정
-                    // initialView: 'resourceTimeGridDay',
+                    slotMinTime: '08:00:00',
+                    slotMaxTime: '20:00:00',
+                    allDaySlot: false,
                     resources: resources,
                     selectable: true,
                     events: events,
@@ -115,45 +148,55 @@
                         info.el.style.backgroundColor = info.event.extendedProps.color || 'lightgray'; // 기본값은 lightgray
                     },
                     eventClick: function (info) {
-                        console.log("인포!!:" + info.event.title)
+                        console.log("인포!!:" + JSON.stringify((info)))
                         alert('Event clicked: ' + info.event.title);
+
+                        let data = {
+                            title: info.event.title,
+                            start: info.event.start,
+                            end: info.event.end,
+                            id: info.event.id,
+                            resourceId: info.resourceIds[0],
+
+                        }
+
                         showBookingPopup(info);
                     },
                     select: function(info) {
                         alert('Selected: ' + info.startStr + ' to ' + info.endStr);
                         alert('Resource ID: ' + roomId);
-                        let infomation = [info.startStr, info.startStr, info.endStr]
+                        let data = [info.startStr, info.startStr, info.endStr]
 
-                        showBookingPopup(infomation);
+                        showBookingPopup(data);
                     }
                 });
 
                 calendar.render();
 
-                $('#ROOM3').click(() => {
+                $(".rooms").click((e) => {
+                    let id = e.target.innerText
+                    roomId = id;
 
-                let eventData = [];
-                    console.log("ROOM3 clicked")
-                    for(let book of bookList) {
-                        if(book.room == "ROOM3") {
-                            let event = {
-                                id: book.confId,
-                                resourceId: book.room,
-                                start: book.runningDay + 'T' + book.startTime,
-                                end: book.runningDay + 'T' + book.endTime,
-                                title: book.confName,
-                                color: book.color,
+                    let eventData = [];
+                        console.log(id + " clicked")
+                        for(let book of bookList) {
+                            if (book.room == id) {
+                                let event = {
+                                    id: book.confId,
+                                    resourceId: id,
+                                    start: book.runningDay + 'T' + book.startTime,
+                                    end: book.runningDay + 'T' + book.endTime,
+                                    title: book.confName,
+                                    color: book.color,
+                                }
+                                console.log(event)
+                                eventData.push(event);
                             }
-                            console.log(event)
-                            eventData.push(event);
                         }
-                    }
-                    calendar.setOption('events', eventData);
-                    calendar.rerenderEvents();
-                })
-
-                // FullCalendar의 events 옵션 업데이트
-                // calendar.setOption('events', eventData);
+                        // FullCalendar의 events 옵션 업데이트
+                        calendar.setOption('events', eventData);
+                        calendar.rerenderEvents();
+                });
 
             }).fail(function(error) {
                 // 에러처리
@@ -162,7 +205,7 @@
 
 
 
-            // 모달창 띄우기
+            // 예약하기 모달창 띄우기
             function showBookingPopup(info) {
                 let modal = $('#bookingModal')
 
@@ -174,6 +217,9 @@
                 console.log(info)
                 modal.css('display', 'block');
             }
+
+            // 예약 조회 모달창 띄우기
+
 
 
             // 예약 생성
