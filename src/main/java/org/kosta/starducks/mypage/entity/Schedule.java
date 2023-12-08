@@ -29,14 +29,15 @@ public class Schedule {
     private LocalDateTime scheEndDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "calendar_type")
+    @Column(name = "sche_type")
     private ScheduleType scheduleType;
 
     @Column(name = "notes")
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id")
+    @JoinColumn(name = "emp_id", referencedColumnName = "empId") // 여기서 변경
     private Employee employee;
+
 
 }

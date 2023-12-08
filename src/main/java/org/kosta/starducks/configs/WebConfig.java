@@ -2,6 +2,7 @@ package org.kosta.starducks.configs;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,11 @@ public class WebConfig implements WebMvcConfigurer {
         ms.setDefaultEncoding("UTF-8");
         ms.setBasenames("messages.commons", "messages.errors");
         return ms;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     /**
