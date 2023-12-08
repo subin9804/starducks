@@ -77,10 +77,10 @@
 
                         <ul class="options2">
                             <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
-                                <th:block th:if="${position.toString() == 'BOSS'}" th:text="사장"></th:block>
-                                <th:block th:if="${position.toString() == 'DEPTLEADER'}" th:text="부장"></th:block>
-                                <th:block th:if="${position.toString() == 'TEAMLEADER'}" th:text="팀장"></th:block>
-                                <th:block th:if="${position.toString() == 'EMPLOYEE'}" th:text="사원"></th:block>
+                                <th:block th:if="${position.toString() == 'ROLE_BOSS'}" th:text="사장"></th:block>
+                                <th:block th:if="${position.toString() == 'ROLE_DEPTLEADER'}" th:text="부장"></th:block>
+                                <th:block th:if="${position.toString() == 'ROLE_TEAMLEADER'}" th:text="팀장"></th:block>
+                                <th:block th:if="${position.toString() == 'ROLE_EMPLOYEE'}" th:text="사원"></th:block>
                             </li>
                         </ul>
                         <input id="position" type="hidden" th:field="*{position}">

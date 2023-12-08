@@ -27,6 +27,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
     private final ForumPostRepository forumPostRepository;
+
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
 
@@ -60,7 +61,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
-            emp.setPwd("234jf");
+            emp.setPwd(passwordEncoder.encode("1"));
             emp.setDept(deptRepository.findById(i).orElse(null));
 
             repository.saveAndFlush(emp);
@@ -72,18 +73,17 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setStatus(false);
         specificEmp.setBirth(LocalDate.parse("2023-12-20"));
         specificEmp.setEmpTel("010-9999-9990");
-        specificEmp.setGender("여");
-        specificEmp.setEmail("sdf@Aasdf.com");
+        specificEmp.setGender("남");
+        specificEmp.setEmail("lhg0529@gmail.com");
         specificEmp.setAddr("부천시");
-        specificEmp.setEmpName("사원11");
+        specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
-        specificEmp.setDAddr("용인시 오리구");
+        specificEmp.setDAddr("수원시");
         specificEmp.setPosition(Position.ROLE_EMPLOYEE);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
-
 
         //초기 vendor 데이터
         for(int i = 0; i < 5; i++) {
@@ -105,6 +105,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setPostTitle("제목" + i);
             forumPost.setPostContent("내용" + i);
             forumPost.setPostView(i);
+            forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
             if (i < 5) {
@@ -115,7 +116,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             forumPostRepository.saveAndFlush(forumPost);
         }
-
 
     }
 }

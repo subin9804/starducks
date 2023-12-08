@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-
 <aside th:fragment="sidebar" class="sidebar">
     <a th:href="@{/}">
         <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="sidebar-logo"/>
@@ -27,7 +25,6 @@
             <!--                </li>-->
         </ul>
     </div>
-
         <div class="accro">
             <div class="head">
                 <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu" th:checked="${menuCode.equals('document')} ? true">
@@ -120,11 +117,9 @@
         </div>
     </div>
 
-
     <div class="sidebar-footer">
-        <button class="commonBtn">Logout</button>
+        <a href="/logout" class="commonBtn">Logout</a>
         <p>©2023 STARDUCKS ERP</p>
     </div>
-
 </aside>
 </html>

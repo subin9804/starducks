@@ -1,0 +1,77 @@
+.preview-layout {
+    width: 1400px;
+    /*height: 1122px;*/
+}
+.commonBtn {
+    margin: 30px;
+}
+.inputs-div {
+    display: inline-block;
+    border: 1px solid #6B4D27;
+    height: 1122px;
+    width: 500px;
+    border-radius: 20px;
+}
+.a4-box {
+    display: inline-block;
+    border: 1px solid cadetblue;
+    /*width: 210mm;*/
+    /*height: 297mm;*/
+    width: 794.52px;
+    height: 1122.66px;
+}
+#print-div {
+    position: relative;
+    border: 1px solid yellowgreen;
+    /*margin: 10mm;*/
+    margin: 38.7px;
+}
+.doc-type-name {
+    text-align: center;
+}
+table {
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, .col-th {
+    background-color: #dddddd;
+    -webkit-print-color-adjust:exact;
+}
+.col-th {
+    width: 80px;
+}
+.top-box {
+    height: 120px;
+}
+.drafter-box {
+    position: absolute;
+    top: 100px;
+    right: 180px;
+    width: 100%;
+    height: 100%;
+    width: 90px;
+    height: 90px;
+}
+.approver-box {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 160px;
+    height: 90px;
+}
+.stamp-box {
+    width: 65px;
+    height: 70px;
+}
+.doc-info-box {
+    margin: 20px 0;
+}
+.doc-content-box {
+    margin: 20px 0;
+}
+.attached-files-box {
+    margin: 20px 0;
+}
