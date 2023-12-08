@@ -16,7 +16,7 @@
     <div th:fragment="modal">
         <div class="modal" th:style="'display: none'" th:id="modal">
             <div class="modal-content">
-                <span class="close" th:text="'×'" onclick="closeModal()"></span>
+<!--                <span class="close" th:text="'×'" onclick="closeModal()"></span>-->
                 <form th:action="@{/schedule/add}" method="post" th:object="${scheduleDTO}">
                     <label th:text="'일정명'"><input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/></label>
 
@@ -35,6 +35,8 @@
 
                     <label th:text="'참고 사항'"></label>
                     <textarea name="notes" placeholder="참고 사항" th:field="*{notes}"></textarea>
+
+                    <input th:value="1" name="code" type="hidden" id="*{code}" />
 
                     <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
                 </form>

@@ -44,20 +44,16 @@ public class ScheduleController {
         // 각 일정의 정보를 해시맵에 담고 JSON 객체로 변환하여 리스트에 추가
         for (Schedule schedule : scheduleList) {
             HashMap<String, Object> scheduleData = new HashMap<>();
-            scheduleData.put("scheNo", schedule.getScheNo());
-            scheduleData.put("scheTitle", schedule.getScheTitle());
-            scheduleData.put("scheStartDate", schedule.getScheStartDate());
-            scheduleData.put("scheEndDate", schedule.getScheEndDate());
-            scheduleData.put("scheduleType", schedule.getScheduleType().toString());
-            scheduleData.put("notes", schedule.getNotes());
-            scheduleData.put("empId", schedule.getEmployee().getEmpId());
-
+            scheduleData.put("title", schedule.getScheTitle());
+            scheduleData.put("start", schedule.getScheStartDate());
+            scheduleData.put("end", schedule.getScheEndDate());
+            scheduleData.put("url", "/schedule/detailSche/" + schedule.getScheNo());
             // 리스트에 일정 정보를 추가
             scheduleDataList.add(scheduleData);
         }
 
         // 모델에 데이터를 담아 화면으로 전달
-        model.addAttribute("scheduleDataList", scheduleDataList);
+//        model.addAttribute("scheduleDataList", scheduleDataList);
         // 화면으로 이동
         return scheduleDataList;
     }
