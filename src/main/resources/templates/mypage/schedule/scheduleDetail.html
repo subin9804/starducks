@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<meta charset="UTF-8">
+
+<!--여기는 헤드(메인에 없는 헤드 추가하기)-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
+</th:block>
+
+<script th:if="${detailSchedule == null}" th:inline="javascript">
+    /* JavaScript 코드로 alert 창 띄우기 */
+    alert('일정을 찾지 못했습니다! 다시 확인해주세요!');
+</script>
+
+<main layout:fragment="content">
+    <h2 class="mb-4" id="main-text">마이페이지</h2>
+    <br><br>
+    <h5 class="mb-4" id="sub-text">일정관리</h5>
+    <br>
+
+    <div class="leftMar20">
+        <table class="type03">
+            <tr>
+                <th>일정명</th>
+                <td th:text="${detailSchedule.scheTitle}"></td>
+            </tr>
+            <tr>
+                <th>시작일</th>
+                <td th:text="${detailSchedule.scheStartDate}"></td>
+            </tr>
+            <tr>
+                <th>종료일</th>
+                <td th:text="${detailSchedule.scheEndDate}"></td>
+            </tr>
+            <tr>
+                <th>일정 종류</th>
+                <td th:text="${detailSchedule.scheduleType}"></td>
+            </tr>
+            <tr>
+                <th>참고사항</th>
+                <td th:text="${detailSchedule.notes}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height: 500px;" th:text="${ }"></td>
+            </tr>
+        </table>
+        <button class="btn btn-info leftMar500p" type="submit" th:onclick="'location.href = \'' +  @{/schedule/calendar/update/(no=${detailCal.code})} + '\''">수정하기</button>
+        <button class="btn btn-dark leftMar20p" id="deletebtn" type="button">삭제하기</button>
+    </div>
+    <br><br>
+</main>
+</html>

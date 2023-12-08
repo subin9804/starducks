@@ -27,7 +27,7 @@ public class ScheduleController {
     private final HttpServletRequest request;
 
     /**
-     * 로그인을 한 사원의 일정 조회S
+     * 로그인을 한 사원의 일정 조회
      *
      * 정보를 던져주는 용도의 GetMapping
      * @param
@@ -72,19 +72,19 @@ public class ScheduleController {
         MenuService.commonProcess(request, model, "mypage");
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
-            return "mypage/schedule/schedule";
-        }
+        return "mypage/schedule/schedule";
+    }
 
-        /**
-         * 일정 등록하기
-         * @param scheduleDTO
-         * @return
-         */
-        @PostMapping("/add")
-        public ResponseEntity<Map<String, String>> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-            Map<String, String> response = new HashMap<>();
-            try {
-                Schedule schedule = scheduleDTO.toEntity();
+    /**
+     * 일정 등록하기
+     * @param scheduleDTO
+     * @return
+     */
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            Schedule schedule = scheduleDTO.toEntity();
             scheduleService.saveSchedule(schedule);
             response.put("message", "일정이 성공적으로 저장되었습니다.");
             return ResponseEntity.ok(response);
@@ -92,5 +92,14 @@ public class ScheduleController {
             response.put("error", "일정 저장 중 오류 발생: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+    }
+
+    @GetMapping("/detailSche/{scheduleCode}")
+    public String findScheduleDetail(Model model, @PathVariable("scheduleCode") Long scheduleCode) {
+        ScheduleDTO detailSchedule = scheduleService.findScheduleDetail(scheduleCode);
+        model.addAttribute("detailSchedule", detailSchedule);
+
+        return "mypage/schedule/scheduleDetail";
+
     }
 }

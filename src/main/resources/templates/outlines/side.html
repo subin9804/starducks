@@ -7,7 +7,7 @@
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="myPage" name="nav" aria-controls="flush-myPage"
-                   th:checked="${menuCode.equals('mypage')} ? true">
+                   th:checked="${menuCode != null && !menuCode.equals('mypage')} ? true">
             <label for="myPage"><a th:href="@{/mypage}">마이페이지</a></label>
         </div>
         <ul id="flush-myPage" th:style="${!menuCode.equals('mypage')}? 'display: none;'">
