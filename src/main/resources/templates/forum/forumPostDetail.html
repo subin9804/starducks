@@ -3,8 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--title-->
-<th:block layout:fragment="title">페이지 탭 제목</th:block>
 <th:block layout:fragment="addMore">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}">
@@ -49,12 +47,12 @@
                     <!-- 댓글 내용 -->
                     <p th:text="${comment.commentContent}" th:id="'comment-content-' + ${comment.commentId}">댓글 내용</p>
 
-                    <!-- 숨겨진 댓글 수정 폼 -->
-                    <form th:id="'edit-comment-form-' + ${comment.commentId}" style="display: none;">
-                        <textarea th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
-                        <button type="button" class="fcommonBtn fregister-button" onclick="updateComment(this)" th:id="${comment.commentId}">저장</button>
+                    <form th:action="@{/forum/updateComment}" method="post" th:id="'edit-comment-form-' + ${comment.commentId}" style="display: none;">
+                        <input type="hidden" name="commentId" th:value="${comment.commentId}">
+                        <input type="hidden" name="postId" th:value="${post.postId}">
+                        <textarea name="commentContent" th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
+                        <button type="submit" class="fcommonBtn fregister-button">저장</button>
                     </form>
-
                     <!-- 댓글 수정/삭제 버튼. 로그인한 사용자와 댓글 작성자가 일치할 때만 표시 -->
                     <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
                         <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
@@ -87,62 +85,17 @@
         </div>
     </div>
     <script>
-        window.document.addEventListener("DOMContentLoaded", function() {
+        function updateComment(buttonElement) {
+            const commentId = buttonElement.getAttribute('data-comment-id');
+            const editForm = document.getElementById('edit-comment-form-' + commentId);
 
-            const updateComment = (buttonElement) => {
-                // buttonElement 확인
-                console.log('buttonElement:', buttonElement);
-
-                const commentId = buttonElement.getAttribute('data-comment-id');
-                // commentId 값 확인
-                console.log('commentId:', commentId);
-
-                const commentTextarea = document.getElementById('edit-comment-textarea-' + commentId);
-                // commentTextarea 요소 확인
-                console.log('commentTextarea:', commentTextarea);
-
-                if (commentTextarea) {
-                    const commentContent = commentTextarea.value.trim();
-                    if (commentContent === '') {
-                        alert('댓글 내용을 입력해주세요.');
-                        return;
-                    }
-
-                    const url = '/api/comments/' + commentId;
-
-                    fetch(url, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            commentId: commentId,
-                            commentContent: commentContent
-                        })
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            document.getElementById('comment-content-' + commentId).innerText = commentContent;
-                            const editForm = document.getElementById('edit-comment-form-' + commentId);
-                            if (editForm) {
-                                editForm.style.display = 'none';
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error during update comment:', error);
-                            alert('댓글을 저장하는 중 문제가 발생했습니다. 다시 시도해주세요.');
-                        });
-                } else {
-                    console.error('Textarea element not found for commentId:', commentId);
-                    alert('댓글을 찾을 수 없습니다.');
-                }
-            };
-        })
+            if (editForm) {
+                editForm.onsubmit = function() {
+                    // 폼 제출 후 페이지 새로고침
+                    window.location.reload();
+                };
+            }
+        }
     </script>
 </main>
 </html>
