@@ -58,14 +58,14 @@ public class MenuService {
                 menus.add(new MenuDetail("inventory", "재고 관리", "/"));
                 break;
             case "general" :
-                menus.add(new MenuDetail("adschedule", "입고 관리", "/"));
-                menus.add(new MenuDetail("adforum", "출고 관리", "/"));
-                menus.add(new MenuDetail("adconf", "재고 관리", "/"));
-                menus.add(new MenuDetail("adproduct", "재고 관리", "/"));
+                menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));
+                menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
+                menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
+                menus.add(new MenuDetail("adproduct", "품목 관리", "/"));
                 break;
             case "fina" :
-                menus.add(new MenuDetail("point", "입고 관리", "/"));
-                menus.add(new MenuDetail("vendor", "출고 관리", "/"));
+                menus.add(new MenuDetail("point", "지점 정보 관리", "/"));
+                menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
                 break;
             default:
                 menus.add(new MenuDetail("attend", "근태관리", "/"));

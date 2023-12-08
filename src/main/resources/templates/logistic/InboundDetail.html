@@ -23,7 +23,7 @@
             <br>
         </div>
 
-        <table class="styled-table">
+        <table class="detail-table">
             <thead>
             <tr>
                 <th>품목Code</th><th>품목 이름</th><th>거래처</th><th>거래단가</th><th>입고수량</th><th>단위</th><th>입고금액</th>
@@ -32,7 +32,7 @@
             <tbody>
             <tr th:each="i:${inbound.getInboundProducts()}">
 
-                <td th:text="${i.getWarehouseInboundProductId()}">품목code</td>
+                <td th:text="${i.getProduct().productCode}">품목code</td>
                 <td th:text="${i.getProduct().productName}">품목 이름</td>
                 <td th:text="${i.getProduct().getVendor().getVendorName()}">거래처</td>
                 <td th:text="${i.getProduct().productPrice}">거래단가</td>
@@ -43,46 +43,20 @@
 
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <td th:text="거래합계"></td>
+                <td colspan="3"></td>
+                <td th:text="${inbound.getTotalQuantity()}">Total Quantity</td>
+                <td></td>
+                <td th:text="${inbound.getTotalPrice()}">Total Price</td>
+            </tr>
+            </tfoot>
         </table>
 
-        <div>
-            총 입고수량 : <input type="text" th:value="${inbound.getTotalQuantity()}" readonly>
-            <br>
-            총 입고 금액 : <input type="text" th:value="${inbound.getTotalPrice()}" readonly>
-            <br>
-
-        </div>
 
     </div>
 </main>
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--                            <label for="product">입고상품 : </label>-->
-<!--                            &lt;!&ndash; 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.&ndash;&gt;-->
-<!--                            <select  id="product" name="productCode">-->
-<!--                                &lt;!&ndash; Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.&ndash;&gt;-->
-<!--                                <option value="">상품 선택하세요</option>-->
-<!--                                <option th:each="p :${products}"-->
-<!--                                        th:value="${p.productCode}"-->
-<!--                                        th:text="${p.productName}">-->
-<!--                                    고객명-->
-<!--                            </select>-->

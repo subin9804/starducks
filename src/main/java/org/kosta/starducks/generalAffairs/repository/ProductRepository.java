@@ -1,8 +1,5 @@
 package org.kosta.starducks.generalAffairs.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

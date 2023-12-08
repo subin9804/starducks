@@ -10,15 +10,26 @@
     <script th:src="@{/js/logistic/script.js}"></script>
 </th:block>
 
+
 <main layout:fragment="content">
     <h1>입고 목록</h1>
     <div class="content">
-
+        <div class="right-top-btn">
         <a th:href="@{/logistic/warehouseinbound/add}" >
-            <button  type="submit"> 입고 등록 </button>
+            <button class="commonBtn register-button" type="submit"> + 입고 등록 </button>
         </a>
+        </div>
 
             <table class="styled-table">
+                <label>
+                    <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">
+                    <input type="hidden" name="_bulkInboundCheckbox" value="on">
+                    대량 입고
+                </label>
+
+                <!-- Thymeleaf에서 값을 출력해보기 -->
+                <input type="text" th:value="${checkbox}" readonly>
+
                 <thead>
                 <tr>
                     <th>입고번호</th><th>입고일자</th><th>담당자</th><th>총입고수량</th><th>구분</th>
@@ -40,21 +51,23 @@
                 </tr>
 
                 </tbody>
+
             </table>
-
-
-<!--            <td>-->
-<!--                <a th:if="${o.orderStatus.name()=='CREATED'}"-->
-<!--                   th:text="취소"-->
-<!--                   th:href="@{/order/cancel/{orderId}(orderId=${o.orderId})}">-->
-<!--                    취소하기-->
-<!--                </a>-->
-<!--            </td>-->
 
 
 
     </div>
+    <script th:inline="javascript">
+
+        function handleCheckboxClick() {
+            var isChecked = document.getElementById('bulkInboundCheckbox').checked;
+
+            // AJAX로 서버에 데이터 전송
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/logistic/warehouseinbound/list?bulkInboundCheckbox=' + isChecked, true);
+            xhr.send();
+        }
+
+    </script>
 </main>
-
-
 </html>

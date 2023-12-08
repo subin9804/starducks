@@ -3,6 +3,7 @@ package org.kosta.starducks.logistic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
@@ -25,6 +26,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/logistic/warehouseinbound")
 @RequiredArgsConstructor
+@Slf4j
 public class WarehouseInboundController {
 
 
@@ -65,11 +67,21 @@ public class WarehouseInboundController {
 
 
     @GetMapping("/list")
-    public String getAllInbounds(Model m)
+    public String getAllInbounds(Model m, @RequestParam(name="bulkInboundCheckbox", required = false) Boolean bulkInboundCheckbox)
     {
         MenuService.commonProcess(request, m, "logistic");
-        List<WarehouseInbound> allInbounds = warehouseInboundService.getAllInbounds();
-        m.addAttribute("inbounds", allInbounds);
+
+        log.info(String.valueOf(bulkInboundCheckbox));
+        List<WarehouseInbound> inbounds;
+
+        if (bulkInboundCheckbox != null && bulkInboundCheckbox) {
+            inbounds = warehouseInboundService.findRecentHighTotalPriceInbounds();
+        } else {
+            inbounds = warehouseInboundService.getAllInbounds();
+        }
+
+        m.addAttribute("inbounds", inbounds);
+        m.addAttribute("checkbox",bulkInboundCheckbox);
         return "logistic/InboundList";
     }
 
