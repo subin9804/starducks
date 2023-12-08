@@ -19,23 +19,25 @@
             <button class="commonBtn register-button" type="submit"> + 입고 등록 </button>
         </a>
         </div>
+        <form>
+        <label>
+            <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">
+            <input type="hidden" name="_bulkInboundCheckbox" value="on">
+            대량 입고
+        </label>
+        </form>
+
+        <input type="text" th:value="${checkbox}" readonly>
 
             <table class="styled-table">
-                <label>
-                    <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">
-                    <input type="hidden" name="_bulkInboundCheckbox" value="on">
-                    대량 입고
-                </label>
 
-                <!-- Thymeleaf에서 값을 출력해보기 -->
-                <input type="text" th:value="${checkbox}" readonly>
 
                 <thead>
                 <tr>
                     <th>입고번호</th><th>입고일자</th><th>담당자</th><th>총입고수량</th><th>구분</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody th:fragment="inboundTableBody" id="inboundTableBody">
                 <tr th:each="i:${inbounds}">
 
                     <td>
@@ -61,12 +63,29 @@
 
         function handleCheckboxClick() {
             var isChecked = document.getElementById('bulkInboundCheckbox').checked;
+            console.log(isChecked);
 
-            // AJAX로 서버에 데이터 전송
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/logistic/warehouseinbound/list?bulkInboundCheckbox=' + isChecked, true);
+            //업데이트 하는 부분
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 'inboundTableBody' fragment를 가진 테이블의 내용을 업데이트
+                    var parser = new DOMParser();
+                    var responseDoc = parser.parseFromString(xhr.responseText, 'text/html');
+
+                    // 조건 추가: 'inboundTableBody' ID를 가진 요소를 찾을 수 있는 경우에만 업데이트
+                    var updatedTableBody = responseDoc.getElementById('inboundTableBody');
+                    if (updatedTableBody) {
+                        document.getElementById('inboundTableBody').innerHTML = updatedTableBody.innerHTML;
+                    }
+                }
+            };
             xhr.send();
         }
+
+
+
 
     </script>
 </main>

@@ -67,11 +67,13 @@ public class WarehouseInboundController {
 
 
     @GetMapping("/list")
-    public String getAllInbounds(Model m, @RequestParam(name="bulkInboundCheckbox", required = false) Boolean bulkInboundCheckbox)
+    public String getAllInbounds(Model m,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
         MenuService.commonProcess(request, m, "logistic");
 
         log.info(String.valueOf(bulkInboundCheckbox));
+
+
         List<WarehouseInbound> inbounds;
 
         if (bulkInboundCheckbox != null && bulkInboundCheckbox) {
@@ -82,6 +84,9 @@ public class WarehouseInboundController {
 
         m.addAttribute("inbounds", inbounds);
         m.addAttribute("checkbox",bulkInboundCheckbox);
+
+
+
         return "logistic/InboundList";
     }
 
