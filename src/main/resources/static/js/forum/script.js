@@ -1,4 +1,4 @@
-function quilljsediterInit(postContent) {
+function quilljsediterInit() {
     var options = {
         modules: {
             toolbar: [
@@ -13,12 +13,6 @@ function quilljsediterInit(postContent) {
     };
 
     var quill = new Quill('#editor', options);
-
-    // 수정 페이지에서 게시글 내용을 보이도록 에디터에 설정
-    if (postContent) {
-        quill.clipboard.dangerouslyPasteHTML(postContent);
-    }
-
 
     // 에디터 내용이 변경될 때마다 숨겨진 입력 필드에 값을 업데이트
     quill.on('text-change', function() {
@@ -64,6 +58,7 @@ function quilljsediterInit(postContent) {
     }
 
 }
+
 
 // 페이지 로드 완료 시 에디터 초기화
 window.onload = function() {
@@ -150,17 +145,18 @@ document.querySelectorAll('.delete-comment').forEach(button => {
 
 
 /** 콘텐츠 내용에서 <p>태그가 자꾸 보여서 없애려는 수단 나중에 시도해보기
- $(document).ready(function() {
- var content = $("#content").html(); // 여기서 'content'는 실제 요소의 ID에 맞게 변경해야 합니다.
+$(document).ready(function() {
+    var content = $("#content").html(); // 여기서 'content'는 실제 요소의 ID에 맞게 변경해야 합니다.
 
- if (content.startsWith("<p>")) {
- content = content.substring(3);
- }
+    if (content.startsWith("<p>")) {
+        content = content.substring(3);
+    }
 
- if (content.endsWith("</p>")) {
- content = content.substring(0, content.length - 4);
- }
+    if (content.endsWith("</p>")) {
+        content = content.substring(0, content.length - 4);
+    }
 
- $("#content").html(content);
- });
- */
+    $("#content").html(content);
+});
+*/
+

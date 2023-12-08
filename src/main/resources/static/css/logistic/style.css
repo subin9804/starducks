@@ -10,7 +10,7 @@
 }
 
 /*목록 페이지의 표에 대한 스타일 적용*/
-.styled-table {
+.list-table {
 
     width: 80%;
     margin: 30px auto;
@@ -24,23 +24,28 @@
 
 }
 
-.styled-table th,
-.styled-table td {
+
+
+
+
+.list-table th,
+.list-table td {
     padding: 12px 15px;
+
 
 }
 
-.styled-table td {
+.list-table td {
     border-top: 1px solid #6B4D27
 
 }
-.styled-table tfoot {
+.list-table tfoot {
     font-weight: bold;
 
 }
 
 
-.styled-table tbody tr:last-child:hover {
+.list-table tbody tr:last-child:hover {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: #6B4D27;
@@ -48,7 +53,7 @@
 }
 
 
-.styled-table tbody tr:hover {
+.list-table tbody tr:hover {
     background-color: #6B4D27;
     color: #fff;
 }

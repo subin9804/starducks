@@ -8,6 +8,14 @@ body {
     grid-template-rows: 60px 1fr; /* 헤더와 컨텐츠 사이의 비율 조정 */
     min-height: 1250px;
     padding-right: 40px;
+
+    /*배경으로 파도 이미지 추가*/
+    background-image: url('/images/wave.png');
+    background-size: 90%; /* 배경 이미지를 크기 조절 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-attachment: fixed; /* 스크롤 시 이미지 고정 */
+    background-position: 80% 120% /* x축 숫자 올리면 오른쪽, y축 숫자 올리면 더 밑으로  */
+
 }
 *{
     box-sizing: border-box;
@@ -20,6 +28,14 @@ main {
     border: 1px solid #6B4D27;
     border-radius: 10px;
     width: 1300px;
+}
+.page-border {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
+}
+.page-shadow {
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
 }
 a {
     text-decoration: none;
@@ -72,15 +88,15 @@ label {
     border-radius: 20px 0 0 20px;
     font-weight: bold;
 }
-.head input[type=radio] {
+.head input[name="nav"] {
     display: none;
 }
-.head input[type=radio]:checked~label {
+.head input[name="nav"]:checked~label {
     background-color: #ffffff;
     color: black;
     border-radius: 20px 0 0 0;
 }
-.only input[type=radio]:checked~label {
+.only input[name="nav"]:checked~label {
     border-radius: 20px 0 0 20px;
     padding: 20px;
 }
@@ -140,6 +156,9 @@ header a {
     cursor: pointer;
 
 }
+.commonBtn:active {
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
+}
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
 a p.commonBtn {
@@ -188,3 +207,45 @@ a p.commonBtn {
 }
 /** ----- 버튼 E ------ */
 
+/*!** --------테이블 ---------*!*/
+/*table {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*    margin-bottom: 20px;*/
+/*    background-color: #fff; !* 테이블 배경색 추가 *!*/
+/*}*/
+/*!*제목 링크 밑줄 제거*!*/
+/*table a {*/
+/*    text-decoration: none; !* 링크 밑줄 제거 *!*/
+/*    color: inherit; !* 링크 색상을 텍스트와 동일하게 설정 *!*/
+/*}*/
+
+/*!* 마우스 오버 시 링크에 밑줄 표시  *!*/
+/*table a:hover {*/
+/*    text-decoration: underline;*/
+/*    color: #4CAF50;*/
+/*}*/
+
+
+/*!*게시글 목록 테이블 가운데 정렬*!*/
+/*table th, table td {*/
+/*    border: 1px solid #ddd;*/
+/*    padding: 10px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*table th {*/
+/*    background-color: #f2f2f2;*/
+/*}*/
+/*!* 테이블 행에 마우스 오버 시 배경색 변경 *!*/
+/*table tr:hover {*/
+/*    background-color: #f5f5f5;*/
+/*}*/
+.search-button {
+    padding: 5px 15px;
+    border-color: #AF9A63;
+    cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
+}

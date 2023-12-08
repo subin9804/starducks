@@ -26,8 +26,6 @@ public class ScheduleService {
     }
 
     public void saveSchedule(Schedule schedule) {
-        log.info("여기는 서비스 // 값 넘어오니??????" + schedule);
-
         scheduleRepository.save(schedule);
     }
 }

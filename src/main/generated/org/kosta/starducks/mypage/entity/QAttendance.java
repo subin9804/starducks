@@ -52,7 +52,7 @@ public class QAttendance extends EntityPathBase<Attendance> {
 
     public QAttendance(Class<? extends Attendance> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.emp = inits.isInitialized("emp") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("emp")) : null;
+        this.emp = inits.isInitialized("emp") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("emp"), inits.get("emp")) : null;
     }
 
 }

@@ -7,9 +7,8 @@
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>
+    <script th:src="@{/js/mypage/schedule/ScheduleScript.js/mypage/ScheduleScript.js}"></script>
 </th:block>
-
 
 <main layout:fragment="content">
 
@@ -19,12 +18,11 @@
             <div class="modal-content">
                 <span class="close" th:text="'×'" onclick="closeModal()"></span>
                 <form th:action="@{/schedule/add}" method="post" th:object="${scheduleDTO}">
-                    <label th:text="'일정명'"></label>
-                    <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요"
-                           th:field="*{scheTitle}"/>
+                    <label th:text="'일정명'"><input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/></label>
 
                     <label th:text="'시작 일시'"></label>
-                    <input type="datetime-local" name="scheStartDate" th:field="*{scheStartDate}"/>
+                    <input type="datetime-local" name="scheStartDate"
+                           th:field="*{scheStartDate}"/>
 
                     <label th:text="'종료 일시'"></label>
                     <input type="datetime-local" name="scheEndDate" th:field="*{scheEndDate}"/>
