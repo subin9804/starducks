@@ -32,7 +32,7 @@ public class Document {
     private DocStatus docStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_code", nullable = false)
+    @JoinColumn(name = "form_code", nullable = false)
     private DocForm docForm;
 
     @ManyToOne(fetch = FetchType.LAZY)

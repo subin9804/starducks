@@ -32,13 +32,13 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final DateTimePath<java.time.LocalDateTime> docDate = createDateTime("docDate", java.time.LocalDateTime.class);
 
+    public final QDocForm docForm;
+
     public final NumberPath<Long> docId = createNumber("docId", Long.class);
 
     public final EnumPath<DocStatus> docStatus = createEnum("docStatus", DocStatus.class);
 
     public final StringPath docTitle = createString("docTitle");
-
-    public final EnumPath<DocType> docType = createEnum("docType", DocType.class);
 
     public final DateTimePath<java.time.LocalDateTime> docUpdateDate = createDateTime("docUpdateDate", java.time.LocalDateTime.class);
 
@@ -68,6 +68,7 @@ public class QDocument extends EntityPathBase<Document> {
 
     public QDocument(Class<? extends Document> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter")) : null;
     }
 

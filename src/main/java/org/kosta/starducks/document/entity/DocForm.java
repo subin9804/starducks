@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "DOC_FORM")
 public class DocForm {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String formCode;
 
     private String formName;
