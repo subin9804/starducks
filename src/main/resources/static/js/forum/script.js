@@ -115,26 +115,26 @@ function showEditForm(commentId) {
 
 
 
-function updateComment(commentId) {
-    var commentContent = document.getElementById('edit-comment-textarea-' + commentId).value;
-    var url = '/api/comments/' + commentId; // RESTful API 엔드포인트
-
-    // AJAX 요청
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ content: commentContent })
-    })
-        .then(response => response.json())
-        .then(data => {
-            // 요청 성공 시, 댓글 내용 업데이트 및 수정 폼 숨기기
-            document.getElementById('comment-content-' + commentId).innerText = commentContent;
-            showEditForm(commentId); // 수정 폼 숨김
-        })
-        .catch(error => console.error('Error:', error));
-}
+// function updateComment(commentId) {
+//     var commentContent = document.getElementById('edit-comment-textarea-' + commentId).value;
+//     var url = '/api/comments/' + commentId; // RESTful API 엔드포인트
+//
+//     // AJAX 요청
+//     fetch(url, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ content: commentContent })
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             // 요청 성공 시, 댓글 내용 업데이트 및 수정 폼 숨기기
+//             document.getElementById('comment-content-' + commentId).innerText = commentContent;
+//             showEditForm(commentId); // 수정 폼 숨김
+//         })
+//         .catch(error => console.error('Error:', error));
+// }
 
 // 댓글 수정 이벤트 리스너
 document.querySelectorAll('.edit-comment').forEach(button => {
@@ -148,22 +148,22 @@ document.querySelectorAll('.edit-comment').forEach(button => {
 });
 
 // 댓글 저장 이벤트 리스너
-document.querySelectorAll('.save-comment').forEach(button => {
-    button.addEventListener('click', function() {
-        let commentId = this.dataset.commentId;
-        let updatedContent = document.querySelector(`#edit-comment-input-${commentId}`).value;
-        // AJAX 요청으로 수정된 내용 전송
-        fetch(`/api/comments/${commentId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content: updatedContent })
-        }).then(response => {
-            // 처리 결과에 따른 UI 업데이트
-        });
-    });
-});
+// document.querySelectorAll('.save-comment').forEach(button => {
+//     button.addEventListener('click', function() {
+//         let commentId = this.dataset.commentId;
+//         let updatedContent = document.querySelector(`#edit-comment-input-${commentId}`).value;
+//         // AJAX 요청으로 수정된 내용 전송
+//         fetch(`/api/comments/${commentId}`, {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({ content: updatedContent })
+//         }).then(response => {
+//             // 처리 결과에 따른 UI 업데이트
+//         });
+//     });
+// });
 
 
 

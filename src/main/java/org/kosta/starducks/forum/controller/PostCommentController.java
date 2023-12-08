@@ -23,11 +23,18 @@ public class PostCommentController {
     this.postCommentService = postCommentService;
   }
 
-  // 댓글 내용 업데이트를 위한 RESTful API 엔드포인트
+  // 댓글 생성 또는 수정을 위한 RESTful API 엔드포인트
   @PutMapping("/{commentId}")
-  public ResponseEntity<?> updateCommentContent(@PathVariable Long commentId, @RequestBody PostCommentDto postCommentDto) {
+  public ResponseEntity<?> createOrUpdateComment(@PathVariable Long commentId, @RequestBody PostCommentDto postCommentDto) {
     postCommentDto.setCommentId(commentId); // DTO에 commentId 설정
     PostComment updatedComment = postCommentService.updateCommentContent(postCommentDto);
     return ResponseEntity.ok(updatedComment); // 성공 응답
+  }
+
+  // 댓글 삭제를 위한 RESTful API 엔드포인트
+  @DeleteMapping("/{commentId}")
+  public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
+    postCommentService.deleteComment(commentId);
+    return ResponseEntity.ok().build();
   }
 }
