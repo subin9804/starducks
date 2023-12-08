@@ -12,12 +12,71 @@
 
 <main layout:fragment="content">
 
-    <h1>기안서 작성</h1>
+    <h1 class="frag-title">기안서 작성</h1>
     <div class="preview-layout">
         <div class="inputs-div page-shadow">
+<!--            <div th:text="${docForm.formCode} ${docForm.formName}">>A01 기안서</div>-->
+<!--            <div class="doc-input-lbl" th:text="기안일">기안일</div>-->
+<!--            :<div class="doc-readonly" th:text="${doc.docDate}">${doc.docDate}</div>-->
+<!--            <div class="doc-input-lbl" th:text="기안자">기안자</div>-->
+<!--            :<div class="doc-readonly" th:text="${doc.docWriter}">${doc.docDate}</div>-->
+
+<!--            <div class="hr">-->
+                <hr>
+            </div>
+
+            <button type="button" class="btn btn-primary">Base class</button>
+
+<!--            <div th:text="1차 결재자">1차 결재자</div>-->
+<!--            <button class="inline-btn">사원찾기</button>-->
+<!--            :<div th:text="${apv1.approver}">${apv1.approver}</div>-->
+<!--            <div th:text="2차 결재자">2차 결재자</div>-->
+<!--            <button class="inline-btn">사원찾기</button>-->
+<!--            :<div th:text="${apv2.approver}">${apv2.approver}</div>-->
+
+<!--            <div class="hr">-->
+<!--                <hr>-->
+<!--            </div>-->
+
+<!--            <div th:text="참조인">참조인</div>-->
+<!--            :<div th:text="${doc.refEmp}">${doc.docDate}</div>-->
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
             <input type="text" class="">
+
+
+
+
             <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
         </div>
+
+
+
     <div class="a4-box page-shadow">
         <div id="print-div">
             <h1 class="doc-type-name">업 무 기 안 서</h1>
