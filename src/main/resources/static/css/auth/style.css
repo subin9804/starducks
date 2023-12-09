@@ -96,6 +96,10 @@ button[type="submit"] {
     color: #FEF5DB;
 }
 
+.send-email{
+    margin-top: 10px;
+}
+
 /*플로팅 라벨 구현하기~~~~~~~~~~~~*/
 .form-floating {
     position: relative;

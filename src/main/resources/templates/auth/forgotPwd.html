@@ -23,8 +23,9 @@
             <input type="email" id="email" name="email" required>
             <label for="email">이메일 주소</label>
         </div>
-        <span id="errorMessage" class="error-message" th:if="${error}" th:text="${error}"></span> <!-- 에러 메시지 -->
-        <button type="submit">이메일로 전송</button>
+        <!-- 사번, 이메일 주소가 일치하지 않으면 에러 메시지가 보인다 -->
+        <span id="errorMessage" class="error-message" th:if="${error}" th:text="${error}"></span>
+        <button type="submit" class="send-email">이메일로 전송</button>
     </form>
 </div>
 </div>
