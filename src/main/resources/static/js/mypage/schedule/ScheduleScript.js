@@ -32,18 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
 
                 var events = data.map(function (schedule) {
-
+                    console.log(schedule.url)
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        title: schedule.scheTitle,
-                        start: schedule.scheStartDate,
-                        url: '/schedule/detailSche/' + schedule.url,   // 해당 일정의 상세 페이지로 이동
-                        end: schedule.scheEndDate,
-                        extendedProps: {
-                            scheduleType: schedule.scheduleType,
-                            notes: schedule.notes,
-                            empId: schedule.empId
-                        }
+                        title: schedule.title,
+                        start: schedule.start,
+                        url: schedule.url,   // 해당 일정의 상세 페이지로 이동
+                        end: schedule.end,
+                        // extendedProps: {
+                        //     scheduleType: schedule.scheduleType,
+                        //     notes: schedule.notes,
+                        //     empId: schedule.empId
+                        // }
                     };
                     console.log("schedule.scheTitle" + schedule.scheTitle);
                 });
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         eventClick: function (info) {
             console.log(info.event.url);
-            if(info.event.url) {
+            if (info.event.url) {
                 window.open(info.event.url);
             }
 

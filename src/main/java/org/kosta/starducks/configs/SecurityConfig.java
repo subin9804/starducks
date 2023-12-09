@@ -22,18 +22,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(AbstractHttpConfigurer::disable) //나중에 지워주면 좋음  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**","/login", "/forgot-password")
-                .permitAll()
-                .anyRequest().authenticated())
-            .formLogin(form -> form
-                .loginPage("/login") //로그인 페이지 주소
-                .usernameParameter("empId") //로그인 페이지에서 name="empId" 라고 지어진 사번 인풋값 인식
-                .defaultSuccessUrl("/", true) //로그인 성공 시 메인 페이지로
-                .failureUrl("/login/securityPassFailed") // 로그인 실패 시 리디렉션할 URL
-                .permitAll())
-            .logout(LogoutConfigurer::permitAll);
+                .csrf(AbstractHttpConfigurer::disable) //나중에 지워주면 좋음  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**","/login", "/forgot-password")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login") //로그인 페이지 주소
+                        .usernameParameter("empId") //로그인 페이지에서 name="empId" 라고 지어진 사번 인풋값 인식
+                        .defaultSuccessUrl("/", true) //로그인 성공 시 메인 페이지로
+                        .failureUrl("/login/securityPassFailed") // 로그인 실패 시 리디렉션할 URL
+                        .permitAll())
+                .logout(LogoutConfigurer::permitAll);
 
         return http.build();
     }
@@ -41,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return w -> w.ignoring().requestMatchers(
-            "/images/**", "/css/**", "/js/**"
+                "/images/**", "/css/**", "/js/**"
         );
     }
 

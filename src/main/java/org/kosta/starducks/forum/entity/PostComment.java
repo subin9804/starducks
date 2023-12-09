@@ -1,6 +1,7 @@
 package org.kosta.starducks.forum.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class PostComment {
   @Lob
   private String commentContent; //댓글 내용
 
+  @CreationTimestamp
   private LocalDateTime commentDate; //댓글 작성일
 
   @ManyToOne

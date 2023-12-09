@@ -2,20 +2,25 @@ package org.kosta.starducks.mypage.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.kosta.starducks.mypage.entity.ConfRoomEN;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+/**
+ * json으로 회의실 예약 정보를 받아와서 생성하기 위한 Dto
+ */
 @Getter @Setter
 public class ConfBookDto {
+
+    private ConfRoomEN room;    // 회의실 이름
+
     private String confName;    // 회의 이름
 
-    private LocalDate RunningDay;  // 진행 일자
+    private String text;    // 메모
 
-    @DateTimeFormat(pattern="HH:mm:ss")
-    private LocalDateTime StartTime;    // 시작 시간
+    private String runningDay;  // 진행 일자
 
-    @DateTimeFormat(pattern="HH:mm:ss")
-    private LocalDateTime endTime;  // 종료 시간
+    private String startTime;    // 시작 시간
+
+    private String endTime;  // 종료 시간
+
+    private String color; // 예약 블록 색상
 }

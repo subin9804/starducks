@@ -74,7 +74,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setStatus(false);
         specificEmp.setBirth(LocalDate.parse("2023-12-20"));
         specificEmp.setEmpTel("010-9999-9990");
-        specificEmp.setGender("남");
+        specificEmp.setGender("man");
         specificEmp.setEmail("lhg0529@gmail.com");
         specificEmp.setAddr("부천시");
         specificEmp.setEmpName("이현기");
@@ -106,6 +106,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setPostTitle("제목" + i);
             forumPost.setPostContent("내용" + i);
             forumPost.setPostView(i);
+            forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
             if (i < 5) {
