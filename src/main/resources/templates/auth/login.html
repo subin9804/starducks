@@ -7,8 +7,9 @@
   <script th:src="@{/js/auth/script.js}"></script>
 </head>
 <body>
+<div class="flex-container">
+  <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="login-logo">
 <div class="login-container">
-  <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="logo">
   <form th:action="@{/login}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <div class="form-floating">
@@ -27,6 +28,7 @@
   </form>
 
   <a href="/forgotPwd" class="forgot-password">비밀번호 찾기</a>
+</div>
 </div>
 </body>
 </html>

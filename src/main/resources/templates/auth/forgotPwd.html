@@ -8,15 +8,25 @@
 
 </head>
 <body>
-<img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="logo">
-<form action="/forgotPwd" method="post">
-    <label for="empId">사번</label>
-    <input type="text" id="empId" name="email" required>
-    <label for="email">이메일 주소</label>
-    <input type="email" id="email" name="email" required>
-    <button type="submit">비밀번호 찾기</button>
-</form>
+<div class="flex-container">
+<img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="findPwd-logo">
+<div class="login-container">
 
+    <h2 class="findPwdTitle">비밀번호 찾기</h2>
+    <form action="/forgotPwd" method="post">
+        <div class="form-floating">
+            <input type="text" id="empId" name="empId" required>
+            <label for="empId">사번</label>
+        </div>
 
+        <div class="form-floating">
+            <input type="email" id="email" name="email" required>
+            <label for="email">이메일 주소</label>
+        </div>
+        <span id="errorMessage" class="error-message" th:if="${error}" th:text="${error}"></span> <!-- 에러 메시지 -->
+        <button type="submit">이메일로 전송</button>
+    </form>
+</div>
+</div>
 </body>
 </html>
