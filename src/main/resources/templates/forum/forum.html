@@ -20,7 +20,7 @@
     <!-- 전체 글 보기 링크 -->
     <div class="forum-header">
         <div class="view-all-posts">
-            <a href="/forum" th:href="@{/forum}">전체 글 보기</a>
+            <a href="/forum" class="fcommonBtn" th:href="@{/forum}">전체 글 보기</a>
         </div>
         <form class="search-form" method="get" th:action="@{/forum}">
             <input name="searchKeyword" placeholder="검색어 입력" type="text">

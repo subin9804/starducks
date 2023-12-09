@@ -139,33 +139,69 @@
 }
 
 .detail-content-section {
-    background-color: #f8f8f8;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 15px;
     width: 100%;
 }
 
-.detail-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/*테이블 부분 스타일*/
+.detail-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* 내용과의 간격 */
 }
 
-.detail-info {
-    margin-bottom: 20px;
+.detail-info-table th {
+    background-color: #978268; /* 제목, 조회수, 작성자, 작성 시간 칸의 배경색 */
+    color: #ffffff;
+    width: 130px; /* 정보 이름들의 폭 */
 }
 
-.detail-author, .detail-views, .detail-timestamp {
-    font-size: 14px;
-    margin-bottom: 5px;
+.detail-info-table td:first-child {
+    white-space: normal; /* td 첫 번째 열의 텍스트 줄바꿈을 허용 */
+    word-wrap: break-word; /* 긴 단어나 URL이 줄 바꿈 시 자동으로 줄바꿈 처리 */
 }
 
+/*공통 테이블 호버 효과 없애기 */
+table tr:hover {
+    background-color: #ffffff;
+}
+
+.detail-info-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+
+/* 마우스 호버 시 색상 변경 제거 */
+.detail-info-table td:hover {
+    background-color: #ffffff; /* 호버 시에도 배경색 유지 */
+}
+
+/* '내용' 셀의 스타일 조정 */
 .detail-post-content {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    margin-bottom: 20px;
+    min-height: 500px; /* 내용 부분의 최소 높이 */
+    background-color: #ffffff; /* 내용 칸의 배경색 */
+    padding: 0px; /* 패딩 추가 */
+    border-top: none; /* 상단 테두리 제거 */
+    margin: 0; /* 마진 제거 */
+    text-align: left;
 }
+
+/* 조회수와 작성 시간 셀에 직접 클래스를 부여하여 스타일 적용 */
+.detail-info-table .views,
+.detail-info-table .timestamp {
+    text-align: center;
+    width: 200px; /* 조회수, 작성 시간 데이터 부분 폭 길이 */
+}
+.detail-post-content img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 .detail-comment-section {
     margin-top: 20px;

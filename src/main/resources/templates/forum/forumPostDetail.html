@@ -17,16 +17,29 @@
     <div class="detail-page-container" th:object="${post}">
         <p class="detail-page-title">게시글 상세</p>
         <div class="detail-content-section">
-            <div class="detail-title" th:text="${post.postTitle}">제목</div>
-            <div class="detail-info">
-                <div class="detail-author" th:text="${post.employee != null ? post.employee.empName : '작성자 정보 없음'}">
-                    작성자
-                </div>
-                <div class="detail-views" th:text="${post.postView}">조회수</div>
-                <div class="detail-timestamp" th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd HH:mm')}">작성 시간
-                </div>
+            <!-- 게시글 상세 정보 표시 -->
+            <div class="detail-info-table">
+                <table>
+                    <tr>
+                        <th>제목</th>
+                        <td th:text="${post.postTitle}">조회수 데이터</td>
+                        <th>조회수</th>
+                        <td class="views" th:text="${post.postView}">조회수 데이터</td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td th:text="${post.employee != null ? post.employee.empName : '작성자 정보 없음'}">작성자 데이터</td>
+                        <th>작성 시간</th>
+                        <td class="timestamp" th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd HH:mm')}">작성 시간 데이터</td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td colspan="3">
+                            <div class="detail-post-content" th:utext="${post.postContent}">글 내용</div>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="detail-post-content" th:text="${post.postContent}">글 내용</div>
 
             <!--            댓글 입력 폼          -->
             <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
@@ -34,7 +47,7 @@
                 <button type="submit" class="fcommonBtn fregister-button">등록</button>
             </form>
 
-            <!--            댓글 목록  댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
+            <!--            댓글 목록. 댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
             <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
                 <div th:each="comment : ${post.comments}" class="detail-comment-block">
 
