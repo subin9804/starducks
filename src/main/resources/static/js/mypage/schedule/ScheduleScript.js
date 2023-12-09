@@ -1,8 +1,6 @@
-
-
-document.addEventListener('DOMContentLoaded', function () {     // HTML 문서가 로드되면 실행
-    var calendarEl = document.getElementById('calendar');   // HTML에서 id가 'calendar'인 요소를 찾아서 변수 calendarEl에 할당
-    var modal;  // 변수 modal을 초기화
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var modal;
     var calendar = new FullCalendar.Calendar(calendarEl, {  // calendarEl 요소에 달력을 초기화
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
@@ -22,20 +20,19 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
                 modal.style.display = 'block'; // 모달을 보이게 함
             }
         },
-        editable: false,
+        editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
 
-        // FullCalendar에서 이벤트를 가져오는 역할
         // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
         events: function (fetchInfo, successCallback, errorCallback) {
             var empId = 1;
 
             // 사용자의 일정 정보를 가져옴
             fetchShowSingleSchedule(empId).then(function (data) {   // 서버에 요청을 보내어 해당 사용자의 일정 정보를 가져옴
-                console.log("받아온 데이265165터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
+                console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
 
                 var events = data.map(function (schedule) {
-                    console.log(schedule.)
+
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
                         title: schedule.scheTitle,
@@ -73,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
                 return response.text(); // response.json() 대신 response.text()로 변경
             })
             .then(function (data) {
-                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
+                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console..log
                 return JSON.parse(data); // JSON 형식으로 파싱하여 반환
             })
             .catch(function (error) {
