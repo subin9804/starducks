@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>비밀번호 찾기</title>
     <link href="/css/auth/style.css" rel="stylesheet" type="text/css">
     <script th:src="@{/js/auth/script.js}"></script>
 
@@ -21,7 +21,7 @@
 
         <div class="form-floating">
             <input type="email" id="email" name="email" required>
-            <label for="email">이메일 주소</label>
+            <label for="email">이메일</label>
         </div>
         <!-- 사번, 이메일 주소가 일치하지 않으면 에러 메시지가 보인다 -->
         <span id="errorMessage" class="error-message" th:if="${error}" th:text="${error}"></span>

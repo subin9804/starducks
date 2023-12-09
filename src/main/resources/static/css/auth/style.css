@@ -1,7 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #6b4d27; /* 배경색 */
-    /*color: white; */
     margin: 0;
     padding: 0;
     display: flex;
@@ -33,17 +32,18 @@ body {
     width: 300px; /* 이미지 크기 조절 */
     height: auto;
     align-content: center;
+}
 
 /* 로고 이미지 스타일 비번찾기 페이지*/
-}.findPwd-logo {
+.findPwd-logo {
     display: block;
     margin: 0 auto 0px; /* 로고와 입력 필드 사이 간격 */
     width: 300px; /* 이미지 크기 조절 */
     height: auto;
     align-content: center;
-
 }
 
+/* 비밀번호 찾기 제목 스타일 */
 .findPwdTitle {
     font-size: 24px; /* 크기 증가 */
     font-weight: bold; /* 굵게 */
@@ -105,6 +105,7 @@ button[type="submit"] {
     margin-bottom: 15px;
 }
 
+/* 입력되는 곳 스타일 */
 .form-floating input {
     width: 100%;
     padding: 10px;
@@ -113,7 +114,6 @@ button[type="submit"] {
     font-size: 14px;
     background-color: #fff;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-
 }
 
 .form-floating label {
