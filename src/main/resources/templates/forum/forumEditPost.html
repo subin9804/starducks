@@ -19,7 +19,7 @@
   <h1>게시글 수정</h1>
   <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
     <!-- 제목 입력란 -->
-    <input type="text" th:field="*{postTitle}" placeholder="제목">
+    <input type="text" th:field="*{postTitle}" placeholder="제목" required>
 
     <!-- 공지사항 체크박스 -->
     <div class="checkbox-container">
@@ -27,11 +27,11 @@
       <label for="postNotice">공지로 등록</label>
     </div>
 
-    <!-- Quill 에디터의 메인 컨테이너 -->
+    <!-- 에디터의 메인 컨테이너 -->
     <div id="editor"></div>
 
-    <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
-    <input type="hidden" id="quill_html" th:field="*{postContent}">
+    <!-- 에디터의 내용을 저장할 숨겨진 input 필드 -->
+    <input type="hidden" id="editor_content" name="postContent">
 
     <!-- 수정, 취소 버튼 -->
     <button type="submit" class="commonBtn register-button">수정 완료</button>
@@ -39,5 +39,50 @@
       <p class="commonBtn cancel-button">취소</p>
     </a>
   </form>
+  <!--토스트 글쓰기 에디터 -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    // 서버로부터 가져온 기존 게시글의 내용
+    const existingContent = [[${post.postContent}]];
+    /*]]>*/
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',             // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: existingContent,          // 기존 내용을 에디터의 초기 값으로 설정
+        previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+        hooks: {
+          async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+            try {
+              const formData = new FormData();
+              formData.append('image', blob);
+
+              const response = await fetch('/tui-editor/image-upload', {
+                method : 'POST',
+                body : formData,
+              });
+
+              const filename = await response.text();
+              console.log('서버에 저장된 파일명 : ', filename);
+
+              const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+              callback(imageUrl, 'image alt attribute');
+            } catch (error) {
+              console.error('업로드 실패 : ', error);
+            }
+          }
+        }
+      });
+
+      document.querySelector('form').addEventListener('submit', function() {
+        document.getElementById('editor_content').value = editor.getHTML();
+      });
+    });
+  </script>
+
 </main>
 </html>
