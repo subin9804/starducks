@@ -20,7 +20,6 @@
     <div class="form-floating">
       <input type="password" id="password" name="password" required>
       <label for="password">비밀번호</label>
-      <!-- 예시 오류 메시지 -->
       <span id="errorMessage"  th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></span>
     </div>
 
@@ -30,5 +29,23 @@
   <a href="/forgotPwd" class="forgot-password">비밀번호 찾기</a>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const emailSent = /*[[${emailSent}]]*/ 'false';
+
+  window.onload = function() {
+    if (emailSent === 'true') {
+      Swal.fire({
+        title: 'Starducks',
+        text: '이메일이 전송되었습니다. 로그인 페이지로 이동합니다.',
+        icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#4A85F6'
+      });
+    }
+  };
+  /*]]>*/
+</script>
 </body>
 </html>

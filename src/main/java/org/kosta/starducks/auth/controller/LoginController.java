@@ -69,7 +69,7 @@ public String login(@RequestParam(value = "error", required = false) String erro
     String subject = "비밀번호 재설정";
     String text = "귀하의 임시 비밀번호는 " + tempPwd + " 입니다. 로그인 후 비밀번호를 변경해 주세요.";
     emailService.sendTempPwdEmail(email, subject, text);
-
+    redirectAttrs.addFlashAttribute("emailSent", "true");
     return "redirect:/login";
   }
 }

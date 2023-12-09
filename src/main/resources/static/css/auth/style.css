@@ -66,12 +66,11 @@ input[type="email"]{
     box-sizing: border-box; /* 패딩과 테두리 포함한 너비 계산. 인풋, 버튼 가로 크기 일치 */
 }
 
-/* 오류 메시지 스타일 */
+/* 에러 메시지 스타일 */
 .error-message {
     color: red;
     font-size: 14px;
 }
-
 
 /* 로그인 버튼 스타일 */
 button[type="submit"] {

@@ -27,7 +27,7 @@ public class CustomFailHandler extends SimpleUrlAuthenticationFailureHandler {
                                       AuthenticationException exception) throws IOException, ServletException {
     String errorMessage;
     if (exception instanceof BadCredentialsException) {
-      errorMessage = "일치하는 정보가 없습니다.";
+      errorMessage = "정보가 일치하지 않습니다.";
     } else {
       errorMessage = "알 수 없는 이유로 로그인에 실패하였습니다. 관리자에게 문의하세요.";
     }
