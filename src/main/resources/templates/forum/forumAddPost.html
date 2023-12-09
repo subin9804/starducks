@@ -82,10 +82,6 @@
             // 에디터의 HTML 내용을 가져옴. 이것을 통해서 에디터의 내용을 인식하고 저장할 수 있다
             document.getElementById('editor_content').value = editor.getHTML(); // 숨겨진 input 필드에 설정.
         }
-
-        // form 제출 이벤트에 함수 연결
-        const form = document.querySelector('form');
-        form.onsubmit = saveEditorContent;
     </script>
 </main>
 </html>

@@ -1,42 +1,60 @@
 package org.kosta.starducks.configs;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.kosta.starducks.auth.handler.CustomFailHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean //로그인 유지 기능 rememberMe 나중에 추가하기
+    @Autowired
+    private CustomFailHandler customFailHandler;
+
+    @Bean //시큐리티 옵션을 커스텀할 수 있는 곳
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(AbstractHttpConfigurer::disable) //나중에 지워주면 좋음  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
+            .csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**","/login", "/forgot-password")
+                .requestMatchers("/**","/login", "/forgot-password") //로그인 안해도 접속 가능한 주소 /**는 모든 하위 주소에 접근 가능하게 만듦
                 .permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form
-                .loginPage("/login") //로그인 페이지 주소
-                .usernameParameter("empId") //로그인 페이지에서 name="empId" 라고 지어진 사번 인풋값 인식
+                .loginPage("/login") //로그인 하는 페이지
+                .usernameParameter("empId") //사원 번호를 통해서 정보 조회
                 .defaultSuccessUrl("/", true) //로그인 성공 시 메인 페이지로
-                .failureUrl("/login/securityPassFailed") // 로그인 실패 시 리디렉션할 URL
+                .failureHandler(customFailHandler) //페이지 자체에 로그인 실패 메시지 표시를 위해 커스텀핸들러 따로 제작함
                 .permitAll())
             .logout(LogoutConfigurer::permitAll);
 
         return http.build();
     }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

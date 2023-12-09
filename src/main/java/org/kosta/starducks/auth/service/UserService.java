@@ -20,6 +20,12 @@ public class UserService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+//  비밀번호 찾기 페이지에서 사번, 이메일 일치 여부 확인을 위한 메서드
+  public boolean validateEmpIdAndEmail(Long empId, String email) {
+    Employee emp = empRepository.findById(empId).orElse(null);
+    return emp != null && emp.getEmail().equals(email);
+  }
+
   public Employee findByEmail(String email) {
     return empRepository.findByEmail(email).orElse(null);
   }
