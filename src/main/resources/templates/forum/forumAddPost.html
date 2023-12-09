@@ -12,9 +12,9 @@
 
 <main layout:fragment="content">
     <h1>글쓰기</h1>
-    <form th:action="@{/forum/add}" method="post" onsubmit="return handleSubmit()">
+    <form th:action="@{/forum/add}" method="post" >
         <!-- 제목 입력란 -->
-        <input type="text" th:field="*{post.postTitle}"  placeholder="제목" id="postTitle">
+        <input type="text" th:field="*{post.postTitle}"  placeholder="제목" id="postTitle" required>
 
         <!-- 공지사항 체크박스 -->
         <div class="checkbox-container">

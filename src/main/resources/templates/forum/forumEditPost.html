@@ -19,7 +19,7 @@
   <h1>게시글 수정</h1>
   <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
     <!-- 제목 입력란 -->
-    <input type="text" th:field="*{postTitle}" placeholder="제목">
+    <input type="text" th:field="*{postTitle}" placeholder="제목" required>
 
     <!-- 공지사항 체크박스 -->
     <div class="checkbox-container">

@@ -8,15 +8,15 @@
     margin-bottom: 20px;
 }
 
-.view-all-posts a {
-    text-decoration: none;
-    color: black;
-}
+/*.view-all-posts a {*/
+/*    text-decoration: none;*/
+/*    color: black;*/
+/*}*/
 
-.view-all-posts a:hover {
-    text-decoration: underline;
-    color: #4CAF50;
-}
+/*.view-all-posts a:hover {*/
+/*    text-decoration: underline;*/
+/*    color: #4CAF50;*/
+/*}*/
 
 .search-form {
     display: flex;
@@ -65,9 +65,8 @@
     color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
 }
 
-/* 마우스 오버 시 링크에 밑줄 표시  */
+ 마우스 오버 시 링크에 밑줄 표시
 .forum-table a:hover {
-    text-decoration: underline;
     color: #4CAF50;
 }
 
@@ -271,6 +270,20 @@ table tr:hover {
     border-radius: 10px;
     cursor: pointer;
 
+}
+
+/* 전체글 보기 버튼 */
+.listBtn {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 27px;
+    width: 70px;
+    height: 30px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
 }
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
