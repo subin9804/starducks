@@ -1,5 +1,6 @@
 package org.kosta.starducks.auth.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.kosta.starducks.auth.service.EmailService;
 import org.kosta.starducks.auth.service.UserService;
 import org.kosta.starducks.hr.entity.Employee;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class LoginController {
@@ -27,14 +31,15 @@ public class LoginController {
 
 
 //  로그인 페이지
-  @GetMapping("/login")
-  public String login(@RequestParam(value = "error", required = false) String error,
-                      Model model) {
-    if (error != null) {
-      model.addAttribute("loginError", true);
-    }
-    return "auth/login";
+@GetMapping("/login")
+public String login(@RequestParam(value = "error", required = false) String error,
+                    @RequestParam(value = "exception", required = false) String exception,
+                    Model model) {
+  if (error != null && exception != null) {
+    model.addAttribute("errorMessage", URLDecoder.decode(exception, StandardCharsets.UTF_8));
   }
+  return "auth/login";
+}
 
   // 비밀번호 찾기 페이지로 이동
   @GetMapping("/forgotPwd")

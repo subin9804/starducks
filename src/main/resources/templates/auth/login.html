@@ -14,15 +14,13 @@
     <div class="form-floating">
       <input type="text" id="empId" name="empId" required>
       <label for="empId">사번</label>
-      <!-- 예시 오류 메시지 -->
-<!--      <span id="empIdError" class="error-message">사번이 일치하지 않습니다.</span>-->
     </div>
 
     <div class="form-floating">
       <input type="password" id="password" name="password" required>
       <label for="password">비밀번호</label>
       <!-- 예시 오류 메시지 -->
-      <span id="passwordError" class="error-message">비밀번호가 일치하지 않습니다.</span>
+      <span id="errorMessage"  th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></span>
     </div>
 
     <button type="submit">로그인</button>

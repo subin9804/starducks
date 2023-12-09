@@ -29,8 +29,8 @@ input[type="text"],
 input[type="password"] {
     width: 100%; /* 컨테이너 너비에 맞게 조절 */
     padding: 10px;
-    margin-top: 5px; /* 유효성 검사 글씨와의 간격 조절*/
-    margin-bottom: 0px; /* 입력 필드 사이의 간격 */
+    margin-top: 0px;
+    margin-bottom: 10px; /* 유효성 검사 글씨와의 간격 조절*/
     border: none;
     border-radius: 15px;
     font-size: 16px; /* 글자 크기 */
@@ -41,11 +41,10 @@ input[type="password"] {
 
 /* 오류 메시지 스타일 */
 .error-message {
-    color: red; /* 빨간색 글씨 */
-    font-size: 10px; /* 글씨 크기 조정 */
-    margin-top: 0px; /* 필드와의 간격 */
-    /*display: none;*/
+    color: red;
+    font-size: 14px;
 }
+
 
 /* 로그인 버튼 스타일 */
 button[type="submit"] {
@@ -89,7 +88,7 @@ button[type="submit"] {
 
 .form-floating label {
     position: absolute;
-    top: 7%;
+    top: 0%;
     left: 0;
     padding: 10px;
     pointer-events: none;
@@ -100,7 +99,7 @@ button[type="submit"] {
 /* 인풋 필드에 값이 있거나 포커스를 받았을 때 */
 .form-floating input:focus + label,
 .form-floating input:valid + label {
-    top: -15px; /* 라벨 글씨 올라가는 높이 조절 */
+    top: -20px; /* 라벨 글씨 올라가는 높이 조절 */
     left: 10px;
     padding: 0 5px;
     font-size: 12px;
