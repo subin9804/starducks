@@ -1,114 +1,124 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html layout:decorate="~{layouts/main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <th:block layout:fragment="addMore">
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}">
-    <script th:src="@{/js/forum/script.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
+  <script th:src="@{/js/forum/script.js}"></script>
 
-    <!--    quill 위지윅 사용 불러오기 링크-->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+<!-- 시큐리티 때문에 삭제 기능을 위해서 토큰 추가 -->
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 </th:block>
 
 <main layout:fragment="content">
-    <div class="detail-page-container" th:object="${post}">
-        <p class="detail-page-title">게시글 상세</p>
-        <div class="detail-content-section">
-            <!-- 게시글 상세 정보 표시 -->
-            <div class="detail-info-table">
-                <table>
-                    <tr>
-                        <th>제목</th>
-                        <td th:text="${post.postTitle}">조회수 데이터</td>
-                        <th>조회수</th>
-                        <td class="views" th:text="${post.postView}">조회수 데이터</td>
-                    </tr>
-                    <tr>
-                        <th>작성자</th>
-                        <td th:text="${post.employee != null ? post.employee.empName : '작성자 정보 없음'}">작성자 데이터</td>
-                        <th>작성 시간</th>
-                        <td class="timestamp" th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd HH:mm')}">작성 시간 데이터</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td colspan="3">
-                            <div class="detail-post-content" th:utext="${post.postContent}">글 내용</div>
-                        </td>
-                    </tr>
-                </table>
+  <div class="detail-page-container" th:object="${post}">
+    <p class="detail-page-title">게시글 상세정보</p>
+    <div class="detail-content-section">
+      <!-- 게시글 상세 정보 표시 -->
+      <div class="detail-info-table">
+        <table>
+          <tr>
+            <th>제목</th>
+            <td th:text="${post.postTitle}">조회수 데이터</td>
+            <th>조회수</th>
+            <td class="views" th:text="${post.postView}">조회수 데이터</td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td th:text="${post.employee != null ? post.employee.empName : '작성자 정보 없음'}">작성자 데이터</td>
+            <th>작성 시간</th>
+            <td class="timestamp" th:text="${#temporals.format(post.postDate, 'yyyy-MM-dd HH:mm')}">작성 시간
+              데이터
+            </td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <!--  utext로 불러서 html 태그가 적용된 상태로 글 내용이 보여진다-->
+            <td colspan="3">
+              <div class="detail-post-content" th:utext="${post.postContent}">글 내용</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!--            댓글 입력 폼          -->
+      <form method="post" th:action="@{/forum/post/{id}/addComment(id=${post.postId})}">
+        <textarea class="detail-comment-input" name="commentContent" placeholder="댓글을 입력하세요."></textarea>
+        <button class="fcommonBtn fregister-button" type="submit">등록</button>
+      </form>
+
+      <!--            댓글 목록. 댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
+      <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
+        <div class="detail-comment-block" th:each="comment : ${post.comments}">
+
+          <!-- 댓글 작성자 이름과 작성 시간 -->
+          <div class="detail-comment-author">
+            <span th:text="${comment.employee != null ? comment.employee.empName : '익명'}">작성자</span>
+            <span th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+          </div>
+
+          <!-- 댓글 내용 -->
+          <p th:id="'comment-content-' + ${comment.commentId}" th:text="${comment.commentContent}">댓글 내용</p>
+
+          <form method="post" style="display: none;"
+                th:action="@{/forum/updateComment}" th:id="'edit-comment-form-' + ${comment.commentId}">
+            <input name="commentId" th:value="${comment.commentId}" type="hidden">
+            <input name="postId" th:value="${post.postId}" type="hidden">
+            <textarea name="commentContent"
+                      th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
+            <button class="fcommonBtn fregister-button" type="submit">저장</button>
+          </form>
+          <!-- 댓글 수정/삭제 버튼. 로그인한 사용자와 댓글 작성자가 일치할 때만 표시 -->
+          <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
+            <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
+            <div class="detail-comment-actions"
+                 th:if="${comment.employee.empId == #authentication.principal.empId}">
+              <button class="fcommonBtn fedit-button"
+                      th:onclick="'showEditForm(' + ${comment.commentId} + ');'">
+                수정
+              </button>
+              <button class="fcommonBtn fdelete-button"
+                      th:onclick="'deletePostComment(' + ${comment.commentId} + ');'">
+                삭제
+              </button>
             </div>
-
-            <!--            댓글 입력 폼          -->
-            <form th:action="@{/forum/post/{id}/addComment(id=${post.postId})}" method="post">
-                <textarea name="commentContent" class="detail-comment-input" placeholder="댓글을 입력하세요."></textarea>
-                <button type="submit" class="fcommonBtn fregister-button">등록</button>
-            </form>
-
-            <!--            댓글 목록. 댓글이 있으면 댓글마다 수정, 삭제 버튼이 생성된다       -->
-            <div th:if="${post.comments != null and not #lists.isEmpty(post.comments)}">
-                <div th:each="comment : ${post.comments}" class="detail-comment-block">
-
-                    <!-- 댓글 작성자 이름과 작성 시간 -->
-                    <div class="detail-comment-author">
-                        <span th:text="${comment.employee != null ? comment.employee.empName : '익명'}">작성자</span>
-                        <span th:text="${#temporals.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
-                    </div>
-
-                    <!-- 댓글 내용 -->
-                    <p th:text="${comment.commentContent}" th:id="'comment-content-' + ${comment.commentId}">댓글 내용</p>
-
-                    <form th:action="@{/forum/updateComment}" method="post" th:id="'edit-comment-form-' + ${comment.commentId}" style="display: none;">
-                        <input type="hidden" name="commentId" th:value="${comment.commentId}">
-                        <input type="hidden" name="postId" th:value="${post.postId}">
-                        <textarea name="commentContent" th:id="'edit-comment-textarea-' + ${comment.commentId}"></textarea>
-                        <button type="submit" class="fcommonBtn fregister-button">저장</button>
-                    </form>
-                    <!-- 댓글 수정/삭제 버튼. 로그인한 사용자와 댓글 작성자가 일치할 때만 표시 -->
-                    <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
-                        <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
-                        <div th:if="${comment.employee.empId == #authentication.principal.empId}" class="detail-comment-actions">
-                            <button th:onclick="'showEditForm(' + ${comment.commentId} + ');'" class="fcommonBtn fedit-button">
-                                수정
-                            </button>
-                            <button th:onclick="'deletePostComment(' + ${comment.commentId} + ');'" class="fcommonBtn fdelete-button">
-                                삭제
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <!-- 버튼 그룹 -->
-        <div class="button-group">
-            <!-- 현재 로그인한 사용자가 작성자인 경우에만 수정/삭제 버튼 표시 -->
-            <div th:if="${post.employee != null and #authentication != null and #authentication.principal != null and post.employee.empId == #authentication.principal.empId}">
-                <a th:href="@{/forum/edit/{id}(id=${post.postId})}">
-                    <button class="commonBtn edit-button">수정</button>
-                </a>
-                <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
-                    <button class="commonBtn delete-button">삭제</button>
-                </a>
-            </div>
-            <a href="/forum">
-                <button class="commonBtn cancel-button">목록</button>
-            </a>
-        </div>
+      </div>
     </div>
-    <script>
-        function updateComment(buttonElement) {
-            const commentId = buttonElement.getAttribute('data-comment-id');
-            const editForm = document.getElementById('edit-comment-form-' + commentId);
+    <!-- 게시글 본문 관련 버튼 그룹 -->
+    <div class="button-group">
+      <!-- 현재 로그인한 사용자가 작성자인 경우에만 수정/삭제 버튼 표시 -->
+      <div
+          th:if="${post.employee != null and #authentication != null and #authentication.principal != null and post.employee.empId == #authentication.principal.empId}">
+        <a th:href="@{/forum/edit/{id}(id=${post.postId})}">
+          <button class="commonBtn edit-button">수정</button>
+        </a>
+        <a th:href="@{/forum/delete/{id}(id=${post.postId})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
+          <button class="commonBtn delete-button">삭제</button>
+        </a>
+      </div>
+      <a href="/forum">
+        <button class="commonBtn cancel-button">목록</button>
+      </a>
+    </div>
+  </div>
+  <script>
+    function updateComment(buttonElement) {
+      const commentId = buttonElement.getAttribute('data-comment-id');
+      const editForm = document.getElementById('edit-comment-form-' + commentId);
 
-            if (editForm) {
-                editForm.onsubmit = function() {
-                    // 폼 제출 후 페이지 새로고침
-                    window.location.reload();
-                };
-            }
-        }
-    </script>
+      if (editForm) {
+        editForm.onsubmit = function () {
+          // 폼 제출 후 페이지 새로고침
+          window.location.reload();
+        };
+      }
+    }
+  </script>
 </main>
 </html>

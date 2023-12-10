@@ -8,37 +8,39 @@
 </head>
 <body>
 <div class="flex-container">
-  <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="login-logo">
-<div class="login-container">
-  <form th:action="@{/login}" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <div class="form-floating">
-      <input type="text" id="empId" name="empId" required>
-      <label for="empId">사번</label>
-    </div>
+  <img alt="Starducks Logo" class="login-logo" th:src="@{/images/Starducks_Logo.png}">
+  <div class="login-container">
+    <form method="post" th:action="@{/login}">
+      <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+      <div class="form-floating">
+        <input id="empId" name="empId" required type="text">
+        <label for="empId">사번</label>
+      </div>
 
-    <div class="form-floating">
-      <input type="password" id="password" name="password" required>
-      <label for="password">비밀번호</label>
-      <span id="errorMessage"  th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></span>
-    </div>
+      <div class="form-floating">
+        <input id="password" name="password" required type="password">
+        <label for="password">비밀번호</label>
+        <!-- 사번과 비밀번호가 일치하지 않으면 에러 메시지가 여기에 나타난다 -->
+        <span class="error-message" id="errorMessage" th:if="${errorMessage}" th:text="${errorMessage}"></span>
+      </div>
 
-    <button type="submit">로그인</button>
-  </form>
+      <button type="submit">로그인</button>
+    </form>
 
-  <a href="/forgotPwd" class="forgot-password">비밀번호 찾기</a>
+    <a class="forgot-password" href="/forgotPwd">비밀번호 찾기</a>
+  </div>
 </div>
-</div>
+<!-- 비밀번호 찾기 페이지에서 이메일 전송이 성공하고, 로그인 페이지로 이동되면 뜨는 알림 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:inline="javascript">
   /*<![CDATA[*/
   const emailSent = /*[[${emailSent}]]*/ 'false';
 
-  window.onload = function() {
+  window.onload = function () {
     if (emailSent === 'true') {
       Swal.fire({
         title: 'Starducks',
-        text: '이메일이 전송되었습니다. 로그인 페이지로 이동합니다.',
+        text: '이메일로 임시 비밀번호가 전송되었습니다.',
         icon: 'success',
         confirmButtonText: '확인',
         confirmButtonColor: '#4A85F6'
