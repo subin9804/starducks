@@ -20,7 +20,11 @@ public class ConfRoom {
     @Enumerated(EnumType.STRING)
     private ConfRoomEN room;    // 회의실 이름
 
-    private Long booker;    // 예약자
+    private Long bookerId;    // 예약자 아이디
+
+    private String bookerNm;    // 예약자 이름
+
+    private String dept;    // 예약 부서
 
     private String confName;    // 회의 이름
 

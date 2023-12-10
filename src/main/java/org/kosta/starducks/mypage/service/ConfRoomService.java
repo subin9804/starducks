@@ -49,7 +49,9 @@ public class ConfRoomService {
 //        Employee emp = details.getEmployee();
 
         ConfRoom room = new ModelMapper().map(dto, ConfRoom.class);
-        room.setBooker(1L);
+        room.setBookerId(1L);
+        room.setBookerNm("수빈 리");
+        room.setDept("물류유통부");
         room.setStatus("booked");
 
         room.setRunningDay(LocalDate.parse(dto.getRunningDay()));

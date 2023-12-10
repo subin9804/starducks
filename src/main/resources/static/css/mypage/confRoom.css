@@ -1,0 +1,42 @@
+#roomList {
+    text-align: center;
+}
+#roomList ul {
+    display: inline-flex;
+    gap: 20px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+.rooms {
+    padding: 5px;
+}
+
+/** 회의실이 선택되었을 때 탭 스타일 */
+.selected {
+    background-color: brown;
+    border-radius: 15px;
+    color: white;
+}
+
+.customModal {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    right:0;
+}
+#bookingForm {
+    position: absolute;
+    background-color: brown;
+    z-index: 5;
+    width: 500px;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+}
+
+
+
