@@ -15,25 +15,29 @@
     <h1>품목 등록</h1>
     <div class="content">
 
-    <form action="/general/products/add" method="post">
+    <form action="/general/products/add" method="post" enctype="multipart/form-data">
         <!-- 물품 카테고리 드롭다운 -->
         <label for="productCategory">카테고리:</label>
         <select id="productCategory" name="productCategory">
             <option th:each="category : ${productCategories}"
                     th:value="${category}" th:text="${category}"></option>
         </select>
-        <br>
+        <br><br>
         물품 이름 : <input type="text" name="productName" placeholder="물품이름을 입력하세요">
         <br>
+
+        <!-- 물품 이미지 첨부 -->
+        <input type="file" name="file">
+
         <!-- 물품 단위 드롭다운 -->
         <label for="productUnit">단위:</label>
         <select id="productUnit" name="productUnit">
             <option th:each="unit : ${productUnit}"
                     th:value="${unit}" th:text="${unit}"></option>
         </select>
-        <br>
+        <br><br>
         물품 가격 : <input type="number" name="productPrice" placeholder="물품가격을 입력하세요">
-        <br>
+        <br><br>
         <!-- 공급 업체 드롭다운 -->
         <label for="vendor">공급 업체:</label>
         <select id="vendor" name="vendorName">
@@ -41,9 +45,8 @@
                     th:value="${vendorName}" th:text="${vendorName}"></option>
         </select>
 
-        <br>
-        거래 여부:
-        <input type="checkbox" id="productSelling" name="productSelling" >
+        <br><br>
+        거래 여부: <input type="checkbox" id="productSelling" name="productSelling" >
         <label for="productSelling">거래 중</label>
         <br>
 

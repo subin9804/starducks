@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -89,11 +90,11 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName) {
+    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName, MultipartFile file) throws Exception {
         Vendor vendorByName = vendorService.getVendorByName(vendorName);
 
         product.setVendor(vendorByName);
-        productService.addProduct(product);
+        productService.addProduct(product, file);
         return "redirect:/general/products/list";
     }
 
