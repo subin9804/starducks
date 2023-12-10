@@ -25,14 +25,15 @@ public class ScheduleService {
 
     /**
      * 특정 사원의 모든 일정 정보 가져오기
+     *
      * @return
      */
     public List<Schedule> findByEmployeeEmpId(Long empId) {
         return scheduleRepository.findByEmployeeEmpId(empId);
     }
 
-    public void saveSchedule(Schedule schedule) {
-        scheduleRepository.save(schedule);
+    public Schedule saveSchedule(Schedule schedule) {
+        return scheduleRepository.save(schedule); // 저장된 Schedule 객체 반환
     }
 
     // 일정 상세 조회

@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         end: scheEndDate,
                         url: '/schedule/detail/' + responseData.scheNo,
                     };
-                    console.log("responseData.scheNo ==> " + responseData.scheNo)
+                    console.log("responseData.scheNo ==> " + responseData.scheNo);
                     calendar.addEvent(newEvent);
 
 
