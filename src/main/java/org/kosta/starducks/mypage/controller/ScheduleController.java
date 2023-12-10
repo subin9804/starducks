@@ -28,8 +28,9 @@ public class ScheduleController {
 
     /**
      * 로그인을 한 사원의 일정 조회
-     *
+     * <p>
      * 정보를 던져주는 용도의 GetMapping
+     *
      * @param
      * @return
      */
@@ -53,15 +54,13 @@ public class ScheduleController {
             // 리스트에 일정 정보를 추가
             scheduleDataList.add(scheduleData);
         }
-        System.out.println("데이터리스트" + scheduleDataList);
-        // 모델에 데이터를 담아 화면으로 전달
-//        model.addAttribute("scheduleDataList", scheduleDataList);
-        // 화면으로 이동
+        System.out.println("데이터리스트 : " + scheduleDataList);
         return scheduleDataList;
     }
 
     /**
      * 화면 조회를 위한 GetMapping
+     *
      * @param model
      * @return
      */
@@ -75,6 +74,7 @@ public class ScheduleController {
 
     /**
      * 일정 등록하기
+     *
      * @param scheduleDTO
      * @return
      */
@@ -92,9 +92,9 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/detailSche/{scheduleCode}")
-    public String findScheduleDetail(Model model, @PathVariable("scheduleCode") Long scheduleCode) {
-        ScheduleDTO detailSchedule = scheduleService.findScheduleDetail(scheduleCode);
+    @GetMapping("/detailSche/{scheNo}")
+    public String findScheduleDetail(Model model, @PathVariable("scheNo") Long scheNo) {
+        ScheduleDTO detailSchedule = scheduleService.findScheduleDetail(scheNo);
         model.addAttribute("detailSchedule", detailSchedule);
 
         return "mypage/schedule/scheduleDetail";

@@ -53,8 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             console.log(info.event.url);
             if (info.event.url) {
-                window.open(info.event.url);
+                window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
             }
+
+            // console.log(info.event.url);
+            // if (info.event.url) {
+            //     window.open(info.event.url);
+            // }
 
         }
     });
@@ -174,51 +179,61 @@ document.addEventListener('DOMContentLoaded', function () {
             var scheduleType = scheduleTypeDropdown.value;
             var notes = notesInput.value;
 
-            var start = new Date(scheStartDate);
-            var end = new Date(scheEndDate);
+            // var start = new Date(scheStartDate);
+            // var end = new Date(scheEndDate);
 
-            if (scheTitle.trim() !== '' && start && end) {
-                calendar.addEvent({
-                    title: scheTitle,
-                    start: start,
-                    end: end,
-                    extendedProps: {
-                        calendar: scheduleType,
-                        notes: notes
+            // if (scheTitle.trim() !== '' && start && end) {
+            //     calendar.addEvent({
+            //         title: scheTitle,
+            //         start: start,
+            //         end: end,
+            //         extendedProps: {
+            //             calendar: scheduleType,
+            //             notes: notes
+            //         }
+            //     });
+
+            var data = {
+                scheTitle: scheTitle,
+                scheStartDate: scheStartDate,
+                scheEndDate: scheEndDate,
+                scheduleType: scheduleType,
+                notes: notes
+            };
+
+            fetch('/schedule/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('네트워크가 좋지 않습니다.');
                     }
-                });
-
-                var data = {
-                    scheTitle: scheTitle,
-                    scheStartDate: scheStartDate,
-                    scheEndDate: scheEndDate,
-                    scheduleType: scheduleType,
-                    notes: notes
-                };
-
-                fetch('/schedule/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                    return response.json();
                 })
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('네트워크가 좋지 않습니다.');
-                        }
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
-                    })
-                    .catch(function (error) {
-                        alert('일정 추가 중 오류 발생: ' + error.message);
-                    });
-                modal.style.display = 'none'; // 일정 추가 후 모달을 닫음
-            } else {
-                alert('잘못된 입력입니다. 일정명과 날짜를 확인해주세요.');
-            }
+                .then(function (responseData) {
+                    alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
+
+                    // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
+                    var newEvent = {
+                        title: scheTitle,
+                        start: scheStartDate,
+                        end: scheEndDate,
+                        url: '/schedule/detail/' + responseData.scheNo,
+                    };
+                    console.log("responseData.scheNo ==> " + responseData.scheNo)
+                    calendar.addEvent(newEvent);
+
+
+                    modal.style.display = 'none';
+
+                })
+                .catch(function (error) {
+                    alert('일정 추가 중 오류 발생: ' + error.message);
+                });
         });
 
         form.appendChild(submitButton);
