@@ -10,7 +10,7 @@ body {
     padding-right: 40px;
 
     /*배경으로 파도 이미지 추가*/
-    background-image: url('/images/wave.png');
+    background-image: url('static/images/wave.png');
     background-size: 90%; /* 배경 이미지를 크기 조절 */
     background-repeat: no-repeat; /* 이미지 반복 방지 */
     background-attachment: fixed; /* 스크롤 시 이미지 고정 */
@@ -168,13 +168,12 @@ header a {
     width: 120px;
     height: 50px;
     border: none;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     cursor: pointer;
-
 }
 .commonBtn:active, .register-button:active, .cancel-button:active, .edit-button:active, .delete-button:active {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
