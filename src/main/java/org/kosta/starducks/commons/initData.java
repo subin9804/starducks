@@ -238,17 +238,17 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
 
-            for (int schei = 0; schei < 3; schei++) {
+            for (int j = 0; j < 3; j++) {
                 Schedule scheduleData = new Schedule();
-                scheduleData.setScheNo((long) (schei + 1));
-                scheduleData.setScheTitle(titles[schei]);
-                scheduleData.setScheStartDate(startDates[schei]);
-                scheduleData.setScheEndDate(endDates[schei]);
-                scheduleData.setNotes(notes[schei]);
-                scheduleData.setScheduleType(scheduleTypes[schei]);
+                scheduleData.setScheNo((long) (j + 1));
+                scheduleData.setScheTitle(titles[j]);
+                scheduleData.setScheStartDate(startDates[j]);
+                scheduleData.setScheEndDate(endDates[j]);
+                scheduleData.setNotes(notes[j]);
+                scheduleData.setScheduleType(scheduleTypes[j]);
 
                 // Employee 객체 찾기
-                Employee emp = repository.findById(empIds[schei]).orElse(null);
+                Employee emp = repository.findById(empIds[j]).orElse(null);
                 if (emp != null) {
                     scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
                 }
