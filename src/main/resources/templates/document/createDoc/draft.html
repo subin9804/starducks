@@ -31,16 +31,10 @@
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
             <form method="post">
-<!--                <form method="post" th:object="${document}">-->
             <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
-<!--                <input type="hidden" name="docForm.formName" th:value="${docForm?.formName}">-->
 
-<!--            긴급 <input type="hidden" name="isUrgent" value="false">-->
-<!--                    <input type="checkbox" name="isUrgent" th:value="${document?.isUrgent}">-->
-<!--                    <input type="checkbox" name="isUrgent" th:field="*{isUrgent}">-->
-                    <input type="checkbox" id="isUrgent" name="isUrgent" th:field="${document.urgent}">
-<!--                기인급 <p th:text="${document?.isUrgent}"></p> : false로 잘 출력-->
+            긴급 <input type="checkbox" id="urgent" name="urgent" th:checked="${document?.urgent}">
 
                 <div>
                 <span class="doc-input-lbl">기안일</span>
