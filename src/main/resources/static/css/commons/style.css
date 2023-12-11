@@ -41,8 +41,8 @@ main {
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
     background-color: white;
 }
-/* 기능(페이지) 제목 */
-.frag-title {
+/* 상단의 페이지 제목 */
+.page-title {
     color: #6B4D27;
 }
 a {
@@ -64,6 +64,15 @@ input[type="date"] {
     border-radius: 10px;
     border: 1px solid #6B4D27;
     height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    display: block;
+}
+textarea {
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    height: 130px;
+    width: 350px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px;
     display: block;
@@ -152,7 +161,7 @@ header a {
 
 /** ----- 버튼 S------ */
 /* 버튼 공통 디자인 */
-.commonBtn {
+.commonBtn, .register-button, .cancel-button, .edit-button, .delete-button {
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
@@ -164,8 +173,8 @@ header a {
     cursor: pointer;
 
 }
-.commonBtn:active {
-    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
+.commonBtn:active, .register-button:active, .cancel-button:active, .edit-button:active, .delete-button:active {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
