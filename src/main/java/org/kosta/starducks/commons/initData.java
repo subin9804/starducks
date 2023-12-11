@@ -128,11 +128,10 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendorRepository.saveAndFlush(vendor2);
 
 
-
         //초기 product 데이터
         Product product1 = new Product();
         product1.setProductSelling(true);
-        product1.setProductPrice((long)75000);
+        product1.setProductPrice((long) 75000);
         product1.setProductName("콜롬비아 부에나 비스타 게이샤");
         product1.setVendor(vendor1);
         product1.setProductCategory(ProductCategory.cate1);
@@ -141,7 +140,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product2 = new Product();
         product2.setProductSelling(true);
-        product2.setProductPrice((long)15000);
+        product2.setProductPrice((long) 15000);
         product2.setProductName("브라질 세하도 싱글원두");
         product2.setVendor(vendor1);
         product2.setProductCategory(ProductCategory.cate1);
@@ -150,7 +149,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product3 = new Product();
         product3.setProductSelling(false);
-        product3.setProductPrice((long)29000);
+        product3.setProductPrice((long) 29000);
         product3.setProductName("에티오피아 예가체프 코케허니 원두");
         product3.setVendor(vendor1);
         product3.setProductCategory(ProductCategory.cate1);
@@ -159,7 +158,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product4 = new Product();
         product4.setProductSelling(true);
-        product4.setProductPrice((long)4200);
+        product4.setProductPrice((long) 4200);
         product4.setProductName("14온스 PET 투명컵");
         product4.setVendor(vendor2);
         product4.setProductCategory(ProductCategory.cate2);
@@ -168,7 +167,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product5 = new Product();
         product5.setProductSelling(true);
-        product5.setProductPrice((long)4000);
+        product5.setProductPrice((long) 4000);
         product5.setProductName("9온스 PET 투명컵");
         product5.setVendor(vendor2);
         product5.setProductCategory(ProductCategory.cate2);
@@ -177,7 +176,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product6 = new Product();
         product6.setProductSelling(true);
-        product6.setProductPrice((long)3900);
+        product6.setProductPrice((long) 3900);
         product6.setProductName("16온스 흰색 무지 커피컵");
         product6.setVendor(vendor2);
         product6.setProductCategory(ProductCategory.cate2);
