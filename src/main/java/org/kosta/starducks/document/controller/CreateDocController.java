@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/createDoc")
+@RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
 public class CreateDocController {
     private final CreateDocService createDocService;
@@ -42,24 +42,6 @@ public class CreateDocController {
         model.addAttribute("docForms", docFormList);
 
         return "document/createDoc/docFormList";
-    }
-
-    /**
-     * 문서 상세 페이지
-     */
-    @GetMapping("/{formNameEn}/{docId}/detail")
-    public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
-                                 @PathVariable(name = "docId") Long docId,
-                                 Model model) {
-        MenuService.commonProcess(request, model, "document");
-
-        docFormRepository.findByFormNameEn(formNameEn)
-                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
-
-        createDocRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
-
-        return "document/createDoc/" + formNameEn + "Detail";
     }
 
     /**
@@ -96,7 +78,7 @@ public class CreateDocController {
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/createDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/createDoc/" + formNameEn + "/{docId}";
     }
 
     /**
@@ -134,7 +116,7 @@ public class CreateDocController {
         Document savedDoc = createDocRepository.save(document);
 
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/createDoc/" + formNameEn + "/" + docId;
+        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
     }
 
     /**
@@ -160,6 +142,6 @@ public class CreateDocController {
         Long docId = savedDoc.getDocId();
 
         redirectAttributes.addAttribute("tmpStatus", true);
-        return "redirect:/createDoc/" + formNameEn + "/" + docId;
+        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
     }
 }

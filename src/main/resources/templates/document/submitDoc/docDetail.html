@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+  <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+
+</main>
+</html>
