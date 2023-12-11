@@ -17,7 +17,7 @@ public class ProfileEditController {
   @Autowired
   private EmpService empService;
 
-  // 현재 로그인한 사용자의 프로필 정보를 불러오는 메소드
+  // 현재 로그인한 사용자의 프로필 정보를 불러오는 메소드ㅇ
   @GetMapping("/profileEdit")
   public String profileEdit(Model model, Principal principal) {
     Long empId = Long.parseLong(principal.getName());
