@@ -47,7 +47,7 @@ public class CreateDocController {
     /**
      * 문서 상세 페이지
      */
-    @GetMapping("/{formNameEn}/{docId}")
+    @GetMapping("/{formNameEn}/{docId}/detail")
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
@@ -57,9 +57,9 @@ public class CreateDocController {
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
         createDocRepository.findByDocId(docId)
-            .ifPresent(document -> model.addAttribute("document", document));
+                .ifPresent(document -> model.addAttribute("document", document));
 
-        return "document/createDoc/" + formNameEn;
+        return "document/createDoc/" + formNameEn + "/Detail";
     }
 
     /**
@@ -100,7 +100,25 @@ public class CreateDocController {
     }
 
     /**
-     * 문서 작성 상신 처리 - 임시저장 이력 있는 경우
+     * 문서 작성 중 (임시저장 한 경우), 수정 페이지
+     */
+    @GetMapping("/{formNameEn}/{docId}")
+    public String createDocumentTemp(@PathVariable(name = "formNameEn") String formNameEn,
+                                 @PathVariable(name = "docId") Long docId,
+                                 Model model) {
+        MenuService.commonProcess(request, model, "document");
+
+        docFormRepository.findByFormNameEn(formNameEn)
+                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
+
+        createDocRepository.findByDocId(docId)
+                .ifPresent(document -> model.addAttribute("document", document));
+
+        return "document/createDoc/" + formNameEn;
+    }
+
+    /**
+     * 문서 작성 상신 처리 - 임시저장 이력 있는 경우, 수정하는 경우
      */
     @PostMapping("/{formNameEn}/{docId}")
     public String submitDocument2(@PathVariable(name = "formNameEn") String formNameEn,
