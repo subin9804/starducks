@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="searchPost">
-    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+    <input type="button" onclick="sample6_execDaumPostcode()" id="searchPostBtn" value="우편번호 찾기"><br>
     <input type="text" id="sample6_postcode" th:field="*{postNo}" placeholder="우편번호">
     <input type="text" id="sample6_address" th:field="*{addr}" placeholder="주소">
     <input type="text" id="sample6_detailAddress" th:field="*{dAddr}" placeholder="상세주소">

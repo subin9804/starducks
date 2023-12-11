@@ -90,7 +90,7 @@
                 <dl>
                     <dt>입사일자</dt>
                     <dd>
-                        <p th:text="*{joinDate}">
+                        <input type="text" th:field="*{joinDate}" disabled>
                         <input type="hidden" th:field="*{joinDate}">
                     </dd>
                 </dl>
@@ -106,7 +106,7 @@
                 <dl>
                     <dt>퇴사일자</dt>
                     <dd>
-                        <p th:text="*{leaveDate != null} ? *{leaveDate} : '|0000-00-00|'">
+                        <p th:text="*{leaveDate != null} ? *{leaveDate} : '0000-00-00'">
 <!--                        <p th:if="*{leaveDate == null}" th:text="">-->
                     </dd>
                 </dl>
