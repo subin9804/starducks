@@ -26,37 +26,39 @@
             </div>
             <div class="modal-body">
               <!-- 모달 내용 시작 -->
-              <div id="searchModalContainer">
-                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />
-                <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
+              <h1>모달 내용</h1>
+              <h1 th:text="${document?.docTitle}"></h1>
+<!--              <div id="searchModalContainer">-->
+<!--                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />-->
+<!--                <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>-->
 
-                <div class="form-check">
-                  <div th:each="place, index : ${filterTitle}">
-                    <div th:if="${search ne ''}">
-                      <input
-                              class="form-check-input"
-                              type="radio"
-                              name="seletedPlaceId"
-                              th:id="${'flexRadioDefault' + index.index}"
-                              th:value="${place.contentsid}"
-                              th:checked="${selectedOption eq place.contentsid}"
-                              th:onchange="${() => handleRadioSelect(place.contentsid)}"
-                      />
-                      <div class="searchItem">
-                        <label class="form-check-label" th:for="${'flexRadioDefault' + index.index}">
-                          <img class="searchImg" th:src="${place.repPhoto == null ? null : place.repPhoto.photoid.thumbnailpath}" />
-                          <div class="searchInfo">
-                            <div>
-                              <div class="searchTitle" th:text="${place.title}"></div>
-                              <div class="searchStar">★★★☆☆ 3.5</div>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<!--                <div class="form-check">-->
+<!--                  <div th:each="place, index : ${filterTitle}">-->
+<!--                    <div th:if="${search ne ''}">-->
+<!--                      <input-->
+<!--                              class="form-check-input"-->
+<!--                              type="radio"-->
+<!--                              name="seletedPlaceId"-->
+<!--                              th:id="${'flexRadioDefault' + index.index}"-->
+<!--                              th:value="${place.contentsid}"-->
+<!--                              th:checked="${selectedOption eq place.contentsid}"-->
+<!--                              th:onchange="${() => handleRadioSelect(place.contentsid)}"-->
+<!--                      />-->
+<!--                      <div class="searchItem">-->
+<!--                        <label class="form-check-label" th:for="${'flexRadioDefault' + index.index}">-->
+<!--                          <img class="searchImg" th:src="${place.repPhoto == null ? null : place.repPhoto.photoid.thumbnailpath}" />-->
+<!--                          <div class="searchInfo">-->
+<!--                            <div>-->
+<!--                              <div class="searchTitle" th:text="${place.title}"></div>-->
+<!--                              <div class="searchStar">★★★☆☆ 3.5</div>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </label>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
 
               <!-- 모달 내용 끝 -->
             </div>
