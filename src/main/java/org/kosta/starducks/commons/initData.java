@@ -216,44 +216,45 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             docForm.setFormNameEn(formNamesEn[i - 1]);
 
             docFormRepository.saveAndFlush(docForm);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 // Schedule 데이터 생성
-        LocalDateTime[] startDates = {
-                LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
-        };
+            LocalDateTime[] startDates = {
+                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
+            };
 
-        LocalDateTime[] endDates = {
-                LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
-        };
+            LocalDateTime[] endDates = {
+                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+            };
 
-        ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
+            ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
 
-        String[] titles = {"가가가가", "나나나나", "다다다다"};
-        String[] notes = {"내용1", "내용2", "내용3"};
+            String[] titles = {"가가가가", "나나나나", "다다다다"};
+            String[] notes = {"내용1", "내용2", "내용3"};
 
-        Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
+            Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
 
-        for (int i = 0; i < 3; i++) {
-            Schedule scheduleData = new Schedule();
-            scheduleData.setScheNo((long) (i + 1));
-            scheduleData.setScheTitle(titles[i]);
-            scheduleData.setScheStartDate(startDates[i]);
-            scheduleData.setScheEndDate(endDates[i]);
-            scheduleData.setNotes(notes[i]);
-            scheduleData.setScheduleType(scheduleTypes[i]);
+            for (int schei = 0; schei < 3; schei++) {
+                Schedule scheduleData = new Schedule();
+                scheduleData.setScheNo((long) (schei + 1));
+                scheduleData.setScheTitle(titles[schei]);
+                scheduleData.setScheStartDate(startDates[schei]);
+                scheduleData.setScheEndDate(endDates[schei]);
+                scheduleData.setNotes(notes[schei]);
+                scheduleData.setScheduleType(scheduleTypes[schei]);
 
-            // Employee 객체 찾기
-            Employee emp = repository.findById(empIds[i]).orElse(null);
-            if (emp != null) {
-                scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+                // Employee 객체 찾기
+                Employee emp = repository.findById(empIds[schei]).orElse(null);
+                if (emp != null) {
+                    scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+                }
+
+                scheduleRepository.saveAndFlush(scheduleData);
             }
-
-            scheduleRepository.saveAndFlush(scheduleData);
         }
     }
 }
