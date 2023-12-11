@@ -2,33 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>로그인</title>
   <link href="/css/auth/style.css" rel="stylesheet" type="text/css">
   <script th:src="@{/js/auth/script.js}"></script>
 </head>
 <body>
-<div class="login-container">
-  <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="logo">
-  <form th:action="@{/login}" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <div class="form-floating">
-      <input type="text" id="empId" name="empId" required>
-      <label for="empId">사번</label>
-      <!-- 예시 오류 메시지 -->
-<!--      <span id="empIdError" class="error-message">사번이 일치하지 않습니다.</span>-->
-    </div>
+<div class="flex-container">
+  <img alt="Starducks Logo" class="login-logo" th:src="@{/images/Starducks_Logo.png}">
+  <div class="login-container">
+    <form method="post" th:action="@{/login}">
+      <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+      <div class="form-floating">
+        <input id="empId" name="empId" required type="text">
+        <label for="empId">사번</label>
+      </div>
 
-    <div class="form-floating">
-      <input type="password" id="password" name="password" required>
-      <label for="password">비밀번호</label>
-      <!-- 예시 오류 메시지 -->
-      <span id="passwordError" class="error-message">비밀번호가 일치하지 않습니다.</span>
-    </div>
+      <div class="form-floating">
+        <input id="password" name="password" required type="password">
+        <label for="password">비밀번호</label>
+        <!-- 사번과 비밀번호가 일치하지 않으면 에러 메시지가 여기에 나타난다 -->
+        <span class="error-message" id="errorMessage" th:if="${errorMessage}" th:text="${errorMessage}"></span>
+      </div>
 
-    <button type="submit">로그인</button>
-  </form>
+      <button type="submit">로그인</button>
+    </form>
 
-  <a href="/forgotPwd" class="forgot-password">비밀번호 찾기</a>
+    <a class="forgot-password" href="/forgotPwd">비밀번호 찾기</a>
+  </div>
 </div>
+<!-- 비밀번호 찾기 페이지에서 이메일 전송이 성공하고, 로그인 페이지로 이동되면 뜨는 알림 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const emailSent = /*[[${emailSent}]]*/ 'false';
+
+  window.onload = function () {
+    if (emailSent === 'true') {
+      Swal.fire({
+        title: 'Starducks',
+        text: '이메일로 임시 비밀번호가 전송되었습니다.',
+        icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#4A85F6'
+      });
+    }
+  };
+  /*]]>*/
+</script>
 </body>
 </html>

@@ -1,43 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html layout:decorate="~{layouts/main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <!--title-->
 <th:block layout:fragment="title">게시글 수정</th:block>
 <th:block layout:fragment="addMore">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
-  <!--    여기 위에 href를 추가해줬음-->
+
+  <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
   <script th:src="@{/js/forum/script.js}"></script>
 
-  <!--    quill 위지윅 사용 불러오기 링크-->
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
 </th:block>
 
 <main layout:fragment="content">
   <h1>게시글 수정</h1>
-  <form th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}" method="post">
+  <form method="post" th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}">
     <!-- 제목 입력란 -->
-    <input type="text" th:field="*{postTitle}" placeholder="제목">
+    <input placeholder="제목" required th:field="*{postTitle}" type="text">
 
     <!-- 공지사항 체크박스 -->
     <div class="checkbox-container">
-      <input type="checkbox" id="postNotice" name="postNotice" th:checked="${post.postNotice}">
+      <input id="postNotice" name="postNotice" th:checked="${post.postNotice}" type="checkbox">
       <label for="postNotice">공지로 등록</label>
     </div>
 
-    <!-- Quill 에디터의 메인 컨테이너 -->
+    <!-- 에디터의 메인 컨테이너 -->
     <div id="editor"></div>
 
-    <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
-    <input type="hidden" id="quill_html" th:field="*{postContent}">
+    <!-- 에디터의 내용을 저장할 숨겨진 input 필드 -->
+    <input id="editor_content" name="postContent" type="hidden">
 
     <!-- 수정, 취소 버튼 -->
-    <button type="submit" class="commonBtn register-button">수정 완료</button>
+    <button class="commonBtn register-button" type="submit">수정 완료</button>
     <a th:href="@{/forum/post/{id}(id=${post.postId})}">
       <p class="commonBtn cancel-button">취소</p>
     </a>
   </form>
+  <!--토스트 글쓰기 에디터 -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    // 서버로부터 가져온 기존 게시글의 내용
+    const existingContent = [[${post.postContent}]];
+    /*]]>*/
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',             // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: existingContent,          // 기존 내용을 에디터의 초기 값으로 설정
+        previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+        hooks: {
+          async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+            try {
+              const formData = new FormData();
+              formData.append('image', blob);
+
+              const response = await fetch('/tui-editor/image-upload', {
+                method: 'POST',
+                body: formData,
+              });
+
+              const filename = await response.text();
+              console.log('서버에 저장된 파일명 : ', filename);
+
+              const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+              callback(imageUrl, 'image alt attribute');
+            } catch (error) {
+              console.error('업로드 실패 : ', error);
+            }
+          }
+        }
+      });
+
+      document.querySelector('form').addEventListener('submit', function () {
+        document.getElementById('editor_content').value = editor.getHTML();
+      });
+    });
+  </script>
 </main>
 </html>

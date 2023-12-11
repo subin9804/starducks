@@ -21,6 +21,10 @@
     <script th:src="@{/js/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${jsFile})}"></script>
 
+    <!-- 토스트 Editor's Style -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+
     <!--    title 사용 x...-->
     <title layout:fragment="title">index</title>
 
@@ -56,6 +60,7 @@
 
     <!--메인은 여기에-->
     <main layout:fragment="content"></main>
+
 
 
 
