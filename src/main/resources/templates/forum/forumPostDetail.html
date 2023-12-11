@@ -8,10 +8,6 @@
   <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
   <script th:src="@{/js/forum/script.js}"></script>
 
-<!-- 시큐리티 때문에 삭제 기능을 위해서 토큰 추가 -->
-  <meta name="_csrf" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-
 </th:block>
 
 <main layout:fragment="content">

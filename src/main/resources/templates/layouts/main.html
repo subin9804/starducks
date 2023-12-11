@@ -20,6 +20,9 @@
     <!-- 토스트 Editor's Style -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
+    <!--  스프링 시큐리티 토큰 추가   csrf -->
+    <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}" />
+    <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}" />
 
     <!--    title 사용 x...-->
     <title layout:fragment="title">index</title>
