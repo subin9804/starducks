@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 
-</body>
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">-->
+<!--    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>-->
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="page-title" th:text="@{결재문서 작성}">결재문서 작성</h1>
+    <div class="page-border">
+        <h2 class="page-title" th:text="@{결재문서 양식}">결재문서 양식</h2>
+        <table class="">
+            <tr>
+                <th>양식코드</th>
+                <th>양식명</th>
+                <th>작성하기</th>
+            </tr>
+            <tr th:each="docForm : ${docForms}">
+                <td th:text="${docForm?.formCode}">양식코드</td>
+                <td th:text="${docForm?.formName}">양식명</td>
+                <td>
+                    <a th:href="@{/createDoc/{formNameEn}(formNameEn=${docForm?.formNameEn})}">
+                        <i class="fa-solid fa-file-export"></i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</main>
 </html>

@@ -10,7 +10,7 @@ body {
     padding-right: 40px;
 
     /*배경으로 파도 이미지 추가*/
-    background-image: url('/images/wave.png');
+    background-image: url('static/images/wave.png');
     background-size: 90%; /* 배경 이미지를 크기 조절 */
     background-repeat: no-repeat; /* 이미지 반복 방지 */
     background-attachment: fixed; /* 스크롤 시 이미지 고정 */
@@ -29,17 +29,25 @@ main {
     border-radius: 10px;
     width: 1300px;
 }
+/* 페이지에 가장 크게 들어가는 경계선 + 그림자 */
 .page-border {
     border: 1px solid #6B4D27;
     border-radius: 10px;
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
+    background-color: white;
 }
+/* 페이지에 가장 크게 들어가는 그림자 */
 .page-shadow {
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
+    background-color: white;
+}
+/* 상단의 페이지 제목 */
+.page-title {
+    color: #6B4D27;
 }
 a {
-    text-decoration: none;
-    color: black;
+    text-decoration: none !important; /* 부트스트랩 5.3.1 cdn 삽입 시 !important 넣어야 적용 */
+    color: black !important; /* !important 넣어야 적용 */
 }
 ul {
     list-style: none;
@@ -56,6 +64,15 @@ input[type="date"] {
     border-radius: 10px;
     border: 1px solid #6B4D27;
     height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    display: block;
+}
+textarea {
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    height: 130px;
+    width: 350px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px;
     display: block;
@@ -119,7 +136,7 @@ label {
 
 .sidebar-footer {
     color: #fff;
-    font-width: bold;
+    font-weight: bold;
     text-align: center;
     margin: 200px auto 0;
 }
@@ -144,20 +161,19 @@ header a {
 
 /** ----- 버튼 S------ */
 /* 버튼 공통 디자인 */
-.commonBtn {
+.commonBtn, .register-button, .cancel-button, .edit-button, .delete-button {
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
     width: 120px;
     height: 50px;
     border: none;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     cursor: pointer;
-
 }
-.commonBtn:active {
-    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
+.commonBtn:active, .register-button:active, .cancel-button:active, .edit-button:active, .delete-button:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
@@ -180,7 +196,7 @@ a p.commonBtn {
     background-color: #999;
 }
 
-/* 수정 */
+/* 수정 버튼 */
 .edit-button {
     color: #FFFFFF;
     background-color: #43946f;
@@ -206,6 +222,7 @@ a p.commonBtn {
     background-color: #d91717;
 }
 /** ----- 버튼 E ------ */
+
 
 .search-button {
     padding: 5px 15px;

@@ -2,7 +2,6 @@ package org.kosta.starducks.mypage.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.entity.Schedule;
@@ -26,14 +25,15 @@ public class ScheduleService {
 
     /**
      * 특정 사원의 모든 일정 정보 가져오기
+     *
      * @return
      */
     public List<Schedule> findByEmployeeEmpId(Long empId) {
         return scheduleRepository.findByEmployeeEmpId(empId);
     }
 
-    public void saveSchedule(Schedule schedule) {
-        scheduleRepository.save(schedule);
+    public Schedule saveSchedule(Schedule schedule) {
+        return scheduleRepository.save(schedule); // 저장된 Schedule 객체 반환
     }
 
     // 일정 상세 조회
@@ -44,7 +44,10 @@ public class ScheduleService {
             return modelMapper.map(scheduleDetail, ScheduleDTO.class);
         }
         // 일정을 찾지 못한 경우에 대한 처리
-
         return null;
+    }
+
+    public void deleteSchedule(Long scheNo) {
+        scheduleRepository.deleteById(scheNo);
     }
 }

@@ -3,7 +3,7 @@ package org.kosta.starducks.logistic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.apache.groovy.ast.tools.MethodNodeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
@@ -21,10 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/warehouseinbound")
+@RequestMapping("/logistic/warehouseinbound")
 @RequiredArgsConstructor
+@Slf4j
 public class WarehouseInboundController {
 
 
@@ -34,13 +36,13 @@ public class WarehouseInboundController {
     private final WarehouseInboundService warehouseInboundService;
     private final HttpServletRequest request;
 
-
     //재고 목록 조회
     @GetMapping("/list1")
-    public String getAllProducts(Model m,
+    public String getAllInventories(Model m,
                                  @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(name="searchKeyword", required = false) String searchKeyword)
     {
+        MenuService.commonProcess(request, m, "logistic");
         Page<Product> allInventory = null;
         if(searchKeyword == null){
             allInventory = productService.getAllProducts(pageable);
@@ -65,19 +67,56 @@ public class WarehouseInboundController {
 
 
     @GetMapping("/list")
-    public String getAllInventories(Model m)
+    public String getAllInbounds(Model m,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
-        List<WarehouseInbound> allInbounds = warehouseInboundService.getAllInbounds();
-        m.addAttribute("inbounds", allInbounds);
+        MenuService.commonProcess(request, m, "logistic");
+
+        log.info(String.valueOf(bulkInboundCheckbox));
+
+
+        List<WarehouseInbound> inbounds;
+
+        if (bulkInboundCheckbox != null && bulkInboundCheckbox) {
+            inbounds = warehouseInboundService.findRecentHighTotalPriceInbounds();
+        } else {
+            inbounds = warehouseInboundService.getAllInbounds();
+        }
+
+        m.addAttribute("inbounds", inbounds);
+        m.addAttribute("checkbox",bulkInboundCheckbox);
+
+
+
         return "logistic/InboundList";
     }
+
+    @GetMapping("/info/{warehouseInboundId}")
+    public String getInboundInfo(@PathVariable("warehouseInboundId") Long warehouseInboundId,
+                                 Model m)
+    {
+        MenuService.commonProcess(request, m, "logistic");
+
+        WarehouseInbound selectedInbound = warehouseInboundService.getInboundByInboundId(warehouseInboundId);
+        m.addAttribute("inbound",selectedInbound);
+
+//        Optional<Product> product = productService.getProduct(productCode);
+//        Product product1 = product.get();
+//        m.addAttribute("p", product1);
+
+        return "logistic/InboundDetail";
+
+
+
+    }
+
+
 
     @GetMapping("/add")
     public String addOrder(Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
 
     {
-
-        MenuService.commonProcess(request,m,"logistic");
+        MenuService.commonProcess(request, m, "logistic");
+        //모든 getMappting에 넣어주기
         m.addAttribute("employees",employeeService.getAllEmp());
         Page<Product> products = productService.getAllProducts(pageable);
         m.addAttribute("products",products);
@@ -91,7 +130,7 @@ public class WarehouseInboundController {
     @PostMapping("/add")
     public String addOrder(@RequestBody List<WarehouseInboundDto> warehouseInboundDtos)  {
         warehouseInboundService.addWarehouseInbound(warehouseInboundDtos);
-        return "redirect:/warehouseinbound/list";
+        return "redirect:/logistic/warehouseinbound/list";
     }
 
 

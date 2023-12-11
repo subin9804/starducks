@@ -36,8 +36,6 @@
                     <label th:text="'참고 사항'"></label>
                     <textarea name="notes" placeholder="참고 사항" th:field="*{notes}"></textarea>
 
-                    <input th:value="1" name="code" type="hidden" id="*{code}" />
-
                     <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
                 </form>
             </div>

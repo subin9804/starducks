@@ -1,8 +1,6 @@
-
-
-document.addEventListener('DOMContentLoaded', function () {     // HTML 문서가 로드되면 실행
-    var calendarEl = document.getElementById('calendar');   // HTML에서 id가 'calendar'인 요소를 찾아서 변수 calendarEl에 할당
-    var modal;  // 변수 modal을 초기화
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var modal;
     var calendar = new FullCalendar.Calendar(calendarEl, {  // calendarEl 요소에 달력을 초기화
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
@@ -22,19 +20,18 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
                 modal.style.display = 'block'; // 모달을 보이게 함
             }
         },
-        editable: false,
+        editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
 
-        // FullCalendar에서 이벤트를 가져오는 역할
         // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
         events: function (fetchInfo, successCallback, errorCallback) {
             var empId = 1;
 
             // 사용자의 일정 정보를 가져옴
             fetchShowSingleSchedule(empId).then(function (data) {   // 서버에 요청을 보내어 해당 사용자의 일정 정보를 가져옴
-                console.log("받아온 데이265165터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
+                console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
 
-                var events = data.map(function (schedule)  {
+                var events = data.map(function (schedule) {
                     console.log(schedule.url)
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
@@ -55,9 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
         },
         eventClick: function (info) {
             console.log(info.event.url);
-            if(info.event.url) {
-                window.open(info.event.url);
+            if (info.event.url) {
+                window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
             }
+
+            // console.log(info.event.url);
+            // if (info.event.url) {
+            //     window.open(info.event.url);
+            // }
 
         }
     });
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
                 return response.text(); // response.json() 대신 response.text()로 변경
             })
             .then(function (data) {
-                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
+                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console..log
                 return JSON.parse(data); // JSON 형식으로 파싱하여 반환
             })
             .catch(function (error) {
@@ -177,51 +179,61 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
             var scheduleType = scheduleTypeDropdown.value;
             var notes = notesInput.value;
 
-            var start = new Date(scheStartDate);
-            var end = new Date(scheEndDate);
+            // var start = new Date(scheStartDate);
+            // var end = new Date(scheEndDate);
 
-            if (scheTitle.trim() !== '' && start && end) {
-                calendar.addEvent({
-                    title: scheTitle,
-                    start: start,
-                    end: end,
-                    extendedProps: {
-                        calendar: scheduleType,
-                        notes: notes
+            // if (scheTitle.trim() !== '' && start && end) {
+            //     calendar.addEvent({
+            //         title: scheTitle,
+            //         start: start,
+            //         end: end,
+            //         extendedProps: {
+            //             calendar: scheduleType,
+            //             notes: notes
+            //         }
+            //     });
+
+            var data = {
+                scheTitle: scheTitle,
+                scheStartDate: scheStartDate,
+                scheEndDate: scheEndDate,
+                scheduleType: scheduleType,
+                notes: notes
+            };
+
+            fetch('/schedule/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('네트워크가 좋지 않습니다.');
                     }
-                });
-
-                var data = {
-                    scheTitle: scheTitle,
-                    scheStartDate: scheStartDate,
-                    scheEndDate: scheEndDate,
-                    scheduleType: scheduleType,
-                    notes: notes
-                };
-
-                fetch('/schedule/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                    return response.json();
                 })
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('네트워크가 좋지 않습니다.');
-                        }
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
-                    })
-                    .catch(function (error) {
-                        alert('일정 추가 중 오류 발생: ' + error.message);
-                    });
-                modal.style.display = 'none'; // 일정 추가 후 모달을 닫음
-            } else {
-                alert('잘못된 입력입니다. 일정명과 날짜를 확인해주세요.');
-            }
+                .then(function (responseData) {
+                    alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
+
+                    // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
+                    var newEvent = {
+                        title: scheTitle,
+                        start: scheStartDate,
+                        end: scheEndDate,
+                        url: '/schedule/detail/' + responseData.scheNo,
+                    };
+                    console.log("responseData.scheNo ==> " + responseData.scheNo);
+                    calendar.addEvent(newEvent);
+
+
+                    modal.style.display = 'none';
+
+                })
+                .catch(function (error) {
+                    alert('일정 추가 중 오류 발생: ' + error.message);
+                });
         });
 
         form.appendChild(submitButton);
@@ -230,5 +242,5 @@ document.addEventListener('DOMContentLoaded', function () {     // HTML 문서�
         document.body.appendChild(modal);
     }
 
-    calendar.render();  // 초기 설정이 완료된 달력을 화면에 렌더링
+    calendar.render();
 });
