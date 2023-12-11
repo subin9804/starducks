@@ -55,7 +55,7 @@ public class QApproval extends EntityPathBase<Approval> {
     public QApproval(Class<? extends Approval> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.document = inits.isInitialized("document") ? new QDocument(forProperty("document"), inits.get("document")) : null;
-        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee")) : null;
+        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
     }
 
 }
