@@ -1,5 +1,6 @@
 package org.kosta.starducks.forum.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +15,12 @@ import java.util.UUID;
 @RequestMapping("/tui-editor")
 public class FileApiController {
 
-  // 파일을 업로드할 디렉터리 경로 : 개인 pc에 저장이 된다
-//  private final String uploadDir = Paths.get("C:", "tui-editor", "upload").toString();
+  @Value("${file.upload.path}")
+  // 파일을 업로드할 디렉터리 경로 : 개인 pc에 c/uploads
+  private String uploadDir;
 
   // 파일을 업로드할 디렉터리 경로 : 이렇게 하면 프로젝트 경로에 저장이 된다. 이미지 삭제
-  private final String uploadDir = Paths.get(System.getProperty("user.dir"), "src/main/resources/static/images").toString();
+//  private final String uploadDir = Paths.get(System.getProperty("user.dir"), "src/main/resources/static/images").toString();
   /**
    * 에디터 이미지 업로드
    * @param image 파일 객체
