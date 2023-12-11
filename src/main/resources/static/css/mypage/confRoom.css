@@ -12,6 +12,7 @@ button {display: block;}
 }
 .rooms {
     padding: 5px;
+    cursor: pointer;
 }
 
 /** 회의실이 선택되었을 때 탭 스타일 */
@@ -57,7 +58,7 @@ button {display: block;}
     background-color: #fefefe;
     margin: 0 auto;
     border: 1px solid #888;
-    width: 80%;
+    width: 60%;
     max-width: 600px;
     opacity: 0;
     border-radius: 15px;
@@ -65,12 +66,12 @@ button {display: block;}
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .modal-content div {
-    padding: 30px 50px;
+    padding: 0 50px 20px 50px;
 }
 #bookingForm span, #bookingForm p {
     display: inline-block;
     width: 100px;
-    padding:  30px 0 10px;
+    padding:  20px 0 10px;
     margin: 0;
     font-weight: bold;
 }
@@ -80,7 +81,7 @@ button {display: block;}
 .modal-content h3 {
     font-weight: bold;
     border-bottom: 1px solid #ddd;
-    padding: 40px 40px 20px;
+    padding: 30px 40px 20px;
 }
 .modal-content button {
     margin: 0 auto;
@@ -118,6 +119,13 @@ button {display: block;}
 #dept{margin-right: 50px;}
 #showModal-content dl:last-child {
     margin: 0;
+}
+#text {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.btns {
+    display: flex;
 }
 
 

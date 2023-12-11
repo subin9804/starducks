@@ -37,7 +37,7 @@ public class Employee {
     private boolean status;      // 퇴사여부
     private String pwd;     // 비밀번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "dept_id")
     private Department dept;    // 부서코드
 //    파일

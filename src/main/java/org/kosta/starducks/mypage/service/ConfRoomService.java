@@ -1,6 +1,8 @@
 package org.kosta.starducks.mypage.service;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.mypage.dto.ConfBookDto;
 import org.kosta.starducks.mypage.entity.ConfRoom;
@@ -45,13 +47,13 @@ public class ConfRoomService {
      */
     public ConfRoom booking(ConfBookDto dto, Authentication auth) {
         // 예약자
-//        CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
-//        Employee emp = details.getEmployee();
+        CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+        Employee emp = details.getEmployee();
 
         ConfRoom room = new ModelMapper().map(dto, ConfRoom.class);
-        room.setBookerId(1L);
-        room.setBookerNm("수빈 리");
-        room.setDept("물류유통부");
+        room.setBookerId(emp.getEmpId());
+        room.setBookerNm(emp.getEmpName());
+        room.setDept(emp.getDept().getDeptName());
         room.setStatus("booked");
 
         room.setRunningDay(LocalDate.parse(dto.getRunningDay()));
