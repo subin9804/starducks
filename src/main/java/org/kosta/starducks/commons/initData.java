@@ -1,6 +1,8 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.document.entity.DocForm;
+import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
@@ -35,6 +37,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
     private final ForumPostRepository forumPostRepository;
+    private final DocFormRepository docFormRepository;
     private final ProductRepository productRepository;
 
     private final DeptRepository deptRepository;
@@ -203,6 +206,17 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPostRepository.saveAndFlush(forumPost);
         }
 
+
+        //문서 양식 데이터
+        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
+        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "g"};
+        for (int i = 1; i < 8; i++) {
+            DocForm docForm = new DocForm();
+            docForm.setFormCode("A0" + i);
+            docForm.setFormName(formNames[i - 1]);
+            docForm.setFormNameEn(formNamesEn[i - 1]);
+
+            docFormRepository.saveAndFlush(docForm);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 // Schedule 데이터 생성

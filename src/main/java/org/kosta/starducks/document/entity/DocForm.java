@@ -15,4 +15,5 @@ public class DocForm {
     private String formCode;
 
     private String formName;
+    private String formNameEn;
 }
