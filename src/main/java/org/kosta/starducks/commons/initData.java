@@ -131,11 +131,10 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendorRepository.saveAndFlush(vendor2);
 
 
-
         //초기 product 데이터
         Product product1 = new Product();
         product1.setProductSelling(true);
-        product1.setProductPrice((long)75000);
+        product1.setProductPrice((long) 75000);
         product1.setProductName("콜롬비아 부에나 비스타 게이샤");
         product1.setVendor(vendor1);
         product1.setProductCategory(ProductCategory.cate1);
@@ -144,7 +143,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product2 = new Product();
         product2.setProductSelling(true);
-        product2.setProductPrice((long)15000);
+        product2.setProductPrice((long) 15000);
         product2.setProductName("브라질 세하도 싱글원두");
         product2.setVendor(vendor1);
         product2.setProductCategory(ProductCategory.cate1);
@@ -153,7 +152,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product3 = new Product();
         product3.setProductSelling(false);
-        product3.setProductPrice((long)29000);
+        product3.setProductPrice((long) 29000);
         product3.setProductName("에티오피아 예가체프 코케허니 원두");
         product3.setVendor(vendor1);
         product3.setProductCategory(ProductCategory.cate1);
@@ -162,7 +161,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product4 = new Product();
         product4.setProductSelling(true);
-        product4.setProductPrice((long)4200);
+        product4.setProductPrice((long) 4200);
         product4.setProductName("14온스 PET 투명컵");
         product4.setVendor(vendor2);
         product4.setProductCategory(ProductCategory.cate2);
@@ -171,7 +170,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product5 = new Product();
         product5.setProductSelling(true);
-        product5.setProductPrice((long)4000);
+        product5.setProductPrice((long) 4000);
         product5.setProductName("9온스 PET 투명컵");
         product5.setVendor(vendor2);
         product5.setProductCategory(ProductCategory.cate2);
@@ -180,7 +179,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Product product6 = new Product();
         product6.setProductSelling(true);
-        product6.setProductPrice((long)3900);
+        product6.setProductPrice((long) 3900);
         product6.setProductName("16온스 흰색 무지 커피컵");
         product6.setVendor(vendor2);
         product6.setProductCategory(ProductCategory.cate2);
@@ -217,44 +216,45 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             docForm.setFormNameEn(formNamesEn[i - 1]);
 
             docFormRepository.saveAndFlush(docForm);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
 // Schedule 데이터 생성
-        LocalDateTime[] startDates = {
-                LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
-        };
+            LocalDateTime[] startDates = {
+                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
+            };
 
-        LocalDateTime[] endDates = {
-                LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
-                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
-        };
+            LocalDateTime[] endDates = {
+                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+            };
 
-        ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
+            ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
 
-        String[] titles = {"가가가가", "나나나나", "다다다다"};
-        String[] notes = {"내용1", "내용2", "내용3"};
+            String[] titles = {"가가가가", "나나나나", "다다다다"};
+            String[] notes = {"내용1", "내용2", "내용3"};
 
-        Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
+            Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
 
-        for (int i = 0; i < 3; i++) {
-            Schedule scheduleData = new Schedule();
-            scheduleData.setScheNo((long) (i + 1));
-            scheduleData.setScheTitle(titles[i]);
-            scheduleData.setScheStartDate(startDates[i]);
-            scheduleData.setScheEndDate(endDates[i]);
-            scheduleData.setNotes(notes[i]);
-            scheduleData.setScheduleType(scheduleTypes[i]);
+            for (int j = 0; j < 3; j++) {
+                Schedule scheduleData = new Schedule();
+                scheduleData.setScheNo((long) (j + 1));
+                scheduleData.setScheTitle(titles[j]);
+                scheduleData.setScheStartDate(startDates[j]);
+                scheduleData.setScheEndDate(endDates[j]);
+                scheduleData.setNotes(notes[j]);
+                scheduleData.setScheduleType(scheduleTypes[j]);
 
-            // Employee 객체 찾기
-            Employee emp = repository.findById(empIds[i]).orElse(null);
-            if (emp != null) {
-                scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+                // Employee 객체 찾기
+                Employee emp = repository.findById(empIds[j]).orElse(null);
+                if (emp != null) {
+                    scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+                }
+
+                scheduleRepository.saveAndFlush(scheduleData);
             }
-
-            scheduleRepository.saveAndFlush(scheduleData);
         }
     }
 }
