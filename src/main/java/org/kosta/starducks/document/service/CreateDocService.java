@@ -22,45 +22,4 @@ public class CreateDocService {
         return createDocRepository.findById(docId);
     }
 
-
-    //안쓸 것 같음
-    /**
-     * 업무 기안서 양식 작성 저장 - 첫 submit
-     */
-    public void firstSave(Document doc) {
-        Document document = new Document();
-        document.setDocWriter(doc.getDocWriter());
-        document.setDocTitle(doc.getDocTitle());
-        document.setDocContent(doc.getDocContent());
-    }
-
-    /**
-     * 업무 기안서 양식 작성 저장 - 임시저장 이력 있는 경우
-     */
-    public void reSave(Document doc) {
-        Document document = new Document();
-        document.setDocWriter(doc.getDocWriter());
-        document.setDocTitle(doc.getDocTitle());
-        document.setDocContent(doc.getDocContent());
-    }
-
-    /**
-     * 업무 기안서 양식 임시 저장 - 첫 submit
-     */
-    public void firstSaveTemp(Document doc) {
-        Document document = new Document();
-        document.setDocWriter(doc.getDocWriter());
-        document.setDocTitle(doc.getDocTitle());
-        document.setDocContent(doc.getDocContent());
-    }
-
-    /**
-     * 업무 기안서 양식 임시 저장 완료 페이지 - 임시저장 이력 있는 경우
-     */
-    public void reSaveTemp(Document doc) {
-        Document document = new Document();
-        document.setDocWriter(doc.getDocWriter());
-        document.setDocTitle(doc.getDocTitle());
-        document.setDocContent(doc.getDocContent());
-    }
 }
