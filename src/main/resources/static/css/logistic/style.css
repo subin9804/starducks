@@ -1,22 +1,209 @@
+.content {
 
-.styled-table {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    width: 1300px;
+}
+
+/*목록 페이지의 표에 대한 스타일 적용*/
+.list-table {
+
+    width: 80%;
+    margin: 30px auto;
     border-collapse: collapse;
-    margin: 25px 0;
+    border-radius: 20px;
+    border-style: hidden;
+    box-shadow: 0 0 0 2px #6B4D27;
     font-size: 18px;
-    text-align: left;
+    text-align: center;
+
+
 }
 
-.styled-table th,
-.styled-table td {
+
+
+
+
+.list-table th,
+.list-table td {
     padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
+
+
 }
 
-.styled-table th {
-    background-color: #f2f2f2;
+.list-table td {
+    border-top: 1px solid #6B4D27
+
+}
+.list-table tfoot {
+    font-weight: bold;
+
 }
 
-.styled-table tbody tr:hover {
-    background-color: #f5f5f5;
+
+.list-table tbody tr:last-child:hover {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #6B4D27;
+    color: #fff;
 }
+
+
+.list-table tbody tr:hover {
+    background-color: #6B4D27;
+    color: #fff;
+}
+
+
+
+
+
+
+/*디테일 페이지의 표에 대한 스타일 적용*/
+.detail-table {
+
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    border-radius: 20px;
+    border-style: hidden;
+    box-shadow: 0 0 0 2px #6B4D27;
+    font-size: 18px;
+    text-align: center;
+
+
+}
+.detail-table tfoot tr:first-child td {
+    border-top: 3px solid black;
+}
+
+
+.detail-table th,
+.detail-table td {
+    padding: 12px 15px;
+
+}
+
+.detail-table td {
+    border-top: 1px solid #6B4D27
+
+}
+.detail-table tfoot {
+    font-weight: bold;
+
+}
+
+
+
+/*타임리프와 JS연동된 form 부분에 있는 표에 대한 스타일 적용*/
+#contentTable {
+
+    width: 80%;
+    margin: 100px auto;
+    border-radius: 20px;
+    background-color: #6B4D27;
+    color: #FFF;
+
+}
+
+#contentTable th, #contentTable td {
+    padding: 12px 15px;
+    text-align: center;
+    border-top: 1px solid #FFF;
+}
+
+
+.right-top-btn{
+
+    width:100%;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+
+/** ----- 버튼 S------ */
+/*버튼 위치설정*/
+.right-top-btn{
+
+    width:100%;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+/* 버튼 공통 디자인 */
+.commonBtn {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    width: 120px;
+    height: 50px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/*취소 버튼을 부득이하게 p태그로 사용할 경우 */
+a p.commonBtn {
+    line-height: 50px;
+    display: inline-block;
+    text-align: center;
+    /* 글자 가운데 정렬 추가 */
+}
+
+/* 등록 */
+.register-button {
+
+
+    background: #4A85F6;
+    color: #FFFFFF;
+    margin-right: 130px;
+
+}
+
+/* 목록 및 취소 */
+.cancel-button {
+    color: #FFFFFF;
+    background-color: #999;
+}
+
+/* 수정 */
+.edit-button {
+    color: #FFFFFF;
+    background-color: #43946f;
+}
+
+/*삭제 버튼 */
+.delete-button {
+    width: 60px;
+    height: 30px;
+    color: #fdf5f5;
+    box-shadow: 0px 0px 0px ;
+    background-color: #FF5B5B;
+}
+
+.register-button:hover {
+    background-color: #6a4af6;
+}
+.cancel-button:hover {
+    background-color: #555;
+}
+.edit-button:hover {
+    background-color: #316c52;
+}
+
+.delete-button:hover {
+    background-color: #d91717;
+}
+

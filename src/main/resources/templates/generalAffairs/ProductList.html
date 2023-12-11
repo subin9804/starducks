@@ -11,14 +11,16 @@
 </th:block>
 
 <main layout:fragment="content">
+    <h1>품목 관리 </h1>
+    <div class="content">
 
     <!-- 검색 폼 추가 -->
-    <form th:action="@{/products/list}" method="get">
+    <form th:action="@{/general/products/list}" method="get">
         <input type="text" name="searchKeyword" placeholder="품목 이름 입력">
         <button type="submit">검색</button>
     </form>
 
-    <a th:href="@{/products/add}" >
+    <a th:href="@{/general/products/add}" >
         <button  type="submit"> 신규등록 </button>
     </a>
 
@@ -37,7 +39,7 @@
         <tr th:each="p : ${products}">
             <td th:text="${p.productCode}">p.productCode</td>
             <td>
-                <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
+                <a th:text="${p.productName}" th:href="@{/general/products/info/{id}(id=${p.productCode})}">p.name</a>
             </td>
             <td th:text="${p.productCategory}">카테고리</td>
             <td th:text="${p.productUnit}">p.unit</td>
@@ -51,12 +53,12 @@
 
     <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
 
-        <a th:if="${page != nowPage}" th:href="@{/products/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}" th:text="${page}"></a>
+        <a th:if="${page != nowPage}" th:href="@{/general/products/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}" th:text="${page}"></a>
 <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
 
         <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
 
     </th:block>
-
+    </div>
 </main>
 </html>
