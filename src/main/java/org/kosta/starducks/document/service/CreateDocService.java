@@ -14,12 +14,4 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CreateDocService {
     private final CreateDocRepository createDocRepository;
-
-    /**
-     * id로 문서 정보 조회
-     */
-    public Optional<Document> getDocumentById(Long docId) {
-        return createDocRepository.findById(docId);
-    }
-
 }
