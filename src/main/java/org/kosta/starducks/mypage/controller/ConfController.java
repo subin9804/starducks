@@ -80,6 +80,12 @@ public class ConfController {
         return ResponseEntity.ok().body(rooms);
     }
 
+    /**
+     * 예약하기
+     * @param dto
+     * @param auth
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<ConfRoom> booking(@RequestBody ConfBookDto dto, Authentication auth) {
@@ -87,5 +93,28 @@ public class ConfController {
         ConfRoom savedBooking = service.booking(dto, auth);
 
         return ResponseEntity.ok(savedBooking);
+    }
+
+    /**
+     * 예약 수정
+     * @param dto
+     * @return
+     */
+    @ResponseBody
+    @PutMapping(value = "/edit/{id}", consumes = "application/json")
+    public ResponseEntity<ConfRoom> editBooking(@PathVariable("id")Long id, @RequestBody ConfBookDto dto) {
+        System.out.println("수정한다!!" + dto.toString());
+
+        ConfRoom editedBooking = service.edit(id, dto);
+
+        System.out.println(editedBooking.toString());
+        return ResponseEntity.ok(editedBooking);
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable("id")Long id) {
+        service.remove(id);
+        return "삭제되었습니다.";
     }
 }

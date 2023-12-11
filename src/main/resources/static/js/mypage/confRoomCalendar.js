@@ -32,6 +32,7 @@ $(document).ready(function () {
                     end: book.runningDay + 'T' + book.endTime,
                     title: book.confName,
                     color: book.color,
+                    textColor: "black",
                     bookerId: book.bookerId,
                     bookerNm: book.bookerNm,
                     dept: book.dept,
@@ -49,17 +50,19 @@ $(document).ready(function () {
             initialView: 'timeGridWeek', // 기본 뷰 설정
             slotMinTime: '08:00:00',
             slotMaxTime: '20:00:00',
-            height: 800,
+            height: 705,
             allDaySlot: false,
             resources: resources,
             selectable: true,
             events: events,
             eventRender: function (info) {
+                console.log(info.el.style.color);
                 // 각 이벤트에 대한 스타일 지정
-                info.el.style.backgroundColor = info.event.extendedProps.color || 'lightgray'; // 기본값은 lightgray
+                info.el.style.backgroundColor = info.event.extendedProps.backgroundColor || 'lightgray'; // 기본값은 lightgray
+                info.el.style.textColor = "black";
             },
             eventClick: function (info) {
-                // console.log("인포!!:" + JSON.stringify((info)))
+                console.log("인포!!:" + JSON.stringify((info)))
                 // alert('Event clicked: ' + info.event.title);
 
                 let data = {
@@ -67,11 +70,12 @@ $(document).ready(function () {
                     start: info.event.start,
                     end: info.event.end,
                     id: info.event.id,
+                    color: info.event.backgroundColor,
                     resourceId: roomId,
                     bookerId: info.event.extendedProps.bookerId,
                     bookerNm: info.event.extendedProps.bookerNm,
                     dept: info.event.extendedProps.dept,
-                    memo: info.event.extendedProps.memo
+                    memo: info.event.extendedProps.memo,
 
                 }
 
@@ -83,6 +87,11 @@ $(document).ready(function () {
                 let data = [info.startStr, info.startStr, info.endStr]
 
                 showBookingPopup(data);
+                // $('#calendar').fullCalendar('unselect');
+            },
+            eventOverlap: function(stillEvent, movingEvent) {
+                // 중복 여부를 확인하고 중복을 허용할지 결정
+                return !isEventOverlapping(movingEvent);
             }
         });
         calendar.render();
@@ -102,6 +111,7 @@ $(document).ready(function () {
                         end: book.runningDay + 'T' + book.endTime,
                         title: book.confName,
                         color: book.color,
+                        textColor: "black",
                         bookerId: book.bookerId,
                         bookerNm: book.bookerNm,
                         dept: book.dept,
@@ -116,7 +126,7 @@ $(document).ready(function () {
 
             // FullCalendar의 events 옵션 업데이트
             calendar.setOption('events', eventData);
-            calendar.rerenderEvents();
+            calendar.renderEvents();
         });
 
     }).fail(function(error) {
@@ -137,6 +147,18 @@ $(document).ready(function () {
 
         console.log(data)
         modal.css('display', 'block');
+        setTimeout(function() {
+            $('#bookingForm').css({
+                'display': 'block',
+                'transform': 'translateY(50px)',
+                'opacity': '1'
+            })
+        }, 10)
+        $('body').css('overflow', 'hidden');
+
+        $("#submitBtn").click((e) => {
+           submit(e, 'post', null)
+        });
     }
 
     // 예약 조회 모달창 띄우기
@@ -148,61 +170,94 @@ $(document).ready(function () {
         $('#dept').text(data.dept);
         $('#empName').text(data.bookerNm);
         $('#sRunningDay').text(dateFormat(data.start.toISOString()));
-        $('#sStartT').text(timeFormat(data.start.toISOString()));
-        $('#sEndT').text(timeFormat(data.end.toISOString()));
+        $('#sStartT').text(data.start.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }))
+        $('#sEndT').text(data.end.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }));
         $('#sConfName').text(data.title);
         $('#sMemo').text(data.memo);
 
         modal.css('display', 'block');
+        $('body').css('overflow', 'hidden');
+        setTimeout(function() {
+            $('#showModal-content').css({
+                'display': 'block',
+                'transform': 'translateY(70px)',
+                'opacity': '1'
+            })
+        }, 10)
+
+        $("#edit-book").click(function (e) {
+            putBookModal(data);
+        })
+
+        $("#delete-book").click(function (e) {
+            deleteBook(data.id);
+        })
+    }
+
+    // 예약 수정 모달창 띄우기
+    function putBookModal(data) {
+        console.log("수정하기!")
+
+        let modal = $('#bookingModal')
+        console.log("data22" + JSON.stringify(data));
+
+        $('#room').val(data.resourceId);
+        $('#runningDay').val(dateFormat(data.start.toISOString()));
+        $('#startTime').val(data.start.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }));
+        $('#endTime').val(data.end.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }));
+        $('#confName').val(data.title);
+        $('#text').val(data.memo);
+        $('#color').val(data.color);
+
+        $('#showModal').css('display', 'none');
+        modal.css('display', 'block');
+        $('#bookingForm').css({
+            'display': 'block',
+            'opacity': '1'
+        })
+        $('body').css('overflow', 'hidden');
+
+        $("#submitBtn").click((e) => {
+            submit(e, 'put', data.id);
+        });
     }
 
 
-    // 예약 생성
-    $('#bookingForm').submit(function(e) {
-        e.preventDefault();
 
-        //폼데이터 가져오기
-        let jsonData = {};
-        jsonData.room = ($('#room').val());
-        jsonData.confName = ($('#confName').val());
-        jsonData.runningDay = ($('#runningDay').val());
-        jsonData.startTime = ($('#startTime').val());
-        jsonData.endTime = ($('#endTime').val());
-        jsonData.text = ($('#text').val());
-        jsonData.color = ($('#color').val());
+    // 모달창 닫기
+    $('#closeModalBtn').click(function() {
+        closeModal();
+    });
+    $('#closeBtn').click(function() {
+        closeModal();
+    });
 
-        console.log(jsonData)
+    $('.customModal').click(function(event) {
+        if (event.target === this) {
+            closeModal();
+        }
+    });
+    function closeModal() {
+        // $('#room').val('');
+        // $('#runningDay').val('');
+        // $('#startTime').val('');
+        // $('#endTime').val('');
+        // $('#confName').val('');
+        // $('#text').val('');
+        // $('#color').val("#f00");
 
-        // Ajax 요청
-        $.ajax({
-            url: '/mypage/conf/add',
-            type: 'POST',
-            data: JSON.stringify(jsonData),
-            contentType: 'application/json',
-            success: function(rep) {
-                console.log('성공')
+        // $('.customModal').css('display', 'none')
+        // $('body').css('overflow', 'auto');
+        // $('.modal-content').css({
+        //     'opacity': '0',
+        //     'transform': 'translateY(0)'
+        // }
 
-                Swal.fire({
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                    .then(() => {
-                        location.reload();
-                    })
-
-            },
-            error: function (err) {
-                console.log( err.message)
-            }
-
-        })
-    })
-
-
+        location.reload();
+    }
 
 });
+
 function dateFormat(date) {
     // date input에 넣을 값을 YYYY-MM-DD 형식으로 생성
     let formattedDate = date.substring(0, 10);
@@ -223,4 +278,24 @@ function changeRoomColor (e) {
         $(room).removeClass('selected');
     }
     $(e.currentTarget).addClass('selected')
+}
+
+// 중복 여부 체크 함수
+function isEventOverlapping(newEvent) {
+    var existingEvents = $('#calendar').fullCalendar('clientEvents');
+
+    for (var i = 0; i < existingEvents.length; i++) {
+        var existingEvent = existingEvents[i];
+        if (
+            newEvent.start.isBefore(existingEvent.end) &&
+            newEvent.end.isAfter(existingEvent.start)
+        ) {
+            // 중복되는 경우
+            return true;
+
+        }
+    }
+
+    // 중복되지 않은 경우
+    return false;
 }

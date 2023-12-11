@@ -1,3 +1,5 @@
+input[type='text'], input[type='date'] {display: inline-block;}
+button {display: block;}
 #roomList {
     text-align: center;
 }
@@ -18,25 +20,108 @@
     border-radius: 15px;
     color: white;
 }
+/** 모달 */
+#closeModalBtn, #closeBtn {
+    width: auto;
+    right: 50px;
+    padding: 30px 50px 0;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 .customModal {
-    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 3;
-    top: 0;
-    right:0;
 }
-#bookingForm {
-    position: absolute;
-    background-color: brown;
-    z-index: 5;
-    width: 500px;
-    height: 100%;
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 0 auto;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    opacity: 0;
+    border-radius: 15px;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.modal-content div {
+    padding: 30px 50px;
+}
+#bookingForm span, #bookingForm p {
+    display: inline-block;
+    width: 100px;
+    padding:  30px 0 10px;
+    margin: 0;
+    font-weight: bold;
+}
+.modal-content select{
+    display: inline-block;
+}
+.modal-content h3 {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding: 40px 40px 20px;
+}
+.modal-content button {
+    margin: 0 auto;
+}
+
+/* 모달이 열렸을 때 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
     right: 0;
     bottom: 0;
+    left: 0;
+    overflow: hidden;
 }
+
+
+/** 예약 조회 모달 스타일 */
+#showModal-content dl{
+    display: flex;
+}
+#showModal-content span {
+    font-weight: normal;
+    /*padding: 0;*/
+}
+#showModal-content p {
+    margin: 0;
+}
+#showModal-content dt {
+    width: 100px;
+    display: inline-block;
+}
+/*#sStartT~span {*/
+/*    width: auto;*/
+/*}*/
+#dept{margin-right: 50px;}
+#showModal-content dl:last-child {
+    margin: 0;
+}
+
+
+
 
 
 

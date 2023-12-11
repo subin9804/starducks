@@ -6,7 +6,8 @@
 <!--<th:block layout:fragment="title">메인 </th:block>-->
 <th:block layout:fragment="addMore">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.10/index.global.min.js'></script>
-    <script th:src="@{/js/mypage/confRoom.js}"></script>
+    <script th:src="@{/js/mypage/confRoomCalendar.js}"></script>
+    <script th:src="@{/js/mypage/confRoomAjax.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/confRoom.css}">
 
 </th:block>
@@ -22,65 +23,72 @@
     </div>
     <div id='scheduler'></div>
 
-    <div class="customModal" id="bookingModal" style="display: block;">
-        <form id="bookingForm">
-            회의실 선택
-            <select id="room" name="room">
-                <option th:each="room : ${rooms}" th:value="${room}" th:text="${room}"></option>
-            </select>
+    <div class="customModal" id="bookingModal" style="display: none;">
+        <form class="modal-content" id="bookingForm">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h3>회의실 예약</h3>
+            <div>
+                <span>회의실 선택</span>
+                <select id="room" name="room">
+                    <option th:each="room : ${rooms}" th:value="${room}" th:text="${room}"></option>
+                </select>
+                <br>
+                <span>예약자</span>
+                <input th:if="${emp != null}" type="text" th:value="${emp.empName}" disabled>
+                <br>
+                <span>회의 제목</span>
+                <input type="text" id="confName">
+                <br>
+                <span>진행일자</span>
+                <input type="date" id="runningDay">
+                <br>
+                <span>시작시간</span>
+                <input type="time" id="startTime" min="08:00" max="18:00" step="1800000">
 
-            예약자
-            <input th:if="${emp != null}" type="text" th:value="${emp.empName}" disabled>
+                <span>종료시간</span>
+                <input type="time" id="endTime" min="09:00" max="19:00" step="1800000">
 
-            회의 제목
-            <input type="text" id="confName">
-
-            진행일자
-            <input type="date" id="runningDay">
-
-            시작시간
-            <input type="time" id="startTime">
-
-            종료시간
-            <input type="time" id="endTime">
-
-            블록 색상
-            <select id="color" name="color">
-                <option onclick="" value="#f00">red</option>
-                <option value="#000">black</option>
-                <option value="#00f">blue</option>
-                <option value="#0f0">green</option>
-            </select>
-
-            메모
-            <textarea id="text"></textarea>
-
-            <button>등록</button>
+                <span>블록 색상</span>
+                <select id="color" name="color">
+                    <option onclick="" value="#FFE4E6">red</option>
+                    <option value="#E6E7FF">blue</option>
+                    <option value="#FEF6E7">orange</option>
+                    <option value="#E6E7FF">purple</option>
+                </select>
+                <br>
+                <p>메모</p>
+                <textarea id="text" rows="5" cols="62"></textarea>
+                <button class="commonBtn register-button" id="submitBtn">등록</button>
+            </div>
         </form>
     </div>
 
     <div class="customModal" id="showModal" style="display: none;">
-        <div>
-            <h2>회의실 예약 관리</h2>
+        <div class="modal-content" id="showModal-content">
+            <span class="close" id="closeBtn">&times;</span>
+            <h3>회의실 예약 관리</h3>
+            <div>
             <dl>
-                <dt>회의실 선택</dt>
+                <dt>회의실</dt>
                 <dd><p id="sRoom"></p></dd>
             </dl>
             <dl>
                 <dt>신청 부서</dt>
                 <dd><p id="dept"></p></dd>
-
+            </dl>
+            <dl>
                 <dt>신청자</dt>
                 <dd><p id="empName"></p></dd>
             </dl>
             <dl>
                 <dt>사용 일자</dt>
                 <dd><p id="sRunningDay"></p></dd>
-
+            </dl>
+            <dl>
                 <dt>Time Slot</dt>
                 <dd>
-                    <p id="sStartT"></p>
-                    <p id="sEndT"></p>
+                    <span>[start] </span><span id="sStartT"></span>
+                    <span>[end]  </span><span id="sEndT"></span>
                 </dd>
             </dl>
 
@@ -92,14 +100,11 @@
                 <dt>사용 목적</dt>
                 <dd><p id="sMemo"></p></dd>
             </dl>
+            </div>
+            <button class="commonBtn edit-button" id="edit-book" onclick="" >수정</button>
+            <button class="commonBtn delete-button" id="delete-book">삭제</button>
         </div>
     </div>
-
-    <script>
-
-
-    </script>
-
 </main>
 
 </html>

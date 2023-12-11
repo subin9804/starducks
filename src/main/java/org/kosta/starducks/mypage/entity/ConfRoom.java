@@ -9,8 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Entity @Builder
-@Getter @Setter
+@Entity @Builder @Data
 @AllArgsConstructor @NoArgsConstructor
 public class ConfRoom {
 

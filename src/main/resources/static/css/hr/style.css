@@ -132,3 +132,35 @@ a p.commonBtn {
     line-height: 50px;
     display: inline-block;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff; /* 테이블 배경색 추가 */
+}
+/*제목 링크 밑줄 제거*/
+table a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+}
+
+/* 마우스 오버 시 링크에 밑줄 표시  */
+table a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+/*게시글 목록 테이블 가운데 정렬*/
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+table th {
+    background-color: #f2f2f2;
+}
+/* 테이블 행에 마우스 오버 시 배경색 변경 */
+table tr:hover {
+    background-color: #f5f5f5;
+}
