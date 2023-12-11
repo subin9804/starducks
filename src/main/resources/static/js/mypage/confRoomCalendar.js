@@ -96,6 +96,7 @@ $(document).ready(function () {
         });
         calendar.render();
 
+        // 회의실 탭을 클릭하면 해당 회의실 예약 현황으로 리렌더링
         $(".rooms").click((e) => {
             let id = e.target.innerText
             roomId = id;

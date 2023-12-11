@@ -44,4 +44,8 @@ public class ConfRoom {
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime recordDay;    // 기록 일자
+
+    public ConfRoom(Long aLong, ConfRoomEN confRoomEN, long l, String s, String deslewfijd, LocalDate parse, LocalTime parse1, LocalTime parse2, String booked, String red, LocalDateTime now) {
+    }
+
 }

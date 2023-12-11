@@ -111,20 +111,20 @@
                     </dd>
                 </dl>
                 <dl>
-                    <dt>우편번호</dt>
+                    <dt>주소</dt>
                     <dd>
-                        <input class="postNo" type="text" th:field="*{postNo}">
-                        <span>우편번호 찾기</span> <!-- 우편번호 api 삽입 -->
+                        <!-- <input class="postNo" type="text" th:field="*{postNo}">-->
+                        <div th:replace="~{hr/postNo::searchPost}"></div>
                     </dd>
                 </dl>
-                <dl>
-                    <dt>주소</dt>
-                    <dd><input type="text" th:field="*{addr}"> </dd>
-                </dl>
-                <dl>
-                    <dt>상세주소</dt>
-                    <dd><input type="text" th:field="*{dAddr}"> </dd>
-                </dl>
+<!--                <dl>-->
+<!--                    <dt>주소</dt>-->
+<!--                    <dd><input type="text" th:field="*{addr}"> </dd>-->
+<!--                </dl>-->
+<!--                <dl>-->
+<!--                    <dt>상세주소</dt>-->
+<!--                    <dd><input type="text" th:field="*{dAddr}"> </dd>-->
+<!--                </dl>-->
             </section>
         </div>
         <div class="btns">
