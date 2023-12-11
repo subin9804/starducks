@@ -23,6 +23,8 @@ public class QDocForm extends EntityPathBase<DocForm> {
 
     public final StringPath formName = createString("formName");
 
+    public final StringPath formNameEn = createString("formNameEn");
+
     public QDocForm(String variable) {
         super(DocForm.class, forVariable(variable));
     }

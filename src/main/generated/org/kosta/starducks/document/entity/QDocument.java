@@ -22,17 +22,11 @@ public class QDocument extends EntityPathBase<Document> {
 
     public static final QDocument document = new QDocument("document");
 
-    public final ListPath<Approval, QApproval> approval = this.<Approval, QApproval>createList("approval", Approval.class, QApproval.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.time.LocalDateTime> apvDeadline = createDateTime("apvDeadline", java.time.LocalDateTime.class);
-
-    public final ListPath<AttachedFile, QAttachedFile> attachedFile = this.<AttachedFile, QAttachedFile>createList("attachedFile", AttachedFile.class, QAttachedFile.class, PathInits.DIRECT2);
 
     public final StringPath docContent = createString("docContent");
 
     public final DateTimePath<java.time.LocalDateTime> docDate = createDateTime("docDate", java.time.LocalDateTime.class);
-
-    public final QDocForm docForm;
 
     public final NumberPath<Long> docId = createNumber("docId", Long.class);
 
@@ -47,8 +41,6 @@ public class QDocument extends EntityPathBase<Document> {
     public final BooleanPath isDeleted = createBoolean("isDeleted");
 
     public final BooleanPath isUrgency = createBoolean("isUrgency");
-
-    public final ListPath<RefEmployee, QRefEmployee> refEmployee = this.<RefEmployee, QRefEmployee>createList("refEmployee", RefEmployee.class, QRefEmployee.class, PathInits.DIRECT2);
 
     public QDocument(String variable) {
         this(Document.class, forVariable(variable), INITS);
@@ -68,7 +60,9 @@ public class QDocument extends EntityPathBase<Document> {
 
     public QDocument(Class<? extends Document> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+
         this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
+
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter"), inits.get("docWriter")) : null;
     }
 

@@ -19,3 +19,11 @@ function beforePrint(){
 function afterPrint(){
     document.body.innerHTML = initBody;
 }
+
+//부트스트랩 모달
+const myModal = document.getElementById('myModal')
+const myInput = document.getElementById('myInput')
+
+myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus()
+})
