@@ -59,7 +59,7 @@ public class CreateDocController {
         createDocRepository.findByDocId(docId)
                 .ifPresent(document -> model.addAttribute("document", document));
 
-        return "document/createDoc/" + formNameEn + "/Detail";
+        return "document/createDoc/" + formNameEn + "Detail";
     }
 
     /**
