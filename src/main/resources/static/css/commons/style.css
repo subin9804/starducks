@@ -10,7 +10,7 @@ body {
     padding-right: 40px;
 
     /*배경으로 파도 이미지 추가*/
-    background-image: url('static/images/wave.png');
+    background-image: url('/images/wave.png');
     background-size: 90%; /* 배경 이미지를 크기 조절 */
     background-repeat: no-repeat; /* 이미지 반복 방지 */
     background-attachment: fixed; /* 스크롤 시 이미지 고정 */
