@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .permitAll())
             .logout(LogoutConfigurer::permitAll);
 
+
         return http.build();
     }
 
@@ -59,7 +60,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return w -> w.ignoring().requestMatchers(
-            "/images/**", "/css/**", "/js/**"
+                "/images/**", "/css/**", "/js/**"
         );
     }
 

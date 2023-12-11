@@ -1,6 +1,8 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.document.entity.DocForm;
+import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
@@ -13,6 +15,9 @@ import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.mypage.entity.Schedule;
+import org.kosta.starducks.mypage.entity.ScheduleType;
+import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.kosta.starducks.roles.Position;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +37,13 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final EmpRepository repository;
     private final VendorRepository vendorRepository;
     private final ForumPostRepository forumPostRepository;
+    private final DocFormRepository docFormRepository;
     private final ProductRepository productRepository;
 
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
+    private final ScheduleRepository scheduleRepository;
+
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -51,22 +60,22 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             deptRepository.saveAllAndFlush(depts);
         }
 
-        //초기 사원 데이터
-        for(int i = 1; i < 5; i++) {
+        // 초기 사원 데이터
+        for (int i = 1; i < 5; i++) {
             Employee emp = new Employee();
             emp.setEmpId((long) i);
             emp.setStatus(false);
-            emp.setBirth(LocalDate.parse("2023-12-2"+i));
-            emp.setEmpTel("010-9999-999"+i);
+            emp.setBirth(LocalDate.parse("2023-12-2" + i));
+            emp.setEmpTel("010-9999-999" + i);
             emp.setGender("woman");
             emp.setEmail("sdf@Aasdf.com");
             emp.setAddr("부천시");
-            emp.setEmpName("사원0"+i);
+            emp.setEmpName("사원0" + i);
             emp.setPostNo("00025");
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
-            emp.setJoinDate(LocalDate.parse("2022-12-2"+i));
-            emp.setPwd(passwordEncoder.encode("1"));
+            emp.setJoinDate(LocalDate.parse("2022-12-2" + i));
+            emp.setPwd(passwordEncoder.encode("1q"));
             emp.setDept(deptRepository.findById(i).orElse(null));
 
             repository.saveAndFlush(emp);
@@ -78,7 +87,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setStatus(false);
         specificEmp.setBirth(LocalDate.parse("2023-12-20"));
         specificEmp.setEmpTel("010-9999-9990");
-        specificEmp.setGender("남");
+        specificEmp.setGender("man");
         specificEmp.setEmail("lhg0529@gmail.com");
         specificEmp.setAddr("부천시");
         specificEmp.setEmpName("이현기");
@@ -178,9 +187,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         product6.setProductUnit(ProductUnit.HUNDRED_EA);
         productRepository.saveAndFlush(product6);
 
-
-
-
         // 초기 게시글 데이터
         for (int i = 0; i < 33; i++) {
             ForumPost forumPost = new ForumPost();
@@ -200,6 +206,56 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPostRepository.saveAndFlush(forumPost);
         }
 
+
+        //문서 양식 데이터
+        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
+        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "g"};
+        for (int i = 1; i < 8; i++) {
+            DocForm docForm = new DocForm();
+            docForm.setFormCode("A0" + i);
+            docForm.setFormName(formNames[i - 1]);
+            docForm.setFormNameEn(formNamesEn[i - 1]);
+
+            docFormRepository.saveAndFlush(docForm);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+
+// Schedule 데이터 생성
+        LocalDateTime[] startDates = {
+                LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
+                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+                LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
+        };
+
+        LocalDateTime[] endDates = {
+                LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
+                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+                LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+        };
+
+        ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
+
+        String[] titles = {"가가가가", "나나나나", "다다다다"};
+        String[] notes = {"내용1", "내용2", "내용3"};
+
+        Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
+
+        for (int i = 0; i < 3; i++) {
+            Schedule scheduleData = new Schedule();
+            scheduleData.setScheNo((long) (i + 1));
+            scheduleData.setScheTitle(titles[i]);
+            scheduleData.setScheStartDate(startDates[i]);
+            scheduleData.setScheEndDate(endDates[i]);
+            scheduleData.setNotes(notes[i]);
+            scheduleData.setScheduleType(scheduleTypes[i]);
+
+            // Employee 객체 찾기
+            Employee emp = repository.findById(empIds[i]).orElse(null);
+            if (emp != null) {
+                scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+            }
+
+            scheduleRepository.saveAndFlush(scheduleData);
+        }
     }
 }
 

@@ -21,7 +21,6 @@ public class ScheduleDTO {
     private LocalDateTime scheStartDate;
     private LocalDateTime scheEndDate;
     private ScheduleType scheduleType;
-
     private String notes;
     private Employee employee;
 
