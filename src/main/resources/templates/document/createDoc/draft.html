@@ -9,18 +9,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
     <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
         function submit2(form) {
-            // var formNameEn = /*[[${docForm?.formNameEn} ?: 'defaultFormNameEn']]*/;
-            // var docId = /*[[${document?.docId} ?: 'defaultDocId']]*/;
-            // form.action = '/createDoc/' + formNameEn + '/' + docId + '/temp';
             form.action = '/createDoc/temp';
             form.submit();
             return true;
         }
-        /*]]>*/
     </script>
-
 </th:block>
 
 <main layout:fragment="content">
