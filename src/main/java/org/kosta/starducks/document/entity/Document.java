@@ -31,7 +31,7 @@ public class Document {
     private DocStatus docStatus;
 
     @ColumnDefault(value = "false")
-    private boolean isUrgency;
+    private boolean isUrgent;
 
     @ColumnDefault(value = "false")
     private boolean isDeleted;
