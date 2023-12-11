@@ -8,6 +8,18 @@
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
     <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function submit2(form) {
+            var formNameEn = /*[[${docForm?.formNameEn} ?: 'defaultFormNameEn']]*/;
+            var docId = /*[[${document?.docId} ?: 'defaultDocId']]*/;
+            form.action = '/createDoc/' + formNameEn + '/' + docId + '/temp';
+            form.submit();
+            return true;
+        }
+        /*]]>*/
+    </script>
+
 </th:block>
 
 <main layout:fragment="content">
@@ -64,7 +76,7 @@
                 <textarea name="docContent" th:value="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/createDoc}'|" th:text="목록으로">목록으로</button>
-                <button class="edit-button" type="submit" th:text="임시저장">임시저장</button>
+                <button class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
                 <button class="register-button"  type="submit" th:text="상신">상신</button>
             </form>
 
