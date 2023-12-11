@@ -2,7 +2,7 @@ package org.kosta.starducks.document.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.entity.DocStatus;
 import org.kosta.starducks.document.entity.Document;

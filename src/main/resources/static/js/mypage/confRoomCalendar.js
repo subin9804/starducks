@@ -19,12 +19,12 @@ $(document).ready(function () {
         // 기본 view는 ROOM1
         let resources = rooms[0];
         let bookList = list[0];
-        console.log(bookList);
+        // console.log(bookList);
 
         let events = [];
         for(let book of bookList) {
             if(book.room == "ROOM1") {
-                console.log(book.room)
+                // console.log(book.room)
                 let event = {
                     id: book.confId,
                     resourceId: book.room,
@@ -42,7 +42,7 @@ $(document).ready(function () {
             }
         }
 
-        console.log(events);
+        // console.log(events);
 
 
         // FullCalendar 라이브러리 사용
@@ -56,13 +56,13 @@ $(document).ready(function () {
             selectable: true,
             events: events,
             eventRender: function (info) {
-                console.log(info.el.style.color);
+                // console.log(info.el.style.color);
                 // 각 이벤트에 대한 스타일 지정
                 info.el.style.backgroundColor = info.event.extendedProps.backgroundColor || 'lightgray'; // 기본값은 lightgray
                 info.el.style.textColor = "black";
             },
             eventClick: function (info) {
-                console.log("인포!!:" + JSON.stringify((info)))
+                // console.log("인포!!:" + JSON.stringify((info)))
                 // alert('Event clicked: ' + info.event.title);
 
                 let data = {
@@ -87,7 +87,6 @@ $(document).ready(function () {
                 let data = [info.startStr, info.startStr, info.endStr]
 
                 showBookingPopup(data);
-                // $('#calendar').fullCalendar('unselect');
             },
             eventOverlap: function(stillEvent, movingEvent) {
                 // 중복 여부를 확인하고 중복을 허용할지 결정
@@ -102,7 +101,7 @@ $(document).ready(function () {
             roomId = id;
 
             let eventData = [];
-            console.log(id + " clicked")
+            // console.log(id + " clicked")
             for(let book of bookList) {
                 if (book.room == id) {
                     let event = {
@@ -118,7 +117,7 @@ $(document).ready(function () {
                         dept: book.dept,
                         memo: book.text
                     }
-                    console.log(event)
+                    // console.log(event)
                     eventData.push(event);
                 }
             }
@@ -146,7 +145,7 @@ $(document).ready(function () {
         $('#startTime').val(timeFormat(data[1]));
         $('#endTime').val(timeFormat(data[2]));
 
-        console.log(data)
+        // console.log(data)
         modal.css('display', 'block');
         setTimeout(function() {
             $('#bookingForm').css({
@@ -165,7 +164,7 @@ $(document).ready(function () {
     // 예약 조회 모달창 띄우기
     function showBookedPopup(data) {
         let modal = $('#showModal')
-        console.log("data" + JSON.stringify(data));
+        // console.log("data" + JSON.stringify(data));
 
         $('#sRoom').text(data.resourceId);
         $('#dept').text(data.dept);
@@ -197,10 +196,10 @@ $(document).ready(function () {
 
     // 예약 수정 모달창 띄우기
     function putBookModal(data) {
-        console.log("수정하기!")
+        // console.log("수정하기!")
 
         let modal = $('#bookingModal')
-        console.log("data22" + JSON.stringify(data));
+        // console.log("data22" + JSON.stringify(data));
 
         $('#room').val(data.resourceId);
         $('#runningDay').val(dateFormat(data.start.toISOString()));
@@ -238,6 +237,7 @@ $(document).ready(function () {
             closeModal();
         }
     });
+
     function closeModal() {
         // $('#room').val('');
         // $('#runningDay').val('');

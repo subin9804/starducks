@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.kosta.starducks.mypage.entity.Attendance;
 
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.commons.menus.MenuService;
 
 
 import org.kosta.starducks.mypage.service.AttendanceService;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

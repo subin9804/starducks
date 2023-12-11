@@ -1,6 +1,7 @@
-package org.kosta.starducks.commons;
+package org.kosta.starducks.commons.menus;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.kosta.starducks.commons.menus.MenuDetail;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MenuService {
      * @return
      */
     public static List<MenuDetail> gets(String code) {
-        System.out.println("code" + code);
+//        System.out.println("code" + code);
         List<MenuDetail> menus = new ArrayList<>();
 
         // 게시판 하위 메뉴
@@ -85,7 +86,7 @@ public class MenuService {
 
     public static String getSubMenuCode(HttpServletRequest request) {
         String URI = request.getRequestURI();
-        System.out.println("uri: " + URI);
+//        System.out.println("uri: " + URI);
         return URI.substring(URI.indexOf("/")+1);
     }
 

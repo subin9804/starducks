@@ -1,27 +1,26 @@
 /** 예약 생성, 수정, 삭제 */
 
-// $(document).ready(function() {
 
 
-    // 예약 생성 및 수정
-    function submit(e, action, id) {
-        e.preventDefault();
+// 예약 생성 및 수정
+function submit(e, action, id) {
+    e.preventDefault();
 
-        //폼데이터 가져오기
-        let jsonData = {};
-        jsonData.room = ($('#room').val());
-        jsonData.confName = ($('#confName').val());
-        jsonData.runningDay = ($('#runningDay').val());
-        jsonData.startTime = ($('#startTime').val());
-        jsonData.endTime = ($('#endTime').val());
-        jsonData.text = ($('#text').val());
-        jsonData.color = ($('#color').val());
+    //폼데이터 가져오기
+    let jsonData = {};
+    jsonData.room = ($('#room').val());
+    jsonData.confName = ($('#confName').val());
+    jsonData.runningDay = ($('#runningDay').val());
+    jsonData.startTime = ($('#startTime').val());
+    jsonData.endTime = ($('#endTime').val());
+    jsonData.text = ($('#text').val());
+    jsonData.color = ($('#color').val());
 
-        if(id != null) {
-            jsonData.id = id;
-        }
+    if(id != null) {
+        jsonData.id = id;
+    }
 
-        console.log(jsonData)
+    // console.log(jsonData)
 
 
     // 예약 생성
@@ -34,8 +33,6 @@
             data: JSON.stringify(jsonData),
             contentType: 'application/json',
             success: function(rep) {
-                console.log('성공')
-
                 Swal.fire({
                     icon: "success",
                     title: "회의실이 예약되었습니다.",
@@ -48,7 +45,12 @@
 
             },
             error: function (err) {
-                console.log( err.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "예약을 실패했습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
 
         })
@@ -70,13 +72,18 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-                    .then(() => {
-                        location.reload();
-                    })
+                .then(() => {
+                    location.reload();
+                })
 
             },
             error: function (err) {
-                console.log( err.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "예약 수정을 실패했습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
 
         })
