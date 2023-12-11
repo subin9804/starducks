@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
+import org.kosta.starducks.forum.dto.PostCommentDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.service.ForumPostService;
@@ -87,7 +88,7 @@ public class ForumPostController {
         return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
     }
 
-    // 게시글 작성 완료 및 업로드
+    // 게시글 작성 완료 및 업로드되면 게시판 페이지로 이동
     @PostMapping("/add")
     public String addPost(@ModelAttribute ForumPost forumPost, @AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam(required = false) boolean postNotice) {
         Employee employee = empService.getEmp(userDetails.getEmpId());
@@ -101,7 +102,7 @@ public class ForumPostController {
     }
 
     // 게시글 상세 페이지
-    @GetMapping("/post/{id}") //   forum/id 가 페이지 주소
+    @GetMapping("/post/{id}")
     public String getPostDetails(@PathVariable("id") Long id, Model model) {
         MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)

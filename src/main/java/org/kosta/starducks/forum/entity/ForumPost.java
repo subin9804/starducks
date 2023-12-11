@@ -1,5 +1,6 @@
 package org.kosta.starducks.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -40,8 +41,9 @@ public class ForumPost {
 
   private boolean postNotice; //공지사항 여부
 
+  @JsonManagedReference
   @OneToMany(mappedBy = "forumPost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  private List<PostComment> comments = new ArrayList<>(); // 게시글에 달린 댓글 목록. 댓글이 하나도 없을 때를 위해 초기값 설정
+  private List<PostComment> comments = new ArrayList<>();
 
   public List<PostComment> getComments() {
     return comments;
