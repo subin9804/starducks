@@ -11,9 +11,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 
-public interface WarehouseInboundRepository extends JpaRepository<WarehouseInbound,Long> {
+public interface WarehouseInboundRepository extends JpaRepository<WarehouseInbound,Long>,WarehouseInboundRepositoryCustom {
 
 
     List<WarehouseInbound> findWarehouseInboundsByEmployee_EmpId(Long empId);
+
+
+
 
 }

@@ -11,8 +11,10 @@
 </th:block>
 
 <main layout:fragment="content">
+    <h1>품목 수정</h1>
+    <div class="content">
 
-    <form th:action="@{/products/update/{productCode}(productCode=${product.productCode})}" th:method="post">
+    <form th:action="@{/general/products/update/{productCode}(productCode=${product.productCode})}" th:method="post">
 
         <div>
             물품 ID : <input type="text" th:value="${product.productCode}" readonly>
@@ -56,6 +58,6 @@
     </form>
 
 
-
+</div>
 </main>
 </html>
