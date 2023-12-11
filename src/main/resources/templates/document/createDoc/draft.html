@@ -1,29 +1,26 @@
 <!DOCTYPE html>
-<!--<html xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layouts/main}">-->
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 
 <!--<th:block layout:fragment="title">title</th:block>-->
-<!--<th:block layout:fragment="addMore">-->
-<!--    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">-->
-<!--    <script th:src="@{draft.js}" src="/js/document/createDoc/draft.js"></script>-->
-<!--</th:block>-->
 
-<head>
-    <link rel="stylesheet" type="text/css" href="/static/css/document/createDoc/draft.css">
-    <script src="/static/js/document/createDoc/draft.js"></script>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
 
-<!--<main layout:fragment="content">-->
-    <body>
-    <h1>시작</h1>
+<main layout:fragment="content">
 
-    <div class="a4-box">
+    <h1>기안서 작성</h1>
+    <div class="preview-layout">
+        <div class="inputs-div page-shadow">
+            <input type="text" class="">
+            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+        </div>
+    <div class="a4-box page-shadow">
         <div id="print-div">
-            <h1 class="doc-form-name">업 무 기 안 서</h1>
+            <h1 class="doc-type-name">업 무 기 안 서</h1>
             <div class="top-box">
                 <table class="drafter-box">
                     <tr>
@@ -92,9 +89,7 @@
 
         </div>
     </div>
+    </div>
 
-    <h1>끝</h1>
-    <button onclick="startPrint('print-div');">print</button>
-    </body>
-<!--</main>-->
+</main>
 </html>

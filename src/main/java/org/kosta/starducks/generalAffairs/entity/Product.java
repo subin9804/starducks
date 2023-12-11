@@ -41,6 +41,12 @@ public class Product {
     @JoinColumn(name = "vendor_id",nullable = false)
     private Vendor vendor;
 
+    @Column(length = 150)
+    private String fileName;
+
+    @Column(length = 300)
+    private String filePath;
+
 
 
     public void increaseCnt(int inboundQuantity){

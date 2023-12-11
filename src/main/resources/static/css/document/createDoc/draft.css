@@ -1,8 +1,15 @@
+.preview-layout {
+    width: 1400px;
+    /*height: 1122px;*/
+}
+.commonBtn {
+    margin: 30px;
+}
 .inputs-div {
     display: inline-block;
     border: 1px solid #6B4D27;
-    height: 900px;
-    width: 560px;
+    height: 1122px;
+    width: 500px;
     border-radius: 20px;
 }
 .a4-box {

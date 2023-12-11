@@ -1,5 +1,6 @@
 package org.kosta.starducks.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
@@ -16,9 +17,10 @@ public class PostComment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long commentId; //댓글 고유 ID
 
+  @JsonBackReference
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "postId")
-  private ForumPost forumPost; // 연결된 게시글
+  private ForumPost forumPost;
 
   @Lob
   private String commentContent; //댓글 내용
