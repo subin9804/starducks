@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layouts/main}">-->
+<html lang="en">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+<!--<th:block layout:fragment="addMore">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">-->
+<!--    <script th:src="@{draft.js}" src="/js/document/createDoc/draft.js"></script>-->
+<!--</th:block>-->
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/document/createDoc/draft.css">
+    <script src="/static/js/document/createDoc/draft.js"></script>
+    <meta charset="UTF-8">
+    <title>재직증명서</title>
+</head>
+
+<!--<main layout:fragment="content">-->
+<body>
+<h1>시작</h1>
+
+<div class="a4-box">
+    <div id="print-div">
+        <h1 class="doc-form-name">재 직 증 명 서</h1>
+        <div class="top-box">
+            <table class="drafter-box">
+                <tr>
+                    <th rowspan="2">신청</th>
+                    <th>사원</th>
+                </tr>
+                <tr>
+                    <td class="stamp-box">(홍길동인)</td>
+                </tr>
+            </table>
+            <table class="approver-box">
+                <tr>
+                    <th rowspan="2">승인</th>
+                    <th>직급</th>
+                    <th>직급</th>
+                </tr>
+                <tr>
+                    <td class="stamp-box">(김팀장인)</td>
+                    <td class="stamp-box">(김사장인)</td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+        </div>
+
+        <div class="middle-box">
+            <table class="doc-info-box">
+                <tr>
+                    <th class="col-th">성명</th>
+                    <td>내용</td>
+                    <th class="col-th">생년월일</th>
+                    <td>내용</td>
+                </tr>
+                <tr>
+                    <th class="col-th">소속</th>
+                    <td>내용</td>
+                    <th class="col-th">연락처</th>
+                    <td>내용</td>
+                </tr>
+                <tr>
+                    <th class="col-th">입사일자</th>
+                    <td>내용</td>
+                    <th class="col-th">직책</th>
+                    <td>내용</td>
+                </tr>
+                <tr>
+                    <th class="col-th">주소</th>
+                    <td>내용</td>
+                    <td class="border-delete" rowspan="2" colspan="2"></td>
+                </tr>
+                <tr>
+                    <th class="col-th">용도</th>
+                    <td>
+                        <select>
+                            <option>제출용</option>
+                            <option>보관용</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <table class="doc-content-box">
+                <tr class="doc-info">
+
+                    <td>
+
+                        <p align="center">위와 같이 재직하고 있음을 증명합니다.</p><br><br><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br><br>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<h1>끝</h1>
+<button onclick="startPrint('print-div');">print</button>
+</body>
+<!--</main>-->
+</html>
