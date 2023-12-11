@@ -29,8 +29,7 @@ public class AccountService implements UserDetailsService {
     // username 파라미터를 사원번호(empId)로 변환
     Long empId;
     try {
-      empId = Long.parseLong(username);
-    } catch (NumberFormatException e) {
+      empId = Long.parseLong(username);    } catch (NumberFormatException e) {
       throw new UsernameNotFoundException("Invalid employee ID format");
     }
 

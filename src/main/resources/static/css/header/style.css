@@ -1,0 +1,137 @@
+/* 기본 스타일 */
+.ul-custom {
+    list-style: none;
+    padding: 0; margin: 0;
+}
+.li-custom {
+    padding: 0; margin: 0;
+    display: block;
+}
+.dl-custom {
+    margin: 0; padding: 20px 0;
+}
+.dt-custom {
+    margin: 0; padding: 0;
+    display: inline-block;
+}
+.dd-custom {
+    text-align: right;
+    margin: 0; padding: 0;
+    display: inline-block;
+}
+.dd-custom p {
+    width: 185px;
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    line-height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 2px 10px;
+}
+.form-custom {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    padding: 40px 100px;
+}
+.p-custom {
+    margin: 0;
+}
+.photos-custom {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 50px;
+}
+.photo-custom img{
+    width: 120px;
+    height: 120px;
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+}
+
+/* 폼 섹션 스타일 */
+.formSection-custom {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 80px;
+}
+.formSection-custom section:first-child {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.formSection-custom section .dl-custom {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.formSection-custom section:nth-child(2) {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 드롭다운 셀렉트 박스 스타일 */
+.selectbox-custom {display: none;}
+.selectbox-custom+label {
+    display: block;
+    border-radius: 10px;
+    width: 185px;
+    border: 1px solid #6B4D27;
+    height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    position:relative;
+}
+.drop-custom{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.options1-custom, .options2-custom {
+    position: absolute;
+    height: 150px;
+    width: 185px;
+    display: none;
+    background-color: white;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    z-index: 5;
+}
+.option1-custom, .option2-custom {
+    padding: 5px;
+    text-align: center;
+}
+.option1-custom:hover, .option2-custom:hover {
+    background-color: #ddd;
+}
+
+/* 우편번호 스타일 */
+.postNo-custom {
+    display: inline-block !important;
+    width: 150px;
+}
+.postNo-custom+span {
+    cursor: pointer;
+    background-color: #ddd;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+/* 하단 버튼 스타일 */
+button-custom {
+    margin: 40px 10px 0 10px;
+}
+.btns-custom {
+    text-align: center;
+}
+a p.commonBtn-custom {
+    line-height: 50px;
+    display: inline-block;
+}

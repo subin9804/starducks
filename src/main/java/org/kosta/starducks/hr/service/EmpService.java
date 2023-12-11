@@ -131,4 +131,26 @@ public class EmpService {
         return 1L;
     }
 
+    /**
+     * 직원의 비밀번호 변경
+     * @param empId 직원 ID
+     * @param oldPassword 현재 비밀번호
+     * @param newPassword 새로운 비밀번호
+     * @return 변경 성공 여부
+     */
+    @Transactional
+    public boolean changePassword(Long empId, String oldPassword, String newPassword) {
+        Employee employee = repository.findById(empId).orElse(null);
+
+        // 직원이 존재하고, 현재 비밀번호가 일치하는 경우에만 비밀번호 변경
+        if (employee != null && passwordEncoder.matches(oldPassword, employee.getPwd())) {
+            String encodedNewPassword = passwordEncoder.encode(newPassword);
+            employee.setPwd(encodedNewPassword);
+            repository.save(employee);
+            return true;
+        }
+
+        return false;
+    }
+
 }
