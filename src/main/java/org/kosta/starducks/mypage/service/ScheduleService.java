@@ -44,7 +44,10 @@ public class ScheduleService {
             return modelMapper.map(scheduleDetail, ScheduleDTO.class);
         }
         // 일정을 찾지 못한 경우에 대한 처리
-
         return null;
+    }
+
+    public void deleteSchedule(Long scheNo) {
+        scheduleRepository.deleteById(scheNo);
     }
 }

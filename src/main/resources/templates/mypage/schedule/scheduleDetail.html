@@ -22,8 +22,12 @@
     <h5 class="mb-4" id="sub-text">일정상세보기</h5>
     <br>
 
-    <div class="leftMar20">
-        <table class="table table-bordered">
+    <div class="leftMar20" style="text-align: center;">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>일정번호</th>
+                <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheNo}">일정번호</td>
+            </tr>
             <tr>
                 <th>일정명</th>
                 <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheTitle}">일정명</td>
@@ -31,12 +35,12 @@
             <tr>
                 <th>시작일</th>
                 <td th:text="${detailSchedule.scheStartDate}"></td>
-<!--                <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheStartDate}">일정 시작일</td>-->
+                <!--                <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheStartDate}">일정 시작일</td>-->
             </tr>
             <tr>
                 <th>종료일</th>
                 <td th:text="${detailSchedule.scheEndDate}"></td>
-<!--                <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheEndDate}">일정 종료일</td>-->
+                <!--                <td th:if="${detailSchedule != null}" th:text="${detailSchedule.scheEndDate}">일정 종료일</td>-->
             </tr>
             <tr>
                 <th>일정 종류</th>
@@ -44,15 +48,26 @@
             </tr>
             <tr>
                 <th>참고사항</th>
-                <td th:text="${detailSchedule.notes}"></td>
+                <td colspan="2" style="height: 500px;" th:text="${detailSchedule.notes}"></td>
             </tr>
-<!--            <tr>-->
-<!--                <td colspan="2" style="height: 500px;" th:text="${ }"></td>-->
-<!--            </tr>-->
         </table>
-
-        <button type="button">삭제하기</button>
+        <!--        <button class="btn btn-outline-success" type="submit" th:onclick="'location.href = \'' +  @{/schedule/update/(no=${detailSchedule.scheNo})} + '\''">수정하기</button>-->
+        <a th:href="@{/schedule/delete/{scheNo}(scheNo=${detailSchedule.scheNo})}" th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
+            <button class="btn btn-outline-danger">delete</button>
+        </a>
+        <button class="btn btn-outline-secondary" id="listbtn" type="button" onclick="location.href='/schedule/show'">
+            목록으로
+        </button>
     </div>
     <br><br>
+
+    <script>
+        document.querySelectorAll('#deletebtn').forEach(button => {
+            button.addEventListener('click', function () {
+                var scheduleId = this.getAttribute('data-schedule-id');
+                deleteSchedule(scheduleId);
+            });
+        });
+    </script>
 </main>
 </html>

@@ -242,5 +242,5 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.appendChild(modal);
     }
 
-    calendar.render();  // 초기 설정이 완료된 달력을 화면에 렌더링
+    calendar.render();
 });
