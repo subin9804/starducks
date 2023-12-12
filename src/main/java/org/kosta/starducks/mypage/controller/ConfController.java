@@ -3,7 +3,6 @@ package org.kosta.starducks.mypage.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.dto.ConfBookDto;
@@ -33,7 +32,6 @@ public class ConfController {
 
     @GetMapping
     public String index(Model model, @AuthenticationPrincipal CustomUserDetails details) {
-        MenuService.commonProcess(request, model, "mypage");
 
         Employee emp = empService.getEmp(1L);
         // 유저 정보 받아오기
