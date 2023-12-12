@@ -106,7 +106,7 @@ label {
     font-weight: bold;
 }
 .head input[name="nav"] {
-    display: none;
+    /*display: none;*/
 }
 .head input[name="nav"]:checked~label {
     background-color: #ffffff;

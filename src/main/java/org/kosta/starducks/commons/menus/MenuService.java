@@ -1,7 +1,6 @@
 package org.kosta.starducks.commons.menus;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.kosta.starducks.commons.menus.MenuDetail;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class MenuService {
             case "mypage":
                 menus.add(new MenuDetail("attend", "근태관리", "/"));
                 menus.add(new MenuDetail("schedule", "일정관리", "/"));
-                menus.add(new MenuDetail("confroom", "회의실 예약", "/"));
+                menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
                 menus.add(new MenuDetail("mydocu", "나의 결재", "/"));
@@ -47,7 +46,7 @@ public class MenuService {
                 menus.add(new MenuDetail("tempsaved", "임시저장함", "/"));
                 break;
             case "hr" :
-                menus.add(new MenuDetail("employee", "사원 관리", "/hr"));
+                menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
                 menus.add(new MenuDetail("attend", "근태 관리", "/"));
                 menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
                 menus.add(new MenuDetail("dept", "부서 관리", "/"));

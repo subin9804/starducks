@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.kosta.starducks.commons.MenuInterceptor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     private EntityManager em;
     private EntityTransaction tx;
+
+    @Autowired
+    private MenuInterceptor interceptor;
 
     @Bean
     public MessageSource messageSource () {
@@ -56,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MenuInterceptor())
+        registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/**", "/logout", "/js/**", "/css/**");
     }

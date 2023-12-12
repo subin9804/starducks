@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/hr")
+@RequestMapping("/hr/emp")
 @RequiredArgsConstructor
 public class EmpController {
 
@@ -51,7 +51,7 @@ public class EmpController {
      * @param model
      * @return
      */
-    @GetMapping("/emp/register")
+    @GetMapping("/register")
     public String register(@ModelAttribute Employee employee, Model model) {
         MenuService.commonProcess(request, model, "hr");
         // 자동으로 저장되는 사번을 미리 알려줌
@@ -70,7 +70,7 @@ public class EmpController {
      * @param employee
      * @return
      */
-    @PostMapping("/emp/save")
+    @PostMapping("/save")
     public String save(@ModelAttribute Employee employee, Model model) {
 
         Employee savedEmp = service.saveEmp(employee);
@@ -89,7 +89,7 @@ public class EmpController {
      * @param model
      * @return
      */
-    @GetMapping("/emp/{empId}")
+    @GetMapping("/{empId}")
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
         MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
@@ -105,7 +105,7 @@ public class EmpController {
      * @param model
      * @return
      */
-    @GetMapping("/emp/edit/{empId}")
+    @GetMapping("/edit/{empId}")
     public String empEdit (@PathVariable("empId") Long empId, Model model) {
         MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);

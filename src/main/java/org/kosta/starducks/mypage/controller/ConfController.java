@@ -30,10 +30,10 @@ public class ConfController {
     private final EmpRepository empRepository;
     private final HttpServletRequest request;
 
-
     @GetMapping
     public String index(Model model, @AuthenticationPrincipal CustomUserDetails details) {
         MenuService.commonProcess(request, model, "mypage");
+
 
         // 유저 정보 받아오기
         if(details != null) {
