@@ -41,10 +41,10 @@
     </div>
 
     <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
-    <button class="edit-button" type="button" th:onclick="|location.href='@{/document/createDoc/{formNameEn}(formNameEn=${docForm?.formNameEn})/{docId}(docId=${document?.docId})}'|" th:text="수정">수정</button>
+    <button class="edit-button" type="button" th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|" th:text="수정">수정</button>
     <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
 
-      <a th:href="@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}">수저엉</a>
+      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>
 <!--      th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"-->
 
     </div>

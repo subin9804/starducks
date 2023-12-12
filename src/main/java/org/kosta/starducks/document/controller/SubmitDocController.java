@@ -3,6 +3,7 @@ package org.kosta.starducks.document.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.repository.CreateDocRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.CreateDocService;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/document/submitDoc")
@@ -29,6 +32,8 @@ public class SubmitDocController {
     @GetMapping
     public String docSubmitList(Model model) {
         MenuService.commonProcess(request, model, "document");
+        List<Document> documents = createDocRepository.findAll();
+        model.addAttribute("documents", documents);
         return "document/submitDoc/docSubmitList";
     }
 
