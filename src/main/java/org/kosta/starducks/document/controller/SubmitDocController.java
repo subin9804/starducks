@@ -26,7 +26,7 @@ public class SubmitDocController {
     /**
      * 결재 상신 리스트 페이지
      */
-    @GetMapping("/docSubmitList")
+    @GetMapping
     public String docSubmitList(Model model) {
         MenuService.commonProcess(request, model, "document");
         return "document/submitDoc/docSubmitList";
@@ -35,7 +35,7 @@ public class SubmitDocController {
     /**
      * 상신 문서 상세 페이지
      */
-    @GetMapping("/submitDoc/{formNameEn}/{docId}")
+    @GetMapping("/{formNameEn}/{docId}")
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
