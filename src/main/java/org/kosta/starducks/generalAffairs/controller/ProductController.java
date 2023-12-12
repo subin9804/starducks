@@ -3,7 +3,7 @@ package org.kosta.starducks.generalAffairs.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.ProductCategory;

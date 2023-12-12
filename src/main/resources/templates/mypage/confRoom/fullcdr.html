@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+</head>
+<body>
+<div id='scheduler'></div>
+
+<div id="bookingModal" style="display: none;">
+    <p>팝업 짠</p>
+</div>
+
+<script>
+
+
+        // 리소스 데이터
+        var resources = [
+            { id: 1, title: 'Resource 1' },
+            { id: 2, title: 'Resource 2' },
+            // 여기에 필요한 만큼 리소스를 추가할 수 있습니다.
+        ];
+
+        // 이벤트 데이터
+        var events = [
+            { id: 1, resourceId: 1, start: '2023-12-07T10:00:00', end: '2023-12-07T12:00:00', title: 'Event 1' },
+            { id: 2, resourceId: 2, start: '2023-12-07T14:00:00', end: '2023-12-07T16:00:00', title: 'Event 2' },
+            // 여기에 필요한 만큼 이벤트를 추가할 수 있습니다.
+        ];
+
+        $(document).ready(function () {
+
+        // FullCalendar 라이브러리 사용
+        var calendar = new FullCalendar.Calendar($('#scheduler')[0], {
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            // initialView: 'resourceTimelineDay', // 기본 뷰 설정
+            initialView: 'resourceTimeGridDay',
+            resources: resources,
+            selectable: true,
+            events: events,
+            eventClick: function (info) {
+                alert('Event clicked: ' + info.event.title);
+                showBookingPopup(info);
+            },
+            select: function(info) {
+                alert('Date: ' + info.dateStr);
+                alert('Selected: ' + info.startStr + ' to ' + info.endStr);
+                alert('Resource ID: ' + info.resource.id);
+                showBookingPopup(info);
+            }
+        });
+
+
+
+        calendar.render();
+    });
+        function showBookingPopup(info) {
+            let modal = $('#bookingModal')
+            modal.css('display', 'block');
+        }
+
+</script>
+</body>
+</html>

@@ -3,15 +3,16 @@ package org.kosta.starducks.mypage.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Entity @Builder
-@Getter @Setter
+@Entity @Builder @Data
 @AllArgsConstructor @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ConfRoom {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,11 @@ public class ConfRoom {
     @Enumerated(EnumType.STRING)
     private ConfRoomEN room;    // 회의실 이름
 
-    private Long booker;    // 예약자
+    private Long bookerId;    // 예약자 아이디
+
+    private String bookerNm;    // 예약자 이름
+
+    private String dept;    // 예약 부서
 
     private String confName;    // 회의 이름
 
@@ -41,4 +46,5 @@ public class ConfRoom {
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime recordDay;    // 기록 일자
+
 }

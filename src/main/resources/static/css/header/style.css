@@ -1,83 +1,83 @@
-ul {
+/* 기본 스타일 */
+.ul-custom {
     list-style: none;
     padding: 0; margin: 0;
 }
-li {
+.li-custom {
     padding: 0; margin: 0;
     display: block;
 }
-dl {
+.dl-custom {
     margin: 0; padding: 20px 0;
 }
-dt {
+.dt-custom {
     margin: 0; padding: 0;
     display: inline-block;
-    min-width: 96px;
 }
-dd {
+.dd-custom {
     text-align: right;
     margin: 0; padding: 0;
     display: inline-block;
 }
-dd p {
+.dd-custom p {
     width: 185px;
     border-radius: 10px;
     border: 1px solid #6B4D27;
     line-height: 30px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 2px 10px;
-    background-color: white;
 }
-#form {
+.form-custom {
     border: 1px solid #6B4D27;
     border-radius: 10px;
     padding: 40px 100px;
 }
-p {
+.p-custom {
     margin: 0;
 }
-.photos {
+.photos-custom {
     text-align: center;
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
     gap: 50px;
 }
-.photo img{
+.photo-custom img{
     width: 120px;
     height: 120px;
     border: 1px solid #6B4D27;
     border-radius: 10px;
-
 }
-#formSection {
+
+/* 폼 섹션 스타일 */
+.formSection-custom {
     width: 100%;
     display: inline-flex;
     flex-direction: row;
     gap: 80px;
 }
-#formSection section:first-child {
+.formSection-custom section:first-child {
     width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-#formSection section dl {
+.formSection-custom section .dl-custom {
     display: flex;
     justify-content: space-between;
     text-align: center;
 }
 
-#formSection section:nth-child(2) {
+.formSection-custom section:nth-child(2) {
     width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-/** 포지션 드롭다운 셀렉박스 */
-input[type='checkbox'].selectbox {display: none;}
-.selectbox+label {
+/* 드롭다운 셀렉트 박스 스타일 */
+.selectbox-custom {display: none;}
+.selectbox-custom+label {
     display: block;
     border-radius: 10px;
     width: 185px;
@@ -86,14 +86,13 @@ input[type='checkbox'].selectbox {display: none;}
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
     position:relative;
-    background-color: white;
 }
-.drop{
+.drop-custom{
     position: absolute;
     top: 5px;
     right: 10px;
 }
-.options1, .options2 {
+.options1-custom, .options2-custom {
     position: absolute;
     height: 150px;
     width: 185px;
@@ -103,79 +102,36 @@ input[type='checkbox'].selectbox {display: none;}
     border-radius: 10px;
     border: 1px solid #6B4D27;
     z-index: 5;
- }
-.option1, .option2 {
+}
+.option1-custom, .option2-custom {
     padding: 5px;
     text-align: center;
 }
-.option1:hover, .option2:hover {
+.option1-custom:hover, .option2-custom:hover {
     background-color: #ddd;
 }
 
-/*.postNo {*/
-/*    display: inline-block !important;*/
-/*    width: 150px;*/
-/*}*/
-/*.postNo+span {*/
-/*    cursor: pointer;*/
-/*    background-color: #ddd;*/
-/*    display: inline-block;*/
-/*    padding: 6px;*/
-/*    border-radius: 10px;*/
-/*}*/
-
-input[name="postNo"], input[name="addr"] {
-    margin-bottom: 10px;
+/* 우편번호 스타일 */
+.postNo-custom {
+    display: inline-block !important;
+    width: 150px;
 }
-#searchPostBtn {
-    margin-bottom: 10px;
-    padding: 5px;
-    background-color: #6B4D27;
-    color: white;
+.postNo-custom+span {
+    cursor: pointer;
+    background-color: #ddd;
+    display: inline-block;
+    padding: 6px;
     border-radius: 10px;
 }
 
-
-/** 하단 버튼 */
-button {
+/* 하단 버튼 스타일 */
+button-custom {
     margin: 40px 10px 0 10px;
 }
-.btns {
+.btns-custom {
     text-align: center;
 }
-a p.commonBtn {
+a p.commonBtn-custom {
     line-height: 50px;
     display: inline-block;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #fff; /* 테이블 배경색 추가 */
-}
-/*제목 링크 밑줄 제거*/
-table a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
-}
-
-/* 마우스 오버 시 링크에 밑줄 표시  */
-table a:hover {
-    text-decoration: underline;
-    color: #4CAF50;
-}
-
-/*게시글 목록 테이블 가운데 정렬*/
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-table th {
-    background-color: #f2f2f2;
-}
-/* 테이블 행에 마우스 오버 시 배경색 변경 */
-table tr:hover {
-    background-color: #f5f5f5;
 }

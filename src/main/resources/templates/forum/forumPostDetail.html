@@ -8,10 +8,6 @@
   <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
   <script th:src="@{/js/forum/script.js}"></script>
 
-<!-- 시큐리티 때문에 삭제 기능을 위해서 토큰 추가 -->
-  <meta name="_csrf" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-
 </th:block>
 
 <main layout:fragment="content">
@@ -76,7 +72,7 @@
           <div th:if="${comment.employee != null and #authentication != null and #authentication.principal != null}">
             <!-- 로그인한 사용자와 댓글 작성자가 같은 경우 -->
             <div class="detail-comment-actions"
-                 th:if="${comment.employee.empId == #authentication.principal.empId}">
+                 th:if="${comment.employee.empId.toString() == #authentication.principal.username}">
               <button class="fcommonBtn fedit-button"
                       th:onclick="'showEditForm(' + ${comment.commentId} + ');'">
                 수정
@@ -94,7 +90,7 @@
     <div class="button-group">
       <!-- 현재 로그인한 사용자가 작성자인 경우에만 수정/삭제 버튼 표시 -->
       <div
-          th:if="${post.employee != null and #authentication != null and #authentication.principal != null and post.employee.empId == #authentication.principal.empId}">
+          th:if="${post.employee != null and #authentication != null and #authentication.principal != null and post.employee.empId.toString == #authentication.principal.username}">
         <a th:href="@{/forum/edit/{id}(id=${post.postId})}">
           <button class="commonBtn edit-button">수정</button>
         </a>

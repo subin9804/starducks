@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons;
+package org.kosta.starducks.commons.menus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

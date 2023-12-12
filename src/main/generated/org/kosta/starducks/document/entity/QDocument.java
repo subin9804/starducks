@@ -63,6 +63,7 @@ public class QDocument extends EntityPathBase<Document> {
     public QDocument(Class<? extends Document> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
+
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter"), inits.get("docWriter")) : null;
     }
 
