@@ -58,8 +58,8 @@ public class CreateDocController {
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        createDocService.getDocumentById(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        createDocRepository.findByDocId(docId)
+            .ifPresent(document -> model.addAttribute("document", document));
 
         return "document/createDoc/" + formNameEn;
     }
@@ -75,7 +75,7 @@ public class CreateDocController {
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
         Long docId = 1L;
-        createDocService.getDocumentById(docId)
+        createDocRepository.findByDocId(docId)
                 .ifPresent(document -> model.addAttribute("document", document));
 
         return "document/createDoc/" + formNameEn;
@@ -91,7 +91,6 @@ public class CreateDocController {
         // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
         Long empId = 1L; //로그인한 사원 정보
         Employee docWriter = empRepository.findById(empId).orElse(null);
-        // document 엔티티에 docWriter 설정
         document.setDocWriter(docWriter);
 
         document.setDocStatus(DocStatus.PENDING_DOC);
@@ -102,8 +101,6 @@ public class CreateDocController {
         return "redirect:/createDoc/" + formNameEn + "/{docId}";
     }
 
-    //아마 안쓸것같기도 ..
-    // 돈 크라이... 나진...
     /**
      * 문서 작성 상신 처리 - 임시저장 이력 있는 경우
      */
@@ -115,7 +112,6 @@ public class CreateDocController {
         // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
         Long empId = 1L; //로그인한 사원 정보
         Employee docWriter = empRepository.findById(empId).orElse(null);
-        // document 엔티티에 docWriter 설정
         document.setDocWriter(docWriter);
 
         document.setDocStatus(DocStatus.PENDING_DOC);
@@ -128,19 +124,24 @@ public class CreateDocController {
     /**
      * 문서 작성 임시 저장 처리
      */
-    @PostMapping("/{formNameEn}/{docId}/temp")
-    public String submitDraftTemp(@PathVariable(name = "formNameEn") String formNameEn,
-                                  @PathVariable(name = "docId") Long docId,
-                                  Document document,
+    @PostMapping("/temp")
+    public String submitDraftTemp(Document document,
                                   RedirectAttributes redirectAttributes) {
         // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
         Long empId = 1L; //로그인한 사원 정보
         Employee docWriter = empRepository.findById(empId).orElse(null);
-        // document 엔티티에 docWriter 설정
         document.setDocWriter(docWriter);
 
         document.setDocStatus(DocStatus.TEMP_STORED);
         Document savedDoc = createDocRepository.save(document);
+
+        String formCode = savedDoc.getDocForm().getFormCode();
+
+        String formNameEn = docFormRepository.findByFormCode(formCode)
+                .map(DocForm::getFormNameEn)
+                .orElse(null);
+
+        Long docId = savedDoc.getDocId();
 
         redirectAttributes.addAttribute("tmpStatus", true);
         return "redirect:/createDoc/" + formNameEn + "/" + docId;

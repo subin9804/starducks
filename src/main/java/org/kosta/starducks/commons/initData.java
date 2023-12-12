@@ -215,7 +215,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
 // Schedule 데이터 생성
             LocalDateTime[] startDates = {
-
                     LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
@@ -225,7 +224,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                     LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
-
             };
 
             ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};

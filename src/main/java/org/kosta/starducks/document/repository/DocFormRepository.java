@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface DocFormRepository extends JpaRepository<DocForm, Long> {
     Optional<DocForm> findByFormNameEn(String formNameEn);
+    Optional<DocForm> findByFormCode(String formCode);
 }

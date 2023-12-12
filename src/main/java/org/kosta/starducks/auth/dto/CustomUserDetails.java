@@ -26,6 +26,7 @@ public class CustomUserDetails implements UserDetails {
     Collection<GrantedAuthority> collection = new ArrayList<>();
 
     collection.add((GrantedAuthority) () -> String.valueOf(employee.getPosition()));
+    collection.add((GrantedAuthority) () -> employee.getDept().getDeptName());
 
     return collection;
   }
