@@ -93,11 +93,8 @@ public class EmpService {
             employee.setStatus(emp.isStatus());
             employee.setDept(emp.getDept());
 
-
-
             System.out.println("수정한다");
-            return repository.save(emp);
-
+            return repository.save(employee);
         }
     }
 

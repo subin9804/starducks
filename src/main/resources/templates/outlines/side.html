@@ -133,10 +133,13 @@
             <label for="map"><a th:href="@{/map}">조직도</a></label>
         </div>
     </div>
-
-    <div class="sidebar-footer">
-        <a href="/logout" class="commonBtn">Logout</a>
-        <p>©2023 STARDUCKS ERP</p>
-    </div>
+  <div class="sidebar-footer">
+    <form action="/logout" method="post">
+<!-- 이렇게 th:value 형식으로 해야 어떤 페이지에서든 토큰이 유효해지게 동적으로 된다 -->
+      <input type="hidden" name="_csrf" th:if="${_csrf != null}" th:value="${_csrf.token}" />
+      <button type="submit" class="commonBtn">Logout</button>
+    </form>
+    <p>©2023 STARDUCKS ERP</p>
+  </div>
 </aside>
 </html>
