@@ -38,7 +38,7 @@ public class ScheduleController {
     @GetMapping("/show/{empId}")
     @ResponseBody
     public List<Map<String, Object>> showSingleSchedule(@PathVariable("empId") Long empId, Model model) {
-        // scheduleService를 통해 모든 일정을 가져옴
+//        scheduleService를 통해 모든 일정을 가져옴
 
 //        System.out.println("아이디!!!!!" + empId);
         List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
@@ -98,6 +98,7 @@ public class ScheduleController {
 
     /**
      * 새로 등록된 일정 상세 조회
+     *
      * @param model
      * @param scheNo
      * @return
@@ -112,6 +113,7 @@ public class ScheduleController {
 
     /**
      * 기존에 등록되어 있던 일정 상세조회(DB 데이터 상세조회)
+     *
      * @param model
      * @param scheNo
      * @return
