@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <title>개인 정보 수정</title>
+  <link href="/css/header/style.css" rel="stylesheet" type="text/css">
+  <script>
+    function checkPassword() {
+      // 현재 비밀번호 확인 및 새 비밀번호 설정 로직 구현
+    }
+    function findPostalCode() {
+      // 우편번호 찾기 기능 구현
+    }
+  </script>
+</head>
+<body>
+<h1 class="p-custom">개인 정보 수정</h1>
+<form id="form" class="form-custom" th:action="@{/hr/emp/update}" method="post" th:object="${employee}" autocomplete="off">
+  <div id="formSection" class="formSection-custom">
+    <section>
+      <!-- 사원번호 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">사원 번호</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
+      </dl>
+      <!-- 사원 이름 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">사원 이름</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{empName}" disabled></dd>
+      </dl>
+      <!-- 연락처 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">연락처</dt>
+        <dd class="dd-custom"><input type="text" th:field="*{empTel}"></dd>
+      </dl>
+      <!-- 이메일 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">이메일</dt>
+        <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
+      </dl>
+      <!-- 성별 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">성별</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{gender}" disabled></dd>
+      </dl>
+      <!-- 생년월일 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">생년월일</dt>
+        <dd class="dd-custom"><input type="date" th:value="*{birth}" disabled></dd>
+      </dl>
+    </section>
+    <section>
+      <!-- 부서 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">부서</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{dept.deptName}" disabled></dd>
+      </dl>
+      <!-- 직급 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">직급</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{position}" disabled></dd>
+      </dl>
+      <!-- 입사 일자 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">입사 일자</dt>
+        <dd class="dd-custom"><input type="date" th:value="*{joinDate}" disabled></dd>
+      </dl>
+      <!-- 퇴사 여부 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">퇴사 여부</dt>
+        <dd class="dd-custom"><input type="text" th:value="*{status ? '퇴사' : '재직'}" disabled></dd>
+      </dl>
+      <!-- 우편번호 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">우편번호</dt>
+        <dd class="dd-custom">
+          <input type="text" class="postNo-custom" th:field="*{postNo}">
+          <button type="button" class="button-custom" onclick="findPostalCode()">우편번호 찾기</button>
+        </dd>
+      </dl>
+      <!-- 주소 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">주소</dt>
+        <dd class="dd-custom"><input type="text" th:field="*{addr}"></dd>
+      </dl>
+      <!-- 상세주소 -->
+      <dl class="dl-custom">
+        <dt class="dt-custom">상세주소</dt>
+        <dd class="dd-custom"><input type="text" th:field="*{dAddr}"></dd>
+      </dl>
+    </section>
+  </div>
+  <!-- 비밀번호 변경 버튼 -->
+  <div>
+    <button type="button" class="button-custom" onclick="checkPassword()">비밀번호 변경</button>
+  </div>
+  <div class="btns-custom">
+    <button type="submit" class="commonBtn-custom register-button">저장</button>
+    <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
+  </div>
+</form>
+<script>
+  function checkPassword() {
+    // AJAX 요청을 통해 비밀번호 변경 처리
+    // 예: jQuery의 $.ajax() 사용
+    // 서버에 새 비밀번호 전송 및 인코딩 처리
+  }
+</script>
+</body>
+</html>

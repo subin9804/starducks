@@ -3,10 +3,12 @@ package org.kosta.starducks.logistic.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.logistic.repository.WarehouseInboundRepository;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class WarehouseInbound {
 
 
 
-
+    //@CreationTimestamp
     private LocalDateTime warehouseInboundDate;
 
 
@@ -56,7 +58,7 @@ public class WarehouseInbound {
     }
 
 
-    public static WarehouseInbound createInbound(Employee employee, WarehouseInboundProduct... wiproducts) {
+    public static WarehouseInbound createInbound(Employee employee, List<WarehouseInboundProduct> wiproducts) {
 
         //order 생성
         Long totalPrice = 0L;
@@ -65,7 +67,14 @@ public class WarehouseInbound {
         WarehouseInbound warehouseInbound = new WarehouseInbound();
         warehouseInbound.setEmployee(employee);
 
-        warehouseInbound.setWarehouseInboundDate(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+
+        //포맷팅을 위한 DateTimeFormatter 생성
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = now.format(formatter);
+        formattedDateTime = formattedDateTime.replace("T", " ");
+        warehouseInbound.setWarehouseInboundDate(LocalDateTime.parse(formattedDateTime, formatter));
+
 
 
         for(WarehouseInboundProduct wiProduct :wiproducts) {
@@ -76,21 +85,6 @@ public class WarehouseInbound {
 
         warehouseInbound.setTotalPrice(totalPrice);
         warehouseInbound.setTotalQuantity(totalQuantity);
-
-
-
-
-
-
-//        for(OrderProduct orderProduct : orderProducts) {
-//            totalPrice += orderProduct.getOrderPrice();
-//            totalQuantity += orderProduct.getOrderQuantity();
-//            order.addOrderProduct(orderProduct);
-//        }
-//        order.setTotalPrice(totalPrice);
-//        order.setTotalQuantity(totalQuantity);
-
-
 
 
         return warehouseInbound;

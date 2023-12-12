@@ -31,7 +31,7 @@
                 </dl>
                 <dl>
                     <dt>초기비밀번호</dt>
-                    <dd><p th:text="*{pwd}"></dd>
+                    <dd><p th:text="*{pwd}" style="overflow: hidden"></dd>
                 </dl>
                 <dl>
                     <dt>사원이름</dt>
@@ -97,7 +97,7 @@
             </section>
         </div>
         <div class="btns">
-            <a th:href="@{/hr}"><button class="commonBtn cancel-button">목록</button></a>
+            <a th:href="@{/hr/emp}"><button class="commonBtn cancel-button">목록</button></a>
             <a th:href="@{edit/{id}(id=${empId})}"><button class="commonBtn edit-button">수정</button></a>
         </div>
     </div>

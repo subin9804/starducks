@@ -10,10 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.Optional;
+
 public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
 
     Employee findTopByOrderByEmpIdDesc();
     Employee findByEmpName(String empName);
+
+    // 이메일로 직원 검색
+    Optional<Employee> findByEmail(String email);
 
 //    List<Employee> dynamicSearch(EmpSearchCond empSearch);
 //    Page<Employee> pagination(EmpSearchCond empSearch, Pageable pageable);
@@ -66,5 +71,7 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
         Page<Employee> data = findAll(builder, pageable);
         return data;
+
+
     }
 }

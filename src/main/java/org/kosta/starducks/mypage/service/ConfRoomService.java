@@ -1,7 +1,10 @@
 package org.kosta.starducks.mypage.service;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.dto.ConfBookDto;
 import org.kosta.starducks.mypage.entity.ConfRoom;
 import org.kosta.starducks.mypage.repository.ConfRepository;
@@ -18,10 +21,10 @@ import java.util.List;
 public class ConfRoomService {
 
     private final ConfRepository confRepository;
-    private final EmpRepository empRepository;
+    private final EmpService empService;
 
     /**
-     * 예약된 회의 전체 조회 (쓸일없음)
+     * 예약된 회의 전체 조회
      * @return
      */
     public List<ConfRoom> getAll() {
@@ -45,11 +48,18 @@ public class ConfRoomService {
      */
     public ConfRoom booking(ConfBookDto dto, Authentication auth) {
         // 예약자
-//        CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
-//        Employee emp = details.getEmployee();
+        Employee emp = empService.getEmp(1L);
+
+        if(auth != null) {
+            CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+            emp = details.getEmployee();
+
+        }
 
         ConfRoom room = new ModelMapper().map(dto, ConfRoom.class);
-        room.setBooker(1L);
+        room.setBookerId(emp.getEmpId());
+        room.setBookerNm(emp.getEmpName());
+        room.setDept(emp.getDept().getDeptName());
         room.setStatus("booked");
 
         room.setRunningDay(LocalDate.parse(dto.getRunningDay()));
@@ -64,11 +74,18 @@ public class ConfRoomService {
      * @param id
      * @return
      */
-    public ConfRoom edit(Long id) {
+    public ConfRoom edit(Long id, ConfBookDto dto) {
         ConfRoom room = confRepository.findById(id).orElse(null);
 
-        return room;
+        room.setRoom(dto.getRoom());
+        room.setConfName(dto.getConfName());
+        room.setText(dto.getText());
+        room.setStartTime(LocalTime.parse(dto.getStartTime()));
+        room.setEndTime(LocalTime.parse(dto.getEndTime()));
+        room.setRunningDay(LocalDate.parse(dto.getRunningDay()));
+        room.setColor(dto.getColor());
 
+        return confRepository.save(room);
     }
 
     public void remove(Long id) {

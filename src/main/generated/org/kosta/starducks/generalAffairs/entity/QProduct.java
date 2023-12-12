@@ -22,6 +22,10 @@ public class QProduct extends EntityPathBase<Product> {
 
     public static final QProduct product = new QProduct("product");
 
+    public final StringPath fileName = createString("fileName");
+
+    public final StringPath filePath = createString("filePath");
+
     public final EnumPath<ProductCategory> productCategory = createEnum("productCategory", ProductCategory.class);
 
     public final NumberPath<Integer> productCnt = createNumber("productCnt", Integer.class);

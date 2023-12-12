@@ -6,9 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,6 +20,9 @@ public class EmpService {
 
     private final EmpRepository repository;
     private final EntityManager em;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 모든 직원 조회
@@ -63,6 +69,11 @@ public class EmpService {
             // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
             Long id = getLastEmpId();
             emp.setEmpId(id + 1);
+
+//            비밀번호 암호화해서 사원 등록~~~
+            String encodedPassword = passwordEncoder.encode(emp.getPwd());
+            emp.setPwd(encodedPassword);
+
             System.out.println("등록한다");
 
             return repository.save(emp);
@@ -80,14 +91,15 @@ public class EmpService {
             employee.setPostNo(emp.getPostNo());
             employee.setAddr(emp.getAddr());
             employee.setDAddr(emp.getDAddr());
-            employee.setStatus(emp.isStatus());
             employee.setDept(emp.getDept());
 
-
+            if(emp.isStatus() != employee.isStatus()) {
+                employee.setStatus(emp.isStatus());
+                employee.setLeaveDate(LocalDate.now());
+            }
 
             System.out.println("수정한다");
-            return repository.save(emp);
-
+            return repository.save(employee);
         }
     }
 
@@ -119,6 +131,28 @@ public class EmpService {
             return emp.getEmpId();
         }
         return 1L;
+    }
+
+    /**
+     * 직원의 비밀번호 변경
+     * @param empId 직원 ID
+     * @param oldPassword 현재 비밀번호
+     * @param newPassword 새로운 비밀번호
+     * @return 변경 성공 여부
+     */
+    @Transactional
+    public boolean changePassword(Long empId, String oldPassword, String newPassword) {
+        Employee employee = repository.findById(empId).orElse(null);
+
+        // 직원이 존재하고, 현재 비밀번호가 일치하는 경우에만 비밀번호 변경
+        if (employee != null && passwordEncoder.matches(oldPassword, employee.getPwd())) {
+            String encodedNewPassword = passwordEncoder.encode(newPassword);
+            employee.setPwd(encodedNewPassword);
+            repository.save(employee);
+            return true;
+        }
+
+        return false;
     }
 
 }

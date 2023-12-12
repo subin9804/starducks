@@ -1,19 +1,44 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff; /* 테이블 배경색 추가 */
+}
+
+/*제목 링크 밑줄 제거*/
+table a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+}
+
+/* 마우스 오버 시 링크에 밑줄 표시  */
+table a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+
+/*게시글 목록 테이블 가운데 정렬*/
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+/* 테이블 행에 마우스 오버 시 배경색 변경 */
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
 .forum-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
     margin-bottom: 20px;
-}
-
-.view-all-posts a {
-    text-decoration: none;
-    color: black;
-}
-
-.view-all-posts a:hover {
-    text-decoration: underline;
-    color: #4CAF50;
 }
 
 .search-form {
@@ -63,9 +88,8 @@
     color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
 }
 
-/* 마우스 오버 시 링크에 밑줄 표시  */
+ /*마우스 오버 시 링크에 밑줄 표시*/
 .forum-table a:hover {
-    text-decoration: underline;
     color: #4CAF50;
 }
 
@@ -137,33 +161,69 @@
 }
 
 .detail-content-section {
-    background-color: #f8f8f8;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 15px;
     width: 100%;
 }
 
-.detail-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/*테이블 부분 스타일*/
+.detail-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* 내용과의 간격 */
 }
 
-.detail-info {
-    margin-bottom: 20px;
+.detail-info-table th {
+    background-color: #978268; /* 제목, 조회수, 작성자, 작성 시간 칸의 배경색 */
+    color: #ffffff;
+    width: 130px; /* 정보 이름들의 폭 */
 }
 
-.detail-author, .detail-views, .detail-timestamp {
-    font-size: 14px;
-    margin-bottom: 5px;
+.detail-info-table td:first-child {
+    white-space: normal; /* td 첫 번째 열의 텍스트 줄바꿈을 허용 */
+    word-wrap: break-word; /* 긴 단어나 URL이 줄 바꿈 시 자동으로 줄바꿈 처리 */
 }
 
+/*공통 테이블 호버 효과 없애기 */
+table tr:hover {
+    background-color: #ffffff;
+}
+
+.detail-info-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+
+/* 마우스 호버 시 색상 변경 제거 */
+.detail-info-table td:hover {
+    background-color: #ffffff; /* 호버 시에도 배경색 유지 */
+}
+
+/* '내용' 셀의 스타일 조정 */
 .detail-post-content {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    margin-bottom: 20px;
+    min-height: 500px; /* 내용 부분의 최소 높이 */
+    background-color: #ffffff; /* 내용 칸의 배경색 */
+    padding: 0; /* 패딩 추가 */
+    border-top: none; /* 상단 테두리 제거 */
+    margin: 0; /* 마진 제거 */
+    text-align: left;
 }
+
+/* 조회수와 작성 시간 셀에 직접 클래스를 부여하여 스타일 적용 */
+.detail-info-table .views,
+.detail-info-table .timestamp {
+    text-align: center;
+    width: 200px; /* 조회수, 작성 시간 데이터 부분 폭 길이 */
+}
+.detail-post-content img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 .detail-comment-section {
     margin-top: 20px;
@@ -207,13 +267,108 @@
 /*수정, 삭제, 목록 버튼이 좌우로 보이도록 묶음 */
 .button-group {
     display: flex;
-    justify-content: space-between; /* 버튼들 사이에 균일한 간격을 두기 위함 */
+    justify-content: center; /* 버튼들 사이에 균일한 간격을 두기 위함 */
     margin-top: 20px; /* 추가적인 상단 여백을 위함 */
+    align-items: center;
 }
 
 .button-group a {
     margin-right: 10px; /* 각 링크(버튼) 사이의 간격 */
 }
+
+.button-group > div{
+    display: flex;
+    justify-content: center;
+}
+
+
+.fcommonBtn {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 27px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/* 전체글 보기 버튼 */
+.listBtn {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 27px;
+    width: 70px;
+    height: 30px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #AF9A63;
+    border-radius: 5px;
+    color: white;
+}
+
+.view-all-posts a, .add-post a {
+    color: white !important;
+}
+
+/*취소 버튼을 부득이하게 p태그로 사용할 경우 */
+a p.fcommonBtn {
+    line-height: 30px;
+    display: inline-block;
+    text-align: center;
+    /* 글자 가운데 정렬 추가 */
+}
+
+/* 등록 */
+.fregister-button {
+    background: #4A85F6;
+    color: #FFFFFF;
+}
+
+/* 목록 및 취소 */
+.fcancel-button {
+    color: #FFFFFF;
+    background-color: #999;
+}
+
+/* 수정 */
+.fedit-button {
+    color: #FFFFFF;
+    background-color: #43946f;
+}
+
+/*삭제 버튼 */
+.fdelete-button {
+    color: #fdf5f5;
+    background-color: #FF5B5B;
+}
+
+.fregister-button:hover {
+    background-color: #6a4af6;
+}
+.fcancel-button:hover {
+    background-color: #555;
+}
+.fedit-button:hover {
+    background-color: #316c52;
+}
+
+.fdelete-button:hover {
+    background-color: #d91717;
+}
+/* '목록' 버튼에 대한 스타일 */
+/*.button-group > a {*/
+/*    flex: 1; !* 필요한 경우 flex 속성을 사용하여 조정 *!*/
+/*}*/
+
+/* '수정'과 '삭제' 버튼이 없을 때 '목록' 버튼을 중앙에 배치 */
+/*.button-group > a:last-child {*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*}*/
+
 /*게시물 상세 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 

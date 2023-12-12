@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="frag-title"  th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
+    <div class="preview-layout">
+        <div class="inputs-div page-shadow">
+            <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
+
+            <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
+            <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
+
+            긴급 <input type="checkbox" name="isUrgent">
+
+            <div class="doc-input-lbl" th:text="기안일">기안일</div>
+            :<div class="doc-readonly" th:text="${document?.docDate}">${doc.docDate}</div>
+            <div class="doc-input-lbl" th:text="기안자">기안자</div>
+            :<div class="doc-readonly" th:text="${document?.docWriter?.empName}">${doc.docDate}</div>
+
+            <div class="hr"><hr></div>
+
+            1차 결재자 :
+<!--            <div th:text="${apv1.approver}"></div>-->
+            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                사원찾기
+            </button>
+
+            2차 결재자 :
+<!--            <div th:text="${apv2.approver}"></div>-->
+            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                사원찾기
+            </button>
+
+            <div class="hr"><hr></div>
+
+            참조인 :
+<!--            <div th:text="${doc.refEmp}"></div>-->
+<!--            라디오가 아닌 체크박스로 변경-->
+            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                사원찾기
+            </button>
+
+            <div class="hr"><hr></div>
+
+            첨부파일 :
+            <input type="file" multiple>
+
+            <div class="hr"><hr></div>
+
+            <form method="post">
+                제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
+                <textarea name="docContent" th:value="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
+
+                <button class="cancel-button" type="button" th:onclick="|location.href='@{/createDoc}'|" th:text="목록으로">목록으로</button>
+                <button class="edit-button" type="submit" th:text="임시저장">임시저장</button>
+                <button class="register-button"  type="submit" th:text="상신">상신</button>
+            </form>
+
+
+            <div th:replace="~{document/createDoc/selectEmp::modal}"></div>
+
+            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+        </div>
+
+
+    <div class="a4-box page-shadow">
+        <div id="print-div">
+            <h1 class="doc-type-name">업 무 기 안 서</h1>
+            <div class="top-box">
+                <table class="drafter-box">
+                    <tr>
+                        <th rowspan="2">신청</th>
+                        <th>사원</th>
+                    </tr>
+                    <tr>
+                        <td class="stamp-box">(홍길동인)</td>
+                    </tr>
+                </table>
+                <table class="approver-box">
+                    <tr>
+                        <th rowspan="2">승인</th>
+                        <th>직급</th>
+                        <th>직급</th>
+                    </tr>
+                    <tr>
+                        <td class="stamp-box">(김팀장인)</td>
+                        <td class="stamp-box">(김사장인)</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="middle-box">
+                <table class="doc-info-box">
+                    <tr class="approver">
+                        <td class="col-th">기안자</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-info">
+                        <td class="col-th">소속</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">기안일</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">문서번호</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">참조인</td>
+                        <td>내용</td>
+                    </tr>
+                </table>
+                <table class="doc-content-box">
+                    <tr class="approver">
+                        <td class="col-th">제목</td>
+                        <td th:value="${document?.docTitle}">내용</td>
+                    </tr>
+                    <tr class="doc-info">
+                        <td class="col-th">내용</td>
+                        <td th:value="${document?.docContent}">내용</td>
+                    </tr>
+                </table>
+                <table class="attached-files-box">
+                    <tr class="attached-files">
+                        <td class="col-th">첨부파일</td>
+                        <td>내용</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+</main>
+</html>

@@ -10,9 +10,10 @@
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>
+    <script type="module" th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
 
 </th:block>
+
 
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">

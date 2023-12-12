@@ -8,6 +8,14 @@ body {
     grid-template-rows: 60px 1fr; /* 헤더와 컨텐츠 사이의 비율 조정 */
     min-height: 1250px;
     padding-right: 40px;
+
+    /*배경으로 파도 이미지 추가*/
+    background-image: url('/images/wave.png');
+    background-size: 100%; /* 배경 이미지를 크기 조절 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-attachment: fixed; /* 스크롤 시 이미지 고정 */
+    background-position: 80% 120% /* x축 숫자 올리면 오른쪽, y축 숫자 올리면 더 밑으로  */
+
 }
 *{
     box-sizing: border-box;
@@ -21,9 +29,25 @@ main {
     border-radius: 10px;
     width: 1300px;
 }
+/* 페이지에 가장 크게 들어가는 경계선 + 그림자 */
+.page-border {
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
+    background-color: white;
+}
+/* 페이지에 가장 크게 들어가는 그림자 */
+.page-shadow {
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);
+    background-color: white;
+}
+/* 상단의 페이지 제목 */
+.page-title {
+    color: #6B4D27;
+}
 a {
-    text-decoration: none;
-    color: black;
+    text-decoration: none !important; /* 부트스트랩 5.3.1 cdn 삽입 시 !important 넣어야 적용 */
+    color: black !important; /* !important 넣어야 적용 */
 }
 ul {
     list-style: none;
@@ -40,6 +64,15 @@ input[type="date"] {
     border-radius: 10px;
     border: 1px solid #6B4D27;
     height: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    display: block;
+}
+textarea {
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    height: 130px;
+    width: 350px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px;
     display: block;
@@ -66,11 +99,12 @@ label {
     border-radius: 20px;
     margin: 20px 0;
 }
-.accro .head > label{
-    color: white;
+.accro .head > label a{
+    color: white !important;
     padding: 20px 20px 0;
     border-radius: 20px 0 0 20px;
     font-weight: bold;
+    display: block;
 }
 .head input[name="nav"] {
     display: none;
@@ -80,9 +114,13 @@ label {
     color: black;
     border-radius: 20px 0 0 0;
 }
+.head input[name="nav"]:checked~label a {
+    color: black !important;
+}
+
 .only input[name="nav"]:checked~label {
     border-radius: 20px 0 0 20px;
-    padding: 20px;
+    padding: 0 20px 20px;
 }
 .head+ul {
     background-color: #fff;
@@ -97,13 +135,13 @@ label {
 .submenu {
     background-color: #A3C614;
     padding: 10px;
-    color: #fff;
+    color: #fff !important;
     border-radius: 15px;
 }
 
 .sidebar-footer {
     color: #fff;
-    font-width: bold;
+    font-weight: bold;
     text-align: center;
     margin: 200px auto 0;
 }
@@ -124,21 +162,21 @@ header a {
 /* ------ 헤더 E --------*/
 
 
-
-
 /** ----- 버튼 S------ */
 /* 버튼 공통 디자인 */
-.commonBtn {
+.commonBtn, .register-button, .cancel-button, .edit-button, .delete-button {
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
     width: 120px;
     height: 50px;
     border: none;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     cursor: pointer;
-
+}
+.commonBtn:active, .register-button:active, .cancel-button:active, .edit-button:active, .delete-button:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 /*취소 버튼을 부득이하게 p태그로 사용할 경우 */
@@ -161,7 +199,7 @@ a p.commonBtn {
     background-color: #999;
 }
 
-/* 수정 */
+/* 수정 버튼 */
 .edit-button {
     color: #FFFFFF;
     background-color: #43946f;
@@ -188,40 +226,7 @@ a p.commonBtn {
 }
 /** ----- 버튼 E ------ */
 
-/** --------테이블 ---------*/
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #fff; /* 테이블 배경색 추가 */
-}
-/*제목 링크 밑줄 제거*/
-table a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
-}
 
-/* 마우스 오버 시 링크에 밑줄 표시  */
-table a:hover {
-    text-decoration: underline;
-    color: #4CAF50;
-}
-
-
-/*게시글 목록 테이블 가운데 정렬*/
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-table th {
-    background-color: #f2f2f2;
-}
-/* 테이블 행에 마우스 오버 시 배경색 변경 */
-table tr:hover {
-    background-color: #f5f5f5;
-}
 .search-button {
     padding: 5px 15px;
     border-color: #AF9A63;

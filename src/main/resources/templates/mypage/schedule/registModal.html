@@ -7,9 +7,8 @@
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script th:src="@{/js/mypage/ScheduleScript.js}"></script>
+    <script th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
 </th:block>
-
 
 <main layout:fragment="content">
 
@@ -17,11 +16,9 @@
     <div th:fragment="modal">
         <div class="modal" th:style="'display: none'" th:id="modal">
             <div class="modal-content">
-                <span class="close" th:text="'×'" onclick="closeModal()"></span>
+<!--                <span class="close" th:text="'×'" onclick="closeModal()"></span>-->
                 <form th:action="@{/schedule/add}" method="post" th:object="${scheduleDTO}">
-                    <label th:text="'일정명'"></label>
-                    <input type="text" name="scheTitle" placeholder="일정명을 입력해주세요"
-                           th:field="*{scheTitle}"/>
+                    <label th:text="'일정명'"><input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/></label>
 
                     <label th:text="'시작 일시'"></label>
                     <input type="datetime-local" name="scheStartDate"
@@ -31,9 +28,9 @@
                     <input type="datetime-local" name="scheEndDate" th:field="*{scheEndDate}"/>
 
                     <label th:text="'일정 종류'"></label>
-                    <select name="calendarType" th:field="*{scheduleType}">
+                    <select name="scheduleType" th:field="*{scheduleType}">
                         <option value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></option>
-                        <option value="TEAM_SCHEDULE" th:text="'공식 일정'"></option>
+                        <option value="OFFICIAL_SCHEDULE" th:text="'공식 일정'"></option>
                     </select>
 
                     <label th:text="'참고 사항'"></label>

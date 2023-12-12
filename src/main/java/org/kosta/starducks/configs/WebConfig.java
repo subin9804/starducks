@@ -2,15 +2,21 @@ package org.kosta.starducks.configs;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import org.kosta.starducks.commons.MenuInterceptor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableJpaAuditing
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${file.upload.path}")
@@ -22,12 +28,20 @@ public class WebConfig implements WebMvcConfigurer {
     private EntityManager em;
     private EntityTransaction tx;
 
+    @Autowired
+    private MenuInterceptor interceptor;
+
     @Bean
     public MessageSource messageSource () {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
         ms.setDefaultEncoding("UTF-8");
         ms.setBasenames("messages.commons", "messages.errors");
         return ms;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     /**
@@ -44,4 +58,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/images/");
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(interceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login/**", "/logout", "/js/**", "/css/**");
+    }
 }

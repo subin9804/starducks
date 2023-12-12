@@ -6,170 +6,107 @@
 <!--<th:block layout:fragment="title">메인 </th:block>-->
 <th:block layout:fragment="addMore">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.10/index.global.min.js'></script>
+    <script th:src="@{/js/mypage/confRoomCalendar.js}"></script>
+    <script th:src="@{/js/mypage/confRoomAjax.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/confRoom.css}">
 
 </th:block>
 
 <main layout:fragment="content">
+    <div id="roomList">
+        <ul>
+            <li class="rooms selected" id="ROOM1">ROOM1</li>
+            <li class="rooms" id="ROOM2">ROOM2</li>
+            <li class="rooms" id="ROOM3">ROOM3</li>
+            <li class="rooms" id="ROOM4">ROOM4</li>
+        </ul>
+    </div>
     <div id='scheduler'></div>
 
-    <div id="bookingModal" style="display: none;">
-        <form id="bookingForm">
-            회의실 선택
-            <select id="room" name="room">
-                <option th:each="room : ${rooms}" th:value="${room}" th:text="${room}"></option>
-            </select>
+    <div class="customModal" id="bookingModal" style="display: none;">
+        <form class="modal-content" id="bookingForm">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h3>회의실 예약</h3>
+            <div>
+                <span>회의실 선택</span>
+                <select id="room" name="room">
+                    <option th:each="room : ${rooms}" th:value="${room}" th:text="${room}"></option>
+                </select>
+                <br>
+                <span>예약자</span>
+                <input th:if="${emp != null}" type="text" th:value="${emp.empName}" disabled>
+                <br>
+                <span>회의 제목</span>
+                <input type="text" id="confName">
+                <br>
+                <span>진행일자</span>
+                <input type="date" id="runningDay">
+                <br>
+                <span>시작시간</span>
+                <input type="time" id="startTime" min="08:00" max="18:00" step="1800000">
 
-            예약자
-            <input th:if="${emp != null}" type="text" th:value="${emp.empName}" disabled>
+                <span>종료시간</span>
+                <input type="time" id="endTime" min="09:00" max="19:00" step="1800000">
 
-            회의 제목
-            <input type="text" id="confName">
-
-            진행일자
-            <input type="date" id="runningDay">
-
-            시작시간
-            <input type="time" id="startTime">
-
-            종료시간
-            <input type="time" id="endTime">
-
-            블록 색상
-            <select id="color" name="color">
-                <option value="red">red</option>
-                <option value="black">black</option>
-                <option value="blue">blue</option>
-                <option value="purple">purple</option>
-            </select>
-
-            메모
-            <textarea id="text"></textarea>
-
-            <button>등록</button>
+                <span>블록 색상</span>
+                <select id="color" name="color">
+                    <option onclick="" value="#FFE4E6">red</option>
+                    <option value="#E6E7FF">blue</option>
+                    <option value="#FEF6E7">orange</option>
+                    <option value="#E6E7FF">purple</option>
+                </select>
+                <br>
+                <p>메모</p>
+                <textarea id="text" rows="5" cols="62"></textarea>
+                <button class="commonBtn register-button" id="submitBtn">등록</button>
+            </div>
         </form>
     </div>
 
-    <script>
+    <div class="customModal" id="showModal" style="display: none;">
+        <div class="modal-content" id="showModal-content">
+            <span class="close" id="closeBtn">&times;</span>
+            <h3>회의실 예약 관리</h3>
+            <div>
+            <dl>
+                <dt>회의실</dt>
+                <dd><p id="sRoom"></p></dd>
+            </dl>
+            <dl>
+                <dt>신청 부서</dt>
+                <dd><p id="dept"></p></dd>
+            </dl>
+            <dl>
+                <dt>신청자</dt>
+                <dd><p id="empName"></p></dd>
+            </dl>
+            <dl>
+                <dt>사용 일자</dt>
+                <dd><p id="sRunningDay"></p></dd>
+            </dl>
+            <dl>
+                <dt>Time Slot</dt>
+                <dd>
+                    <span>[start] </span><span id="sStartT"></span>
+                    <span>[end]  </span><span id="sEndT"></span>
+                </dd>
+            </dl>
 
-
-    $(document).ready(function () {
-        // 리소스 데이터 요청
-        let req1 = $.ajax({
-            url: "/mypage/conf/room",
-            type: "GET",
-            dataType: "json"
-        });
-        // 이벤트 데이터 요청
-        let req2 = $.ajax({
-            url: "/mypage/conf/list",
-            type: "GET",
-            dataType: "json"
-        });
-
-        // 두 개의 ajax 요청이 완료될 때까지 대기
-        $.when(req1, req2).done(function (rooms, list) {
-            let roomList = list[0];
-            let events = [];
-            for(let room of roomList) {
-                events.push(room);
-            }
-            console.log(events);
-
-
-            let resources = rooms[0];
-
-            // FullCalendar 라이브러리 사용
-            var calendar = new FullCalendar.Calendar($('#scheduler')[0], {
-                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                // initialView: 'resourceTimelineDay', // 기본 뷰 설정
-                initialView: 'resourceTimeGridDay',
-                resources: resources,
-                selectable: true,
-                events: events,
-                eventClick: function (info) {
-                    alert('Event clicked: ' + info.event.title);
-                    showBookingPopup(info);
-                },
-                select: function(info) {
-                    alert('Selected: ' + info.startStr + ' to ' + info.endStr);
-                    alert('Resource ID: ' + info.resource.id);
-                    let infomation = [info.startStr, info.startStr, info.endStr]
-
-                    showBookingPopup(infomation);
-                }
-
-            });
-
-            calendar.render();
-
-        }).fail(function(error) {
-            // 에러처리
-            alert(error.message);
-        })
-
-        function showBookingPopup(info) {
-            let modal = $('#bookingModal')
-
-            $('#runningDay').val(dateFormat(info[0]));
-            $('#startTime').val(timeFormat(info[1]));
-            $('#endTime').val(timeFormat(info[2]));
-
-            console.log(info)
-            modal.css('display', 'block');
-        }
-
-
-        $('#bookingForm').submit(function(e) {
-            e.preventDefault();
-
-            //폼데이터 가져오기
-            let jsonData = {};
-            jsonData.room = ($('#room').val());
-            jsonData.confName = ($('#confName').val());
-            jsonData.runningDay = ($('#runningDay').val());
-            jsonData.startTime = ($('#startTime').val());
-            jsonData.endTime = ($('#endTime').val());
-            jsonData.text = ($('#text').val());
-            jsonData.color = ($('#color').val());
-
-            console.log(jsonData)
-
-            // Ajax 요청
-            $.ajax({
-                url: '/mypage/conf/add',
-                type: 'POST',
-                data: jsonData,
-                contentType: 'application/json',
-                success: function(rep) {
-                    console.log('성공')
-                },
-                error: function (err) {
-                    console.log( err.message)
-                }
-            })
-        })
-
-
-
-    });
-    function dateFormat(date) {
-        // date input에 넣을 값을 YYYY-MM-DD 형식으로 생성
-        let formattedDate = date.substring(0, 10);
-        return formattedDate;
-    }
-
-    function timeFormat(time) {
-        // time input에 넣을 값을 YYYY-MM-DD 형식으로
-        let formattedtime = time.toString().slice(11, 19);
-        return formattedtime;
-    }
-
-
-
-
-
-    </script>
-
+            <dl>
+                <dt>회의명</dt>
+                <dd id="sConfName"></dd>
+            </dl>
+            <dl>
+                <dt>사용 목적</dt>
+                <dd><p id="sMemo"></p></dd>
+            </dl>
+            </div>
+            <div class="btns">
+                <button class="commonBtn edit-button" id="edit-book">수정</button>
+                <button class="commonBtn delete-button" id="delete-book">삭제</button>
+            </div>
+        </div>
+    </div>
 </main>
 
 </html>

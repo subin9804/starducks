@@ -2,16 +2,20 @@ package org.kosta.starducks.forum.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.service.ForumPostService;
 import org.kosta.starducks.forum.service.PostCommentService;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,16 +33,17 @@ public class ForumPostController {
     private final ForumPostService forumPostService;
     private final PostCommentService postCommentService;
     private final HttpServletRequest request;
+    private final EmpService empService;
 
-    public ForumPostController(ForumPostService forumPostService, PostCommentService postCommentService, HttpServletRequest request) {
+    public ForumPostController(ForumPostService forumPostService, PostCommentService postCommentService, HttpServletRequest request, EmpService empService) {
         this.forumPostService = forumPostService;
         this.postCommentService = postCommentService;
         this.request = request;
+        this.empService = empService;
     }
 
     // 게시판 메인 페이지
     @GetMapping
-
     public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
         MenuService.commonProcess(request, model, "forum");
 
@@ -82,16 +87,21 @@ public class ForumPostController {
         return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
     }
 
-    // 게시글 작성 완료 및 업로드
+    // 게시글 작성 완료 및 업로드되면 게시판 페이지로 이동
     @PostMapping("/add")
-    public String addPost(@ModelAttribute ForumPost forumPost, @RequestParam(required = false) boolean postNotice) {
+    public String addPost(@ModelAttribute ForumPost forumPost, @AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam(required = false) boolean postNotice) {
+        Employee employee = userDetails.getEmployee();
+        if (employee == null) {
+            throw new IllegalArgumentException("Invalid employee Id: " + (userDetails.getUsername()));
+        }
+        forumPost.setEmployee(employee);
         forumPost.setPostNotice(postNotice);
         forumPostService.createOrUpdateForumPost(forumPost);
         return "redirect:/forum";
     }
 
     // 게시글 상세 페이지
-    @GetMapping("/post/{id}") //   forum/id 가 페이지 주소
+    @GetMapping("/post/{id}")
     public String getPostDetails(@PathVariable("id") Long id, Model model) {
         MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
@@ -138,9 +148,17 @@ public class ForumPostController {
 
     // 댓글 추가 엔드포인트
     @PostMapping("/post/{id}/addComment")
-    public String addComment(@PathVariable("id") Long id, @RequestParam String commentContent) {
+    public String addComment(@PathVariable("id") Long id, @RequestParam String commentContent, @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostComment comment = new PostComment();
         comment.setCommentContent(commentContent);
+
+        // 현재 인증된 사용자의 Employee 정보를 설정
+        Employee employee = userDetails.getEmployee();
+        if (employee == null) {
+            throw new IllegalArgumentException("Invalid employee Id: " + userDetails.getUsername());
+        }
+        comment.setEmployee(employee);
+
         comment.setForumPost(forumPostService.getPostById(id).orElseThrow());
         postCommentService.createOrUpdateComment(comment);
         return "redirect:/forum/post/" + id;

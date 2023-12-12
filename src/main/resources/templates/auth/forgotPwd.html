@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>비밀번호 찾기</title>
+  <link href="/css/auth/style.css" rel="stylesheet" type="text/css">
+  <script th:src="@{/js/auth/script.js}"></script>
+
+</head>
+<body>
+<div class="flex-container">
+  <img alt="Starducks Logo" class="findPwd-logo" th:src="@{/images/Starducks_Logo.png}">
+  <div class="login-container">
+
+    <h2 class="findPwdTitle">비밀번호 찾기</h2>
+    <form action="/forgotPwd" method="post">
+      <div class="form-floating">
+        <input id="empId" name="empId" required type="text">
+        <label for="empId">사번</label>
+      </div>
+
+      <div class="form-floating">
+        <input id="email" name="email" required type="email">
+        <label for="email">이메일</label>
+      </div>
+      <!-- 사번, 이메일 주소가 일치하지 않으면 에러 메시지가 보인다 -->
+      <span class="error-message" id="errorMessage" th:if="${error}" th:text="${error}"></span>
+      <button class="send-email" type="submit">이메일로 전송</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

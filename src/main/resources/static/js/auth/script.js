@@ -1,22 +1,15 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//     // 모든 플로팅 라벨 필드를 선택
-//     var floatingLabels = document.querySelectorAll('.form-floating input');
-//
-//     // 각 필드에 이벤트 리스너 추가
-//     floatingLabels.forEach(function(input) {
-//         input.addEventListener('focus', floatLabel);
-//         input.addEventListener('blur', floatLabel);
-//         input.addEventListener('input', floatLabel);
-//     });
-//
-//     function floatLabel(e) {
-//         var input = e.target;
-//         var label = input.nextElementSibling;
-//         // 인풋에 값이 있거나 포커스되었을 때
-//         if(input.value || input === document.activeElement) {
-//             label.classList.add('active');
-//         } else {
-//             label.classList.remove('active');
-//         }
-//     }
-// });
+// 이메일 인풋은 valid가 되려면 @가 있는 경우메만 그렇다보니
+// 다른 인풋들과 동일하게 아무 값이나 입력됐어도 플로팅 라벨이 유지되려면 이렇게 설정해줘야 한다
+document.addEventListener("DOMContentLoaded", function () {
+  const inputs = document.querySelectorAll(".form-floating input");
+
+  inputs.forEach(function (input) {
+    input.addEventListener("blur", function () {
+      if (this.value !== "") {
+        this.classList.add("has-value");
+      } else {
+        this.classList.remove("has-value");
+      }
+    });
+  });
+});

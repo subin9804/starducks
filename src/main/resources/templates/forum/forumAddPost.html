@@ -1,43 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html layout:decorate="~{layouts/main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      xmlns:th="http://www.thymeleaf.org">
 
-<!--title-->
-<th:block layout:fragment="title">게시글 작성</th:block>
 <th:block layout:fragment="addMore">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forum/style.css}" href="/forum/style.css">
-    <!--    여기 위에 href를 추가해줬음-->
-    <script th:src="@{/js/forum/script.js}"></script>
 
-    <!--    quill 위지윅 사용 불러오기 링크-->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="http://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
+  <script th:src="@{/js/forum/script.js}"></script>
+
 </th:block>
 
 <main layout:fragment="content">
-    <h1>글쓰기</h1>
-    <form th:action="@{/forum/add}" method="post">
-        <!-- 제목 입력란 -->
-        <input type="text" th:field="*{post.postTitle}" placeholder="제목">
+  <!--    페이지 제목 -->
+  <h1>글쓰기</h1>
+  <!--    글쓰기 폼 -->
+  <form method="post" th:action="@{/forum/add}">
+    <!-- 제목 입력란 -->
+    <input id="postTitle" placeholder="제목" required th:field="*{post.postTitle}" type="text">
 
-        <!-- 공지사항 체크박스 -->
-        <div class="checkbox-container">
-            <input type="checkbox" id="postNotice" name="postNotice" th:checked="${post.postNotice}">
-            <label for="postNotice">공지로 등록</label>
-        </div>
+    <!-- 공지사항 체크박스 -->
+    <div class="checkbox-container">
+      <input id="postNotice" name="postNotice" th:checked="${post.postNotice}" type="checkbox">
+      <label for="postNotice">공지로 등록</label>
+    </div>
 
-        <!-- Quill 에디터의 메인 컨테이너 -->
-        <div id="editor"></div>
+    <!-- 에디터의 메인 컨테이너. 내용이 들어감 -->
+    <div id="editor"></div>
 
-        <!-- Quill 에디터의 내용을 저장할 숨겨진 input 필드 -->
-        <input type="hidden" id="quill_html" th:field="*{post.postContent}">
+    <!-- 에디터의 내용을 db로 저장하기 위한 숨겨진 input 필드 -->
+    <input id="editor_content" name="postContent" required type="hidden">
 
-        <!-- 제출 버튼 -->
-        <button type="submit" class="commonBtn register-button">작성</button>
-        <a href="/forum">
-            <p class="commonBtn cancel-button">취소</p>
-        </a>
-    </form>
+    <!-- 제출 버튼 -->
+    <button class="commonBtn register-button" type="submit">작성</button>
+    <!--        취소를 누르면 게시판 페이지로 -->
+    <a href="/forum">
+      <p class="commonBtn cancel-button">취소</p>
+    </a>
+  </form>
+  <!--토스트 글쓰기 에디터 스크립트 -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script>
+    const editor = new toastui.Editor({
+      el: document.querySelector('#editor'),
+      height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+      initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+      initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+      previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+      /* start of hooks */
+      hooks: {
+        async addImageBlobHook(blob, callback) { // 이미지 업로드 로직 커스텀
+          try {
+            /*
+             * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
+             *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'images'와 formData에 append 하는 key('image')값은 동일해야 함)
+             */
+            const formData = new FormData();
+            formData.append('image', blob);
+
+            // 2. FileApiController - uploadEditorImage 메서드 호출
+            const response = await fetch('/tui-editor/image-upload', {
+              method: 'POST',
+              body: formData,
+            });
+
+            // 3. 컨트롤러에서 전달받은 디스크에 저장된 파일명
+            const filename = await response.text();
+            console.log('서버에 저장된 파일명 : ', filename);
+
+            // 4. addImageBlobHook의 callback 함수를 통해, 디스크에 저장된 이미지를 에디터에 렌더링
+            const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+            callback(imageUrl, 'image alt attribute');
+
+          } catch (error) {
+            console.error('업로드 실패 : ', error);
+          }
+        }
+      }
+      /* end of hooks */
+    });
+  </script>
+  <script>
+    // form 제출 시 호출될 함수
+    function saveEditorContent() {
+      // 에디터의 HTML 내용을 가져옴. 이것을 통해서 에디터의 내용을 인식하고 저장할 수 있다
+      document.getElementById('editor_content').value = editor.getHTML(); // 숨겨진 input 필드에 설정.
+    }
+  </script>
 </main>
 </html>
