@@ -1,7 +1,10 @@
 package org.kosta.starducks.fina.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.fina.dto.StoreDTO;
+import org.kosta.starducks.fina.entity.Store;
+import org.kosta.starducks.fina.repository.StoreRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequestMapping("/fina/store")
+@RequiredArgsConstructor
 public class StoreController {
+
+    private final StoreRepository storeRepository;
 
     /**
      * 지점 추가
@@ -19,7 +25,7 @@ public class StoreController {
      */
     @GetMapping("new")
     public String newStoreForm() {
-        return "fina/branchAdd";
+        return "fina/storeAdd";
     }
 
     /**
@@ -30,9 +36,22 @@ public class StoreController {
     @PostMapping("/create")
     public String createStore(StoreDTO storeDTO) {
         log.info("storeDTO.toString() ==> " + storeDTO.toString());
-        return "";
+//        1. DTO를 엔티티로 변환
+        Store store = storeDTO.toEntity();
+        log.info("DTO가 엔티티로 잘 변환되는지 확인 출력" + store.toString());
+//        2. 리파지터리로 엔티티를 DB에 저장
+        Store saved = storeRepository.save(store);
+        log.info("store이 DB에 잘 저장되는지 확인 출력" + saved.toString());
+        return "redirect:/fina/store/list";
     }
 
+    // 지점 단일 조회
+
+
+    /**
+     * 지점 목록 조회
+     * @return
+     */
     @GetMapping("/list")
     public String showStoreList() {
         return "fina/storeList";

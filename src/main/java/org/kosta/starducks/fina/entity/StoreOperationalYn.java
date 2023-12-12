@@ -1,5 +1,5 @@
 package org.kosta.starducks.fina.entity;
 
-public enum storeOperationalYn {
+public enum StoreOperationalYn {
     storeOperationalY, storeOperationalN
 }

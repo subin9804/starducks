@@ -17,10 +17,10 @@
     <h5>지점 추가</h5>
     <br>
 
-    <form class="container" action="" method="post">
+    <form class="container" action="/fina/store/create" method="post">
         <div>
-            <label for="branchName">지점명</label>
-            <input type="text" id="branchName" name="storeName" placeholder="지점명">
+            <label for="storeName">지점명</label>
+            <input type="text" id="storeName" name="storeName" placeholder="지점명">
         </div>
 
         <div>
@@ -29,10 +29,10 @@
         </div>
 
         <div>
-            <label for="storeManage">점장</label>
-            <select id="storeManage" name="storeManage">
-                <option value="storeManage1">점장1</option>
-                <option value="storeManage2">점장2</option>
+            <label for="storeManager">지점장</label>
+            <select id="storeManager" name="storeManager">
+                <option value="STOREMANAGE_ONE">점장1</option>
+                <option value="STOREMANAGE_TWO">점장2</option>
             </select>
         </div>
 
@@ -42,8 +42,8 @@
         </div>
 
         <div>
-            <label for="storeAddNo">우편번호</label>
-            <input type="text" id="storeAddNo" name="addNo" placeholder="우편번호를 입력해주세요">
+            <label for="addNo">우편번호</label>
+            <input type="text" id="addNo" name="addNo" placeholder="우편번호를 입력해주세요">
         </div>
         <div>
             <label for="storeAddr">주소</label>
