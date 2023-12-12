@@ -36,7 +36,7 @@ public class MenuService {
         switch (code) {
             case "mypage":
                 menus.add(new MenuDetail("attend", "근태관리", "/"));
-                menus.add(new MenuDetail("schedule", "일정관리", "/"));
+                menus.add(new MenuDetail("schedule", "일정관리", "/schedule"));
                 menus.add(new MenuDetail("confroom", "회의실 예약", "/"));
                 break;
             case "document":

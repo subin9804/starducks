@@ -22,7 +22,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/schedule")
+@RequestMapping("/mypage/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final HttpServletRequest request;

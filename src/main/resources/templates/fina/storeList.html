@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</th:block>
+
+<main layout:fragment="content">
+    <h1>지점 정보 관리</h1>
+
+    <!-- 검색창. 제목 + 내용 검색 가능 -->
+    <form class="search-form" method="get" th:action="@{/fina/branch}">
+        <input name="searchKeyword" placeholder="검색어 입력" type="text">
+        <button type="submit">검색</button>
+    </form>
+
+    <table class="fina-branch-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>지점명</th>
+            <th>사업자 번호</th>
+            <th>지점장</th>
+            <th>연락처</th>
+            <th>영업여부</th>
+        </tr>
+        </thead>
+
+        <tbody>
+    </table>
+
+</main>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</th:block>
+
+<main layout:fragment="content">
+    <h2>지점 관리</h2>
+    <hr>
+    <br><br>
+    <h5>지점 추가</h5>
+    <br>
+
+    <form class="container" action="" method="post">
+        <div>
+            <label for="branchName">지점명</label>
+            <input type="text" id="branchName" name="storeName" placeholder="지점명">
+        </div>
+
+        <div>
+            <label for="businessNum">사업자 번호</label>
+            <input type="text" id="businessNum" name="businessNum" placeholder="사업자 번호을 입력해주세요">
+        </div>
+
+        <div>
+            <label for="storeManage">점장</label>
+            <select id="storeManage" name="storeManage">
+                <option value="storeManage1">점장1</option>
+                <option value="storeManage2">점장2</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="storeOpenDate">개업일</label>
+            <input type="date" id="storeOpenDate" name="storeOpenDate">
+        </div>
+
+        <div>
+            <label for="storeAddNo">우편번호</label>
+            <input type="text" id="storeAddNo" name="addNo" placeholder="우편번호를 입력해주세요">
+        </div>
+        <div>
+            <label for="storeAddr">주소</label>
+            <input type="text" id="storeAddr" name="storeAddr" placeholder="주소를 입력해주세요">
+        </div>
+        <div>
+            <label for="storeDetailAddr">상세주소</label>
+            <input type="text" id="storeDetailAddr" name="storeDetailAddr" placeholder="상세주소를 입력해주세요">
+        </div>
+
+        <div>
+            <label for="storeOperationalYn">운영여부</label>
+            <select id="storeOperationalYn" name="storeOperationalYn">
+                <option value="storeOperationalY">운영</option>
+                <option value="storeOperationalN">미운영</option>
+            </select>
+        </div>
+        <button class="btn btn-primary">추가</button>
+        <button class="btn btn-outline-danger" type="button" onclick="location.href='/fina/branch/list'">
+            목록으로
+        </button>
+    </form>
+</main>
+</html>

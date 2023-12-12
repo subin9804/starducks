@@ -44,7 +44,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
 
-
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
@@ -203,7 +202,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         //문서 양식 데이터
         String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "g"};
+        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "empVerification"};
         for (int i = 1; i < 8; i++) {
             DocForm docForm = new DocForm();
             docForm.setFormCode("A0" + i);
@@ -245,7 +244,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 scheduleData.setScheduleType(scheduleTypes[j]);
 
                 // Employee 객체 찾기
-
                 Employee emp = repository.findById(empIds[j]).orElse(null);
                 if (emp != null) {
                     scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정

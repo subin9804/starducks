@@ -1,7 +1,6 @@
 package org.kosta.starducks.logistic.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.commons.MenuService;
@@ -21,15 +20,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/logistic/warehouseinbound")
 @RequiredArgsConstructor
 @Slf4j
 public class WarehouseInboundController {
-
-
     private final ProductService productService;
     private final VendorService vendorService;
     private final EmpService employeeService;
