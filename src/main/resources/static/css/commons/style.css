@@ -11,7 +11,7 @@ body {
 
     /*배경으로 파도 이미지 추가*/
     background-image: url('/images/wave.png');
-    background-size: 90%; /* 배경 이미지를 크기 조절 */
+    background-size: 100%; /* 배경 이미지를 크기 조절 */
     background-repeat: no-repeat; /* 이미지 반복 방지 */
     background-attachment: fixed; /* 스크롤 시 이미지 고정 */
     background-position: 80% 120% /* x축 숫자 올리면 오른쪽, y축 숫자 올리면 더 밑으로  */
@@ -99,11 +99,12 @@ label {
     border-radius: 20px;
     margin: 20px 0;
 }
-.accro .head > label{
-    color: white;
+.accro .head > label a{
+    color: white !important;
     padding: 20px 20px 0;
     border-radius: 20px 0 0 20px;
     font-weight: bold;
+    display: block;
 }
 .head input[name="nav"] {
     display: none;
@@ -113,9 +114,13 @@ label {
     color: black;
     border-radius: 20px 0 0 0;
 }
+.head input[name="nav"]:checked~label a {
+    color: black !important;
+}
+
 .only input[name="nav"]:checked~label {
     border-radius: 20px 0 0 20px;
-    padding: 20px;
+    padding: 0 20px 20px;
 }
 .head+ul {
     background-color: #fff;
@@ -130,7 +135,7 @@ label {
 .submenu {
     background-color: #A3C614;
     padding: 10px;
-    color: #fff;
+    color: #fff !important;
     border-radius: 15px;
 }
 
@@ -155,8 +160,6 @@ header a {
     line-height: 60px;
 }
 /* ------ 헤더 E --------*/
-
-
 
 
 /** ----- 버튼 S------ */
@@ -223,7 +226,6 @@ a p.commonBtn {
 }
 /** ----- 버튼 E ------ */
 
-/** --------테이블 ---------*/
 
 .search-button {
     padding: 5px 15px;

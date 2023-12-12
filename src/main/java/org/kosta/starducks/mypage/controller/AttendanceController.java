@@ -2,24 +2,20 @@ package org.kosta.starducks.mypage.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-
+import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.mypage.entity.Attendance;
-
-import org.kosta.starducks.commons.MenuService;
-
-
 import org.kosta.starducks.mypage.service.AttendanceService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/attendance")
+@RequestMapping("/mypage/attendance")
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
@@ -37,9 +33,14 @@ public class AttendanceController {
     /**
      * 마이페이지 근태기록 컨트롤러 함수
      */
-    @GetMapping("/{empId}")
-    public String Attendance(Model model, @PathVariable("empId") Long empId) {
-        MenuService.commonProcess(request, model, "mypage");
+    @GetMapping
+    public String Attendance(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long empId = 1L;
+
+        if(userDetails != null) {
+            empId = userDetails.getEmployee().getEmpId();
+        }
+
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
 

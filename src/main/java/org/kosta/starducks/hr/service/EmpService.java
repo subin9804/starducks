@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -90,8 +91,12 @@ public class EmpService {
             employee.setPostNo(emp.getPostNo());
             employee.setAddr(emp.getAddr());
             employee.setDAddr(emp.getDAddr());
-            employee.setStatus(emp.isStatus());
             employee.setDept(emp.getDept());
+
+            if(emp.isStatus() != employee.isStatus()) {
+                employee.setStatus(emp.isStatus());
+                employee.setLeaveDate(LocalDate.now());
+            }
 
             System.out.println("수정한다");
             return repository.save(employee);

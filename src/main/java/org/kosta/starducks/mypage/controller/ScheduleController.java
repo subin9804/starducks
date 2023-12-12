@@ -3,7 +3,7 @@ package org.kosta.starducks.mypage.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.service.ScheduleService;
@@ -22,7 +22,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/schedule")
+@RequestMapping("/mypage/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final HttpServletRequest request;

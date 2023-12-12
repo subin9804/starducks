@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<th:block layout:fragment="title">메인 </th:block>
+<!--<th:block layout:fragment="title">메인 </th:block>-->
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
@@ -11,11 +11,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </th:block>
 
-<th:block th:layout="title">메인 </th:block>
-<th:block th:layout="addMore">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
-<!--    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>-->
-</th:block>
+
 
 <main layout:fragment="content">
     <h2>근태관리</h2>

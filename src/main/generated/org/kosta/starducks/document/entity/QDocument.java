@@ -24,9 +24,13 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final DateTimePath<java.time.LocalDateTime> apvDeadline = createDateTime("apvDeadline", java.time.LocalDateTime.class);
 
+    public final BooleanPath deleted = createBoolean("deleted");
+
     public final StringPath docContent = createString("docContent");
 
     public final DateTimePath<java.time.LocalDateTime> docDate = createDateTime("docDate", java.time.LocalDateTime.class);
+
+    public final QDocForm docForm;
 
     public final NumberPath<Long> docId = createNumber("docId", Long.class);
 
@@ -38,9 +42,7 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final org.kosta.starducks.hr.entity.QEmployee docWriter;
 
-    public final BooleanPath isDeleted = createBoolean("isDeleted");
-
-    public final BooleanPath isUrgent = createBoolean("isUrgent");
+    public final BooleanPath urgent = createBoolean("urgent");
 
     public QDocument(String variable) {
         this(Document.class, forVariable(variable), INITS);
@@ -60,6 +62,8 @@ public class QDocument extends EntityPathBase<Document> {
 
     public QDocument(Class<? extends Document> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
+
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter"), inits.get("docWriter")) : null;
     }
 
