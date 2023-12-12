@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
-import org.kosta.starducks.forum.dto.PostCommentDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
 import org.kosta.starducks.forum.service.ForumPostService;
@@ -40,7 +39,7 @@ public class ForumPostController {
         this.forumPostService = forumPostService;
         this.postCommentService = postCommentService;
         this.request = request;
-      this.empService = empService;
+        this.empService = empService;
     }
 
     // 게시판 메인 페이지
@@ -91,9 +90,9 @@ public class ForumPostController {
     // 게시글 작성 완료 및 업로드되면 게시판 페이지로 이동
     @PostMapping("/add")
     public String addPost(@ModelAttribute ForumPost forumPost, @AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam(required = false) boolean postNotice) {
-        Employee employee = empService.getEmp(userDetails.getEmpId());
+        Employee employee = userDetails.getEmployee();
         if (employee == null) {
-            throw new IllegalArgumentException("Invalid employee Id: " + userDetails.getEmpId());
+            throw new IllegalArgumentException("Invalid employee Id: " + (userDetails.getUsername()));
         }
         forumPost.setEmployee(employee);
         forumPost.setPostNotice(postNotice);
@@ -156,7 +155,7 @@ public class ForumPostController {
         // 현재 인증된 사용자의 Employee 정보를 설정
         Employee employee = userDetails.getEmployee();
         if (employee == null) {
-            throw new IllegalArgumentException("Invalid employee Id: " + userDetails.getEmpId());
+            throw new IllegalArgumentException("Invalid employee Id: " + userDetails.getUsername());
         }
         comment.setEmployee(employee);
 

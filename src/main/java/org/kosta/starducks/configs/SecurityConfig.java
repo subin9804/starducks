@@ -33,12 +33,10 @@ public class SecurityConfig {
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/login") //로그인 하는 페이지
-                .usernameParameter("empId") //사원 번호를 통해서 정보 조회
                 .defaultSuccessUrl("/", true) //로그인 성공 시 메인 페이지로
                 .failureHandler(customFailHandler) //페이지 자체에 로그인 실패 메시지 표시를 위해 커스텀핸들러 따로 제작함
                 .permitAll())
             .logout(LogoutConfigurer::permitAll);
-
 
         return http.build();
     }

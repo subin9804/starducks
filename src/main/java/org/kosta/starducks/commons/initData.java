@@ -75,7 +75,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             emp.setDAddr("용인시 오리구");
             emp.setPosition(Position.ROLE_EMPLOYEE);
             emp.setJoinDate(LocalDate.parse("2022-12-2" + i));
-            emp.setPwd(passwordEncoder.encode("1q"));
+            emp.setPwd(passwordEncoder.encode("1"));
             emp.setDept(deptRepository.findById(i).orElse(null));
 
             repository.saveAndFlush(emp);
@@ -196,12 +196,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
-            if (i < 5) {
-                forumPost.setPostNotice(true);
-            } else {
-                forumPost.setPostNotice(false);
-            }
-
+          forumPost.setPostNotice(i < 5);
             forumPostRepository.saveAndFlush(forumPost);
         }
 
@@ -220,6 +215,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
 //            Schedule 데이터 생성
             LocalDateTime[] startDates = {
+
                     LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
@@ -229,6 +225,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                     LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+
             };
 
             ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
@@ -259,4 +256,3 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         }
     }
 }
-

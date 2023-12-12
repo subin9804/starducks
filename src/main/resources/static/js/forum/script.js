@@ -13,7 +13,7 @@ function deletePostComment(commentId) {
       }
     }).then(response => {
       if (response.ok) {
-        var elementToRemove = document.getElementById('comment-block-' + commentId);
+        const elementToRemove = document.getElementById('comment-block-' + commentId);
         if (elementToRemove) {
           elementToRemove.remove();
 
