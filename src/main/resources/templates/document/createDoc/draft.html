@@ -76,7 +76,7 @@
 
 <!--                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">-->
                     제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
-                <textarea name="docContent" th:value="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
+                <textarea name="docContent" th:value="${document?.docContent}" th:text="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/createDoc}'|" th:text="목록으로">목록으로</button>
                 <button class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
@@ -86,7 +86,6 @@
 
             <div th:replace="~{document/createDoc/selectEmp::modal}"></div>
 
-            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
         </div>
 
 
@@ -144,11 +143,11 @@
                 <table class="doc-content-box">
                     <tr class="approver">
                         <td class="col-th">제목</td>
-                        <td th:value="${document?.docTitle}">내용</td>
+                        <td th:text="${document?.docTitle}">내용</td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">내용</td>
-                        <td th:value="${document?.docContent}">내용</td>
+                        <td th:text="${document?.docContent}">내용</td>
                     </tr>
                 </table>
                 <table class="attached-files-box">
