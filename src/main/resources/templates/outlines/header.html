@@ -3,23 +3,21 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
-    <header th:fragment="header">
+<header th:fragment="header">
+  <div>
+    <!--            메일-->
+    <a href="#"><i class="fa-solid fa-envelope"></i></a>
 
-        <div>
-<!--            메일-->
-            <a href="#"><i class="fa-solid fa-envelope"></i></a>
-<!--            채팅-->
-            <a href="#"><i class="fa-solid fa-comments"></i></a>
-<!--            알림-->
-            <a href="#"><i class="fa-solid fa-bell"></i></a>
-        </div>
-<!--        프로필. 누르면 개인 정보 수정 페이지로 -->
-        <div class="right">
-            <a href="#">
-                <th:block sec:authorize="isAuthenticated()">
-                    <i class="fa-solid fa-circle-user"></i>
-                </th:block>
-            </a>
-        </div>
-    </header>
+    <!--            채팅-->
+    <a href="#"><i class="fa-solid fa-comments"></i></a>
+
+    <!--            알림-->
+    <a href="#"><i class="fa-solid fa-bell"></i></a>
+
+    <!--        프로필. 누르면 개인 정보 수정 페이지로 -->
+    <a th:href="@{/profileEdit}">
+      <i class="fa-solid fa-circle-user"></i>
+    </a>
+  </div>
+</header>
 </html>

@@ -99,23 +99,28 @@ label {
     border-radius: 20px;
     margin: 20px 0;
 }
-.accro .head > label{
-    color: white;
+.accro .head > label a{
+    color: white !important;
     padding: 20px 20px 0;
     border-radius: 20px 0 0 20px;
     font-weight: bold;
+    display: block;
 }
 .head input[name="nav"] {
-    /*display: none;*/
+    display: none;
 }
 .head input[name="nav"]:checked~label {
     background-color: #ffffff;
     color: black;
     border-radius: 20px 0 0 0;
 }
+.head input[name="nav"]:checked~label a {
+    color: black !important;
+}
+
 .only input[name="nav"]:checked~label {
     border-radius: 20px 0 0 20px;
-    padding: 20px;
+    padding: 0 20px 20px;
 }
 .head+ul {
     background-color: #fff;
@@ -130,7 +135,7 @@ label {
 .submenu {
     background-color: #A3C614;
     padding: 10px;
-    color: #fff;
+    color: #fff !important;
     border-radius: 15px;
 }
 

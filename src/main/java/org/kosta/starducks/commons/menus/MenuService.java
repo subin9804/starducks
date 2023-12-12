@@ -35,8 +35,8 @@ public class MenuService {
         // 게시판 하위 메뉴
         switch (code) {
             case "mypage":
-                menus.add(new MenuDetail("attend", "근태관리", "/"));
-                menus.add(new MenuDetail("schedule", "일정관리", "/"));
+                menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));
+                menus.add(new MenuDetail("schedule", "일정관리", "/mypage/schedule/show"));
                 menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
@@ -55,22 +55,22 @@ public class MenuService {
             case "logistic" :
                 menus.add(new MenuDetail("store", "입고 관리", "/"));
                 menus.add(new MenuDetail("release", "출고 관리", "/"));
-                menus.add(new MenuDetail("inventory", "재고 관리", "/"));
+                menus.add(new MenuDetail("warehouseinbound", "재고 관리", "/logistic/warehouseinbound"));
                 break;
             case "general" :
                 menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));
                 menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
-                menus.add(new MenuDetail("adproduct", "품목 관리", "/"));
+                menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
                 break;
             case "fina" :
                 menus.add(new MenuDetail("point", "지점 정보 관리", "/"));
                 menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
                 break;
             default:
-                menus.add(new MenuDetail("attend", "근태관리", "/"));
-                menus.add(new MenuDetail("schedule", "일정관리", "/"));
-                menus.add(new MenuDetail("confroom", "회의실 예약", "/"));
+                menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));
+                menus.add(new MenuDetail("schedule", "일정관리", "/mypage/schedule"));
+                menus.add(new MenuDetail("confroom", "회의실 예약", "/mypage/conf"));
         }
 //        if (code.equals("mypage")) {
 //        } else if (code.equals("document")) {

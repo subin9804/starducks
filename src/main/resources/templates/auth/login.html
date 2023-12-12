@@ -13,7 +13,8 @@
     <form method="post" th:action="@{/login}">
       <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
       <div class="form-floating">
-        <input id="empId" name="empId" required type="text">
+<!--        스프링 시큐리티에서 username으로 등록된 것을 식별 id로 인식한다-->
+        <input id="empId" name="username" required type="text">
         <label for="empId">사번</label>
       </div>
 

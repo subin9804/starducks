@@ -20,26 +20,28 @@
         </ul>
     </div>
 
-<!--    <div class="accro">-->
-<!--        <div class="head">-->
-<!--            <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu" th:checked="${menuCode != null && menuCode.equals('document')} ? true">-->
-<!--            <label for="docu">전자결재</label>-->
-<!--        </div>-->
-<!--        <ul id="flush-docu" th:style="${menuCode != null && !menuCode.equals('document')}? 'display: none;'">-->
-<!--            <li th:each="submenu : ${submenus}" th:object="${submenu}">-->
-<!--                <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <div class="accro">
+        <div class="head">
+            <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu" th:checked="${menuCode != null && menuCode.equals('document')} ? true">
+            <label for="docu">
+                <a th:href="@{/document}">전자결재</a>
+            </label>
+        </div>
+        <ul id="flush-docu" th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('document')}? 'display: none;'">
+            <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">
+                <a th:href="*{url}" th:text="*{name}" th:classappend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
+            </li>
+        </ul>
+    </div>
 
-<!--    <div class="accro">-->
-<!--        <div class="head only">-->
-<!--            <input class="" type="radio" id="forum" name="nav" th:checked="${menuCode != null && menuCode.equals('forum')} ? true">-->
-<!--            <label for="forum">-->
-<!--                <a th:href="@{/forum}">전사 게시판</a>-->
-<!--            </label>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="accro">
+        <div class="head only">
+            <input class="" type="radio" id="forum" name="nav" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('forum')} ? true">
+            <label for="forum">
+                <a th:href="@{/forum}">전사 게시판</a>
+            </label>
+        </div>
+    </div>
 
     <div class="accro">
         <div class="head">
@@ -54,54 +56,48 @@
         </ul>
     </div>
 
-<!--    <div class="accro">-->
-<!--        <div class="head">-->
-<!--            <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic" th:checked="${menuCode != null && menuCode.equals('logistic')} ? true">-->
-<!--            <label for="logistic"><a th:href="@{/logistic}">물류유통부</a></label>-->
-<!--        </div>-->
-<!--        <ul id="flush-logistic" th:style="${menuCode != null && !menuCode.equals('logistic')}? 'display: none;'">-->
-<!--            <li th:each="submenu : ${submenus}" th:object="${submenu}">-->
-<!--                <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <div class="accro">
+        <div class="head">
+            <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('logistic')} ? true">
+            <label for="logistic"><a th:href="@{/logistic/warehouseinbound/list}">물류유통부</a></label>
+        </div>
+        <ul id="flush-logistic" th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('logistic')}? 'display: none;'">
+            <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">
+                <a th:href="*{url}" th:text="*{name}" th:classappend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
+            </li>
+        </ul>
+    </div>
 
-<!--    <div class="accro">-->
-<!--        <div class="head">-->
-<!--            <input class="" type="radio" id="general" name="nav" aria-controls="flush-general" th:checked="${menuCode != null && menuCode.equals('general')} ? true">-->
-<!--            <label for="general"><a th:href="@{/general}">총무부</a></label>-->
-<!--        </div>-->
-<!--        <ul id="flush-general" th:style="${menuCode != null && !menuCode.equals('general')}? 'display: none;'">-->
-<!--            <li th:each="submenu : ${submenus}" th:object="${submenu}">-->
-<!--                <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <div class="accro">
+        <div class="head">
+            <input class="" type="radio" id="general" name="nav" aria-controls="flush-general" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('general')} ? true">
+            <label for="general"><a th:href="@{/general/products/list}">총무부</a></label>
+        </div>
+        <ul id="flush-general" th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('general')}? 'display: none;'">
+            <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">
+                <a th:href="*{url}" th:text="*{name}" th:classappend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
+            </li>
+        </ul>
+    </div>
 
-<!--    <div class="accro">-->
-<!--        <div class="head">-->
-<!--            <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina" th:checked="${menuCode != null && menuCode.equals('fina')} ? true">-->
-<!--&lt;!&ndash;            <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina"&ndash;&gt;-->
-<!--&lt;!&ndash;                   th:checked="${menuCode.equals('fina')} ? true">&ndash;&gt;-->
-<!--            <label for="fina"><a th:href="@{/fina}">재무부</a></label>-->
-<!--        </div>-->
+    <div class="accro">
+        <div class="head">
+            <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('fina')} ? true">
+            <label for="fina"><a th:href="@{/fina}">재무부</a></label>
+        </div>
+        <ul id="flush-fina" th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('fina')}? 'display: none;'">
+            <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">
+                <a th:href="*{url}" th:text="*{name}" th:classappend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
+            </li>
+        </ul>
+    </div>
 
-<!--        <ul id="flush-fina" th:style="${menuCode != null && !menuCode.equals('fina')}? 'display: none;'">-->
-<!--&lt;!&ndash;        <ul id="flush-fina" th:style="${!menuCode.equals('fina')}? 'display: none;'">&ndash;&gt;-->
-<!--            <li th:each="submenu : ${submenus}" th:object="${submenu}">-->
-<!--                <a th:href="*{url}" th:text="*{name}" th:classappend="${URI} == ${submenu.url} ? 'submenu'"></a>-->
-<!--            </li>-->
-<!--            &lt;!&ndash;                <li><a href="/finance/branch-info">지점 정보 관리</a></li>&ndash;&gt;-->
-<!--            &lt;!&ndash;                <li><a href="/finance/partner-info">거래처 정보 관리</a></li>&ndash;&gt;-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--    <div class="accro">-->
-<!--        <div class="head only">-->
-<!--            <input class="" type="radio" id="map" name="nav" aria-controls="flush-map" th:checked="${menuCode != null && menuCode.equals('map')} ? true">-->
-<!--&lt;!&ndash;            <input class="" type="radio" id="map" name="nav" th:checked="${menuCode.equals('map')} ? true">&ndash;&gt;-->
-<!--            <label for="map"><a th:href="@{/map}">조직도</a></label>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="accro">
+        <div class="head only">
+            <input class="" type="radio" id="map" name="nav" aria-controls="flush-map" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('map')} ? true">
+            <label for="map"><a th:href="@{/map}">조직도</a></label>
+        </div>
+    </div>
 
     <div class="sidebar-footer">
         <a href="/logout" class="commonBtn">Logout</a>
