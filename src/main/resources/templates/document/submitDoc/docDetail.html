@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/docDetail.css}" href="/static/css/document/createDoc/docDetail.css">
+  <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+  <h1 class="page-title">문서 상세 보기</h1>
+  <div class="page-border">
+    <div class="document" th:replace="~{document/submitDoc/draftDetail::draftDetail}"></div>
+
+    <div class="approval-state">
+      <div>
+        <div>
+        <span>1차 결재상태</span>
+        <span>대기</span>
+      </div>
+      <div>
+        <span>내용</span>
+        <textarea></textarea>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <span>2차 결재상태</span>
+        <span>대기</span>
+      </div>
+      <div>
+        <span th:text="${docForm?.formNameEn}">내용</span>
+        <span th:text="${document?.docId}">내용</span>
+        <textarea></textarea>
+      </div>
+    </div>
+
+    <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+    <button class="edit-button" type="button" th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|" th:text="수정">수정</button>
+    <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
+
+      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>
+<!--      th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"-->
+
+    </div>
+
+  </div>
+</main>
+</html>

@@ -1,0 +1,11 @@
+.page-border {
+    width: 1300px;
+}
+.document, .a4-box {
+    display: inline-block;
+}
+
+.approval-state {
+    display: inline-block;
+    width: 370px;
+}
