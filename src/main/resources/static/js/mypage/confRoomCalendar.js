@@ -19,7 +19,7 @@ $(document).ready(function () {
         // 기본 view는 ROOM1
         let resources = rooms[0];
         let bookList = list[0];
-        // console.log(bookList);
+        console.log(bookList);
 
         let events = [];
         for(let book of bookList) {
@@ -36,7 +36,8 @@ $(document).ready(function () {
                     bookerId: book.bookerId,
                     bookerNm: book.bookerNm,
                     dept: book.dept,
-                    memo: book.text
+                    memo: book.text,
+                    status: book.status
                 }
                 events.push(event);
             }
@@ -76,6 +77,7 @@ $(document).ready(function () {
                     bookerNm: info.event.extendedProps.bookerNm,
                     dept: info.event.extendedProps.dept,
                     memo: info.event.extendedProps.memo,
+                    status: info.event.extendedProps.status
 
                 }
 
@@ -89,7 +91,7 @@ $(document).ready(function () {
                 let data = [info.startStr, info.startStr, info.endStr]
 
                 /** 중복 방지 코드 S */
-                if(!isOverlapping(info.startStr, info.endStr, events)) {
+                if(!isOverlapping(roomId, info.startStr, info.endStr, bookList)) {
                     // 중복이 아니라면 팝업 오픈
                     showBookingPopup(data);
                 } else {
@@ -169,7 +171,7 @@ $(document).ready(function () {
                 let start = $('#runningDay').val() + 'T' + $('#startTime').val();
                 let end = $('#runningDay').val() + 'T' + $('#endTime').val();
 
-                if(!isOverlapping(start, end, events)) {
+                if(!isOverlapping($('#room').val(), start, end, bookList)) {
                     // 중복이 아니라면 전송
                     submit(e, 'post', null)
 
@@ -192,7 +194,7 @@ $(document).ready(function () {
             // console.log("수정하기!")
 
             let modal = $('#bookingModal')
-            // console.log("data22" + JSON.stringify(data));
+            console.log("data22" + JSON.stringify(data));
 
             $('#room').val(data.resourceId);
             $('#runningDay').val(dateFormat(data.start.toISOString()));
@@ -210,12 +212,32 @@ $(document).ready(function () {
             })
             $('body').css('overflow', 'hidden');
 
+
             $("#submitBtn").click((e) => {
                 // 중복 방지 코드
-                let start = $('#runningDay').val() + 'T' + $('#startTime').val();
-                let end = $('#runningDay').val() + 'T' + $('#endTime').val();
+                let start = new Date($('#runningDay').val() + 'T' + $('#startTime').val()); // 선택한 시작시간
+                let end = new Date($('#runningDay').val() + 'T' + $('#endTime').val());   // 선택한 종료시간
 
-                if(!isOverlapping(start, end, events)) {
+                let dupl = false;
+
+                for(let event of bookList) {
+                    let eventStart = new Date(event.runningDay + 'T' + event.startTime);
+                    let eventEnd = new Date(event.runningDay + 'T' + event.endTime);
+                    let eventId = event.confId;
+
+                    if(data.id == eventId) {
+                        continue;
+                    }
+
+                    if((start < eventEnd) && (end > eventStart)) {
+                        // 시간도 중복되고 회의실도 중복되면 예약 불가
+                        if ($('#room').val() == event.room) {
+                            dupl = true;
+                        }
+                    }
+                }
+
+                if(!dupl) {
                     // 중복이 아니라면 전송
                     submit(e, 'put', data.id);
 
@@ -257,8 +279,8 @@ $(document).ready(function () {
                 })
             }, 10)
 
-            // 작성자와 로그인 계정 아이디가 다를 경우 삭제와 수정 버튼 안보이게 처리
-            if(data.bookerId != $('#empId').val()) {
+            // 작성자와 로그인 계정 아이디가 다를 경우 || 이미 지난 회의일 경우 삭제와 수정 버튼 안보이게 처리
+            if((data.bookerId != $('#empId').val()) || (new Date(data.runningDay + 'T' + data.start) < new Date())) {
                 $('#btns').css('display', 'none');
             }
 
@@ -338,7 +360,7 @@ function changeRoomColor (e) {
 
 
 // 중복 여부 체크 함수
-function isOverlapping(newStart, newEnd, events) {
+function isOverlapping(room, newStart, newEnd, events) {
     /** 중복 방지 코드 S */
     let dupl = false;
 
@@ -348,20 +370,23 @@ function isOverlapping(newStart, newEnd, events) {
     // 모든 예약들이 선택한 시간과 중복 되지 않는지 확인
     for (let i = 0; i < events.length; i++) {
         let existingEvent = events[i];
-        const existingEventStart = new Date(existingEvent.start);
-        const existingEventEnd = new Date(existingEvent.end);
+        const eventStart = new Date((existingEvent.runningDay + 'T' + existingEvent.startTime));
+        const eventEnd = new Date((existingEvent.runningDay + 'T' + existingEvent.endTime));
 
         if (
-            (infoStartStr < existingEventEnd) &&
-            (infoEndStr > existingEventStart)
+            (infoStartStr < eventEnd) &&
+            (infoEndStr > eventStart)
         ) {
             // 중복되는 경우
-            return true;
+            if (room == existingEvent.room) {
+
+                return true;
+            }
         }
 
 
         console.log("info.startStr: " +  infoStartStr)
-        console.log("existingEvent.start: " + existingEventStart)
+        console.log("existingEvent.start: " + eventStart)
     }
     // 중복되지 않는 경우
     return false;
