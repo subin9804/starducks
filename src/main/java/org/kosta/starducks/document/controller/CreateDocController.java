@@ -78,7 +78,7 @@ public class CreateDocController {
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/document/createDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
     }
 
     /**
@@ -116,7 +116,7 @@ public class CreateDocController {
         Document savedDoc = createDocRepository.save(document);
 
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
+        return "redirect:/document/submitDoc/" + formNameEn + "/" + docId;
     }
 
     /**
