@@ -33,13 +33,11 @@ public class ForumPostController {
     private final ForumPostService forumPostService;
     private final PostCommentService postCommentService;
     private final HttpServletRequest request;
-    private final EmpService empService;
 
     public ForumPostController(ForumPostService forumPostService, PostCommentService postCommentService, HttpServletRequest request, EmpService empService) {
         this.forumPostService = forumPostService;
         this.postCommentService = postCommentService;
         this.request = request;
-        this.empService = empService;
     }
 
     // 게시판 메인 페이지
@@ -68,6 +66,11 @@ public class ForumPostController {
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, posts.getTotalPages());
         int totalPages = posts.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
 
         model.addAttribute("posts", posts );
         model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가

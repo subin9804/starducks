@@ -11,7 +11,9 @@
 <h1 class="p-custom">개인 정보 수정</h1>
 <form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}" autocomplete="off">
   <!--  토큰 추가 -->
-  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  <th:block th:if="${_csrf != null}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  </th:block>
   <div id="formSection" class="formSection-custom">
     <section>
       <!-- 사원번호 -->

@@ -32,6 +32,10 @@ public class ProfileService {
     return password != null && password.matches(passwordRegex);
   }
 
+  public  Employee getEmployeeById(Long empId) {
+    return empRepository.findById(empId).orElse(null);
+  }
+
 
   @Transactional
   public boolean updatePassword(Long empId, String newPassword) {

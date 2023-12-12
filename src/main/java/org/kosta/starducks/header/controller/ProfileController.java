@@ -31,8 +31,16 @@ public class ProfileController {
 
   // 사용자가 수정한 프로필 정보를 처리하는 메소드
   @PostMapping("/profileEdit/update")
-  public String updateEmployee(@ModelAttribute Employee employee) {
+  public String updateEmployee(@ModelAttribute Employee employee, @AuthenticationPrincipal CustomUserDetails userDetails) {
     profileService.updateProfile(employee); // ProfileService를 통해 프로필 업데이트 처리
+
+    // 새로운 정보 다시 로드
+    Employee updatedEmployee = profileService.getEmployeeById(employee.getEmpId());
+//    Employee updatedEmployee = userDetails.getEmployee(); 이건 번경 전 정보를 다시 덮는 거여서 안됨. 위처럼 해야함
+    if (updatedEmployee != null) {
+      userDetails.setEmployee(updatedEmployee); // 세션 정보 업데이트 (필요한 경우)
+    }
+
     return "redirect:/profileEdit"; // 처리 후 리디렉트할 페이지
   }
 
