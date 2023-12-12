@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <!-- Bootstrap-->
 <!--    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossOrigin="anonymous"></link>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -27,7 +28,7 @@
     <!-- 토스트 Editor's Style -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
-    <!--  스프링 시큐리티 토큰 추가   csrf -->
+    <!--  스프링 시큐리티 토큰 추가   csrf disable 상태에서는 null 상태  -->
     <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}" />
     <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}" />
 
