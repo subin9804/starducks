@@ -3,7 +3,7 @@ package org.kosta.starducks.forum.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
-import org.kosta.starducks.commons.MenuService;
+import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;

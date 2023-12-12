@@ -24,7 +24,7 @@
                 <td th:text="${docForm?.formCode}">양식코드</td>
                 <td th:text="${docForm?.formName}">양식명</td>
                 <td>
-                    <a th:href="@{/createDoc/{formNameEn}(formNameEn=${docForm?.formNameEn})}">
+                    <a th:href="@{/document/createDoc/{formNameEn}(formNameEn=${docForm?.formNameEn})}">
                         <i class="fa-solid fa-file-export"></i>
                     </a>
                 </td>

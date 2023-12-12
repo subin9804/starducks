@@ -31,14 +31,14 @@ public class Document {
     private DocStatus docStatus;
 
     @ColumnDefault(value = "false")
-    private boolean isUrgent;
+    private boolean urgent;
 
     @ColumnDefault(value = "false")
-    private boolean isDeleted;
+    private boolean deleted;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "form_code", nullable = false)
-//    private DocForm docForm;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "form_code", nullable = false)
+    private DocForm docForm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_writer_id", nullable = false)

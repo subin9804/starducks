@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
 
     Employee findTopByOrderByEmpIdDesc();
+    Employee findByEmpName(String empName);
 
     // 이메일로 직원 검색
     Optional<Employee> findByEmail(String email);

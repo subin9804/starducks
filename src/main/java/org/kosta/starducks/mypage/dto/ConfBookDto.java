@@ -2,12 +2,13 @@ package org.kosta.starducks.mypage.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.kosta.starducks.mypage.entity.ConfRoomEN;
 
 /**
  * json으로 회의실 예약 정보를 받아와서 생성하기 위한 Dto
  */
-@Getter @Setter
+@Getter @Setter @ToString
 public class ConfBookDto {
 
     private ConfRoomEN room;    // 회의실 이름

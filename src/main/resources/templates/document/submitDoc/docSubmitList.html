@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/submitList.css}" href="/static/css/document/createDoc/docDetail.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="page-title">결재 상신함</h1>
+    <div class="page-border">
+    <table class="list-table">
+        <thead class="list-thead">
+            <tr>
+                <th class="docId-th">문서번호</th>
+                <th class="docTitle-th">문서제목</th>
+                <th class="formName-th">구분</th>
+                <th class="docDate-th">기안일</th>
+                <th class="urgent-th">긴급여부</th>
+                <th class="docStatus-th">결재상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="document : ${documents}">
+                <td><a th:href="@{|/document/submitDoc/${document?.docForm?.formNameEn}/${document?.docId}|}" th:text="${document?.docId}">문서번호</a></td>
+                <td><a th:href="@{|/document/submitDoc/${document?.docForm?.formNameEn}/${document?.docId}|}" th:text="${document?.docTitle}">문서제목</a></td>
+                <td th:text="${document?.docForm?.formName}">구분</td>
+                <td th:text="${document?.docDate}">기안일</td>
+                <td><div class="urgent" th:if="${document?.urgent}">긴급</div></td>
+                <td>
+                    <th:block th:switch="${document.docStatus.toString()}">
+                        <div th:case="PENDING_DOC" class="docStatus" style="background-color:#FDF290;">대기</div>
+                        <div th:case="IN_PROGRESS" class="docStatus" style="background-color:#BCE784;">진행중</div>
+                        <div th:case="APPROVED_DOC" class="docStatus" style="background-color:#52B788;">승인</div>
+                        <div th:case="REJECTED_DOC" class="docStatus" style="background-color:#D6D6D6;">반려</div>
+                    </th:block>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</main>
+</html>

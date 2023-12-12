@@ -4,20 +4,22 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap-->
 <!--    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossOrigin="anonymous"></link>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
     <!-- font awesome-->
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+
     <!-- sweetAlert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/commons/style.css}">
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script th:src="@{/js/commons/script.js}"></script>
     <script th:each="jsFile : ${addScript}" th:src="@{/js/{file}(file=${jsFile})}"></script>
@@ -36,6 +38,8 @@
     <th:block layout:fragment="addMore"></th:block>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 </head>
 
 <body>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!-- 메인 콘텐츠 영역 -->
+<main layout:fragment="content">
+  <!-- draftDetail.html -->
+  <div class="document" th:fragment="draftDetail">
+    <div class="a4-box page-shadow">
+      <div id="print-div">
+        <h1 class="doc-type-name">업 무 기 안 서</h1>
+        <div class="top-box">
+          <table class="drafter-box">
+            <tr>
+              <th rowspan="2">신청</th>
+              <th>사원</th>
+            </tr>
+            <tr>
+              <td class="stamp-box">(홍길동인)</td>
+            </tr>
+          </table>
+          <table class="approver-box">
+            <tr>
+              <th rowspan="2">승인</th>
+              <th>직급</th>
+              <th>직급</th>
+            </tr>
+            <tr>
+              <td class="stamp-box">(김팀장인)</td>
+              <td class="stamp-box">(김사장인)</td>
+            </tr>
+            <tr>
+            </tr>
+          </table>
+        </div>
+
+        <div class="middle-box">
+          <table class="doc-info-box">
+            <tr class="approver">
+              <td class="col-th">기안자</td>
+              <td>내용</td>
+            </tr>
+            <tr class="doc-info">
+              <td class="col-th">소속</td>
+              <td>내용</td>
+            </tr>
+            <tr class="doc-content">
+              <td class="col-th">기안일</td>
+              <td>내용</td>
+            </tr>
+            <tr class="doc-content">
+              <td class="col-th">문서번호</td>
+              <td>내용</td>
+            </tr>
+            <tr class="doc-content">
+              <td class="col-th">참조인</td>
+              <td>내용</td>
+            </tr>
+          </table>
+          <table class="doc-content-box">
+            <tr class="approver">
+              <td class="col-th">제목</td>
+              <td th:text="${document?.docTitle}">내용</td>
+            </tr>
+            <tr class="doc-info">
+              <td class="col-th">내용</td>
+              <td th:text="${document?.docContent}">내용</td>
+            </tr>
+          </table>
+          <table class="attached-files-box">
+            <tr class="attached-files">
+              <td class="col-th">첨부파일</td>
+              <td>내용</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+</main>
+</html>
