@@ -82,8 +82,8 @@ $(document).ready(function () {
                 showBookedPopup(data);
             },
             select: function(info) {
-                alert('Selected: ' + info.startStr + ' to ' + info.endStr);
-                alert('Resource ID: ' + roomId);
+                // alert('Selected: ' + info.startStr + ' to ' + info.endStr);
+                // alert('Resource ID: ' + roomId);
                 let data = [info.startStr, info.startStr, info.endStr]
 
                 showBookingPopup(data);
@@ -259,14 +259,14 @@ $(document).ready(function () {
 
 });
 
+// date input에 넣을 값을 YYYY-MM-DD 형식으로 생성
 function dateFormat(date) {
-    // date input에 넣을 값을 YYYY-MM-DD 형식으로 생성
     let formattedDate = date.substring(0, 10);
     return formattedDate;
 }
 
+// time input에 넣을 값을 YYYY-MM-DD 형식으로
 function timeFormat(time) {
-    // time input에 넣을 값을 YYYY-MM-DD 형식으로
     let formattedtime = time.toString().slice(11, 19);
     return formattedtime;
 }
