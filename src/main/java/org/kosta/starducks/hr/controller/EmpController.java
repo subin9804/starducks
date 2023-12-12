@@ -32,7 +32,6 @@ public class EmpController {
      */
     @GetMapping
     public String index(Model model, EmpSearchCond empSearch) {
-        MenuService.commonProcess(request, model, "hr");
         model.addAttribute("empSearch", empSearch);
         System.out.println(empSearch);
 
@@ -53,7 +52,6 @@ public class EmpController {
      */
     @GetMapping("/register")
     public String register(@ModelAttribute Employee employee, Model model) {
-        MenuService.commonProcess(request, model, "hr");
         // 자동으로 저장되는 사번을 미리 알려줌
         Long id = service.getLastEmpId();
         model.addAttribute("id", id + 1);

@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/createDoc")
+@RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
 public class CreateDocController {
     private final CreateDocService createDocService;
@@ -44,24 +44,6 @@ public class CreateDocController {
         model.addAttribute("docForms", docFormList);
 
         return "document/createDoc/docFormList";
-    }
-
-    /**
-     * 문서 상세 페이지
-     */
-    @GetMapping("/{formNameEn}/{docId}")
-    public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
-                                 @PathVariable(name = "docId") Long docId,
-                                 Model model) {
-        MenuService.commonProcess(request, model, "document");
-
-        docFormRepository.findByFormNameEn(formNameEn)
-                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
-
-        createDocRepository.findByDocId(docId)
-            .ifPresent(document -> model.addAttribute("document", document));
-
-        return "document/createDoc/" + formNameEn;
     }
 
     /**
@@ -98,11 +80,29 @@ public class CreateDocController {
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/createDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
     }
 
     /**
-     * 문서 작성 상신 처리 - 임시저장 이력 있는 경우
+     * 문서 작성 중 (임시저장 한 경우), 수정 페이지
+     */
+    @GetMapping("/{formNameEn}/{docId}")
+    public String createDocumentTemp(@PathVariable(name = "formNameEn") String formNameEn,
+                                 @PathVariable(name = "docId") Long docId,
+                                 Model model) {
+        MenuService.commonProcess(request, model, "document");
+
+        docFormRepository.findByFormNameEn(formNameEn)
+                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
+
+        createDocRepository.findByDocId(docId)
+                .ifPresent(document -> model.addAttribute("document", document));
+
+        return "document/createDoc/" + formNameEn;
+    }
+
+    /**
+     * 문서 작성 상신 처리 - 임시저장 이력 있는 경우, 수정하는 경우
      */
     @PostMapping("/{formNameEn}/{docId}")
     public String submitDocument2(@PathVariable(name = "formNameEn") String formNameEn,
@@ -118,7 +118,7 @@ public class CreateDocController {
         Document savedDoc = createDocRepository.save(document);
 
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/createDoc/" + formNameEn + "/" + docId;
+        return "redirect:/document/submitDoc/" + formNameEn + "/" + docId;
     }
 
     /**
@@ -144,6 +144,6 @@ public class CreateDocController {
         Long docId = savedDoc.getDocId();
 
         redirectAttributes.addAttribute("tmpStatus", true);
-        return "redirect:/createDoc/" + formNameEn + "/" + docId;
+        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
     }
 }
