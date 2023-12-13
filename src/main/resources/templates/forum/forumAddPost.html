@@ -58,9 +58,15 @@
             const formData = new FormData();
             formData.append('image', blob);
 
+            const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
             // 2. FileApiController - uploadEditorImage 메서드 호출
             const response = await fetch('/tui-editor/image-upload', {
               method: 'POST',
+              headers: {
+                [csrfHeaderName]: csrfToken
+              },
               body: formData,
             });
 
