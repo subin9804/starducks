@@ -75,9 +75,9 @@
 
             <div class="hr"><hr></div>
 
-                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
+                    제목 : <input type="text" th:field="*{docTitle}">
 <!--                    제목 : <input type="text" name="docTitle" th:field="*{docTitle}">-->
-                <textarea name="docContent" th:value="${document?.docContent}" th:text="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
+                <textarea th:field="*{docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
                 <button class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
