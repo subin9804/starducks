@@ -8,13 +8,6 @@
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
     <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
-    <script th:inline="javascript">
-        function submit2(form) {
-            form.action = '/createDoc/temp';
-            form.submit();
-            return true;
-        }
-    </script>
 </th:block>
 
 <main layout:fragment="content">
@@ -45,14 +38,41 @@
             <div class="hr"><hr></div>
 
             1차 결재자 :
-<!--            <div th:text="${apv1.approver}"></div>-->
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                <div class="searchEmp">
+                    <label class="col-form-label">1차 결재자</label>
+                    <div th:each="e : ${emps}" class="form-check form-check-inline">
+                        <input type="radio" name="apvEmpId1" th:value="${e.empId}" class="form-check-input">
+                        <label th:for="${'apvEmpId1_' + e.empId}" class="form-check-label">
+<!--                            <img  className="searchImg" src="">-->
+                            <div className="searchInfo">
+                                <div class="searchEmpId" th:text="${e.empId}"></div>
+                                <div class="searchEmpName" th:text="${e.empName}"></div>
+<!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
                     data-bs-toggle="modal" data-bs-target="#selectEmpModal">
                 사원찾기
             </button>
 
             2차 결재자 :
-<!--            <div th:text="${apv2.approver}"></div>-->
+                <div class="searchEmp">
+                    <label class="col-form-label">2차 결재자</label>
+                    <div th:each="e : ${emps}" class="form-check form-check-inline">
+                        <input type="radio" name="apvEmpId2" th:value="${e.empId}" class="form-check-input">
+                        <label th:for="${'apvEmpId2_' + e.empId}" class="form-check-label">
+                            <!--                            <img  className="searchImg" src="">-->
+                            <div className="searchInfo">
+                                <div class="searchEmpId" th:text="${e.empId}"></div>
+                                <div class="searchEmpName" th:text="${e.empName}"></div>
+                                <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                            </div>
+                        </label>
+                    </div>
+                </div>
             <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
                     data-bs-toggle="modal" data-bs-target="#selectEmpModal">
                 사원찾기
@@ -61,16 +81,28 @@
             <div class="hr"><hr></div>
 
             참조인 :
-<!--            <div th:text="${doc.refEmp}"></div>-->
-<!--            라디오가 아닌 체크박스로 변경-->
             <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
                     data-bs-toggle="modal" data-bs-target="#selectEmpModal">
                 사원찾기
             </button>
 
             <div class="hr"><hr></div>
+                <div class="searchEmp">
+                    <label class="col-form-label">참조인</label>
+                    <div th:each="e : ${emps}" class="form-check form-check-inline">
+                        <input type="checkbox" name="refEmpIdList" th:value="${e.empId}" class="form-check-input">
+                        <label th:for="${'refEmpIdList_' + e.empId}" class="form-check-label">
+                            <!--                            <img  className="searchImg" src="">-->
+                            <div className="searchInfo">
+                                <div class="searchEmpId" th:text="${e.empId}"></div>
+                                <div class="searchEmpName" th:text="${e.empName}"></div>
+                                <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                            </div>
+                        </label>
+                    </div>
+                </div>
 
-            첨부파일 :
+                첨부파일 :
             <input type="file" multiple>
 
             <div class="hr"><hr></div>
@@ -110,7 +142,7 @@
 <!--                    </div>-->
                 </div>
 
-<!--                <div th:insert="~{document/createDoc/selectEmp::modal}"></div>-->
+                <div th:insert="~{document/createDoc/selectEmp::modal}"></div>
             </form>
 
 

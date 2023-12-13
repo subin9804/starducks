@@ -15,7 +15,7 @@
   <!-- modal을 포함시키는 부분 -->
     <!-- selectEmp.html -->
 
-    <div th:fragment="modal">
+    <div th:fragment="modal"  th:object="${employee}" th:with="employeeObject=${employee}">
       <!-- 모달의 구조와 내용을 여기에 정의 -->
       <div class="modal fade" id="selectEmpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -26,44 +26,32 @@
             </div>
             <div class="modal-body">
               <!-- 모달 내용 시작 -->
+
               <h1>모달 내용</h1>
               <h1 th:text="${document?.docTitle}"></h1>
-<!--              <div id="searchModalContainer">-->
+
+              <div id="searchModalContainer">
 <!--                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />-->
-<!--                <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>-->
+                <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
 
 <!--                <div class="form-check">-->
-<!--                  <div th:each="place, index : ${filterTitle}">-->
-<!--                    <div th:if="${search ne ''}">-->
-<!--                      <input-->
-<!--                              class="form-check-input"-->
-<!--                              type="radio"-->
-<!--                              name="seletedPlaceId"-->
-<!--                              th:id="${'flexRadioDefault' + index.index}"-->
-<!--                              th:value="${place.contentsid}"-->
-<!--                              th:checked="${selectedOption eq place.contentsid}"-->
-<!--                              th:onchange="${() => handleRadioSelect(place.contentsid)}"-->
-<!--                      />-->
-<!--                      <div class="searchItem">-->
-<!--                        <label class="form-check-label" th:for="${'flexRadioDefault' + index.index}">-->
-<!--                          <img class="searchImg" th:src="${place.repPhoto == null ? null : place.repPhoto.photoid.thumbnailpath}" />-->
-<!--                          <div class="searchInfo">-->
-<!--                            <div>-->
-<!--                              <div class="searchTitle" th:text="${place.title}"></div>-->
-<!--                              <div class="searchStar">★★★☆☆ 3.5</div>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </label>-->
-<!--                      </div>-->
+
+<!--                    <div th:each="employee : ${employees}" class="form-check form-check-inline">-->
+<!--                      <input type="radio" th:field="*{docWriter.empId}" th:value="${employee.empId}" class="form-check-input">-->
+<!--                      <label th:for="${#ids.prev('employee')}" th:text="${employee.empName}" class="form-check-label">-->
+<!--                        Employee-->
+<!--                      </label>-->
 <!--                    </div>-->
-<!--                  </div>-->
+
 <!--                </div>-->
 <!--              </div>-->
 
               <!-- 모달 내용 끝 -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn" style="background-color:#316c52;border-color:#316c52;color:white">선택</button>
+<!--              <button type="button" class="btn" style="background-color:#316c52;border-color:#316c52;color:white">선택</button>-->
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>

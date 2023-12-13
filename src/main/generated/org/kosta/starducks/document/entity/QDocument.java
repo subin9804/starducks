@@ -22,6 +22,8 @@ public class QDocument extends EntityPathBase<Document> {
 
     public static final QDocument document = new QDocument("document");
 
+    public final ListPath<Approval, QApproval> approval = this.<Approval, QApproval>createList("approval", Approval.class, QApproval.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> apvDeadline = createDateTime("apvDeadline", java.time.LocalDateTime.class);
 
     public final BooleanPath deleted = createBoolean("deleted");
@@ -63,7 +65,6 @@ public class QDocument extends EntityPathBase<Document> {
     public QDocument(Class<? extends Document> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
-
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter"), inits.get("docWriter")) : null;
     }
 

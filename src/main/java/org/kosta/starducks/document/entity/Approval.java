@@ -27,7 +27,7 @@ public class Approval {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apv_emp_id", nullable = false)
-    private Employee employee;
+    private Employee apvEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_id", nullable = false)

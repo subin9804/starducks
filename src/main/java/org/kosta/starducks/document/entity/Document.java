@@ -44,8 +44,8 @@ public class Document {
     @JoinColumn(name = "doc_writer_id", nullable = false)
     private Employee docWriter;
 
-//    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-//    private List<Approval> approval = new ArrayList<>();
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private List<Approval> approval = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 //    private List<RefEmployee> refEmployee = new ArrayList<>();

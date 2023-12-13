@@ -3,9 +3,11 @@ package org.kosta.starducks.document.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.menus.MenuService;
+import org.kosta.starducks.document.entity.Approval;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.entity.DocStatus;
 import org.kosta.starducks.document.entity.Document;
+import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.CreateDocRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.CreateDocService;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -29,6 +33,7 @@ public class CreateDocController {
     private final CreateDocRepository createDocRepository;
     private final DocFormRepository docFormRepository;
     private final EmpRepository empRepository;
+    private final ApprovalRepository approvalRepository;
 
     private final HttpServletRequest request;
 
@@ -48,6 +53,15 @@ public class CreateDocController {
      */
     @GetMapping("/{formNameEn}")
     public String createDocument(@PathVariable(name = "formNameEn") String formNameEn, Model model) {
+        Long apvEmpId1 = null, apvEmpId2 = null;
+        model.addAttribute("apvEmpId1", apvEmpId1);
+        model.addAttribute("apvEmpId2", apvEmpId2);
+        List<Long> refEmpIdList = null;
+        model.addAttribute("refEmpIdList", refEmpIdList);
+
+        List<Employee> emps = empRepository.findAll();
+        model.addAttribute("emps", emps);
+
         model.addAttribute("document", new Document());
 
         docFormRepository.findByFormNameEn(formNameEn)
@@ -67,7 +81,14 @@ public class CreateDocController {
     @PostMapping("/{formNameEn}")
     public String submitDocument(@PathVariable(name = "formNameEn") String formNameEn,
                                  @ModelAttribute(name = "document") Document document,
+                                 @RequestParam(name = "apvEmpId1") Long apvEmpId1,
+                                 @RequestParam(name = "apvEmpId2") Long apvEmpId2,
+                                 @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                  RedirectAttributes redirectAttributes) {
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId1ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId1);
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId2ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId2);
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
+//        Approval approval1 = approvalRepository.save(apv1);
 
         Long empId = 1L; //로그인한 사원 번호
         document.setDocWriter(empRepository.getById(empId));
