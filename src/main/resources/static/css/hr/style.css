@@ -44,6 +44,7 @@ p {
     gap: 50px;
 }
 .photo img{
+    display: block;
     width: 120px;
     height: 120px;
     border: 1px solid #6B4D27;

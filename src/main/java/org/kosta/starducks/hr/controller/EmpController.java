@@ -4,15 +4,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
+import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
+import org.kosta.starducks.hr.repository.EmpFileRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpFileService;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/hr/emp")
@@ -23,6 +27,8 @@ public class EmpController {
     private final EmpRepository repository;
     private final HttpServletRequest request;
     private final DeptRepository deptRepository;
+    private final EmpFileService fileService;
+    private final EmpFileRepository fileRepository;
 
     /**
      * 인사부 홈 (사원 전체조회 및 검색)
@@ -38,7 +44,6 @@ public class EmpController {
         Page<Employee> emps = service.toSearchEmp(empSearch);
         System.out.println(emps.stream().toList());
         model.addAttribute("employees", emps);
-
 
         return "hr/hrIndex";
     }
@@ -69,11 +74,13 @@ public class EmpController {
      * @return
      */
     @PostMapping("/save")
-    public String save(@ModelAttribute Employee employee, Model model) {
+    public String save(@ModelAttribute Employee employee, Model model,
+                       @RequestParam("profile") MultipartFile profile,
+                       @RequestParam("stamp") MultipartFile stamp) {
 
         Employee savedEmp = service.saveEmp(employee);
-//        model.addAttribute("result", true);
-//        return ResponseEntity.ok("Employee information saved successfully.");
+        fileService.upload(profile, "profile", employee.getEmpId());
+        fileService.upload(stamp, "stamp", employee.getEmpId());
 
         Long id = savedEmp.getEmpId();
 
@@ -91,6 +98,11 @@ public class EmpController {
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
         MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
+
+        EmpFile profile = fileRepository.findByEmpIdAndType(empId, "profile");
+        EmpFile stamp = fileRepository.findByEmpIdAndType(empId, "stamp");
+
+
         model.addAttribute("employee", employee);
 
         return "hr/empDetail";

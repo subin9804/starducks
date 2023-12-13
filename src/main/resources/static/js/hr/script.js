@@ -53,6 +53,50 @@ window.document.addEventListener("DOMContentLoaded", function() {
         console.log($("#allLabel2").val())
     })
 
+    // 프로필 및 도장 이미지
+    $("#profileImg").on('click', () => {
+        $("#profile").click();
+        $("#profile").val("");
+    })
+
+    $("#stampImg").click(() => {
+        $("#stamp").click();
+        $("#stamp").val("");
+    })
+
+    // input 요소에 파일이 선택되었을 때 이벤트를 처리하는 부분
+    $("#profile").on("change", function() {
+        const fileInput = $(this)[0];
+        const file = fileInput.files[0];
+
+        if (file) {
+            let reader = new FileReader();
+
+            // 파일을 읽어오고 읽기가 완료되면 미리보기 설정
+            reader.onload = function (e) {
+                $("#profileImg").attr("src", e.target.result);
+            };
+
+            // 파일을 읽어오기
+            reader.readAsDataURL(file);
+        }
+    });
+    $("#stamp").on("change", function() {
+        const fileInput = $(this)[0];
+        const file = fileInput.files[0];
+
+        if (file) {
+            let reader = new FileReader();
+
+            // 파일을 읽어오고 읽기가 완료되면 미리보기 설정
+            reader.onload = function (e) {
+                $("#stampImg").attr("src", e.target.result);
+            };
+
+            // 파일을 읽어오기
+            reader.readAsDataURL(file);
+        }
+    });
 
     // $(document).ready(function () {
     //     // Form이 성공적으로 제출되면 Ajax를 사용하여 서버로부터 메시지를 받아 SweetAlert을 표시

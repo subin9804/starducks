@@ -45,7 +45,6 @@ public class Employee {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dept_id")
     private Department dept;    // 부서코드
-//    파일
 
 }
 

@@ -90,23 +90,30 @@ $(document).ready(function () {
                 // alert('Resource ID: ' + roomId);
                 let data = [info.startStr, info.startStr, info.endStr]
 
-                /** 중복 방지 코드 S */
-                if(!isOverlapping(roomId, info.startStr, info.endStr, bookList)) {
-                    // 중복이 아니라면 팝업 오픈
-                    showBookingPopup(data);
-                } else {
-                    // 중복이라면 경고창 표시
-                    Swal.fire({
-                        icon: "error",
-                        title: "중복예약은 불가합니다.",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
+                /** 이전 날짜 방지 코드 */
+                let today = new Date()
+                let selected = new Date(info.start)
+                if(today > selected) {
+                    errorAlert("현재 시간 이후로 예약이 가능합니다.")
+                    .then(() => {
                         location.reload();
                     })
-                }
-                /** 중복 방지 코드 E */
 
+                /** 현재 시간 이후로는 예약 가능 */
+                } else {
+
+                    /** 중복 방지 코드 S */
+                    if (!isOverlapping(roomId, info.startStr, info.endStr, bookList)) {
+                        // 중복이 아니라면 팝업 오픈
+                        showBookingPopup(data);
+                    } else {
+                        // 중복이라면 경고창 표시
+                        errorAlert("중복예약은 불가합니다.").then(() => {
+                            location.reload();
+                        })
+                    }
+                    /** 중복 방지 코드 E */
+                }
             }
         });
         calendar.render();
@@ -177,12 +184,8 @@ $(document).ready(function () {
 
                 } else {
                     // 중복이라면 경고창 표시
-                    Swal.fire({
-                        icon: "error",
-                        title: "중복예약은 불가합니다.",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
+                    errorAlert("중복예약은 불가합니다.")
+                    .then(() => {
                         location.reload();
                     })
                 }
@@ -245,19 +248,11 @@ $(document).ready(function () {
                     submit(e, 'put', data.id);
 
                 } else {
-                    // 중복이지만 수정하는 것이기 때문에 제출
-                    if(($('#startTime').val() != startTime) && ($('#endTime').val() == endTime)) {
-                        submit(e, 'put', data.id);
-                    }
-                    // 수정도 아닌 중복이라면 경고창 표시
-                    Swal.fire({
-                        icon: "error",
-                        title: "중복예약은 불가합니다.",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
-                        location.reload();
-                    })
+                    // 중복이라면 경고창 표시
+                    errorAlert("중복예약은 불가합니다.")
+                        .then(() => {
+                            location.reload();
+                        })
                 }
             });
         }
@@ -286,9 +281,28 @@ $(document).ready(function () {
                 })
             }, 10)
 
-            // 작성자와 로그인 계정 아이디가 다를 경우 || 이미 지난 회의일 경우 삭제와 수정 버튼 안보이게 처리
-            if((data.bookerId != $('#empId').val()) || (new Date(data.runningDay + 'T' + data.start) < new Date())) {
+            // 작성자와 로그인 계정 아이디가 다를 경우 삭제와 수정 버튼 안보이게 처리
+            if((data.bookerId != $('#empId').val())) {
                 $('#btns').css('display', 'none');
+            }
+
+            // 이미 지난 회의일 경우 삭제와 수정 버튼 안보이게 처리 + 완료 표시 추가
+            if((new Date(data.runningDay + 'T' + data.start) < new Date())) {
+                $('#btns').css('display', 'none');
+
+                // 새로운 <p> 요소를 생성
+                let newParagraph = $('<p>');
+
+                newParagraph.text("완료된 회의입니다.");
+
+                newParagraph.css({
+                    'padding': '10px',
+                    'border': '5px solid black',
+                    'text-align': 'center',
+                    'font-weight': 'bold'
+                });
+
+                $("#content").append(newParagraph);
             }
 
             $("#edit-book").click(function (e) {
@@ -393,9 +407,8 @@ function isOverlapping(room, newStart, newEnd, events) {
             }
         }
 
-
-        console.log("info.startStr: " +  infoStartStr)
-        console.log("existingEvent.start: " + eventStart)
+        // console.log("info.startStr: " +  infoStartStr)
+        // console.log("existingEvent.start: " + eventStart)
     }
     // 중복되지 않는 경우
     return false;

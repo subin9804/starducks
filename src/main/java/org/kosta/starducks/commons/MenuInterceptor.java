@@ -19,7 +19,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("reqURI." + request.getRequestURI());
+//        System.out.println("reqURI." + request.getRequestURI());
         String uri = request.getRequestURI().substring(1);
 
 //        String menu = "";
@@ -45,7 +45,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 //        String mess = uri.substring(uri.indexOf("/"));
 //        String subMenu = mess.substring(1, mess.indexOf("/"));
 
-        System.out.printf("menu: %s, mess: %s, subMenu: %s", menu, mess, subMenu, '\n');
+//        System.out.printf("menu: %s, mess: %s, subMenu: %s", menu, mess, subMenu, '\n');
         return true;
     }
 
