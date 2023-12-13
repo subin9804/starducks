@@ -13,13 +13,12 @@ import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/document/createDoc")
@@ -38,8 +37,6 @@ public class CreateDocController {
      */
     @GetMapping
     public String docFormList(Model model) {
-        MenuService.commonProcess(request, model, "document"); //getMapping에 넣어주기
-
         List<DocForm> docFormList = docFormRepository.findAll();
         model.addAttribute("docForms", docFormList);
 
@@ -51,15 +48,16 @@ public class CreateDocController {
      */
     @GetMapping("/{formNameEn}")
     public String createDocument(@PathVariable(name = "formNameEn") String formNameEn, Model model) {
-        MenuService.commonProcess(request, model, "document");
+        model.addAttribute("document", new Document());
 
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        Long docId = 1L;
-        createDocRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        String empName = "홍길동"; //로그인한 사원 이름
+        model.addAttribute("empName", empName);
 
+        List<Employee> employeeList = empRepository.findAll();
+        model.addAttribute("employees", employeeList);
         return "document/createDoc/" + formNameEn;
     }
 
@@ -68,13 +66,12 @@ public class CreateDocController {
      */
     @PostMapping("/{formNameEn}")
     public String submitDocument(@PathVariable(name = "formNameEn") String formNameEn,
-                                 Document document,
+                                 @ModelAttribute(name = "document") Document document,
                                  RedirectAttributes redirectAttributes) {
-        // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
-        Long empId = 1L; //로그인한 사원 정보
-        Employee docWriter = empRepository.findById(empId).orElse(null);
-        document.setDocWriter(docWriter);
 
+        Long empId = 1L; //로그인한 사원 번호
+        document.setDocWriter(empRepository.getById(empId));
+        document.setDocDate(LocalDateTime.now());
         document.setDocStatus(DocStatus.PENDING_DOC);
         Document savedDoc = createDocRepository.save(document);
 
@@ -90,8 +87,6 @@ public class CreateDocController {
     public String createDocumentTemp(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
-        MenuService.commonProcess(request, model, "document");
-
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
@@ -109,11 +104,13 @@ public class CreateDocController {
                                   @PathVariable(name = "docId") Long docId,
                                   Document document,
                                   RedirectAttributes redirectAttributes) {
-        // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
-        Long empId = 1L; //로그인한 사원 정보
-        Employee docWriter = empRepository.findById(empId).orElse(null);
-        document.setDocWriter(docWriter);
 
+        createDocRepository.findByDocId(docId);
+        if (document.getDocStatus() == DocStatus.TEMP_STORED) {
+            document.setDocDate(LocalDateTime.now());
+        } else {
+            document.setDocUpdateDate(LocalDateTime.now());
+        }
         document.setDocStatus(DocStatus.PENDING_DOC);
         Document savedDoc = createDocRepository.save(document);
 
@@ -127,12 +124,9 @@ public class CreateDocController {
     @PostMapping("/temp")
     public String submitDraftTemp(Document document,
                                   RedirectAttributes redirectAttributes) {
-        // Employee 엔티티에서 empId가 1L인 인스턴스를 가져오기
-        Long empId = 1L; //로그인한 사원 정보
-        Employee docWriter = empRepository.findById(empId).orElse(null);
-        document.setDocWriter(docWriter);
 
-        document.setDocStatus(DocStatus.TEMP_STORED);
+        document.setDocStatus(DocStatus.PENDING_DOC);
+        document.setDocDate(LocalDateTime.now());
         Document savedDoc = createDocRepository.save(document);
 
         String formCode = savedDoc.getDocForm().getFormCode();
