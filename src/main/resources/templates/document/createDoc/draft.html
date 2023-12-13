@@ -11,128 +11,75 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1 class="frag-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
+    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
     <div class="preview-layout">
         <div class="inputs-div page-shadow">
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
             <form method="post" th:object="${document}">
-            <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
+                <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
                 긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
 
                 <div>
                 <span class="doc-input-lbl">기안일</span>
-<!--                :<input type="datetime-local" class="doc-readonly" th:value="${document?.docDate}" readonly>-->
                     : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div>
-                    <span class="doc-input-lbl">기안자</span>
-                    <!--                :<input type="text" class="doc-readonly" th:value="${document?.docWriter?.empName}" readonly>-->
-                    : <span th:text="${empName}"></span>
-<!--                    <input type="hidden" name="document.docWriter.empName" th:value="${empName}">-->
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
                 </div>
 
-            <div class="hr"><hr></div>
 
-            1차 결재자 :
+                <div class="hr"><hr></div>
 
 
+                1차 결재자 :
                 <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                    data-bs-toggle="modal" data-bs-target="#selectApvEmp1">
                 사원찾기
-            </button>
+                </button>
+                <div th:insert="~{document/createDoc/_selectApvEmp1::modal}"></div>
 
-            2차 결재자 :
-                <div class="searchEmp">
-                    <label class="col-form-label">2차 결재자</label>
-                    <div th:each="e : ${emps}" class="form-check form-check-inline">
-                        <input type="radio" name="apvEmpId2" th:value="${e.empId}" class="form-check-input">
-                        <label th:for="${'apvEmpId2_' + e.empId}" class="form-check-label">
-                            <!--                            <img  className="searchImg" src="">-->
-                            <div className="searchInfo">
-                                <div class="searchEmpId" th:text="${e.empId}"></div>
-                                <div class="searchEmpName" th:text="${e.empName}"></div>
-                                <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
-                사원찾기
-            </button>
+                2차 결재자 :
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectApvEmp2">
+                    사원찾기
+                </button>
+                <div th:insert="~{document/createDoc/_selectApvEmp2::modal}"></div>
 
-            <div class="hr"><hr></div>
 
-            참조인 :
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
-                사원찾기
-            </button>
+                <div class="hr"><hr></div>
 
-            <div class="hr"><hr></div>
-                <div class="searchEmp">
-                    <label class="col-form-label">참조인</label>
-                    <div th:each="e : ${emps}" class="form-check form-check-inline">
-                        <input type="checkbox" name="refEmpIdList" th:value="${e.empId}" class="form-check-input">
-                        <label th:for="${'refEmpIdList_' + e.empId}" class="form-check-label">
-                            <!--                            <img  className="searchImg" src="">-->
-                            <div className="searchInfo">
-                                <div class="searchEmpId" th:text="${e.empId}"></div>
-                                <div class="searchEmpName" th:text="${e.empName}"></div>
-                                <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
-                            </div>
-                        </label>
-                    </div>
-                </div>
+
+                참조인 :
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectRefEmp">
+                    사원찾기
+                </button>
+                <div th:insert="~{document/createDoc/_selectRefEmp::modal}"></div>
+
+
+                <div class="hr"><hr></div>
+
 
                 첨부파일 :
-            <input type="file" multiple>
+                <input type="file" multiple>
 
-            <div class="hr"><hr></div>
 
-                    제목 : <input type="text" th:field="*{docTitle}">
-<!--                    제목 : <input type="text" name="docTitle" th:field="*{docTitle}">-->
+                <div class="hr"><hr></div>
+
+
+                제목 :
+                <input type="text" th:field="*{docTitle}">
+
                 <textarea th:field="*{docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
                 <button class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
                 <button class="register-button"  type="submit" th:text="상신">상신</button>
-
-
-
-
-
-
-
-                <h1>모달 내용</h1>
-                <h1 th:text="${document?.docTitle}"></h1>
-<!--                <h1 th:text="${document?.docWriterId}"></h1>-->
-
-                <div id="searchModalContainer">
-                    <!--                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />-->
-                    <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
-<!--                    제목 : <input type="text" name="docTitle" th:field="*{docTitle}">-->
-
-<!--                    <div class="form-check">-->
-
-<!--                        <div th:each="employee : ${employees}" class="form-check form-check-inline">-->
-<!--                            <input type="radio" th:field="*{docWriter.empId}" th:value="${employee.empId}" class="form-check-input">-->
-<!--                            <label th:for="${#ids.prev('employee')}" th:text="${employee.empName}" class="form-check-label">-->
-<!--                                Employee-->
-<!--                            </label>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-                </div>
-
-                <div th:insert="~{document/createDoc/selectEmp::modal}"></div>
             </form>
-
-
         </div>
 
 
