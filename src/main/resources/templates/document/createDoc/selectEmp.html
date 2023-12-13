@@ -3,13 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--<th:block layout:fragment="title">title</th:block>-->
-
-<!--<th:block layout:fragment="addMore">-->
-<!--  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">-->
-<!--  <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>-->
-<!--</th:block>-->
-
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
   <!-- modal을 포함시키는 부분 -->
@@ -33,25 +26,25 @@
               <div id="searchModalContainer">
 <!--                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />-->
                 <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
-
-<!--                <div class="form-check">-->
-
-<!--                    <div th:each="employee : ${employees}" class="form-check form-check-inline">-->
-<!--                      <input type="radio" th:field="*{docWriter.empId}" th:value="${employee.empId}" class="form-check-input">-->
-<!--                      <label th:for="${#ids.prev('employee')}" th:text="${employee.empName}" class="form-check-label">-->
-<!--                        Employee-->
-<!--                      </label>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--              </div>-->
+                  <div class="searchEmp">
+                      <label class="col-form-label">1차 결재자</label>
+                      <div th:each="e : ${emps}" class="form-check form-check-inline">
+                          <input type="radio" name="apvEmpId1" th:value="${e.empId}" class="form-check-input">
+                          <label th:for="${'apvEmpId1_' + e.empId}" class="form-check-label">
+                              <!--                            <img  className="searchImg" src="">-->
+                              <div className="searchInfo">
+                                  <div class="searchEmpId" th:text="${e.empId}"></div>
+                                  <div class="searchEmpName" th:text="${e.empName}"></div>
+                                  <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                              </div>
+                          </label>
+                      </div>
+                  </div>
 
               <!-- 모달 내용 끝 -->
             </div>
             <div class="modal-footer">
-<!--              <button type="button" class="btn" style="background-color:#316c52;border-color:#316c52;color:white">선택</button>-->
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn" data-bs-dismiss="modal" style="background-color:#43946f;border-color:#43946f;color:white">선택</button>
             </div>
           </div>
         </div>
