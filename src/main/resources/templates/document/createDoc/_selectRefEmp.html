@@ -27,7 +27,7 @@
                   <div class="searchEmp">
                       <label class="col-form-label">참조인</label>
                       <div th:each="e : ${emps}" class="form-check form-check-inline">
-                          <input type="checkbox" name="refEmpIdList" th:value="${e.empId}" class="form-check-input">
+                          <input type="checkbox" name="refEmpIdList" th:value="${e.empId}" onclick="displaySelectedRefs()" class="form-check-input">
                           <label th:for="${'refEmpIdList_' + e.empId}" class="form-check-label">
                               <!--                            <img  className="searchImg" src="">-->
                               <div className="searchInfo">

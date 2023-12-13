@@ -27,3 +27,29 @@ const myInput = document.getElementById('myInput')
 myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus()
 })
+
+function displaySelectedApv1(element) {
+    var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;
+    document.getElementById('selectedApv1').innerText = selectedEmpName;
+}
+function displaySelectedApv2(element) {
+    var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;
+    document.getElementById('selectedApv2').innerText = selectedEmpName;
+}
+
+function displaySelectedRefs() {
+    // 여러 군데에 값을 출력할 때 각 출력 위치의 id를 배열로 저장
+    var selectedRefsIds = ['selectedRefs', 'selectedRefs2'];
+
+    // 반복문을 통해 각 출력 위치에 값을 설정
+    selectedRefsIds.forEach(function (refsId) {
+        var selectedValues = document.querySelectorAll('input[name="refEmpIdList"]:checked');
+        var selectedValuesText = Array.from(selectedValues).map(function (checkbox) {
+            var selectedEmpName = checkbox.nextElementSibling.querySelector('.searchEmpName').innerText;
+            // return checkbox.value + ' (' + selectedEmpName + ')';
+            return selectedEmpName;
+        }).join(', ');
+
+        document.getElementById(refsId).innerText = selectedValuesText;
+    });
+}

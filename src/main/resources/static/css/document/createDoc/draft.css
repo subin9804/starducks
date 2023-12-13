@@ -1,18 +1,59 @@
 .preview-layout {
-    width: 1400px;
+    position: relative;
+    width: 1280px;
     /*height: 1122px;*/
 }
 .commonBtn {
     margin: 30px;
 }
+/* 폼 영역 */
 .inputs-div {
+    position: relative;
     display: inline-block;
     border: 1px solid #6B4D27;
     height: 1122px;
-    width: 500px;
+    width: 460px;
     border-radius: 20px;
 }
+.hr {
+    width: 400px;
+    margin: 25px auto;
+    /*text-align: center;*/
+}
+.input-wrap {
+    margin: 15px;
+}
+.input-wrap2 {
+    margin: 40px;
+}
+.docForm-title {
+    display: inline-block;
+    background-color: #6B4D27;
+    color: white;
+    border: 1px solid #6B4D27;
+    border-radius: 20px;
+    padding: 10px;
+}
+.urgent-wrap {
+    position: absolute;
+    top: 75px;
+    right: 30px;
+}
+#docTitle {
+    display: inline-block;
+}
+
+/* 문서 미리보기 영역 */
+.urgent-sticker {
+    display: inline-block;
+    border: 2px solid red;
+    color: red;
+    padding: 5px;
+}
 .a4-box {
+    position: absolute;
+    top: 0;
+    right: 0;
     display: inline-block;
     border: 1px solid cadetblue;
     /*width: 210mm;*/
@@ -27,7 +68,10 @@
     margin: 38.7px;
 }
 .doc-type-name {
-    text-align: center;
+    /*text-align: center;*/
+    position: absolute;
+    top: 10px;
+    left: 250px;
 }
 table {
     width: 100%;
@@ -39,9 +83,16 @@ table, th, td {
 th, .col-th {
     background-color: #dddddd;
     -webkit-print-color-adjust:exact;
+    text-align: center;
 }
 .col-th {
     width: 80px;
+    margin: 5px;
+    padding: 5px;
+}
+td {
+    margin: 5px;
+    padding: 5px 10px;
 }
 .top-box {
     height: 120px;
@@ -49,31 +100,52 @@ th, .col-th {
 .drafter-box {
     position: absolute;
     top: 100px;
-    right: 180px;
+    right: 210px;
     width: 100%;
     height: 100%;
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 140px;
 }
 .approver-box {
     position: absolute;
     top: 100px;
     right: 0px;
-    width: 160px;
-    height: 90px;
+    width: 195px;
+    height: 140px;
 }
 .stamp-box {
-    width: 65px;
-    height: 70px;
+    width: 86px;
+    height: 86px;
+}
+.stamp-date {
+    margin: 0;
+    padding: 2px;
+    width: 86px;
+    height: 29px;
 }
 .doc-info-box {
+    position: absolute;
+    top: 250px;
+    left: 0px;
+    width: 700px;
     margin: 20px 0;
 }
 .doc-content-box {
+    position: absolute;
+    top: 450px;
+    left: 0px;
+    width: 700px;
     margin: 20px 0;
 }
 .attached-files-box {
+    position: absolute;
+    top: 860px;
+    left: 0px;
+    width: 700px;
     margin: 20px 0;
+}
+.docContentOut {
+    height: 350px;
 }
 .border-delete {
     border-bottom: solid 1px rgba(0,0,0,0);

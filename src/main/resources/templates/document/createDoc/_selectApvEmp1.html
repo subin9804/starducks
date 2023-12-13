@@ -27,7 +27,7 @@
                   <div class="searchEmp">
                       <label class="col-form-label">1차 결재자</label>
                       <div th:each="e : ${emps}" class="form-check form-check-inline">
-                          <input type="radio" name="apvEmpId1" th:value="${e.empId}" class="form-check-input">
+                          <input type="radio" name="apvEmpId1" th:value="${e.empId}" onclick="displaySelectedApv1(this)" class="form-check-input">
                           <label th:for="${'apvEmpId1_' + e.empId}" class="form-check-label">
                               <!--                            <img  className="searchImg" src="">-->
                               <div className="searchInfo">
