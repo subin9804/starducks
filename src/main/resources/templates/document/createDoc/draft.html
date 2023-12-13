@@ -24,11 +24,11 @@
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
-            <form method="post">
+            <form method="post" th:object="${document}">
             <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
-            긴급 <input type="checkbox" id="urgent" name="urgent" th:checked="${document?.urgent}">
+                긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
 
                 <div>
                 <span class="doc-input-lbl">기안일</span>
@@ -38,7 +38,8 @@
                 <div>
                     <span class="doc-input-lbl">기안자</span>
                     <!--                :<input type="text" class="doc-readonly" th:value="${document?.docWriter?.empName}" readonly>-->
-                    : <span th:value="${document?.docWriter?.empName}"></span>
+                    : <span th:text="${empName}"></span>
+<!--                    <input type="hidden" name="document.docWriter.empName" th:value="${empName}">-->
                 </div>
 
             <div class="hr"><hr></div>
@@ -74,16 +75,44 @@
 
             <div class="hr"><hr></div>
 
-<!--                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">-->
                     제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
+<!--                    제목 : <input type="text" name="docTitle" th:field="*{docTitle}">-->
                 <textarea name="docContent" th:value="${document?.docContent}" th:text="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
                 <button class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
                 <button class="register-button"  type="submit" th:text="상신">상신</button>
+
+
+
+
+
+
+
+                <h1>모달 내용</h1>
+                <h1 th:text="${document?.docTitle}"></h1>
+<!--                <h1 th:text="${document?.docWriterId}"></h1>-->
+
+                <div id="searchModalContainer">
+                    <!--                <input id="searchBar" type="text" th:ref="${myInputRef}" th:value="${search}" th:style="${inputStyle}" th:placeholder="'장소명을 검색하세요.'" th:onchange="${onChange}" />-->
+                    <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
+<!--                    제목 : <input type="text" name="docTitle" th:field="*{docTitle}">-->
+
+<!--                    <div class="form-check">-->
+
+<!--                        <div th:each="employee : ${employees}" class="form-check form-check-inline">-->
+<!--                            <input type="radio" th:field="*{docWriter.empId}" th:value="${employee.empId}" class="form-check-input">-->
+<!--                            <label th:for="${#ids.prev('employee')}" th:text="${employee.empName}" class="form-check-label">-->
+<!--                                Employee-->
+<!--                            </label>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+                </div>
+
+<!--                <div th:insert="~{document/createDoc/selectEmp::modal}"></div>-->
             </form>
 
-            <div th:replace="~{document/createDoc/selectEmp::modal}"></div>
 
         </div>
 

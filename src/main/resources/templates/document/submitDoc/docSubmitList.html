@@ -17,8 +17,8 @@
         <thead class="list-thead">
             <tr>
                 <th class="docId-th">문서번호</th>
-                <th class="docTitle-th">문서제목</th>
                 <th class="formName-th">구분</th>
+                <th class="docTitle-th">문서제목</th>
                 <th class="docDate-th">기안일</th>
                 <th class="urgent-th">긴급여부</th>
                 <th class="docStatus-th">결재상태</th>
@@ -27,9 +27,9 @@
         <tbody>
             <tr th:each="document : ${documents}">
                 <td><a th:href="@{|/document/submitDoc/${document?.docForm?.formNameEn}/${document?.docId}|}" th:text="${document?.docId}">문서번호</a></td>
-                <td><a th:href="@{|/document/submitDoc/${document?.docForm?.formNameEn}/${document?.docId}|}" th:text="${document?.docTitle}">문서제목</a></td>
                 <td th:text="${document?.docForm?.formName}">구분</td>
-                <td th:text="${document?.docDate}">기안일</td>
+                <td><a th:href="@{|/document/submitDoc/${document?.docForm?.formNameEn}/${document?.docId}|}" th:text="${document?.docTitle}">문서제목</a></td>
+                <td th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</td>
                 <td><div class="urgent" th:if="${document?.urgent}">긴급</div></td>
                 <td>
                     <th:block th:switch="${document.docStatus.toString()}">

@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface CreateDocRepository extends JpaRepository<Document, Long>  {
     Optional<Object> findByDocId(Long docId);
+
+    Optional<Object> findByDocWriter_EmpId(Long empId);
+
+    Optional<Object> findByDocForm_FormNameEn(String formNameEn);
 }
