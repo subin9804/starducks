@@ -194,10 +194,13 @@ $(document).ready(function () {
             let modal = $('#bookingModal')
             // console.log("data22" + JSON.stringify(data));
 
+            let startTime = data.start.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' })
+            let endTime = data.end.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' })
+
             $('#room').val(data.resourceId);
             $('#runningDay').val(dateFormat(data.start.toISOString()));
-            $('#startTime').val(data.start.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }));
-            $('#endTime').val(data.end.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Seoul' }));
+            $('#startTime').val(startTime);
+            $('#endTime').val(endTime);
             $('#confName').val(data.title);
             $('#text').val(data.memo);
             $('#color').val(data.color);
@@ -216,11 +219,17 @@ $(document).ready(function () {
                 let end = $('#runningDay').val() + 'T' + $('#endTime').val();
 
                 if(!isOverlapping(start, end, events)) {
-                    // 중복이 아니라면 전송
-                    submit(e, 'put', data.id);
+                    // 중복이 아님 && 본인이 작성한거 맞음
+                    if(data.bookerId == $('#empId').val()) {
+                        submit(e, 'put', data.id);
+                    }
 
                 } else {
-                    // 중복이라면 경고창 표시
+                    // 중복이지만 수정하는 것이기 때문에 제출
+                    if(($('#startTime').val() != startTime) && ($('#endTime').val() == endTime)) {
+                        submit(e, 'put', data.id);
+                    }
+                    // 수정도 아닌 중복이라면 경고창 표시
                     Swal.fire({
                         icon: "error",
                         title: "중복예약은 불가합니다.",
@@ -267,7 +276,9 @@ $(document).ready(function () {
             })
 
             $("#delete-book").click(function (e) {
-                deleteBook(data.id);
+                if(data.bookerId == $('#empId').val()) {
+                    deleteBook(data.id);
+                }
             })
         }
 
