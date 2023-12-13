@@ -3,7 +3,6 @@ package org.kosta.starducks.forum.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
@@ -43,7 +42,6 @@ public class ForumPostController {
     // 게시판 메인 페이지
     @GetMapping
     public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        MenuService.commonProcess(request, model, "forum");
 
         Page<ForumPost> posts = null;
 
@@ -85,7 +83,6 @@ public class ForumPostController {
     // 게시글 작성 페이지로 이동
     @GetMapping("/add")
     public String addPostForm(Model model) {
-        MenuService.commonProcess(request, model, "forum");
         model.addAttribute("post", new ForumPost()); //타임리프에서 참조하는 이름 현재는 post
         return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
     }
@@ -106,7 +103,6 @@ public class ForumPostController {
     // 게시글 상세 페이지
     @GetMapping("/post/{id}")
     public String getPostDetails(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -116,7 +112,6 @@ public class ForumPostController {
     // 게시글 수정 페이지로 이동
     @GetMapping("/edit/{id}")
     public String editPostForm(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -144,7 +139,6 @@ public class ForumPostController {
     // 게시글 삭제
     @GetMapping("/delete/{id}")
     public String deletePost(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         forumPostService.deleteForumPost(id);
         return "redirect:/forum";
     }
