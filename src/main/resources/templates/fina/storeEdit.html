@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--<meta charset="UTF-8">-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/empVerification.css}"
+          href="/static/css/document/createDoc/empVerification.css">
+
+</th:block>
+
+<main layout:fragment="content">
+    <h2>지점 관리</h2>
+    <hr>
+    <br><br>
+    <h5>지점 수정</h5>
+    <br>
+
+    <form class="container" action="/fina/store/update" method="post">
+        <input th:name="storeNo" type="hidden" th:value="${store.storeNo}">
+        <div class="col-auto">
+            <label for="storeName" class="col-form-label">지점명</label>
+            <input type="text" id="storeName" name="storeName" placeholder="지점명" class="form-control"
+                   th:value="${store.storeName}">
+        </div>
+
+        <div>
+            <label for="businessNum">사업자 번호</label>
+            <input class="form-control" type="text" id="businessNum" name="businessNum"
+                   placeholder="사업자 번호를 입력해주세요" th:value="${store.businessNum}">
+        </div>
+
+        <div>
+            <label for="storeManager" class="col-form-label">지점장</label>
+            <select id="storeManager" name="storeManager" th:field="*{store.storeManager}">
+                <option th:each="manager : ${storeManagers}"
+                        th:value="${manager}"
+                        th:text="${manager}"
+                        th:selected="${store.storeManager == manager}"></option>
+            </select>
+        </div>
+
+        <div>
+            <label for="storeOpenDate" class="col-form-label">개업일</label>
+            <input type="date" id="storeOpenDate" name="storeOpenDate" th:value="${store.storeOpenDate}">
+        </div>
+
+        <div>
+            <label for="addNo">우편번호</label>
+            <input type="text" id="addNo" name="addNo" placeholder="우편번호를 입력해주세요" th:value="${store.addNo}">
+        </div>
+        <div>
+            <label for="storeAddr">주소</label>
+            <input type="text" id="storeAddr" name="storeAddr" placeholder="주소를 입력해주세요" th:value="${store.storeAddr}">
+        </div>
+        <div>
+            <label for="storeDetailAddr">상세주소</label>
+            <input type="text" id="storeDetailAddr" name="storeDetailAddr" placeholder="상세주소를 입력해주세요"
+                   th:value="${store.storeDetailAddr}">
+        </div>
+
+        <div>
+            <label for="storeOperationalYn">운영여부</label>
+            <select id="storeOperationalYn" name="storeOperationalYn" th:field="*{store.storeOperationalYn}">
+                <option th:each="option : ${storeOperationalYn}"
+                        th:value="${option}"
+                        th:text="${option}"
+                        th:selected="${store.storeOperationalYn == option}"></option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">저장</button>
+        <button class="btn btn-outline-danger" type="button"
+                th:attr="onclick='location.href=\'/fina/store/single/\' + ${store.storeNo}'">
+            이전
+        </button>
+
+    </form>
+</main>
+</html>

@@ -3,6 +3,10 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.entity.Store;
+import org.kosta.starducks.fina.entity.StoreManager;
+import org.kosta.starducks.fina.entity.StoreOperationalYn;
+import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
@@ -28,6 +32,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -43,6 +48,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
+    private final StoreRepository storeRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -92,7 +98,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
         specificEmp.setDAddr("수원시");
-        specificEmp.setPosition(Position.ROLE_EMPLOYEE);
+        specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
@@ -195,7 +201,8 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
-          forumPost.setPostNotice(i < 5);
+            forumPost.setPostNotice(i < 5);
+
             forumPostRepository.saveAndFlush(forumPost);
         }
 
@@ -251,6 +258,22 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
                 scheduleRepository.saveAndFlush(scheduleData);
             }
+
+            // Store 인스턴스 생성 및 초기화
+            Store store1 = new Store();
+            store1.setStoreName("test1");
+            store1.setBusinessNum(123456789L);
+            store1.setStoreManager(StoreManager.STOREMANAGE_ONE);
+            store1.setStoreOpenDate(LocalDate.parse("2023-12-12"));
+            store1.setAddNo("11111");
+            store1.setStoreAddr("주소1");
+            store1.setStoreDetailAddr("상세주소1");
+            store1.setStoreOperationalYn(StoreOperationalYn.storeOperationalY);
+
+            storeRepository.save(store1);
+
+             List<Store> stores = Arrays.asList(store1);
+             storeRepository.saveAll(stores);
         }
     }
 }

@@ -10,28 +10,51 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </th:block>
 
+<!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
-    <h1>지점 정보 관리</h1>
-
+    <h2>지점 관리</h2>
+    <hr>
+    <br><br>
+    <h5>지점 목록</h5>
+    <br>
     <!-- 검색창. 제목 + 내용 검색 가능 -->
-    <form class="search-form" method="get" th:action="@{/fina/branch}">
-        <input name="searchKeyword" placeholder="검색어 입력" type="text">
-        <button type="submit">검색</button>
-    </form>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <form class="search-form" method="get" th:action="@{/fina/branch}">
+            <input name="searchKeyword" placeholder="검색어를 입력하세요" type="text" style="float:left; margin-right: 10px;">
+            <button type="submit">검색</button>
+        </form>
+    </div>
 
-    <table class="fina-branch-table">
+    <button class="btn btn-primary" type="button" onclick="location.href='/fina/store/new'"
+            style="float: right">
+        추가하기
+    </button>
+
+    <table class="table table-hover">
         <thead>
         <tr>
-            <th>No</th>
-            <th>지점명</th>
-            <th>사업자 번호</th>
-            <th>지점장</th>
-            <th>연락처</th>
-            <th>운영여부</th>
+            <th scope="col">No</th>
+            <th scope="col">지점명</th>
+            <th scope="col">사업자 번호</th>
+            <th scope="col">지점장</th>
+            <th scope="col">주소</th>
+            <th scope="col">운영여부</th>
         </tr>
         </thead>
-
         <tbody>
+
+        <tr th:each="store : ${storeList}"
+            th:onclick="'location.href=\'' + @{/fina/store/single/{storeNo}(storeNo=${store.storeNo})} + '\''"
+            style="cursor:pointer">
+            <td th:text="${store.storeNo}"></td>
+            <td th:text="${store.storeName}">지점명</td>
+            <td th:text="${store.businessNum}">사업자 번호</td>
+            <td th:text="${store.storeManager}">지점장</td>
+            <td th:text="${store.storeAddr}">주소</td>
+            <td th:text="${store.storeOperationalYn}">운영여부</td>
+        </tr>
+        </tbody>
+
     </table>
 
 </main>
