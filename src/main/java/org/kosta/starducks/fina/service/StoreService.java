@@ -82,7 +82,6 @@ public class StoreService {
         if(target != null) {
             storeRepository.save(store);
         }
-//        return "redirect:/fina/store/single/" + store.getStoreNo();
     }
 
     /**
