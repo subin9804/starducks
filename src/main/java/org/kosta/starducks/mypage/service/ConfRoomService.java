@@ -9,9 +9,11 @@ import org.kosta.starducks.mypage.dto.ConfBookDto;
 import org.kosta.starducks.mypage.entity.ConfRoom;
 import org.kosta.starducks.mypage.repository.ConfRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -97,19 +99,20 @@ public class ConfRoomService {
     /**
      * 30분마다 자동으로 오늘 예약기록을 불러와서 지난 회의의 status를 "finished"로 바꿈
      */
-//    @Scheduled(fixedRate = 1800000)
-//    public void statusChanged() {
-//        LocalTime now = LocalTime.now();
-//        LocalDate today = LocalDate.now();
-//
-//        List<ConfRoom> rooms = confRepository.findByRunningDay(today);
-//        for (ConfRoom room : rooms) {
-//            if(room.getStatus().equals("booked") && now.isAfter(room.getStartTime())) {  // 상태가 booked이며, 현재 시각이 회의 시작 시간 이후일 경우
-//                room.setStatus("finished");
-//
-//                confRepository.save(room);
-//            }
-//        }
-//
-//    }
+    @Scheduled(fixedRate = 1800000)
+    public void statusChanged() {
+        LocalTime now = LocalTime.now();
+        LocalDate today = LocalDate.now();
+
+        List<ConfRoom> rooms = confRepository.findByRunningDay(today);
+        for (ConfRoom room : rooms) {
+            if(room.getStatus().equals("booked") && now.isAfter(room.getStartTime())) {  // 상태가 booked이며, 현재 시각이 회의 시작 시간 이후일 경우
+                room.setStatus("finished");
+
+                confRepository.save(room);
+            }
+        }
+        System.out.println("rooms: " + now);
+
+    }
 }
