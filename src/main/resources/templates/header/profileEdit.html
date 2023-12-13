@@ -11,14 +11,15 @@
 </head>
 <body>
 <h1 class="p-custom">개인 정보 수정</h1>
-<form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}" autocomplete="off">
+<form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}"
+      autocomplete="off">
   <div id="formSection" class="formSection-custom">
     <section>
       <!-- 사원번호 -->
       <dl class="dl-custom">
         <dt class="dt-custom">사원 번호</dt>
         <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
-        <input type="hidden" th:field="*{empId}" id="empId" />
+        <input type="hidden" th:field="*{empId}" id="empId"/>
       </dl>
       <!-- 사원 이름 -->
       <dl class="dl-custom">
@@ -35,35 +36,13 @@
         <dt class="dt-custom">이메일</dt>
         <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
       </dl>
-      <!-- 비밀번호 변경 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">기존 비밀번호</dt>
-        <dd class="dd-custom">
-          <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
-          <button type="button" onclick="checkCurrentPassword()">확인</button>
-        </dd>
-      </dl>
-      <!-- 새 비밀번호 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">새 비밀번호</dt>
-        <dd class="dd-custom">
-          <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
-        </dd>
-      </dl>
-      <!-- 새 비밀번호 확인 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">새 비밀번호 확인</dt>
-        <dd class="dd-custom">
-          <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
-        </dd>
-      </dl>
-    </section>
-    <section>
       <!-- 생년월일 -->
       <dl class="dl-custom">
         <dt class="dt-custom">생년월일</dt>
         <dd class="dd-custom"><input type="date" th:value="*{birth}" disabled></dd>
       </dl>
+    </section>
+    <section>
       <!-- 부서 -->
       <dl class="dl-custom">
         <dt class="dt-custom">부서</dt>
@@ -98,21 +77,38 @@
         <dd class="dd-custom"><input type="text" th:field="*{dAddr}"></dd>
       </dl>
     </section>
-  </div>
-
-  <div class="btns-custom">
-    <button type="submit" class="commonBtn-custom register-button">저장</button>
-    <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
+    <div class="btns-custom">
+      <button type="submit" class="commonBtn-custom register-button">저장</button>
+      <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
+    </div>
   </div>
 </form>
+<div>
+  <h2>비밀번호 변경</h2>
+  <dl class="dl-custom">
+    <dt class="dt-custom">기존 비밀번호</dt>
+    <dd class="dd-custom">
+      <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
+      <button type="button" onclick="checkCurrentPassword()">확인</button>
+    </dd>
+    <!-- 새 비밀번호 입력 -->
+    <dt class="dt-custom">새 비밀번호</dt>
+    <dd class="dd-custom">
+      <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
+    </dd>
+    <!-- 새 비밀번호 확인 -->
+    <dt class="dt-custom">새 비밀번호 확인</dt>
+    <dd class="dd-custom">
+      <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
+    </dd>
+  </dl>
+  <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+</div>
+
 <script>
   function checkCurrentPassword() {
     const currentPassword = document.getElementById("currentPassword").value;
 
-    // hidden input 필드에 저장되어 있다면 아래와 같이 가져올 수 있습니다.
-    const empId = document.getElementById("empId").value;
-
-    // CSRF 토큰과 헤더 읽어오기
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
@@ -120,9 +116,9 @@
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        [csrfHeaderName]: csrfToken, // CSRF 토큰을 헤더에 추가
+        [csrfHeaderName]: csrfToken
       },
-      body: JSON.stringify({ empId: empId, currentPassword: currentPassword })
+      body: JSON.stringify({ currentPassword: currentPassword })
     })
       .then(response => {
         if (response.ok) {
@@ -142,6 +138,7 @@
       .catch(error => console.error('오류 발생:', error));
   }
 
+
   function validatePassword() {
     const newPassword = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("newPasswordConfirm").value;
@@ -160,29 +157,26 @@
     return true;
   }
 
-  document.getElementById("passwordForm").onsubmit = function () {
-    return validatePassword();
+  document.getElementById("form").onsubmit = function (event) {
+    const isValid = validatePassword();
+    if (!isValid) {
+      event.preventDefault(); // 유효하지 않으면 폼 제출 방지
+    }
   };
 </script>
 <script>
   function updatePassword() {
     const newPassword = document.getElementById("newPassword").value;
-    const empId = document.getElementById('empId').value;
-
-    // CSRF 토큰과 헤더 읽어오기
-    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
     fetch("/profileEdit/updatePassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        [header]: token, // CSRF 토큰을 헤더에 추가
+        [csrfHeaderName]: csrfToken
       },
-      body: JSON.stringify({
-        empId: empId,
-        newPassword: newPassword
-      })
+      body: JSON.stringify({ newPassword: newPassword })
     })
       .then(response => {
         if (response.ok) {
@@ -200,24 +194,13 @@
       })
       .catch(error => console.error('오류 발생:', error));
   }
-</script>
-<script>
-  document.getElementById("passwordForm").onsubmit = function(event) {
-    event.preventDefault(); // 폼의 기본 제출 동작 방지
 
-    const newPassword = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("newPasswordConfirm").value;
 
-    if (newPassword !== confirmPassword) {
-      alert("새 비밀번호가 일치하지 않습니다.");
-      return false;
-    }
-
-    // 비밀번호 변경 요청 함수 호출
-    updatePassword();
+  document.getElementById("form").onsubmit = function(event) {
+    // 필요한 경우 여기에 개인 정보 수정 관련 유효성 검사 로직을 추가할 수 있습니다.
   };
-</script>
-<script>
+
+
   function checkEmpId() {
     const empIdElement = document.getElementById('empId');
     if (empIdElement) {
@@ -226,7 +209,6 @@
       console.error('empId element not found');
     }
   }
-
   // 페이지 로드 시 empId 값을 확인
   window.onload = checkEmpId;
 </script>

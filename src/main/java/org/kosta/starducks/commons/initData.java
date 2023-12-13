@@ -96,7 +96,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setPosition(Position.ROLE_EMPLOYEE);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
-        specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
+        specificEmp.setPwd(passwordEncoder.encode("qlalf123")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
 
         //초기 vendor 데이터

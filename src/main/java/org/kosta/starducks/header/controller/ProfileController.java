@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 public class ProfileController {
 
   @Autowired
   private ProfileService profileService;
+
 
   // 현재 로그인한 사용자의 프로필 정보를 불러오는 메소드
   @GetMapping("/profileEdit")
@@ -44,15 +46,19 @@ public class ProfileController {
     return "redirect:/profileEdit"; // 처리 후 리디렉트할 페이지
   }
 
-  @ResponseBody
   @PostMapping("/profileEdit/checkPassword")
-  public boolean checkCurrentPassword(@RequestParam Long empId, @RequestParam String currentPassword) {
+  @ResponseBody
+  public boolean checkCurrentPassword(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                      @RequestBody String currentPassword) {
+    Long empId = Long.valueOf(userDetails.getUsername());
     return profileService.checkCurrentPassword(empId, currentPassword);
   }
 
   @ResponseBody
   @PostMapping("/profileEdit/updatePassword")
-  public boolean updatePassword(@RequestParam Long empId, @RequestParam String newPassword) {
+  public boolean updatePassword(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                @RequestParam String newPassword) {
+    Long empId = userDetails.getEmployee().getEmpId();
     return profileService.updatePassword(empId, newPassword);
   }
 }
