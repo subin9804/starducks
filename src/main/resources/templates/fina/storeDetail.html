@@ -38,8 +38,7 @@
 
             <div>
                 <label for="storeManager" class="col-form-label">지점장</label>
-                <!-- 지점장 정보를 표시하는데 사용할 수 있는 방법이 필요 (예: 텍스트 또는 비활성화된 선택 상자) -->
-                <input type="text" id="storeManager" name="storeManager" th:value="${store.storeManager}"
+                <input type="text" id="storeManager" name="storeManager" th:value="${store.employee.getEmpName()}"
                        class="form-control" readonly>
             </div>
 

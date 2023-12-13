@@ -37,8 +37,8 @@
             <div>
                 <label for="storeManager" class="col-form-label">지점장</label>
                 <select id="storeManager" name="storeManager">
-                    <option th:each="e :${emps}"
-                            th:value="${e}" th:text="${e}"></option>
+                    <option th:each="sm :${storeManager}"
+                            th:value="${sm}" th:text="${sm}"></option>
                 </select>
             </div>
 

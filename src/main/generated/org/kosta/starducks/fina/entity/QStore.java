@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,17 +18,19 @@ public class QStore extends EntityPathBase<Store> {
 
     private static final long serialVersionUID = 1303586380L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QStore store = new QStore("store");
 
     public final StringPath addNo = createString("addNo");
 
     public final NumberPath<Long> businessNum = createNumber("businessNum", Long.class);
 
+    public final org.kosta.starducks.hr.entity.QEmployee employee;
+
     public final StringPath storeAddr = createString("storeAddr");
 
     public final StringPath storeDetailAddr = createString("storeDetailAddr");
-
-    public final EnumPath<StoreManager> storeManager = createEnum("storeManager", StoreManager.class);
 
     public final StringPath storeName = createString("storeName");
 
@@ -38,15 +41,24 @@ public class QStore extends EntityPathBase<Store> {
     public final EnumPath<StoreOperationalYn> storeOperationalYn = createEnum("storeOperationalYn", StoreOperationalYn.class);
 
     public QStore(String variable) {
-        super(Store.class, forVariable(variable));
+        this(Store.class, forVariable(variable), INITS);
     }
 
     public QStore(Path<? extends Store> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QStore(PathMetadata metadata) {
-        super(Store.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QStore(PathMetadata metadata, PathInits inits) {
+        this(Store.class, metadata, inits);
+    }
+
+    public QStore(Class<? extends Store> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
     }
 
 }

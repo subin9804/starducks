@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.kosta.starducks.fina.entity.Store;
-import org.kosta.starducks.fina.entity.StoreManager;
 import org.kosta.starducks.fina.entity.StoreOperationalYn;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDate;
 
@@ -19,7 +19,7 @@ public class StoreDTO {
     private Long storeNo;  // 지점 번호
     private String storeName;  // 지점명
     private Long businessNum;   // 사업자번호
-    private StoreManager storeManager;    // 점장
+    private Employee employee;    // 점장
     private LocalDate storeOpenDate;   // 개업일
     private String addNo;   // 우편번호
     private String storeAddr;  // 주소
@@ -28,7 +28,7 @@ public class StoreDTO {
 
 
     public Store toEntity() {
-        return new Store(storeNo, storeName, businessNum, storeManager, storeOpenDate,
+        return new Store(storeNo, storeName, businessNum, employee, storeOpenDate,
                 addNo, storeAddr, storeDetailAddr,storeOperationalYn);
     }
 }

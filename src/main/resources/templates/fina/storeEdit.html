@@ -37,11 +37,9 @@
 
         <div>
             <label for="storeManager" class="col-form-label">지점장</label>
-            <select id="storeManager" name="storeManager" th:field="*{store.storeManager}">
-                <option th:each="manager : ${storeManagers}"
-                        th:value="${manager}"
-                        th:text="${manager}"
-                        th:selected="${store.storeManager == manager}"></option>
+            <select id="storeManager" name="storeManager">
+                <option th:each="sm :${storeManager}"
+                        th:value="${sm}" th:text="${sm}"></option>
             </select>
         </div>
 
@@ -69,7 +67,7 @@
             <select id="storeOperationalYn" name="storeOperationalYn" th:field="*{store.storeOperationalYn}">
                 <option th:each="option : ${storeOperationalYn}"
                         th:value="${option}"
-                        th:text="${option}"
+                        th:text="${option.description}"
                         th:selected="${store.storeOperationalYn == option}"></option>
             </select>
         </div>

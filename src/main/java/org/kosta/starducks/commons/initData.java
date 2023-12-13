@@ -3,9 +3,6 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
-import org.kosta.starducks.fina.entity.Store;
-import org.kosta.starducks.fina.entity.StoreManager;
-import org.kosta.starducks.fina.entity.StoreOperationalYn;
 import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
@@ -32,7 +29,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -258,22 +254,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
                 scheduleRepository.saveAndFlush(scheduleData);
             }
-
-            // Store 인스턴스 생성 및 초기화
-            Store store1 = new Store();
-            store1.setStoreName("test1");
-            store1.setBusinessNum(123456789L);
-            store1.setStoreManager(StoreManager.STOREMANAGE_ONE);
-            store1.setStoreOpenDate(LocalDate.parse("2023-12-12"));
-            store1.setAddNo("11111");
-            store1.setStoreAddr("주소1");
-            store1.setStoreDetailAddr("상세주소1");
-            store1.setStoreOperationalYn(StoreOperationalYn.storeOperationalY);
-
-            storeRepository.save(store1);
-
-             List<Store> stores = Arrays.asList(store1);
-             storeRepository.saveAll(stores);
         }
     }
 }

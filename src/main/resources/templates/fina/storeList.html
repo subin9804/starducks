@@ -49,7 +49,7 @@
             <td th:text="${store.storeNo}"></td>
             <td th:text="${store.storeName}">지점명</td>
             <td th:text="${store.businessNum}">사업자 번호</td>
-            <td th:text="${store.storeManager}">지점장</td>
+            <td th:text="${store.getEmployee().getEmpName()}">지점장</td>
             <td th:text="${store.storeAddr}">주소</td>
             <td th:text="${store.storeOperationalYn}">운영여부</td>
         </tr>
