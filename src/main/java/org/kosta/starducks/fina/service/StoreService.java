@@ -7,6 +7,8 @@ import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.roles.Position;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,8 +28,8 @@ public class StoreService {
     /**
      * 지점 목록 조회
      */
-    public List<Store> getAllStores() {
-        return storeRepository.findAll();
+    public Page<Store> getAllStores(Pageable pageable) {
+        return storeRepository.findAll(pageable);
     }
 
     /**

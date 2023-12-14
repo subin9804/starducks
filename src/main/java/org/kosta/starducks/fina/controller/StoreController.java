@@ -9,6 +9,10 @@ import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.fina.service.StoreService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,9 @@ public class StoreController {
     private final StoreService storeService;
     private final StoreRepository storeRepository;
     private final EmpRepository empRepository;
+
+
+
 
     /**
      * 지점 추가
@@ -71,17 +78,36 @@ public class StoreController {
         return "fina/storeDetail";
     }
 
+
+
     /**
      * 지점 목록 조회
      *
      * @return
      */
     @GetMapping("/list")
-    public String showStoreList(Model model) {
-        List<Store> storeList = storeService.getAllStores();
-        model.addAttribute("storeList", storeList);
+    public String showStoreList(Model model, @PageableDefault(page = 0,size = 3,sort = "storeNo", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Store> storeList = storeService.getAllStores(pageable);
+        model.addAttribute("storeList", storeService.getAllStores(pageable));
         return "fina/storeList";
     }
+
+
+
+
+
+
+    /**
+     * 지점 목록 조회
+     *
+     * @return
+     */
+//    @GetMapping("/list")
+//    public String showStoreList(Model model) {
+//        List<Store> storeList = storeService.getAllStores();
+//        model.addAttribute("storeList", storeList);
+//        return "fina/storeList";
+//    }
 
     /**
      * 수정하기

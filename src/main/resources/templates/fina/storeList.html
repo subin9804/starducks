@@ -17,14 +17,11 @@
     <br><br>
     <br><br>
     <!-- 검색창. 제목 + 내용 검색 가능 -->
-<!--    <div style="display: flex; justify-content: center; align-items: center;">-->
-<!--        <form class="search-form" method="get" th:action="@{/fina/branch}">-->
-<!--            <input name="searchKeyword" placeholder="검색어를 입력하세요" type="text" style="float:left; margin-right: 10px;">-->
-<!--            <button type="submit">검색</button>-->
-<!--        </form>-->
-<!--    </div>-->
-    <div class="searchStore" align="center">
-        <form class="search select" th:width=""
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <form class="search-form" method="get" th:action="@{/fina/branch}">
+            <input name="searchKeyword" placeholder="검색어를 입력하세요" type="text" style="float:left; margin-right: 10px;">
+            <button type="submit">검색</button>
+        </form>
     </div>
 
     <button class="btn btn-primary" type="button" onclick="location.href='/fina/store/new'"
