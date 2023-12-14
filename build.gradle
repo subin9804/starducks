@@ -58,6 +58,10 @@ dependencies {
 
     //이메일 인증용 추가~~~~
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // 실시간 채팅 웹 소켓용 추가
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework:spring-messaging'
 }
 
 tasks.named('bootBuildImage') {
