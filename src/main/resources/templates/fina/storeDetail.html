@@ -11,6 +11,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/empVerification.css}"
           href="/static/css/document/createDoc/empVerification.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
 
 </th:block>
 
@@ -23,59 +24,74 @@
 
     <div class="row g-3 align-items-center">
         <!-- 상세 정보를 표시하는 폼 -->
-        <form class="container">
-            <div class="col-auto">
-                <label for="storeName" class="col-form-label">지점명</label>
-                <input type="text" id="storeName" name="storeName" th:value="${store.storeName}" class="form-control"
-                       readonly>
+        <div id="form" style="display: flex;">
+            <div style="flex: 1;">
+                <form class="container">
+
+                    <dl>
+                        <dt><label for="storeName" class="col-form-label">지점명</label></dt>
+                        <dd><input type="text" id="storeName" name="storeName" th:value="${store.storeName}"
+                                   class="form-control"
+                                   readonly></dd>
+                    </dl>
+
+                    <dl>
+                        <dt><label for="businessNum">사업자 번호</label></dt>
+                        <dd><input class="form-control" type="text" id="businessNum" name="businessNum"
+                                   th:value="${store.businessNum}" readonly></dd>
+                    </dl>
+
+                    <dl>
+                        <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
+                        <dd><input type="text" id="storeManager" name="storeManager"
+                                   th:value="${store.employee.getEmpName()}"
+                                   class="form-control" readonly></dd>
+                    </dl>
+
+                    <dl>
+                        <dt><label for="storeOpenDate" class="col-form-label">개업일</label></dt>
+                        <dd><input type="text" id="storeOpenDate" name="storeOpenDate" th:value="${store.storeOpenDate}"
+                                   class="form-control" readonly></dd>
+                    </dl>
             </div>
 
-            <div>
-                <label for="businessNum">사업자 번호</label>
-                <input class="form-control" type="text" id="businessNum" name="businessNum"
-                       th:value="${store.businessNum}" readonly>
-            </div>
+            <div style="flex: 1;">
+                <dl>
+                    <dt><label for="addNo">우편번호</label></dt>
+                    <dd><input type="text" id="addNo" name="addNo" th:value="${store.addNo}" class="form-control"
+                               readonly></dd>
+                </dl>
 
-            <div>
-                <label for="storeManager" class="col-form-label">지점장</label>
-                <input type="text" id="storeManager" name="storeManager" th:value="${store.employee.getEmpName()}"
-                       class="form-control" readonly>
-            </div>
+                <dl>
+                    <dt><label for="storeAddr">주소</label></dt>
+                    <dd><input type="text" id="storeAddr" name="storeAddr" th:value="${store.storeAddr}"
+                               class="form-control"
+                               readonly></dd>
+                </dl>
 
-            <div>
-                <label for="storeOpenDate" class="col-form-label">개업일</label>
-                <input type="text" id="storeOpenDate" name="storeOpenDate" th:value="${store.storeOpenDate}"
-                       class="form-control" readonly>
-            </div>
+                <dl>
+                    <dt><label for="storeDetailAddr">상세주소</label></dt>
+                    <dd><input type="text" id="storeDetailAddr" name="storeDetailAddr"
+                               th:value="${store.storeDetailAddr}"
+                               class="form-control" readonly></dd>
+                </dl>
 
-            <div>
-                <label for="addNo">우편번호</label>
-                <input type="text" id="addNo" name="addNo" th:value="${store.addNo}" class="form-control" readonly>
+                <!-- 운영 여부 -->
+                <dl>
+                    <dt><label for="storeOperationalYn">운영여부</label></dt>
+                    <dd><input type="text" id="storeOperationalYn" name="storeOperationalYn"
+                               th:value="${store.storeOperationalYn}" class="form-control" readonly></dd>
+                </dl>
             </div>
-            <div>
-                <label for="storeAddr">주소</label>
-                <input type="text" id="storeAddr" name="storeAddr" th:value="${store.storeAddr}" class="form-control"
-                       readonly>
-            </div>
-            <div>
-                <label for="storeDetailAddr">상세주소</label>
-                <input type="text" id="storeDetailAddr" name="storeDetailAddr" th:value="${store.storeDetailAddr}"
-                       class="form-control" readonly>
-            </div>
-
-            <!-- 운영 여부 -->
-            <div>
-                <label for="storeOperationalYn">운영여부</label>
-                <input type="text" id="storeOperationalYn" name="storeOperationalYn"
-                       th:value="${store.storeOperationalYn}" class="form-control" readonly>
-            </div>
+        </div>
 
             <div style="display: flex; justify-content: center; align-items: center;">
                 <button class="btn btn-success" type="button"
-                        th:attr="onclick=|location.href='/fina/store/edit/' + ${store.storeNo}|"
+                        th:onclick="'confirmUpdate(' + ${store.storeNo} + ')'"
                         style="margin-right: 10px;">
                     수정
                 </button>
+
                 <button class="btn btn-danger" type="button"
                         th:onclick="'confirmDelete(' + ${store.storeNo} + ')'"
                         style="margin-right: 10px;">
@@ -85,14 +101,17 @@
                     목록
                 </button>
             </div>
-        </form>
+            </form>
+        </div>
     </div>
+    </div>
+
 
     <script>
         function confirmDelete(storeNo) {
             Swal.fire({
                 title: '삭제 확인',
-                text: '정말로 이 지점을 삭제하시겠습니까?',
+                text: '정말 삭제하시겠습니까?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -103,6 +122,24 @@
                 if (result.isConfirmed) {
                     // 확인을 누르면 삭제 URL로 이동
                     window.location.href = '/fina/store/delete/' + storeNo;
+                }
+            });
+        }
+
+        function confirmUpdate(storeNo) {
+            Swal.fire({
+                title: '수정 확인',
+                text: '해당 정보를 수정 하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 확인을 누르면 수정 URL로 이동
+                    window.location.href = '/fina/store/edit/' + storeNo;
                 }
             });
         }
