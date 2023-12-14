@@ -35,6 +35,7 @@
                 <br>
                 <span>예약자</span>
                 <input th:if="${emp != null}" type="text" th:value="${emp.empName}" disabled>
+                <input th:if="${emp != null}" type="hidden" th:value="${emp.empId}" id="empId" disabled>
                 <br>
                 <span>회의 제목</span>
                 <input type="text" id="confName">
@@ -101,7 +102,7 @@
                 <dd><p id="sMemo"></p></dd>
             </dl>
             </div>
-            <div class="btns">
+            <div class="btns" id="btns">
                 <button class="commonBtn edit-button" id="edit-book">수정</button>
                 <button class="commonBtn delete-button" id="delete-book">삭제</button>
             </div>

@@ -41,7 +41,7 @@ public class MenuService {
                 break;
             case "document":
                 menus.add(new MenuDetail("mydocu", "나의 결재", "/"));
-                menus.add(new MenuDetail("writedocu", "결재문서 작성", "/"));
+                menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
                 menus.add(new MenuDetail("recieved", "수신함", "/"));
                 menus.add(new MenuDetail("tempsaved", "임시저장함", "/"));
                 break;

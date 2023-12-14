@@ -14,7 +14,7 @@
     <script th:if="${result}" th:utext="${result}"></script>
 
     <h1>사원관리</h1>
-    <form method="get" th:action="@{/hr}" class="search" th:object="${empSearch}">
+    <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
         <select name="sopt">
             <option value=null th:field="*{sopt}" selected>전체</option>
             <option value="dept" th:field="*{sopt}">부서명</option>

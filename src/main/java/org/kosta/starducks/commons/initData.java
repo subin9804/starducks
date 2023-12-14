@@ -225,7 +225,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                     LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
-
             };
 
             ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
