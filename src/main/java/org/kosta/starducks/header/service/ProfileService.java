@@ -21,12 +21,9 @@ public class ProfileService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public boolean checkCurrentPassword(Long empId, String currentPassword) {
-    Employee employee = empRepository.findById(empId).orElse(null);
-    if (employee != null) {
+  public boolean checkCurrentPassword(String currentPassword, Employee employee) {
+
       return passwordEncoder.matches(currentPassword, employee.getPwd());
-    }
-    return false;
   }
 
   public boolean isValidPassword(String password) {

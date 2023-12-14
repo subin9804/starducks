@@ -2,6 +2,8 @@ package org.kosta.starducks.header.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.header.dto.NewPasswordDto;
+import org.kosta.starducks.header.dto.PasswordDto;
 import org.kosta.starducks.header.service.ProfileService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +51,16 @@ public class ProfileController {
   @PostMapping("/profileEdit/checkPassword")
   @ResponseBody
   public boolean checkCurrentPassword(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                      @RequestBody String currentPassword) {
-    Long empId = Long.valueOf(userDetails.getUsername());
-    return profileService.checkCurrentPassword(empId, currentPassword);
+                                      @RequestBody PasswordDto passwordDto) {
+    Employee employee = userDetails.getEmployee();
+    return profileService.checkCurrentPassword(passwordDto.getCurrentPassword(), employee);
   }
 
   @ResponseBody
   @PostMapping("/profileEdit/updatePassword")
   public boolean updatePassword(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                @RequestParam String newPassword) {
-    Long empId = userDetails.getEmployee().getEmpId();
-    return profileService.updatePassword(empId, newPassword);
+                                @RequestBody NewPasswordDto newPasswordDto) {
+    Long empId = Long.valueOf(userDetails.getUsername());
+    return profileService.updatePassword(empId, newPasswordDto.getNewPassword());
   }
 }
