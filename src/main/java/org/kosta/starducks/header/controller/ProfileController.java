@@ -48,6 +48,8 @@ public class ProfileController {
     return "redirect:/profileEdit"; // 처리 후 리디렉트할 페이지
   }
 
+
+  //현재 비밀번호 확인
   @PostMapping("/profileEdit/checkPassword")
   @ResponseBody
   public boolean checkCurrentPassword(@AuthenticationPrincipal CustomUserDetails userDetails,
@@ -56,11 +58,12 @@ public class ProfileController {
     return profileService.checkCurrentPassword(passwordDto.getCurrentPassword(), employee);
   }
 
+  //새로운 비밀번호로 변경하기
   @ResponseBody
   @PostMapping("/profileEdit/updatePassword")
   public boolean updatePassword(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestBody NewPasswordDto newPasswordDto) {
-    Long empId = Long.valueOf(userDetails.getUsername());
-    return profileService.updatePassword(empId, newPasswordDto.getNewPassword());
+    Employee employee = userDetails.getEmployee();
+    return profileService.updatePassword(newPasswordDto.getNewPassword(), employee);
   }
 }

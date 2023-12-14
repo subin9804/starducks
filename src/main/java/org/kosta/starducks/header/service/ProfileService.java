@@ -1,10 +1,8 @@
 package org.kosta.starducks.header.service;
 
-import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +35,11 @@ public class ProfileService {
 
 
   @Transactional
-  public boolean updatePassword(Long empId, String newPassword) {
+  public boolean updatePassword(String newPassword, Employee employee) {
     //새로운 비밀번호가 유효성 검사 적합하면 다음 단계
     if (!isValidPassword(newPassword)) {
       return false;
     }
-    Employee employee = empRepository.findById(empId).orElse(null);
     if (employee != null) {
       employee.setPwd(passwordEncoder.encode(newPassword));
       empRepository.save(employee);

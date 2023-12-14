@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class NewPasswordDto {
-  // Getters and Setters
+
   private String newPassword;
 
 }
