@@ -83,7 +83,7 @@
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina" th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('fina')} ? true">
-            <label for="fina"><a th:href="@{/fina}">재무부</a></label>
+            <label for="fina"><a th:href="@{/fina/store/list}">재무부</a></label>
         </div>
         <ul id="flush-fina" th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('fina')}? 'display: none;'">
             <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">

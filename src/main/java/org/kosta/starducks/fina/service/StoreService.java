@@ -32,6 +32,10 @@ public class StoreService {
         return storeRepository.findAll(pageable);
     }
 
+    public Page<Store> storeSearchList(String searchKeyword, Pageable pageable) {
+        return storeRepository.findByStoreNameContaining(searchKeyword, pageable);
+    }
+
     /**
      * 지점 단일 조회
      */
@@ -41,6 +45,7 @@ public class StoreService {
 
     /**
      * 지점 추가하기
+     *
      * @return
      */
     public void createStore(Store store) {
@@ -56,6 +61,7 @@ public class StoreService {
 
     /**
      * 지점 수정
+     *
      * @param
      * @return
      */
@@ -81,19 +87,20 @@ public class StoreService {
 
     public void updateStore(Store store) {
         Store target = storeRepository.findById(store.getStoreNo()).orElse(null);
-        if(target != null) {
+        if (target != null) {
             storeRepository.save(store);
         }
     }
 
     /**
      * 지점 삭제
+     *
      * @param storeNo
      * @param rttr
      */
     public void deleteStore(Long storeNo, RedirectAttributes rttr) {
         Store storeTarget = storeRepository.findById(storeNo).orElse(null);
-        if(storeTarget != null) {
+        if (storeTarget != null) {
             storeRepository.delete(storeTarget);
             rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");
         }

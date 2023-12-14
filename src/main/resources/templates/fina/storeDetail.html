@@ -80,29 +80,30 @@
                 <dl>
                     <dt><label for="storeOperationalYn">운영여부</label></dt>
                     <dd><input type="text" id="storeOperationalYn" name="storeOperationalYn"
-                               th:value="${store.storeOperationalYn}" class="form-control" readonly></dd>
+                               th:value="${store.storeOperationalYn.description}" class="form-control" readonly></dd>
                 </dl>
+
             </div>
         </div>
 
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <button class="btn btn-success" type="button"
-                        th:onclick="'confirmUpdate(' + ${store.storeNo} + ')'"
-                        style="margin-right: 10px;">
-                    수정
-                </button>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <button class="btn btn-success" type="button"
+                    th:onclick="'confirmUpdate(' + ${store.storeNo} + ')'"
+                    style="margin-right: 10px;">
+                수정
+            </button>
 
-                <button class="btn btn-danger" type="button"
-                        th:onclick="'confirmDelete(' + ${store.storeNo} + ')'"
-                        style="margin-right: 10px;">
-                    삭제
-                </button>
-                <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
-                    목록
-                </button>
-            </div>
-            </form>
+            <button class="btn btn-danger" type="button"
+                    th:onclick="'confirmDelete(' + ${store.storeNo} + ')'"
+                    style="margin-right: 10px;">
+                삭제
+            </button>
+            <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
+                목록
+            </button>
         </div>
+        </form>
+    </div>
     </div>
     </div>
 

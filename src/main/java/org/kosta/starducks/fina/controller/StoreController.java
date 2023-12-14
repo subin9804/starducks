@@ -82,9 +82,19 @@ public class StoreController {
      * @return
      */
     @GetMapping("/list")
-    public String showStoreList(Model model, @PageableDefault(page = 0,size = 3,sort = "storeNo", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String showStoreList(Model model,
+                                @PageableDefault(page = 0, size = 5, sort = "storeNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
-        Page<Store> storeList = storeService.getAllStores(pageable);
+        Page<Store> storeList = null;
+
+        // 검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
+        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+            storeList = storeService.storeSearchList(searchKeyword, pageable);
+        } else {
+            storeList = storeService.getAllStores(pageable);
+        }
+
 
 //        페이지 블럭 처리
         int nowPage = storeList.getPageable().getPageNumber() + 1;

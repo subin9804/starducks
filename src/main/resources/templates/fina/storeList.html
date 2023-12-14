@@ -8,6 +8,7 @@
 <th:block layout:fragment="addMore">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
 </th:block>
 
 <!-- 메인 콘텐츠 영역 -->
@@ -16,19 +17,19 @@
     <hr>
     <br><br>
     <br><br>
+
     <!-- 검색창. 제목 + 내용 검색 가능 -->
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <form class="search-form" method="get" th:action="@{/fina/branch}">
-            <input name="searchKeyword" placeholder="검색어를 입력하세요" type="text" style="float:left; margin-right: 10px;">
-            <button type="submit">검색</button>
-        </form>
-    </div>
+    <form class="search-form" method="get" th:action="@{/fina/store/list}" style="display: flex; justify-content: center; align-items: center;">
+        <input name="searchKeyword" placeholder="검색어 입력" type="text">
+        <button type="submit">검색</button>
+    </form>
+
 
     <button class="btn btn-primary" type="button" onclick="location.href='/fina/store/new'"
             style="float: right">
         추가하기
     </button>
-
+    <br><br>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -50,13 +51,13 @@
             <td th:text="${store.businessNum}">사업자 번호</td>
             <td th:text="${store.getEmployee().getEmpName()}">지점장</td>
             <td th:text="${store.storeAddr}">주소</td>
-            <td th:text="${store.storeOperationalYn}">운영여부</td>
+            <td th:text="${store.storeOperationalYn == T(org.kosta.starducks.fina.entity.StoreOperationalYn).storeOperationalY ? '운영' : '미운영'}">운영여부</td>
         </tr>
         </tbody>
     </table>
 
     <!-- 페이지네이션 -->
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" style="display: flex; justify-content: center; align-items: center;">
         <ul class="pagination">
             <!-- 첫 번째 페이지로 이동 -->
             <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">
@@ -75,7 +76,7 @@
             <!-- 페이지 번호 -->
             <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                 <li class="page-item" th:classappend="${page == nowPage} ? 'active' : ''">
-                    <a class="page-link" th:href="@{/fina/store/list(page=${page - 1})}" th:text="${page}"></a>
+                    <a class="page-link" th:href="@{/fina/store/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
                 </li>
             </th:block>
 
