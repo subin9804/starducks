@@ -64,7 +64,7 @@ public class MenuService {
                 menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
                 break;
             case "fina" :
-                menus.add(new MenuDetail("point", "지점 정보 관리", "/"));
+                menus.add(new MenuDetail("store", "지점 정보 관리", "/fina/store/list"));
                 menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
                 break;
             default:
