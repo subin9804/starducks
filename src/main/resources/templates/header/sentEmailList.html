@@ -26,24 +26,25 @@
 
                 <nav class="flex flex-col" id="mailboxes">
 
+
                     <a th:href="@{/email/list}">
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-700 h-10 px-4 py-2 w-full mb-2 text-left">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100">
                             받은편지함
+                        </button>
+                    </a>
+                    <a th:href="@{/email/sentlist}">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-gray-700 h-10 px-4 py-2 w-full mb-2 text-left">
+                            보낸편지함
                         </button>
 
                     </a>
-                    <a th:href="@{email/sentlist}">
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
-                                th:href="@{/email/list}">
-                            보낸편지함
-                        </button>
-                    </a>
+
 
                 </nav>
             </div>
             <div class="flex-1 p-4 bg-white bg-opacity-75">
                 <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-xl font-semibold">받은편지함</h1>
+                    <h1 class="text-xl font-semibold">보낸편지함</h1>
                     <div class="flex space-x-2">
                         <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                             ⬅
@@ -60,13 +61,13 @@
                             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                 <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[10%]"></th>
                                 <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">
-                                    발신자
+                                    수신자
                                 </th>
                                 <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[40%]">
                                     제목
                                 </th>
                                 <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[30%]">
-                                    수신일
+                                    발신일
                                 </th>
 
                             </tr>
