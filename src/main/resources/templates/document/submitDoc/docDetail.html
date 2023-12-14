@@ -12,43 +12,54 @@
 </th:block>
 
 <main layout:fragment="content">
-  <h1 class="page-title">문서 상세 보기</h1>
+  <h1 class="page-title">상신 문서 상세</h1>
   <div class="page-border">
-    <div class="document" th:replace="~{document/submitDoc/draftDetail::draftDetail}"></div>
+<!--    <div class="document" th:include="${'document/submitDoc/' + formNameEn + '::document'}"></div>-->
+      <div class="document" th:include="~{document/submitDoc/draftDetail::document}"></div>
 
     <div class="approval-state">
-      <div>
-        <div>
-        <span>1차 결재상태</span>
-        <span>대기</span>
+      <div class="avp1-wrap">
+        <div class="avp1-title">
+        <span>1차 결재상태 : </span>대기
+        <span class="state-sticker">
+<!--                              <th:block th:switch="${apv2.apvStatus.toString()}">-->
+<!--                        <div th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</div>-->
+<!--                        <div th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</div>-->
+<!--                        <div th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</div>-->
+<!--                    </th:block>-->
+        </span>
       </div>
       <div>
-        <span>내용</span>
-        <textarea></textarea>
-      </div>
-    </div>
-
-    <div>
-      <div>
-        <span>2차 결재상태</span>
-        <span>대기</span>
-      </div>
-      <div>
-        <span th:text="${docForm?.formNameEn}">내용</span>
-        <span th:text="${document?.docId}">내용</span>
-        <textarea></textarea>
+        <span class="avp1-title">내용 : </span>
+        <textarea disabled></textarea>
       </div>
     </div>
 
-    <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
-    <button class="edit-button" type="button" th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|" th:text="수정">수정</button>
-    <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
-
-      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>
-<!--      th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"-->
-
+    <div class="avp2-wrap">
+      <div class="avp2-title">
+        <span>2차 결재상태 : </span>대기
+        <span class="state-sticker">
+<!--                              <th:block th:switch="${apv1.apvStatus.toString()}">-->
+<!--                        <div th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</div>-->
+<!--                        <div th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</div>-->
+<!--                        <div th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</div>-->
+<!--                    </th:block>-->
+        </span>
+      </div>
+      <div>
+        <span class="avp2-title">내용 : </span>
+        <textarea th:text="${document?.docContent}" disabled></textarea>
+      </div>
     </div>
 
+      <div class="buttons">
+        <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+        <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
+        <button class="edit-button" type="button" th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|" th:text="수정">수정</button>
+      </div>
+
+<!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->
+    </div>
   </div>
 </main>
 </html>
