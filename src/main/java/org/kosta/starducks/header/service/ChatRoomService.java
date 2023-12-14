@@ -1,5 +1,5 @@
 package org.kosta.starducks.header.service;
 
-public class ChatService {
+public class ChatRoomService {
 
 }
