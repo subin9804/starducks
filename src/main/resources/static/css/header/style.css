@@ -1,6 +1,7 @@
 
-#mailboxes{
+#mailboxes {
     margin-top: 20px;
+}
 
 /* 기본 스타일 */
 .ul-custom {
@@ -139,4 +140,5 @@ a p.commonBtn-custom {
     line-height: 50px;
     display: inline-block;
 }
+
 

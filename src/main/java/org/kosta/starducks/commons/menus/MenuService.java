@@ -53,7 +53,7 @@ public class MenuService {
                 menus.add(new MenuDetail("docu", "문서 관리", "/"));
                 break;
             case "logistic" :
-                menus.add(new MenuDetail("warehouseinbound", "입고 관리", "/"));
+                menus.add(new MenuDetail("store", "입고 관리", "/"));
                 menus.add(new MenuDetail("release", "출고 관리", "/"));
                 menus.add(new MenuDetail("warehouseinbound", "재고 관리", "/logistic/warehouseinbound"));
                 break;
