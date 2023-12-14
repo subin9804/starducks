@@ -2,7 +2,6 @@ package org.kosta.starducks.document.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.repository.CreateDocRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
@@ -23,7 +22,6 @@ public class SubmitDocController {
 
     private final DocFormRepository docFormRepository;
     private final CreateDocRepository createDocRepository;
-
     private final HttpServletRequest request;
 
     /**
@@ -31,7 +29,6 @@ public class SubmitDocController {
      */
     @GetMapping
     public String docSubmitList(Model model) {
-        MenuService.commonProcess(request, model, "document");
         List<Document> documents = createDocRepository.findAll();
         model.addAttribute("documents", documents);
         return "document/submitDoc/docSubmitList";
@@ -44,7 +41,6 @@ public class SubmitDocController {
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
-        MenuService.commonProcess(request, model, "document");
 
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
