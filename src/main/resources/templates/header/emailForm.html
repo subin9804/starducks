@@ -16,70 +16,63 @@
     <div class="content">
 
 
-            <div class="flex h-screen">
-                <div class="w-60 bg-gray-100 p-4">
-                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-700/90 hover:bg-blue-700 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white"
+        <div class="flex h-screen">
+            <div class="w-60 bg-gray-100 p-4">
+                <a th:href="@{/email}">
+                    <button id="mailwrite"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-700/90 hover:bg-blue-700 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white"
                             th:href="@{/email}">
                         메일쓰기
                     </button>
+                </a>
+                <nav class="flex flex-col" id="mailboxes">
 
-                    <nav class="flex flex-col" id="mailboxes">
-
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
-                                th:href="@{/email/list}">
+                    <a th:href="@{/email/list}">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100">
                             받은편지함
                         </button>
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
-                                th:href="@{/email/list}">
-                            보낸편지함
-                        </button>
+                    </a>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
+                            th:href="@{/email/list}">
+                        보낸편지함
+                    </button>
 
-                    </nav>
+                </nav>
 
             </div>
-            <div class="flex-1 p-4">
-                <div class="flex justify-between items-center mb-4">
+            <div class="flex-1 p-4 bg-white bg-opacity-75">
+                <div class="mb-4">
+<!--                <div class="flex justify-between items-center mb-4">-->
                     <h1 class="text-xl font-semibold">메일쓰기</h1>
 
                 </div>
                 <div class="overflow-auto">
                     <div class="relative w-full overflow-auto">
-                        <form th:action="@{/email/send}" method="post">
-                            <table>
-                                <tr>
-                                    <td>메일 주소</td>
-                                    <td>
-                                        <input type="text" name="address" placeholder="이메일 주소를 입력하세요">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>제목</td>
-                                    <td>
-                                        <input type="text" name="title" placeholder="제목을 입력하세요">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>내용</td>
-                                    <td>
-                                        <textarea name="content" placeholder="보낼 내용을 입력하세요"> </textarea>
-                                    </td>
-                                </tr>
-                            </table>
-                            <button>발송</button>
+
+
+
+                        <form class="space-y-4"  th:action="@{/email/send}" method="post">
+                            <div class="flex flex-col">
+                                <label for="recipient" class="mb-1">받는 사람</label>
+                                <input id="recipient" placeholder="이메일 주소를 입력하세요!" class="border p-2" type="text" name="address">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="subject" class="mb-1">제목</label>
+                                <input id="subject" placeholder="제목을 입력하세요" class="border p-2" type="text" name="title">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="content" class="mb-1">내용</label>
+                                <textarea id="content" style="width:100%;height: 100%" rows="20"  placeholder="메일 내용을 작성하세요" class="border p-2" name="content"></textarea>
+                            </div>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-700/90 hover:bg-blue-700 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white">
+                                보내기
+                            </button>
                         </form>
 
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
 
 
     </div>

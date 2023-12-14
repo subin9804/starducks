@@ -1,4 +1,7 @@
-
+/*메일 보내기 페이지*/
+#mailwrite{
+    margin-top:10px;
+}
 #mailboxes {
     margin-top: 20px;
 }
