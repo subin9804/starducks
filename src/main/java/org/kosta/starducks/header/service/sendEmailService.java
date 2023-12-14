@@ -4,8 +4,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.kosta.starducks.header.dto.EmailDto;
-import org.kosta.starducks.header.dto.RecievedEmailDto;
-import org.springframework.mail.SimpleMailMessage;
+import org.kosta.starducks.header.dto.RSEmailDto;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,9 @@ public class sendEmailService {
     }
 
 
-    public List<RecievedEmailDto> fetchInboxEmails() throws MessagingException {
+    //받은 메일함 받아오는 메서드
+
+    public List<RSEmailDto> fetchInboxEmails() throws MessagingException {
         String host = "imap.gmail.com";
         String username = "10000@starducks.monster";
         String password = "qgfk uxcn sdea vuwx";
@@ -50,16 +51,17 @@ public class sendEmailService {
         Store store = emailSession.getStore("imaps");
         store.connect(host, username, password);
 
+
         Folder inbox = store.getFolder("INBOX");
 
         try {
             inbox.open(Folder.READ_ONLY);
 
             Message[] messages = inbox.getMessages();
-            List<RecievedEmailDto> messageList = new ArrayList<>();
+            List<RSEmailDto> messageList = new ArrayList<>();
             for (Message message : messages) {
-                RecievedEmailDto mailDto = new RecievedEmailDto();
-                mailDto.setFrom(getFromAddresses(message));
+                RSEmailDto mailDto = new RSEmailDto();
+                mailDto.setPeople(getFromAddresses(message));
                 mailDto.setSubject(message.getSubject());
                 mailDto.setSentDate(message.getSentDate());
                 mailDto.setMessageContent(getMessageContent(message));
@@ -83,9 +85,76 @@ public class sendEmailService {
         }
     }
 
+
+
+    //보낸 메일함 받아오는 메서드
+    public List<RSEmailDto> fetchSentEmails() throws MessagingException {
+        String host = "imap.gmail.com";
+        String username = "10000@starducks.monster";
+        String password = "qgfk uxcn sdea vuwx";
+
+        Properties properties = new Properties();
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.imaps.host", host);
+        properties.put("mail.imaps.port", "993");
+        properties.put("mail.imaps.ssl.enable", "true");
+
+        Session emailSession = Session.getInstance(properties);
+        Store store = emailSession.getStore("imaps");
+        store.connect(host, username, password);
+
+        Folder sent = store.getFolder("[Gmail]/Sent Mail");
+
+        try {
+            sent.open(Folder.READ_ONLY);
+
+            Message[] messages = sent.getMessages();
+            List<RSEmailDto> sentEmailList = new ArrayList<>();
+            for (Message message : messages) {
+                RSEmailDto sentEmailDto = new RSEmailDto();
+                sentEmailDto.setPeople(getToAddresses(message));
+                sentEmailDto.setSubject(message.getSubject());
+                sentEmailDto.setSentDate(message.getSentDate());
+                sentEmailDto.setMessageContent(getMessageContent(message));
+                sentEmailDto.setAttachFiles(getAttachmentFiles(message));
+
+                sentEmailList.add(sentEmailDto);
+            }
+
+            return sentEmailList;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 메일 폴더 사용이 끝났으면 닫기
+            if (sent != null && sent.isOpen()) {
+                sent.close(false);
+            }
+            // Store도 닫기
+            if (store != null && store.isConnected()) {
+                store.close();
+            }
+        }
+    }
+
+
+
+
+
     private String getAttachmentFiles(Message message) {
         String s = null;
         return s;
+    }
+
+    private String getToAddresses(Message message) throws MessagingException {
+        Address[] toAddresses = message.getRecipients(Message.RecipientType.TO);
+        StringBuilder to = new StringBuilder();
+        for (Address address : toAddresses) {
+            to.append(address.toString()).append(", ");
+        }
+        if (to.length() > 1) {
+            to.delete(to.length() - 2, to.length());
+        }
+        return to.toString();
     }
 
     private String getFromAddresses(Message message) throws MessagingException {
@@ -121,35 +190,4 @@ public class sendEmailService {
         return "";
     }
 
-//
-//    private static final String from = "1000@starducks.monster"; // 보내는 사람의 이메일 주소
-//    private static final String password = "qgfk uxcn sdea vuwx"; // 보내는 사람의 이메일 계정 비밀번호
-//    private static final String host = "smtp.gmail.com"; // 구글 메일 서버 호스트 이름
-//
-//
-//    public void sendMessage(EmailDto emailDto){
-//
-//    // SMTP 프로토콜 설정
-//    Properties props = new Properties();
-//        props.setProperty("mail.smtp.host", host);
-//        props.setProperty("mail.smtp.port", "587");
-//        props.setProperty("mail.smtp.auth", "true");
-//        props.setProperty("mail.smtp.starttls.enable", "true");
-//
-//    // 보내는 사람 계정 정보 설정
-//    Session session = Session.getInstance(props, new Authenticator() {
-//        protected PasswordAuthentication getPasswordAuthentication() {
-//            return new PasswordAuthentication(from, password);
-//        }
-//    });
-//
-//    // 메일 내용 작성
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom(from);
-//        message.setTo(emailDto.getAddress());
-//        message.setSubject(emailDto.getTitle());
-//        message.setText(emailDto.getContent());
-//        //이메일 보내기
-//        javaMailSender.send(message);
-//}
 }

@@ -1,11 +1,10 @@
 package org.kosta.starducks.header.controller;
 
 
-import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.kosta.starducks.header.dto.EmailDto;
-import org.kosta.starducks.header.dto.RecievedEmailDto;
+import org.kosta.starducks.header.dto.RSEmailDto;
 import org.kosta.starducks.header.service.sendEmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +36,8 @@ public class SendEmailController {
     @GetMapping("/list")
     public String getEmailList(Model model) {
         try {
-            List<RecievedEmailDto> emails = emailService.fetchInboxEmails();
-            emails.sort(Comparator.comparing(RecievedEmailDto::getSentDate).reversed());
+            List<RSEmailDto> emails = emailService.fetchInboxEmails();
+            emails.sort(Comparator.comparing(RSEmailDto::getSentDate).reversed());
 
             model.addAttribute("emails", emails);
         } catch (Exception e) {
@@ -47,6 +46,22 @@ public class SendEmailController {
         }
         return "header/emailList";
     }
+
+    @GetMapping("/sentlist")
+    public String getSentEmailList(Model model) {
+        try {
+
+            List<RSEmailDto> emails =emailService.fetchSentEmails();
+            emails.sort(Comparator.comparing(RSEmailDto::getSentDate).reversed());
+
+            model.addAttribute("emails", emails);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+        return "header/sentEmailList";
+    }
+
 
 
 
