@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         events: function (fetchInfo, successCallback, failureCallback) {
-            // var empId = getEmpId();
-            var empId = 1;
+            var empId = document.getElementById("empId").innerText;
+            console.log(empId);
+
             fetchDailyAttendance(empId).then(function (data) {
                 var events = data.map(function (attendance) {
                     return {
@@ -53,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
-function fetchDailyAttendance() {
-    var empId = 1
+function fetchDailyAttendance(empId) {
     return fetch('/mypage/attendance/daily/' + empId)
         .then(function (response) {
             if (!response.ok) {

@@ -36,6 +36,8 @@ public class EmpService {
 
     /**
      * 직원 검색
+     * @param cond 검색조건
+     * @return
      */
     @Transactional
     public Page<Employee> toSearchEmp (EmpSearchCond cond) {
@@ -43,6 +45,7 @@ public class EmpService {
         emps.stream().forEach(em::detach);  // 영속성 분리
         return emps;
     }
+
 
     /**
      * 한명의 직원 조회

@@ -1,9 +1,7 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
-import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
@@ -19,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,31 +177,31 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 //        productRepository.saveAndFlush(product6);
 
         // 초기 게시글 데이터
-        for (int i = 0; i < 33; i++) {
-            ForumPost forumPost = new ForumPost();
-            forumPost.setPostDate(LocalDateTime.now());
-            forumPost.setPostTitle("제목" + i);
-            forumPost.setPostContent("내용" + i);
-            forumPost.setPostView(i);
-            forumPost.setEmployee(specificEmp);
-
-            //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
-          forumPost.setPostNotice(i < 5);
-            forumPostRepository.saveAndFlush(forumPost);
-        }
+//        for (int i = 0; i < 33; i++) {
+//            ForumPost forumPost = new ForumPost();
+//            forumPost.setPostDate(LocalDateTime.now());
+//            forumPost.setPostTitle("제목" + i);
+//            forumPost.setPostContent("내용" + i);
+//            forumPost.setPostView(i);
+//            forumPost.setEmployee(specificEmp);
+//
+//            //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
+//          forumPost.setPostNotice(i < 5);
+//            forumPostRepository.saveAndFlush(forumPost);
+//        }
 
 
         //문서 양식 데이터
-        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-        String[] formNamesEn = {"draft", "b", "c", "vacation", "cancel", "f", "g"};
-        for (int i = 1; i < 8; i++) {
-            DocForm docForm = new DocForm();
-            docForm.setFormCode("A0" + i);
-            docForm.setFormName(formNames[i - 1]);
-            docForm.setFormNameEn(formNamesEn[i - 1]);
-
-            docFormRepository.saveAndFlush(docForm);
-        }
+//        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
+//        String[] formNamesEn = {"draft", "b", "c", "vacation", "cancel", "f", "g"};
+//        for (int i = 1; i < 8; i++) {
+//            DocForm docForm = new DocForm();
+//            docForm.setFormCode("A0" + i);
+//            docForm.setFormName(formNames[i - 1]);
+//            docForm.setFormNameEn(formNamesEn[i - 1]);
+//
+//            docFormRepository.saveAndFlush(docForm);
+//        }
 
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");

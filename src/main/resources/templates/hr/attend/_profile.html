@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div id="profile-box" class="attd-check-box d-flex align-items-center justify-content-evenly" th:fragment="profile">
+    <div>
+        <img th:src="${profile}" width="80" height="80" class="rounded-circle border-3 border border-dark">
+    </div>
+    <div class="d-flex align-items-center justify-content-between gap-3">
+        <div class="fw-bolder">
+            <p>이름</p>
+            <p>직급</p>
+            <p>부서</p>
+            <p>사번</p>
+        </div>
+        <div>
+            <p th:text="${employee.empName}">이름</p>
+
+            <p th:if="${employee.position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+            <p th:if="${employee.position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+            <p th:if="${employee.position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+            <p th:if="${employee.position.toString() == 'ROLE_BOSS'}">사장</p>
+            <p th:if="${employee.position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+
+            <p th:text="${employee.dept.deptName}">부서</p>
+            <p th:text="${employee.empId}">사번</p>
+        </div>
+    </div>
+</div>

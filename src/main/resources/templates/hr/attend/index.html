@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>사원 근태 관리</h1>
+    <form method="get" th:action="@{/hr/attend}" class="search" th:object="${empSearch}">
+        <select name="sopt">
+            <option value=null th:field="*{sopt}" selected>전체</option>
+            <option value="dept" th:field="*{sopt}">부서명</option>
+            <option value="empName" th:field="*{sopt}">사원명</option>
+            <option value="email" th:field="*{sopt}">사번</option>
+        </select>
+        <div>
+            재직 <input type="radio" name="status" value="running" th:field="*{status}">
+            퇴사 <input type="radio" name="status" value="stopped" th:field="*{status}">
+        </div>
+        <input type="text" th:field="*{text}">
+        <button class="search-button">조회</button>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>사번</th>
+            <th>이름</th>
+            <th>부서</th>
+            <th>직급</th>
+            <th>연락처</th>
+            <th>이메일</th>
+        </tr>
+        </thead>
+        <tbody th:each="emp : ${employees}" th:object="${emp}">
+
+        <tr>
+            <td th:text="*{empId}"></td>
+            <td><a th:href="@{/hr/attend/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
+            <td th:text="*{dept.deptName}"></td>
+            <td th:text="*{position}"></td>
+            <td th:text="*{empTel}"></td>
+            <td th:text="*{email}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</main>
+</html>
