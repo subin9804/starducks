@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header/style.css}">
+    <script th:src="@{/js/header/script.js}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>Inbox</h1>
+    <div class="content">
+
+
+<!--        <table class="gmail-style-table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Subject</th>-->
+<!--            <th>From</th>-->
+<!--            <th>Date</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="email : ${emails}">-->
+<!--            <td th:text="${email.getSubject()}">Subject</td>-->
+<!--            <td th:text="${email.getFrom()}">From</td>-->
+<!--            <td th:text="${email.getSentDate()}">Date</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+
+    <div class="flex h-screen">
+        <div class="w-60 bg-gray-100 p-4">
+            <a class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white"
+                th:href="@{/email}">
+                메일쓰기
+            </a>
+            <nav class="space-y-1">
+                <a class="block p-2 bg-blue-500 text-white rounded-md"
+                    th:href="@{/email/list}"
+                    rel="ugc">
+                    받은편지함
+                </a>
+                <a class="block p-2 hover:bg-gray-200 rounded-md"
+                    href="#"
+                    rel="ugc">
+                    보낸편지함
+                </a>
+
+            </nav>
+        </div>
+        <div class="flex-1 p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-xl font-semibold">받은편지함</h1>
+                <div class="flex space-x-2">
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        ⬅
+                    </button>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        ➡
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-auto">
+                <div class="relative w-full overflow-auto">
+                    <table class="w-full caption-bottom text-sm">
+                        <thead class="[&amp;_tr]:border-b">
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[10%]"></th>
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">
+                                발신자
+                            </th>
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[40%]">
+                                제목
+                            </th>
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[30%]">
+                                수신일
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody class="[&amp;_tr:last-child]:border-0">
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                            th:each="email : ${emails}">
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                <input type="checkbox" />
+                            </td>
+
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                                th:text="${email.getFrom()}">From</td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                                th:text="${email.getSubject()}">SUBJECT</td>
+
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                                th:text="${email.getSentDate()}">시간</td>
+                        </tr>
+
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</main>
+
+
+
+</html>

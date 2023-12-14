@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>발송완료</h1>
+    <div class="content">
+        <h1>새로운 이메일 보내기</h1>
+
+        <form th:action="@{/email/send}" method="post">
+            <table>
+                <tr>
+                    <td>메일 주소</td>
+                    <td>
+                        <input type="text" name="address" placeholder="이메일 주소를 입력하세요">
+                    </td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td>
+                        <input type="text" name="title" placeholder="제목을 입력하세요">
+                    </td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td>
+                        <textarea name="content" placeholder="보낼 내용을 입력하세요"> </textarea>
+                    </td>
+                </tr>
+            </table>
+            <button>발송</button>
+        </form>
+    </div>
+</main>
+
+
+</html>

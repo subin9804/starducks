@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header/style.css}">
+    <script th:src="@{/js/header/script.js}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>메일 보내기</h1>
+    <div class="content">
+
+
+            <div class="flex h-screen">
+                <div class="w-60 bg-gray-100 p-4">
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-700/90 hover:bg-blue-700 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white"
+                            th:href="@{/email}">
+                        메일쓰기
+                    </button>
+
+                    <nav class="flex flex-col" id="mailboxes">
+
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
+                                th:href="@{/email/list}">
+                            받은편지함
+                        </button>
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100"
+                                th:href="@{/email/list}">
+                            보낸편지함
+                        </button>
+
+                    </nav>
+
+            </div>
+            <div class="flex-1 p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-xl font-semibold">메일쓰기</h1>
+
+                </div>
+                <div class="overflow-auto">
+                    <div class="relative w-full overflow-auto">
+                        <form th:action="@{/email/send}" method="post">
+                            <table>
+                                <tr>
+                                    <td>메일 주소</td>
+                                    <td>
+                                        <input type="text" name="address" placeholder="이메일 주소를 입력하세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>제목</td>
+                                    <td>
+                                        <input type="text" name="title" placeholder="제목을 입력하세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>내용</td>
+                                    <td>
+                                        <textarea name="content" placeholder="보낼 내용을 입력하세요"> </textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button>발송</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+</main>
+
+
+</html>
