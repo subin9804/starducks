@@ -42,9 +42,19 @@ public class Employee {
     private boolean status;      // 퇴사여부
     private String pwd;     // 비밀번호
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department dept;    // 부서코드
+
+
+    @Transient
+    private String cmpEmail;    // 회사 이메일
+
+    @PrePersist
+    public void generateCmpEmail() {
+        this.cmpEmail = this.empId + "@starbucks.monster";
+    }
 
 }
 

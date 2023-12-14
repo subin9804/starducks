@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</th:block>
+
+<main layout:fragment="content">
+    <h1>거래처 관리</h1>
+
+    <!-- 검색창. 제목 + 내용 검색 가능 -->
+    <form class="search-form" method="get" th:action="@{/forum}">
+        <input name="searchKeyword" placeholder="검색어 입력" type="text">
+        <button type="submit">검색</button>
+    </form>
+
+    <!--    거래처 목록 테이블-->
+    <table style="text-align: center" class="client-table">
+        <tr>
+            <th class="th1">거래처번호</th>
+            <th class="th1">거래처명</th>
+            <th class="th1">업종</th>
+            <th class="th1">대표자</th>
+            <th class="th1">대표자 연락처</th>
+            <th class="th1">사업자 번호</th>
+            <th class="th1">거래 여부</th>
+        </tr>
+        <tr class="tr1 trs" th:each="client : ${ clientList }">
+            <td th:text="${ client.cntNo }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntName }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntSectors }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntRepName }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntRepPhone }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntBusinessNum }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+            <td th:text="${ client.cntTradeYn }"
+                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+        </tr>
+    </table>
+    </div>
+    <br>
+</main>

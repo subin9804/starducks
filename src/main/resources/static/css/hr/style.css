@@ -104,7 +104,7 @@ input[type='checkbox'].selectbox {display: none;}
     border-radius: 10px;
     border: 1px solid #6B4D27;
     z-index: 5;
- }
+}
 .option1, .option2 {
     padding: 5px;
     text-align: center;

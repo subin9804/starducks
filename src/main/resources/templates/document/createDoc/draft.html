@@ -25,14 +25,14 @@
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
             <form method="post">
-            <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
+                <div th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</div>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
-            긴급 <input type="checkbox" id="urgent" name="urgent" th:checked="${document?.urgent}">
+                긴급 <input type="checkbox" id="urgent" name="urgent" th:checked="${document?.urgent}">
 
                 <div>
-                <span class="doc-input-lbl">기안일</span>
-<!--                :<input type="datetime-local" class="doc-readonly" th:value="${document?.docDate}" readonly>-->
+                    <span class="doc-input-lbl">기안일</span>
+                    <!--                :<input type="datetime-local" class="doc-readonly" th:value="${document?.docDate}" readonly>-->
                     : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div>
@@ -41,41 +41,41 @@
                     : <span th:value="${document?.docWriter?.empName}"></span>
                 </div>
 
-            <div class="hr"><hr></div>
+                <div class="hr"><hr></div>
 
-            1차 결재자 :
-<!--            <div th:text="${apv1.approver}"></div>-->
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
-                사원찾기
-            </button>
+                1차 결재자 :
+                <!--            <div th:text="${apv1.approver}"></div>-->
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                    사원찾기
+                </button>
 
-            2차 결재자 :
-<!--            <div th:text="${apv2.approver}"></div>-->
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
-                사원찾기
-            </button>
+                2차 결재자 :
+                <!--            <div th:text="${apv2.approver}"></div>-->
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                    사원찾기
+                </button>
 
-            <div class="hr"><hr></div>
+                <div class="hr"><hr></div>
 
-            참조인 :
-<!--            <div th:text="${doc.refEmp}"></div>-->
-<!--            라디오가 아닌 체크박스로 변경-->
-            <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                    data-bs-toggle="modal" data-bs-target="#selectEmpModal">
-                사원찾기
-            </button>
+                참조인 :
+                <!--            <div th:text="${doc.refEmp}"></div>-->
+                <!--            라디오가 아닌 체크박스로 변경-->
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectEmpModal">
+                    사원찾기
+                </button>
 
-            <div class="hr"><hr></div>
+                <div class="hr"><hr></div>
 
-            첨부파일 :
-            <input type="file" multiple>
+                첨부파일 :
+                <input type="file" multiple>
 
-            <div class="hr"><hr></div>
+                <div class="hr"><hr></div>
 
-<!--                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">-->
-                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
+                <!--                    제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">-->
+                제목 : <input type="text" name="docTitle" th:value="${document?.docTitle}">
                 <textarea name="docContent" th:value="${document?.docContent}" th:text="${document?.docContent}" placeholder="내용을 입력하세요."></textarea>
 
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
@@ -88,77 +88,77 @@
         </div>
 
 
-    <div class="a4-box page-shadow">
-        <div id="print-div">
-            <h1 class="doc-type-name">업 무 기 안 서</h1>
-            <div class="top-box">
-                <table class="drafter-box">
-                    <tr>
-                        <th rowspan="2">신청</th>
-                        <th>사원</th>
-                    </tr>
-                    <tr>
-                        <td class="stamp-box">(홍길동인)</td>
-                    </tr>
-                </table>
-                <table class="approver-box">
-                    <tr>
-                        <th rowspan="2">승인</th>
-                        <th>직급</th>
-                        <th>직급</th>
-                    </tr>
-                    <tr>
-                        <td class="stamp-box">(김팀장인)</td>
-                        <td class="stamp-box">(김사장인)</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                </table>
-            </div>
+        <div class="a4-box page-shadow">
+            <div id="print-div">
+                <h1 class="doc-type-name">업 무 기 안 서</h1>
+                <div class="top-box">
+                    <table class="drafter-box">
+                        <tr>
+                            <th rowspan="2">신청</th>
+                            <th>사원</th>
+                        </tr>
+                        <tr>
+                            <td class="stamp-box">(홍길동인)</td>
+                        </tr>
+                    </table>
+                    <table class="approver-box">
+                        <tr>
+                            <th rowspan="2">승인</th>
+                            <th>직급</th>
+                            <th>직급</th>
+                        </tr>
+                        <tr>
+                            <td class="stamp-box">(김팀장인)</td>
+                            <td class="stamp-box">(김사장인)</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </table>
+                </div>
 
-            <div class="middle-box">
-                <table class="doc-info-box">
-                    <tr class="approver">
-                        <td class="col-th">기안자</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-info">
-                        <td class="col-th">소속</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">기안일</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">문서번호</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">참조인</td>
-                        <td>내용</td>
-                    </tr>
-                </table>
-                <table class="doc-content-box">
-                    <tr class="approver">
-                        <td class="col-th">제목</td>
-                        <td th:text="${document?.docTitle}">내용</td>
-                    </tr>
-                    <tr class="doc-info">
-                        <td class="col-th">내용</td>
-                        <td th:text="${document?.docContent}">내용</td>
-                    </tr>
-                </table>
-                <table class="attached-files-box">
-                    <tr class="attached-files">
-                        <td class="col-th">첨부파일</td>
-                        <td>내용</td>
-                    </tr>
-                </table>
-            </div>
+                <div class="middle-box">
+                    <table class="doc-info-box">
+                        <tr class="approver">
+                            <td class="col-th">기안자</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr class="doc-info">
+                            <td class="col-th">소속</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr class="doc-content">
+                            <td class="col-th">기안일</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr class="doc-content">
+                            <td class="col-th">문서번호</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr class="doc-content">
+                            <td class="col-th">참조인</td>
+                            <td>내용</td>
+                        </tr>
+                    </table>
+                    <table class="doc-content-box">
+                        <tr class="approver">
+                            <td class="col-th">제목</td>
+                            <td th:text="${document?.docTitle}">내용</td>
+                        </tr>
+                        <tr class="doc-info">
+                            <td class="col-th">내용</td>
+                            <td th:text="${document?.docContent}">내용</td>
+                        </tr>
+                    </table>
+                    <table class="attached-files-box">
+                        <tr class="attached-files">
+                            <td class="col-th">첨부파일</td>
+                            <td>내용</td>
+                        </tr>
+                    </table>
+                </div>
 
+            </div>
         </div>
-    </div>
     </div>
 
 </main>

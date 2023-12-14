@@ -69,6 +69,11 @@ public class ForumPostController {
         int endPage = Math.min(nowPage + 5, posts.getTotalPages());
         int totalPages = posts.getTotalPages();
 
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
         model.addAttribute("posts", posts );
         model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
         model.addAttribute("nowPage", nowPage);

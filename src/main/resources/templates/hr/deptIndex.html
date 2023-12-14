@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+    <main layout:fragment="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>부서 번호</th>
+                    <th>부서명</th>
+                    <th>대표 연락처</th>
+                    <th>인원</th>
+                </tr>
+            </thead>
+            <tbody th:each="dept : ${depts}" th:object="${dept}">
+
+                <tr th:onclick="'location.href=\'' + @{/hr/dept/{deptId}(deptId=*{deptId})} + '\''">
+                    <td th:text="*{deptId}"></td>
+                    <td th:text="*{deptName}"></td>
+                    <td th:text="*{deptRepTel}"></td>
+<!--                    <td th:text="*{#emps.size()}"></td>-->
+                </tr>
+
+            </tbody>
+        </table>
+
+
+    </main>
+</html>

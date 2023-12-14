@@ -42,11 +42,17 @@
         </thead>
         <tbody th:each="emp : ${employees}" th:object="${emp}">
 
-            <tr>
+            <tr th:onclick="'location.href=\'' + @{/hr/emp/{empId}(empId=*{empId})} + '\''">
                 <td th:text="*{empId}"></td>
                 <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
                 <td th:text="*{dept.deptName}"></td>
-                <td th:text="*{position}"></td>
+                <td>
+                    <p th:if="*{position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+                    <p th:if="*{position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+                    <p th:if="*{position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+                    <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
+                    <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+                </td>
                 <td th:text="*{empTel}"></td>
                 <td th:text="*{email}"></td>
             </tr>

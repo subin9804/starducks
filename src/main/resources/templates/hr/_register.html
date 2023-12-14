@@ -82,6 +82,7 @@
                                 <th:block th:if="${position.toString() == 'ROLE_DEPTLEADER'}" th:text="부장"></th:block>
                                 <th:block th:if="${position.toString() == 'ROLE_TEAMLEADER'}" th:text="팀장"></th:block>
                                 <th:block th:if="${position.toString() == 'ROLE_EMPLOYEE'}" th:text="사원"></th:block>
+                                <th:block th:if="${position.toString() == 'ROLE_STOREMANAGER'}" th:text="점장"></th:block>
                             </li>
                         </ul>
                         <input id="position" type="hidden" th:field="*{position}">

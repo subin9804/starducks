@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+////
 /**
  * 서브메뉴 조회
  */
@@ -49,7 +49,7 @@ public class MenuService {
                 menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
                 menus.add(new MenuDetail("attend", "근태 관리", "/hr/attend"));
                 menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
-                menus.add(new MenuDetail("dept", "부서 관리", "/"));
+                menus.add(new MenuDetail("dept", "부서 관리", "/hr/dept"));
                 menus.add(new MenuDetail("docu", "문서 관리", "/"));
                 break;
             case "logistic" :

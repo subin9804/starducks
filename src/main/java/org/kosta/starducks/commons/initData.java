@@ -2,7 +2,9 @@ package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
 import org.kosta.starducks.hr.entity.Department;
@@ -29,26 +31,24 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ForumPostRepository forumPostRepository;
     private final DocFormRepository docFormRepository;
     private final ProductRepository productRepository;
-
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
+    private final StoreRepository storeRepository;
 
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
         // 초기 부서 데이터
-        for (int i = 0; i < 33; i++) {
-            List<Department> depts = new ArrayList<>();
-            depts.add(new Department(1, "사장실", "010-1111-1111"));
-            depts.add(new Department(2, "재무부", "010-2222-2222"));
-            depts.add(new Department(3, "총무부", "010-3333-3333"));
-            depts.add(new Department(4, "물류유통부", "010-4444-4444"));
-            depts.add(new Department(5, "인사부", "010-5555-5555"));
+        List<Department> depts = new ArrayList<>();
+        depts.add(new Department(1, "사장실", "010-1111-1111"));
+        depts.add(new Department(2, "재무부", "010-2222-2222"));
+        depts.add(new Department(3, "총무부", "010-3333-3333"));
+        depts.add(new Department(4, "물류유통부", "010-4444-4444"));
+        depts.add(new Department(5, "인사부", "010-5555-5555"));
 
-            deptRepository.saveAllAndFlush(depts);
-        }
+        deptRepository.saveAllAndFlush(depts);
 
         // 초기 사원 데이터
         for (int i = 1; i < 5; i++) {
@@ -83,42 +83,42 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
         specificEmp.setDAddr("수원시");
-        specificEmp.setPosition(Position.ROLE_EMPLOYEE);
+        specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
         repository.saveAndFlush(specificEmp);
 
         //초기 vendor 데이터
-//        for(int i = 0; i < 5; i++) {
-//            Vendor vendor = new Vendor();
-//            vendor.setVendorName("거래처" + i);
-//            vendor.setVendorRegistNum("11"+i);
-//            vendor.setVendorRepreName("repre"+i);
-//            vendor.setVendorTelephone("010-9993-999"+i);
-//            vendor.setVendorStartDate(LocalDate.parse("2023-11-11"));
-//            vendor.setVendorAddress("용인시");
-//
-//            vendorRepository.saveAndFlush(vendor);
-//        }
+        for(int i = 0; i < 5; i++) {
+            Vendor vendor = new Vendor();
+            vendor.setVendorName("거래처" + i);
+            vendor.setVendorRegistNum("11"+i);
+            vendor.setVendorRepreName("repre"+i);
+            vendor.setVendorTelephone("010-9993-999"+i);
+            vendor.setVendorStartDate(LocalDate.parse("2023-11-11"));
+            vendor.setVendorAddress("용인시");
 
-//        Vendor vendor1 = new Vendor();
-//        vendor1.setVendorName("빈로스터리");
-//        vendor1.setVendorRegistNum("12458921");
-//        vendor1.setVendorRepreName("장총명");
-//        vendor1.setVendorTelephone("010-1212-3434");
-//        vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
-//        vendor1.setVendorAddress("서울시 중구 장충동");
-//        vendorRepository.saveAndFlush(vendor1);
-//
-//        Vendor vendor2 = new Vendor();
-//        vendor2.setVendorName("대성산업");
-//        vendor2.setVendorRegistNum("46952029");
-//        vendor2.setVendorRepreName("김찬구");
-//        vendor2.setVendorTelephone("010-7122-8152");
-//        vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));
-//        vendor2.setVendorAddress("부산시 동래구 사직동");
-//        vendorRepository.saveAndFlush(vendor2);
+            vendorRepository.saveAndFlush(vendor);
+        }
+
+        Vendor vendor1 = new Vendor();
+        vendor1.setVendorName("빈로스터리");
+        vendor1.setVendorRegistNum("12458921");
+        vendor1.setVendorRepreName("장총명");
+        vendor1.setVendorTelephone("010-1212-3434");
+        vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
+        vendor1.setVendorAddress("서울시 중구 장충동");
+        vendorRepository.saveAndFlush(vendor1);
+
+        Vendor vendor2 = new Vendor();
+        vendor2.setVendorName("대성산업");
+        vendor2.setVendorRegistNum("46952029");
+        vendor2.setVendorRepreName("김찬구");
+        vendor2.setVendorTelephone("010-7122-8152");
+        vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));
+        vendor2.setVendorAddress("부산시 동래구 사직동");
+        vendorRepository.saveAndFlush(vendor2);
 //
 //
 //        //초기 product 데이터
@@ -243,7 +243,47 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 //            }
 //
 //            scheduleRepository.saveAndFlush(scheduleData);
+//            }
 //        }
+
+//            Schedule 데이터 생성
+//            LocalDateTime[] startDates = {
+//
+//                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
+//                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+//                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
+//            };
+//
+//            LocalDateTime[] endDates = {
+//                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
+//                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+//                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+//            };
+//
+//            ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
+//
+//            String[] titles = {"가가가가", "나나나나", "다다다다"};
+//            String[] notes = {"내용1", "내용2", "내용3"};
+//
+//            Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
+//
+//            for (int j = 0; j < 3; j++) {
+//                Schedule scheduleData = new Schedule();
+//                scheduleData.setScheNo((long) (j + 1));
+//                scheduleData.setScheTitle(titles[j]);
+//                scheduleData.setScheStartDate(startDates[j]);
+//                scheduleData.setScheEndDate(endDates[j]);
+//                scheduleData.setNotes(notes[j]);
+//                scheduleData.setScheduleType(scheduleTypes[j]);
+//
+//                // Employee 객체 찾기
+//                Employee emp = repository.findById(empIds[j]).orElse(null);
+//                if (emp != null) {
+//                    scheduleData.setEmployee(emp); // Schedule 객체에 Employee 설정
+//                }
+//
+//                scheduleRepository.saveAndFlush(scheduleData);
+//            }
 //        }
     }
 }
