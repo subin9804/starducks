@@ -12,6 +12,7 @@ dl {
 dt {
     margin: 0; padding: 0;
     display: inline-block;
+    min-width: 96px;
 }
 dd {
     text-align: right;
@@ -25,6 +26,7 @@ dd p {
     line-height: 30px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 2px 10px;
+    background-color: white;
 }
 #form {
     border: 1px solid #6B4D27;
@@ -84,6 +86,7 @@ input[type='checkbox'].selectbox {display: none;}
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
     position:relative;
+    background-color: white;
 }
 .drop{
     position: absolute;
@@ -109,17 +112,29 @@ input[type='checkbox'].selectbox {display: none;}
     background-color: #ddd;
 }
 
-.postNo {
-    display: inline-block !important;
-    width: 150px;
+/*.postNo {*/
+/*    display: inline-block !important;*/
+/*    width: 150px;*/
+/*}*/
+/*.postNo+span {*/
+/*    cursor: pointer;*/
+/*    background-color: #ddd;*/
+/*    display: inline-block;*/
+/*    padding: 6px;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+input[name="postNo"], input[name="addr"] {
+    margin-bottom: 10px;
 }
-.postNo+span {
-    cursor: pointer;
-    background-color: #ddd;
-    display: inline-block;
-    padding: 6px;
+#searchPostBtn {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #6B4D27;
+    color: white;
     border-radius: 10px;
 }
+
 
 /** 하단 버튼 */
 button {
@@ -132,8 +147,3 @@ a p.commonBtn {
     line-height: 50px;
     display: inline-block;
 }
-
-
-
-
-/*메일 박스 형태*/

@@ -26,6 +26,7 @@ public class CustomUserDetails implements UserDetails {
     Collection<GrantedAuthority> collection = new ArrayList<>();
 
     collection.add((GrantedAuthority) () -> String.valueOf(employee.getPosition()));
+    collection.add((GrantedAuthority) () -> employee.getDept().getDeptName());
 
     return collection;
   }
@@ -37,14 +38,8 @@ public class CustomUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return employee.getEmpName();
+    return String.valueOf(employee.getEmpId());
   }
-
-  public Long getEmpId() {
-    return employee.getEmpId();
-  }
-
-
 
   @Override //계정이 만료되었는가? 우리는 안 필요할듯
   public boolean isAccountNonExpired() {

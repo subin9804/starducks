@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons;
+package org.kosta.starducks.commons.menus;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
@@ -29,24 +29,24 @@ public class MenuService {
      * @return
      */
     public static List<MenuDetail> gets(String code) {
-        System.out.println("code" + code);
+//        System.out.println("code" + code);
         List<MenuDetail> menus = new ArrayList<>();
 
         // 게시판 하위 메뉴
         switch (code) {
             case "mypage":
-                menus.add(new MenuDetail("attend", "근태관리", "/"));
-                menus.add(new MenuDetail("schedule", "일정관리", "/"));
-                menus.add(new MenuDetail("confroom", "회의실 예약", "/"));
+                menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));
+                menus.add(new MenuDetail("schedule", "일정관리", "/mypage/schedule/show"));
+                menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
                 menus.add(new MenuDetail("mydocu", "나의 결재", "/"));
-                menus.add(new MenuDetail("writedocu", "결재문서 작성", "/"));
+                menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
                 menus.add(new MenuDetail("recieved", "수신함", "/"));
                 menus.add(new MenuDetail("tempsaved", "임시저장함", "/"));
                 break;
             case "hr" :
-                menus.add(new MenuDetail("employee", "사원 관리", "/hr"));
+                menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
                 menus.add(new MenuDetail("attend", "근태 관리", "/"));
                 menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
                 menus.add(new MenuDetail("dept", "부서 관리", "/"));
@@ -55,22 +55,22 @@ public class MenuService {
             case "logistic" :
                 menus.add(new MenuDetail("warehouseinbound", "입고 관리", "/"));
                 menus.add(new MenuDetail("release", "출고 관리", "/"));
-                menus.add(new MenuDetail("inventory", "재고 관리", "/"));
+                menus.add(new MenuDetail("warehouseinbound", "재고 관리", "/logistic/warehouseinbound"));
                 break;
             case "general" :
                 menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));
                 menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
-                menus.add(new MenuDetail("adproduct", "품목 관리", "/"));
+                menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
                 break;
             case "fina" :
                 menus.add(new MenuDetail("point", "지점 정보 관리", "/"));
                 menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
                 break;
             default:
-                menus.add(new MenuDetail("attend", "근태관리", "/"));
-                menus.add(new MenuDetail("schedule", "일정관리", "/"));
-                menus.add(new MenuDetail("confroom", "회의실 예약", "/"));
+                menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));
+                menus.add(new MenuDetail("schedule", "일정관리", "/mypage/schedule"));
+                menus.add(new MenuDetail("confroom", "회의실 예약", "/mypage/conf"));
         }
 //        if (code.equals("mypage")) {
 //        } else if (code.equals("document")) {
@@ -85,7 +85,7 @@ public class MenuService {
 
     public static String getSubMenuCode(HttpServletRequest request) {
         String URI = request.getRequestURI();
-        System.out.println("uri: " + URI);
+//        System.out.println("uri: " + URI);
         return URI.substring(URI.indexOf("/")+1);
     }
 

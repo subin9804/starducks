@@ -19,13 +19,17 @@ public class QConfRoom extends EntityPathBase<ConfRoom> {
 
     public static final QConfRoom confRoom = new QConfRoom("confRoom");
 
-    public final NumberPath<Long> booker = createNumber("booker", Long.class);
+    public final NumberPath<Long> bookerId = createNumber("bookerId", Long.class);
+
+    public final StringPath bookerNm = createString("bookerNm");
 
     public final StringPath color = createString("color");
 
     public final NumberPath<Long> confId = createNumber("confId", Long.class);
 
     public final StringPath confName = createString("confName");
+
+    public final StringPath dept = createString("dept");
 
     public final TimePath<java.time.LocalTime> endTime = createTime("endTime", java.time.LocalTime.class);
 

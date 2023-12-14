@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function fetchDailyAttendance() {
     var empId = 1
-    return fetch('/attendance/daily/' + empId)
+    return fetch('/mypage/attendance/daily/' + empId)
         .then(function (response) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

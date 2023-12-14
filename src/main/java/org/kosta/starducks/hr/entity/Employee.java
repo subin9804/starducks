@@ -3,6 +3,7 @@ package org.kosta.starducks.hr.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kosta.starducks.roles.Position;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -16,6 +17,7 @@ public class Employee {
 
     private String empName;     // 사원이름
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birth;    // 생년월일
 
     private String gender;  // 성별
@@ -31,13 +33,16 @@ public class Employee {
     private String addr;        // 주소
     private String dAddr;       // 상세주소
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate joinDate;     // 입사일자
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate leaveDate;        // 퇴사일자
 
     private boolean status;      // 퇴사여부
     private String pwd;     // 비밀번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dept_id")
     private Department dept;    // 부서코드
 //    파일
