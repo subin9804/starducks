@@ -32,8 +32,6 @@ public class StoreController {
     private final EmpRepository empRepository;
 
 
-
-
     /**
      * 지점 추가
      *
@@ -78,36 +76,35 @@ public class StoreController {
         return "fina/storeDetail";
     }
 
-
-
     /**
-     * 지점 목록 조회
+     * 지점 목록 조회(검색 + 페이징)
      *
      * @return
      */
     @GetMapping("/list")
     public String showStoreList(Model model, @PageableDefault(page = 0,size = 3,sort = "storeNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
         Page<Store> storeList = storeService.getAllStores(pageable);
-        model.addAttribute("storeList", storeService.getAllStores(pageable));
+
+//        페이지 블럭 처리
+        int nowPage = storeList.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, storeList.getTotalPages());
+        int totalPages = storeList.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
+        model.addAttribute("storeList", storeList);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPages", totalPages);
+
         return "fina/storeList";
     }
-
-
-
-
-
-
-    /**
-     * 지점 목록 조회
-     *
-     * @return
-     */
-//    @GetMapping("/list")
-//    public String showStoreList(Model model) {
-//        List<Store> storeList = storeService.getAllStores();
-//        model.addAttribute("storeList", storeList);
-//        return "fina/storeList";
-//    }
 
     /**
      * 수정하기
@@ -145,6 +142,4 @@ public class StoreController {
         storeService.deleteStore(storeNo, rttr);
         return "redirect:/fina/store/list";
     }
-
-
 }

@@ -46,6 +46,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ScheduleRepository scheduleRepository;
     private final StoreRepository storeRepository;
 
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
