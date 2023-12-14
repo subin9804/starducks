@@ -25,6 +25,8 @@ public class QEmpFile extends EntityPathBase<EmpFile> {
 
     public final StringPath filePath = createString("filePath");
 
+    public final StringPath fileUrl = createString("fileUrl");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath type = createString("type");

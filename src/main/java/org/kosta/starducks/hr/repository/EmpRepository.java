@@ -54,7 +54,6 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         }
 
         /** 퇴사여부 옵션 선택 시 */
-
         if (status != null && !status.isBlank()) {
             if ("stopped".equals(status)) {
                 builder.and(employee.status.isTrue());
@@ -66,8 +65,6 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
             builder.andAnyOf(employee.status.isFalse(),
                     employee.status.isTrue());
         }
-
-//        builder.and(andBuilder);
 
         Page<Employee> data = findAll(builder, pageable);
         return data;

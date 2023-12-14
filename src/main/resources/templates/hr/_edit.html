@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="register">
     <h1 th:text="사원정보수정"></h1>
-    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" autocomplete="off">
+    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" enctype="multipart/form-data" autocomplete="off">
         <div class="photos">
             <div class="photo">
-                <img src="#" />
+                <img class="img" id="profileImg" th:src="${profile}" alt="Profile Image">
+                <input type="file" name="profile" id="profile" accept="image/*" style="display: none">
                 <p>프로필사진</p>
             </div>
             <div class="photo">
-                <img src="#" />
+                <img class="img" id="stampImg" th:src="${stamp}" alt="Stamp Image">
+                <input type="file" name="stamp" id="stamp" accept="image/*" style="display: none">
                 <p>도장사진</p>
             </div>
         </div>

@@ -22,7 +22,7 @@ public class EmpFile {
     @Column(length = 300)
     private String filePath;
 
-    @Transient
+    @Column(length = 300)
     private String fileUrl;
 
 }

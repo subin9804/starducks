@@ -2,9 +2,7 @@ package org.kosta.starducks.hr.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
-import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpFileRepository;
@@ -68,7 +66,7 @@ public class EmpController {
 
 
     /**
-     * 사원등록 post
+     * 사원등록 및 수정 post
      *
      * @param employee
      * @return
@@ -96,14 +94,17 @@ public class EmpController {
      */
     @GetMapping("/{empId}")
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
-        MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
-
-        EmpFile profile = fileRepository.findByEmpIdAndType(empId, "profile");
-        EmpFile stamp = fileRepository.findByEmpIdAndType(empId, "stamp");
-
-
         model.addAttribute("employee", employee);
+
+
+        // 파일
+        String profile = fileService.getFileUrl(empId, "profile");
+        String stamp = fileService.getFileUrl(empId, "stamp");
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("stamp", stamp);
+
 
         return "hr/empDetail";
     }
@@ -117,12 +118,18 @@ public class EmpController {
      */
     @GetMapping("/edit/{empId}")
     public String empEdit (@PathVariable("empId") Long empId, Model model) {
-        MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
         model.addAttribute("positions", Position.values());
         model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "edit");
+
+        // 파일
+        String profile = fileService.getFileUrl(empId, "profile");
+        String stamp = fileService.getFileUrl(empId, "stamp");
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("stamp", stamp);
 
         return "hr/empWriter";
     }
