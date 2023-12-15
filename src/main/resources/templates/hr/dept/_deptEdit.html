@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div style="display: none" id="edit" class="w-50 dept-table" th:fragment="edit">
+    <form th:action="@{/hr/dept/edit}" method="post">
+        <table>
+            <tr>
+                <th>부서번호</th>
+                <td>
+                    <input type="text" th:value="${dept.deptId}" disabled>
+                    <input type="hidden" name="deptId" id="deptId" th:field="${dept.deptId}">
+                </td>
+            </tr>
+            <tr>
+                <th>부서명</th>
+                <td><input type="text" name="deptName" id="deptName" th:field="${dept.deptName}"></td>
+            </tr>
+            <tr>
+                <th>대표연락처</th>
+                <td><input type="text" name="deptRepTel" id="deptRepTel" th:field="${dept.deptRepTel}"></td>
+            </tr>
+            <tr>
+                <th>소속인원수</th>
+                <td th:text="${dept.emps.size()}"></td>
+            </tr>
+        </table>
+        <button id="cancelBtn" class="commonBtn cancel-button">취소</button>
+        <button type="submit" id="saveBtn" class="commonBtn register-button">저장</button>
+    </form>
+</div>
+</html>

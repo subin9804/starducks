@@ -74,7 +74,7 @@
                     <dt>직급</dt>
                     <dd>
                         <input type="checkbox" id="all2" class="selectbox box2">
-                        <label for="all2" id="allLabel2" >전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
+                        <label for="all2" id="allLabel2" >전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
 
                         <ul class="options2">
                             <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">

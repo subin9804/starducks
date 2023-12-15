@@ -23,6 +23,9 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
     List<Employee> findByPosition(Position position);
 
+    // 퇴사여부로 직원 검색
+    List<Employee> findByStatus(Boolean status);
+
     // 이메일로 직원 검색
     Optional<Employee> findByEmail(String email);
 

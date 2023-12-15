@@ -6,7 +6,9 @@ import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.service.EmpFileService;
 import org.kosta.starducks.hr.service.EmpService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +30,35 @@ public class DeptController {
      * @return
      */
     @GetMapping
-    public String index(Model model) {
-        List<Department> depts = repository.findAll();
-        model.addAttribute("depts", depts);
+    public String index(Model model, @RequestParam(name = "page", required = false) Integer page, Department newDept) {
+        if(page == null || page == 0) {
+            page = 1;
+        }
+
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<Department> depts = repository.findAll(pageable);
+
+        int startPage= Math.max(page-4, 1);
+        int endPage= Math.min(page+5, depts.getTotalPages());
+
+        model.addAttribute("nowPage", page);
+        model.addAttribute("depts", depts.getContent());
+        model.addAttribute("totalPages", depts.getTotalPages());
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("newDept", newDept);
 
         return "hr/dept/deptIndex";
     }
 
+    /**
+     * 새 부서 등록
+     * @param department
+     * @return
+     */
     @PostMapping("/add")
-    public String addDept(@ModelAttribute Department department) {
+    public String addDept(Department department) {
         repository.saveAndFlush(department);
 
         return "redirect:/hr/dept";
@@ -53,7 +75,7 @@ public class DeptController {
         Department dept = repository.findById(deptId).orElse(null);
         List<Employee> emps = null;
 
-        if(name != null && !name.isBlank()) {
+        if(name != null && !name.isBlank() && name != "") {
             emps = empService.getEmp(deptId, name);
 
         } else {
@@ -67,22 +89,20 @@ public class DeptController {
     }
 
     /**
-     * 부서정보수정 (JSON)
-     * @param deptId
+     * 부서정보수정
      * @param dept
      * @return
      */
-    @ResponseBody
-    @PostMapping("/update/{deptId}")
-    public ResponseEntity<Department> update(@PathVariable("deptId") int deptId, @RequestBody Department dept) {
-        Department originDept = repository.findById(deptId).orElse(null);
+    @PostMapping("/edit")
+    public String edit(Department dept) {
+        Department originDept = repository.findById(dept.getDeptId()).orElse(null);
 
         originDept.setDeptName(dept.getDeptName());
         originDept.setDeptRepTel(dept.getDeptRepTel());
 
         repository.saveAndFlush(originDept);
 
-        return ResponseEntity.ok(originDept);
+        return "redirect:/hr/dept/" + dept.getDeptId();
     }
 
     /**
@@ -93,8 +113,41 @@ public class DeptController {
     @GetMapping("/delete/{deptId}")
     public String delete(@PathVariable("deptId") int deptId) {
         Department dept = repository.findById(deptId).orElse(null);
+        List<Employee> emps = empService.getEmp(deptId);
+
         if(deptId < 6 && dept != null) {
-            repository.delete(dept);
+            System.out.println("삭제 불가" + dept.getDeptName());
+        } else {
+            // 해당되는 직원이 한 명도 없는 경우
+            if(dept.getEmps().size() <= 0 || dept.getEmps() == null || emps.size() <= 0 || emps == null) {
+                repository.delete(dept);
+            }
+
+            // 속해있는 직원이 모두 퇴사한 경우
+            boolean canDelete = true;
+
+            for(Employee emp : emps) {
+                if(emp.isStatus() == false) {
+                    canDelete = false;
+                }
+            }
+
+            if(canDelete) {
+                // 삭제할 부서의 직원들 (퇴사한 직원들)의 부서를 'No_Dept'로 표시한다.
+                Department noDept = Department.builder()
+                        .deptId(0)
+                        .deptName("해당 없음")
+                        .deptRepTel("")
+                        .build();
+
+                for(Employee emp : emps) {
+                    if(emp.isStatus() == true) {
+                        emp.setDept(noDept);
+                    }
+                }
+
+            }
+
         }
 
         return "redirect:/hr/dept";

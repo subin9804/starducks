@@ -39,7 +39,7 @@ public class Employee {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate leaveDate;        // 퇴사일자
 
-    private boolean status;      // 퇴사여부
+    private boolean status;      // 퇴사여부 (false = 재직중 / true = 퇴사)
     private String pwd;     // 비밀번호
 
     @ToString.Exclude

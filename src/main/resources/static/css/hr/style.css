@@ -96,7 +96,8 @@ input[type='checkbox'].selectbox {display: none;}
 }
 .options1, .options2 {
     position: absolute;
-    height: 150px;
+    max-height: 200px;
+    overflow-y: scroll;
     width: 185px;
     display: none;
     background-color: white;
@@ -173,16 +174,18 @@ table tr:hover {
 /* 부서 관리 디테일 페이지 */
 #dept-container {
     display: flex;
+    max-width: 1400px;
 }
-#dept-container > div:first-of-type {
+#dept-container .dept-table {
     padding-top: 200px;
     padding-right: 40px;
 }
-#dept-container div:last-of-type {
+#dept-container > div:last-of-type {
     text-align: center;
+    min-width: 420px;
 }
 
-#dept-container input {
+#emp-container input {
     display: inline-block;
     margin-right: 20px;
     margin-bottom: 40px;
@@ -193,16 +196,26 @@ table tr:hover {
 #profile-box {
     border-bottom: 1px solid #6B4D27;
 }
+#profile-box:last-child > div:last-child{
+    min-width: 240px;
+}
 #emp-container {
     padding: 40px;
     height: calc(100vh - 150px);
     border: 3px solid #6B4D27;
     border-radius: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 700px;
 }
 #emp-container div {
     padding: 0 20px 10px;
 }
 #emp-container p {
     padding-top: 10px;
+}
+
+/*부서 등록*/
+#add {
+    margin-top: 20px;
 }

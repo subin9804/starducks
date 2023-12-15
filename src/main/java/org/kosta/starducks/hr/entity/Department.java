@@ -3,15 +3,13 @@ package org.kosta.starducks.hr.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 
-@Getter @Setter @Entity
-@NoArgsConstructor
+@Getter @Setter @Entity @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Department {
 
     @Id

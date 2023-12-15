@@ -1,3 +1,5 @@
+const token = document.querySelector("meta[name='_csrf']").content;
+const header = document.querySelector("meta[name='_csrf_header']").content;
 
 
 function toggleOptions1(checkbox) {
@@ -98,28 +100,24 @@ window.document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // $(document).ready(function () {
-    //     // Form이 성공적으로 제출되면 Ajax를 사용하여 서버로부터 메시지를 받아 SweetAlert을 표시
-    //     $("#form").submit(function (event) {
-    //         event.preventDefault();
-    //
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "/hr/emp/save",
-    //             data: $(this).serializeArray(),
-    //             contentType: "application/json; charset=UTF-8", // 폼 데이터를 전송할 때의 content type
-    //
-    //             success: function (response) {
-    //                 // 서버로부터 받은 응답을 확인하고 SweetAlert을 표시
-    //                 swal("Success!", response, "success");
-    //                 redirect("/hr")
-    //             },
-    //             error: function (error) {
-    //                 // 실패한 경우에 대한 처리를 추가
-    //                 console.log("Error:", error);
-    //             }
-    //         });
-    //     });
-    // });
 
+    /** 부서 정보창/수정창 토글 */
+    $("#editBtn").click(() => {
+        $("#edit").css("display", "block");
+        $("#info").css("display", "none");
+    });
+    $("#cancelBtn").click((e) => {
+        e.preventDefault();
+        $("#edit").css("display", "none");
+        $("#info").css("display", "block");
+    });
+
+    /** 부서 등록창 토글 */
+    $("#addBtn").click(() => {
+        $("#add").toggleClass("d-none");
+    });
+    $("#hideBtn").click((e) => {
+        e.preventDefault();
+        $("#add").addClass("d-none");
+    });
 })
