@@ -43,7 +43,7 @@ public class EmpController {
         System.out.println(emps.stream().toList());
         model.addAttribute("employees", emps);
 
-        return "hr/hrIndex";
+        return "hr/emp/hrIndex";
     }
 
     /**
@@ -61,7 +61,7 @@ public class EmpController {
         model.addAttribute("positions", Position.values());
         model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "register");
-        return "hr/empWriter";
+        return "hr/emp/empWriter";
     }
 
 
@@ -106,7 +106,7 @@ public class EmpController {
         model.addAttribute("stamp", stamp);
 
 
-        return "hr/empDetail";
+        return "hr/emp/empDetail";
     }
 
     /**
@@ -131,7 +131,7 @@ public class EmpController {
         model.addAttribute("profile", profile);
         model.addAttribute("stamp", stamp);
 
-        return "hr/empWriter";
+        return "hr/emp/empWriter";
     }
 }
 

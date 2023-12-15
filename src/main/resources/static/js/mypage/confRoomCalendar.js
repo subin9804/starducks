@@ -218,7 +218,6 @@ $(document).ready(function () {
             })
             $('body').css('overflow', 'hidden');
 
-
             $("#submitBtn").click((e) => {
                 // 중복 방지 코드
                 let start = new Date($('#runningDay').val() + 'T' + $('#startTime').val()); // 선택한 시작시간
@@ -227,32 +226,51 @@ $(document).ready(function () {
                 let dupl = false;
 
                 for(let event of bookList) {
+                    let today = new Date()
                     let eventStart = new Date(event.runningDay + 'T' + event.startTime);
                     let eventEnd = new Date(event.runningDay + 'T' + event.endTime);
                     let eventId = event.confId;
+                    let message = "";
+
 
                     if(data.id == eventId) {
                         continue;
                     }
 
-                    if((start < eventEnd) && (end > eventStart)) {
-                        // 시간도 중복되고 회의실도 중복되면 예약 불가
-                        if ($('#room').val() == event.room) {
-                            dupl = true;
+                    // 시작 시간이 현재보다 이전이면 예약 불가
+                    if(today > start) {
+                        dupl = true;
+                        message = errorAlert("현재 시간 이후로 예약이 가능합니다.")
+                    } else {
+                        dupl = false;
+
+                        if((start < eventEnd) && (end > eventStart)) {
+                            // 시간도 중복되고 회의실도 중복되면 예약 불가
+                            if ($('#room').val() == event.room) {
+                                dupl = true;
+                                message = errorAlert("중복예약은 불가합니다.")
+                            } else {
+                                dupl = false;
+                            }
                         }
                     }
+
+                    console.log(dupl)
+                    console.log("eventStart" + eventStart)
+                    console.log("eventEnd" + eventEnd)
+
                 }
 
                 if(!dupl) {
                     // 중복이 아니라면 전송
                     submit(e, 'put', data.id);
-
                 } else {
                     // 중복이라면 경고창 표시
-                    errorAlert("중복예약은 불가합니다.")
+                    errorAlert(message)
                         .then(() => {
                             location.reload();
                         })
+                    console.log("실패!")
                 }
             });
         }

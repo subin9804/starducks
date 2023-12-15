@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<!--<th:block layout:fragment="title">사원정보</th:block>-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <th:block th:if="${name.equals('register')}">
+        <th:block th:replace="~{hr/emp/_register}"></th:block>
+    </th:block>
+    <th:block th:if="${name.equals('edit')}">
+        <th:block th:replace="~{hr/emp/_edit}"></th:block>
+    </th:block>
+
+</main>
+</html>

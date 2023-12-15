@@ -113,18 +113,6 @@ input[type='checkbox'].selectbox {display: none;}
     background-color: #ddd;
 }
 
-/*.postNo {*/
-/*    display: inline-block !important;*/
-/*    width: 150px;*/
-/*}*/
-/*.postNo+span {*/
-/*    cursor: pointer;*/
-/*    background-color: #ddd;*/
-/*    display: inline-block;*/
-/*    padding: 6px;*/
-/*    border-radius: 10px;*/
-/*}*/
-
 input[name="postNo"], input[name="addr"] {
     margin-bottom: 10px;
 }
@@ -138,11 +126,12 @@ input[name="postNo"], input[name="addr"] {
 
 
 /** 하단 버튼 */
-button {
-    margin: 40px 10px 0 10px;
-}
+
 .btns {
     text-align: center;
+}
+.commonBtn {
+    margin: 40px 10px 0 10px;
 }
 a p.commonBtn {
     line-height: 50px;
@@ -179,4 +168,41 @@ table th {
 /* 테이블 행에 마우스 오버 시 배경색 변경 */
 table tr:hover {
     background-color: #f5f5f5;
+}
+
+/* 부서 관리 디테일 페이지 */
+#dept-container {
+    display: flex;
+}
+#dept-container > div:first-of-type {
+    padding-top: 200px;
+    padding-right: 40px;
+}
+#dept-container div:last-of-type {
+    text-align: center;
+}
+
+#dept-container input {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+#dept-container button {
+    display: inline-block;
+}
+#profile-box {
+    border-bottom: 1px solid #6B4D27;
+}
+#emp-container {
+    padding: 40px;
+    height: calc(100vh - 150px);
+    border: 3px solid #6B4D27;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+#emp-container div {
+    padding: 0 20px 10px;
+}
+#emp-container p {
+    padding-top: 10px;
 }

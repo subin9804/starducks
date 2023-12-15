@@ -10,6 +10,7 @@
 </th:block>
 
     <main layout:fragment="content">
+        <h1>부서 관리</h1>
         <table>
             <thead>
                 <tr>
@@ -25,12 +26,11 @@
                     <td th:text="*{deptId}"></td>
                     <td th:text="*{deptName}"></td>
                     <td th:text="*{deptRepTel}"></td>
-<!--                    <td th:text="*{#emps.size()}"></td>-->
+                    <td th:text="*{emps.size()}"></td>
                 </tr>
 
             </tbody>
         </table>
-
 
     </main>
 </html>

@@ -118,7 +118,7 @@
                     <dt>주소</dt>
                     <dd>
                         <!-- <input class="postNo" type="text" th:field="*{postNo}">-->
-                        <div th:replace="~{hr/_postNo::searchPost}"></div>
+                        <div th:replace="~{hr/emp/_postNo::searchPost}"></div>
                     </dd>
                 </dl>
 <!--                <dl>-->
@@ -133,7 +133,7 @@
         </div>
         <div class="btns">
             <button class="commonBtn register-button">저장</button>
-            <a th:href="@{/hr/emp}"><p class="commonBtn cancel-button">취소</p></a>
+            <a th:href="@{/templates/hr/emp}"><p class="commonBtn cancel-button">취소</p></a>
         </div>
     </form>
 </th:block>

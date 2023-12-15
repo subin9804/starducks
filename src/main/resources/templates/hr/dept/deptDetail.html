@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>부서 정보 조회</h1>
+    <div id="dept-container">
+        <div class="w-50">
+            <table>
+                <tr>
+                    <th>부서번호</th>
+                    <td th:text="${dept.deptId}"></td>
+                </tr>
+                <tr>
+                    <th>부서번호</th>
+                    <td th:text="${dept.deptName}"></td>
+                </tr>
+                <tr>
+                    <th>대표연락처</th>
+                    <td th:text="${dept.deptRepTel}"></td>
+                </tr>
+                <tr>
+                    <th>소속인원수</th>
+                    <td th:text="${dept.emps.size()}"></td>
+                </tr>
+            </table>
+            <button class="commonBtn edit-button">수정</button>
+        </div>
+        <div class="w-50" id="emp-container">
+            <form><input name="name" id="name" type="text"><button class="search-button">찾기</button></form>
+            <div th:each="employee : ${employees}" th:object="${employee}">
+                <th:block th:replace="~{hr/attend/_profile::profile}"></th:block>
+            </div>
+        </div>
+    </div>
+
+</main>
+</html>
