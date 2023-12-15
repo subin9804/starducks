@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>비밀번호 찾기</title>
@@ -13,7 +13,7 @@
   <div class="login-container">
 
     <h2 class="findPwdTitle">비밀번호 찾기</h2>
-    <form th:action="@{/forgotPwd}" method="post">
+    <form action="/forgotPwd" method="post">
       <div class="form-floating">
         <input id="empId" name="empId" required type="text">
         <label for="empId">사번</label>

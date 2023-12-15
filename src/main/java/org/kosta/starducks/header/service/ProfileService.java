@@ -19,9 +19,12 @@ public class ProfileService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public boolean checkCurrentPassword(String currentPassword, Employee employee) {
-
+  public boolean checkCurrentPassword(Long empId, String currentPassword) {
+    Employee employee = empRepository.findById(empId).orElse(null);
+    if (employee != null) {
       return passwordEncoder.matches(currentPassword, employee.getPwd());
+    }
+    return false;
   }
 
   public boolean isValidPassword(String password) {
@@ -29,17 +32,14 @@ public class ProfileService {
     return password != null && password.matches(passwordRegex);
   }
 
-  public  Employee getEmployeeById(Long empId) {
-    return empRepository.findById(empId).orElse(null);
-  }
-
 
   @Transactional
-  public boolean updatePassword(String newPassword, Employee employee) {
+  public boolean updatePassword(Long empId, String newPassword) {
     //새로운 비밀번호가 유효성 검사 적합하면 다음 단계
     if (!isValidPassword(newPassword)) {
       return false;
     }
+    Employee employee = empRepository.findById(empId).orElse(null);
     if (employee != null) {
       employee.setPwd(passwordEncoder.encode(newPassword));
       empRepository.save(employee);
