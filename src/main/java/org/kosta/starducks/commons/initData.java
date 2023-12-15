@@ -90,7 +90,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             repository.saveAndFlush(emp);
         }
 
-        // empId가 11이고, empPwd가 11을 만족하는 사원 생성
+        // 점검용 사원
         Employee specificEmp = new Employee();
         specificEmp.setEmpId(11L); // empId를 11로 설정
         specificEmp.setStatus(false);
@@ -105,7 +105,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
-        specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "11"로 설정
+        specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
 
         //초기 vendor 데이터
@@ -268,7 +268,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             ChatRoom chatRoom = new ChatRoom();
             chatRoom.setRoomName("채팅방" + i);
 
-//            ChatRoomRepository.saveAndFlush(chatRoom);
+//            ChatRoomRepository.save(chatRoom);
         }
 
         for (int i = 0; i < 5; i++) {

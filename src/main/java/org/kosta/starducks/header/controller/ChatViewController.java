@@ -12,6 +12,6 @@ public class ChatViewController {
 //  메인 페이지. 채팅방 리스트 보여줌
   @GetMapping("/chat")
   public String chatListPage() {
-    return "chatRoomList";
+    return "header/chatRoomList";
   }
 }
