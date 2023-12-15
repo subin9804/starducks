@@ -10,6 +10,10 @@ import org.kosta.starducks.header.dto.ChatRoomRequestDto;
 
 import java.util.List;
 
+/**
+ * 채팅방 엔티티
+ */
+
 @Entity
 @Getter
 @Setter
@@ -20,16 +24,20 @@ public class ChatRoom extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  //채팅방 이름
   private String roomName;
 
+  //채팅방에 속해있는 메시지 리스트
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
   private List<ChatMessage> chatMessageList;
+
 
   @Builder
   public ChatRoom(String roomName) {
     this.roomName = roomName;
   }
 
+//  채팅방 이름 변경 때 사용
   public Long updateRoomName(ChatRoomRequestDto requestDto) {
     this.roomName = requestDto.getRoomName();
     return this.id;
