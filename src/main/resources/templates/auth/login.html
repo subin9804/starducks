@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>로그인</title>
@@ -41,7 +41,7 @@
     if (emailSent === 'true') {
       Swal.fire({
         title: 'Starducks',
-        text: '이메일로 임시 비밀번호가 전송되었습니다.',
+        html: "메일로 임시 비밀번호가 전송되었습니다. <br> 프로필에서 비밀번호 변경을 추천드립니다.",
         icon: 'success',
         confirmButtonText: '확인',
         confirmButtonColor: '#4A85F6'

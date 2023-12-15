@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ko">
 <head>
   <title>개인 정보 수정</title>
 
   <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}"/>
 
+  <link href="/css/header/style.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <h1 class="p-custom">개인 정보 수정</h1>
-<form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}" autocomplete="off">
-  <!--  토큰 추가 -->
-  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}"
+      autocomplete="off">
   <div id="formSection" class="formSection-custom">
     <section>
       <!-- 사원번호 -->
       <dl class="dl-custom">
         <dt class="dt-custom">사원 번호</dt>
         <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
-        <input type="hidden" th:field="*{empId}" />
+        <input type="hidden" th:field="*{empId}" id="empId"/>
       </dl>
       <!-- 사원 이름 -->
       <dl class="dl-custom">
@@ -34,11 +35,6 @@
       <dl class="dl-custom">
         <dt class="dt-custom">이메일</dt>
         <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
-      </dl>
-      <!-- 성별 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">성별</dt>
-        <dd class="dd-custom"><input type="text" th:value="*{gender}" disabled></dd>
       </dl>
       <!-- 생년월일 -->
       <dl class="dl-custom">
@@ -62,11 +58,6 @@
         <dt class="dt-custom">입사 일자</dt>
         <dd class="dd-custom"><input type="date" th:value="*{joinDate}" disabled></dd>
       </dl>
-      <!-- 퇴사 여부 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">퇴사 여부</dt>
-        <dd class="dd-custom"><input type="text" th:value="*{status ? '퇴사' : '재직'}" disabled></dd>
-      </dl>
       <!-- 우편번호 -->
       <dl class="dl-custom">
         <dt class="dt-custom">우편번호</dt>
@@ -86,61 +77,67 @@
         <dd class="dd-custom"><input type="text" th:field="*{dAddr}"></dd>
       </dl>
     </section>
+    <div class="btns-custom">
+      <button type="submit" class="commonBtn-custom register-button">저장</button>
+      <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
+    </div>
   </div>
-  <!-- 비밀번호 변경 -->
+</form>
+<div>
+  <h2>비밀번호 변경</h2>
   <dl class="dl-custom">
     <dt class="dt-custom">기존 비밀번호</dt>
     <dd class="dd-custom">
       <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
       <button type="button" onclick="checkCurrentPassword()">확인</button>
     </dd>
-  </dl>
-
-  <!-- 새 비밀번호 -->
-  <dl class="dl-custom">
+    <!-- 새 비밀번호 입력 -->
     <dt class="dt-custom">새 비밀번호</dt>
     <dd class="dd-custom">
       <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
     </dd>
-  </dl>
-
-  <!-- 새 비밀번호 확인 -->
-  <dl class="dl-custom">
+    <!-- 새 비밀번호 확인 -->
     <dt class="dt-custom">새 비밀번호 확인</dt>
     <dd class="dd-custom">
       <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
     </dd>
   </dl>
-  <div class="btns-custom">
-    <button type="submit" class="commonBtn-custom register-button">저장</button>
-    <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
-  </div>
-</form>
+  <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+</div>
+
 <script>
   function checkCurrentPassword() {
     const currentPassword = document.getElementById("currentPassword").value;
-    const empId = document.getElementById('empId').value;
-    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-    $.ajax({
-      url: "/profileEdit/checkPassword",
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ empId: empId, currentPassword: currentPassword }),
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader(header, token); // CSRF 토큰을 헤더에 추가
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    fetch("/profileEdit/checkPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [csrfHeaderName]: csrfToken
       },
-      success: function(isMatch) {
+      body: JSON.stringify({ currentPassword: currentPassword })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("서버 통신 오류");
+        }
+      })
+      .then(isMatch => {
         if (isMatch) {
           document.getElementById("newPassword").disabled = false;
           document.getElementById("newPasswordConfirm").disabled = false;
         } else {
           alert("현재 비밀번호가 일치하지 않습니다.");
         }
-      }
-    });
+      })
+      .catch(error => console.error('오류 발생:', error));
   }
+
 
   function validatePassword() {
     const newPassword = document.getElementById("newPassword").value;
@@ -160,9 +157,60 @@
     return true;
   }
 
-  document.getElementById("passwordForm").onsubmit = function () {
-    return validatePassword();
+  document.getElementById("form").onsubmit = function (event) {
+    const isValid = validatePassword();
+    if (!isValid) {
+      event.preventDefault(); // 유효하지 않으면 폼 제출 방지
+    }
   };
+</script>
+<script>
+  function updatePassword() {
+    const newPassword = document.getElementById("newPassword").value;
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    fetch("/profileEdit/updatePassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [csrfHeaderName]: csrfToken
+      },
+      body: JSON.stringify({ newPassword: newPassword })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("서버 통신 오류");
+        }
+      })
+      .then(data => {
+        if (data) {
+          alert("비밀번호가 변경되었습니다.");
+        } else {
+          alert("비밀번호 변경 실패");
+        }
+      })
+      .catch(error => console.error('오류 발생:', error));
+  }
+
+
+  document.getElementById("form").onsubmit = function(event) {
+    // 필요한 경우 여기에 개인 정보 수정 관련 유효성 검사 로직을 추가할 수 있습니다.
+  };
+
+
+  function checkEmpId() {
+    const empIdElement = document.getElementById('empId');
+    if (empIdElement) {
+      console.log('empId:', empIdElement.value);  // 콘솔에 empId 값 출력
+    } else {
+      console.error('empId element not found');
+    }
+  }
+  // 페이지 로드 시 empId 값을 확인
+  window.onload = checkEmpId;
 </script>
 </body>
 </html>

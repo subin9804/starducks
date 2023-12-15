@@ -14,7 +14,8 @@
   <!--    페이지 제목 -->
   <h1>글쓰기</h1>
   <!--    글쓰기 폼 -->
-  <form method="post" th:action="@{/forum/add}">
+  <form method="post" th:action="@{/forum/add}" onsubmit="saveEditorContent()">
+
     <!-- 제목 입력란 -->
     <input id="postTitle" placeholder="제목" required th:field="*{post.postTitle}" type="text">
 
@@ -57,9 +58,15 @@
             const formData = new FormData();
             formData.append('image', blob);
 
+            const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
             // 2. FileApiController - uploadEditorImage 메서드 호출
             const response = await fetch('/tui-editor/image-upload', {
               method: 'POST',
+              headers: {
+                [csrfHeaderName]: csrfToken
+              },
               body: formData,
             });
 
@@ -78,8 +85,7 @@
       }
       /* end of hooks */
     });
-  </script>
-  <script>
+
     // form 제출 시 호출될 함수
     function saveEditorContent() {
       // 에디터의 HTML 내용을 가져옴. 이것을 통해서 에디터의 내용을 인식하고 저장할 수 있다

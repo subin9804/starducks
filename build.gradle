@@ -24,7 +24,6 @@ configurations {
 
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
@@ -61,19 +60,18 @@ dependencies {
     //이메일 인증용 추가~~~~
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    //시큐리티 추가
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-
     //자바 mail api
     implementation 'jakarta.mail:jakarta.mail-api:2.0.1'
     implementation 'com.sun.mail:jakarta.mail:2.0.1'
+
+    // 실시간 채팅 웹 소켓용 추가
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework:spring-messaging'
 }
 
 tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
-//
 
 tasks.named('test') {
     useJUnitPlatform()

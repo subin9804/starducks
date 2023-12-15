@@ -3,8 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 
-<!--title-->
-<th:block layout:fragment="title">게시글 수정</th:block>
 <th:block layout:fragment="addMore">
 
   <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
@@ -14,9 +12,9 @@
 
 <main layout:fragment="content">
   <h1>게시글 수정</h1>
-  <form method="post" th:action="@{/forum/edit/{id}(id=${post.postId})}" th:object="${post}">
+  <form method="post" th:action="@{/forum/edit/{id}(id=${post.postId})}" onsubmit="saveEditorContent()">
     <!-- 제목 입력란 -->
-    <input placeholder="제목" required th:field="*{postTitle}" type="text">
+    <input placeholder="제목" required th:field="*{post.postTitle}" type="text">
 
     <!-- 공지사항 체크박스 -->
     <div class="checkbox-container">
@@ -45,8 +43,14 @@
     /*]]>*/
   </script>
   <script>
+    let editor;
+
     document.addEventListener('DOMContentLoaded', function () {
-      const editor = new toastui.Editor({
+
+      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+      const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+      editor = new toastui.Editor({
         el: document.querySelector('#editor'),
         height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
         initialEditType: 'wysiwyg',             // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
@@ -60,6 +64,9 @@
 
               const response = await fetch('/tui-editor/image-upload', {
                 method: 'POST',
+                headers: {
+                  [csrfHeaderName]: csrfToken
+                },
                 body: formData,
               });
 
@@ -74,11 +81,15 @@
           }
         }
       });
-
-      document.querySelector('form').addEventListener('submit', function () {
-        document.getElementById('editor_content').value = editor.getHTML();
-      });
     });
+
+    // form 제출 시 호출될 함수
+    function saveEditorContent() {
+      // 에디터의 HTML 내용을 가져옴. 이것을 통해서 에디터의 내용을 인식하고 저장할 수 있다
+      if (editor) {
+        document.getElementById('editor_content').value = editor.getHTML(); // 숨겨진 input 필드에 설정.
+      }
+    }
   </script>
 </main>
 </html>
