@@ -44,6 +44,8 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final org.kosta.starducks.hr.entity.QEmployee docWriter;
 
+    public final ListPath<RefEmployee, QRefEmployee> refEmployee = this.<RefEmployee, QRefEmployee>createList("refEmployee", RefEmployee.class, QRefEmployee.class, PathInits.DIRECT2);
+
     public final BooleanPath urgent = createBoolean("urgent");
 
     public QDocument(String variable) {

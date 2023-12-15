@@ -1,16 +1,14 @@
 package org.kosta.starducks.document.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.menus.MenuService;
-import org.kosta.starducks.document.entity.Approval;
-import org.kosta.starducks.document.entity.DocForm;
-import org.kosta.starducks.document.entity.DocStatus;
-import org.kosta.starducks.document.entity.Document;
+import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
-import org.kosta.starducks.document.repository.CreateDocRepository;
+import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
-import org.kosta.starducks.document.service.CreateDocService;
+import org.kosta.starducks.document.repository.RefEmpRepository;
+import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.stereotype.Controller;
@@ -19,21 +17,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
 public class CreateDocController {
-    private final CreateDocService createDocService;
+    private final DocumentService documentService;
 
-    private final CreateDocRepository createDocRepository;
+    private final DocumentRepository documentRepository;
     private final DocFormRepository docFormRepository;
     private final EmpRepository empRepository;
     private final ApprovalRepository approvalRepository;
+    private final RefEmpRepository refEmpRepository;
 
     private final HttpServletRequest request;
 
@@ -82,19 +80,15 @@ public class CreateDocController {
     public String submitDocument(@PathVariable(name = "formNameEn") String formNameEn,
                                  @ModelAttribute(name = "document") Document document,
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
-                                 @RequestParam(name = "apvEmpId2") Long apvEmpId2,
-                                 @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
+                                 @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
+                                 @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIds,
                                  RedirectAttributes redirectAttributes) {
         System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId1ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId1);
         System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId2ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId2);
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
-//        Approval approval1 = approvalRepository.save(apv1);
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIds);
 
-        Long empId = 1L; //로그인한 사원 번호
-        document.setDocWriter(empRepository.getById(empId));
-        document.setDocDate(LocalDateTime.now());
-        document.setDocStatus(DocStatus.PENDING_DOC);
-        Document savedDoc = createDocRepository.save(document);
+        List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
+        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIds, refEmpIds);
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
@@ -108,12 +102,35 @@ public class CreateDocController {
     public String createDocumentTemp(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
+
+        List<Long> apvEmpIds = documentService.getApvEmpIdsByDocId(docId);
+        int i = 1;
+        for (Long apvEmpId : apvEmpIds) {
+            model.addAttribute("apvEmpId" + i, apvEmpId);
+        }
+
+        List<Long> refEmpIdList = documentService.getRefEmpIdsByDocId(docId);
+        model.addAttribute("refEmpIdList", refEmpIdList);
+
+        List<Employee> emps = empRepository.findAll();
+        model.addAttribute("emps", emps);
+
+        model.addAttribute("document", documentRepository.findById(docId));
+
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        createDocRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        String empName = "홍길동"; //로그인한 사원 이름
+        model.addAttribute("empName", empName);
 
+        List<Employee> employeeList = empRepository.findAll();
+        model.addAttribute("employees", employeeList);
+
+        docFormRepository.findByFormNameEn(formNameEn)
+                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
+
+        documentRepository.findByDocId(docId)
+                .ifPresent(document -> model.addAttribute("document", document));
         return "document/createDoc/" + formNameEn;
     }
 
@@ -124,16 +141,16 @@ public class CreateDocController {
     public String submitDocument2(@PathVariable(name = "formNameEn") String formNameEn,
                                   @PathVariable(name = "docId") Long docId,
                                   Document document,
+                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
+                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
+                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIds,
                                   RedirectAttributes redirectAttributes) {
 
-        createDocRepository.findByDocId(docId);
-        if (document.getDocStatus() == DocStatus.TEMP_STORED) {
-            document.setDocDate(LocalDateTime.now());
-        } else {
-            document.setDocUpdateDate(LocalDateTime.now());
-        }
-        document.setDocStatus(DocStatus.PENDING_DOC);
-        Document savedDoc = createDocRepository.save(document);
+
+        List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
+        documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIds);
+
+//        documentRepository.findByDocId(docId);
 
         redirectAttributes.addAttribute("status", true);
         return "redirect:/document/submitDoc/" + formNameEn + "/" + docId;
@@ -144,11 +161,12 @@ public class CreateDocController {
      */
     @PostMapping("/temp")
     public String submitDraftTemp(Document document,
+                                  @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
+                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
+                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIds,
                                   RedirectAttributes redirectAttributes) {
-
-        document.setDocStatus(DocStatus.PENDING_DOC);
-        document.setDocDate(LocalDateTime.now());
-        Document savedDoc = createDocRepository.save(document);
+        List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
+        Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIds, refEmpIds);
 
         String formCode = savedDoc.getDocForm().getFormCode();
 
