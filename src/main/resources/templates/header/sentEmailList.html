@@ -95,6 +95,24 @@
 
 
                         </table>
+
+
+                        <div th:if="${emails.totalPages > 1}">
+                            <ul class="pagination">
+                                <li th:class="${emails.isFirst() ? 'disabled' : ''}">
+                                    <a th:href="@{/email/sentlist(page=${emails.number - 1}, size=${emails.size})}">Previous</a>
+                                </li>
+                                <li th:each="pageNum : ${#numbers.sequence(0, emails.totalPages - 1)}"
+                                    th:class="${pageNum == emails.number ? 'active' : ''}">
+                                    <a th:href="@{/email/sentlist(page=${pageNum}, size=${emails.size})}" th:text="${pageNum + 1}">Page number</a>
+                                </li>
+                                <li th:class="${emails.last ? 'disabled' : ''}">
+                                    <a th:href="@{/email/sentlist(page=${emails.number + 1}, size=${emails.size})}">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
