@@ -31,7 +31,6 @@ public class StoreController {
     private final StoreRepository storeRepository;
     private final EmpRepository empRepository;
 
-
     /**
      * 지점 추가
      *
