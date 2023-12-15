@@ -263,7 +263,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             }
         }
 
-        // 초기 채팅 데이터
+        // 초기 채팅 데이터 뭐야야야야
         for (int i = 0; i < 5; i++) {
             ChatRoom chatRoom = new ChatRoom();
             chatRoom.setRoomName("채팅방" + i);
