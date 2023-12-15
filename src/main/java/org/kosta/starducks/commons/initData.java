@@ -3,6 +3,7 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
@@ -43,6 +44,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
+    private final StoreRepository storeRepository;
 
 
     @Override
@@ -93,7 +95,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
         specificEmp.setDAddr("수원시");
-        specificEmp.setPosition(Position.ROLE_EMPLOYEE);
+        specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
@@ -196,14 +198,15 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             forumPost.setEmployee(specificEmp);
 
             //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
-          forumPost.setPostNotice(i < 5);
+            forumPost.setPostNotice(i < 5);
+
             forumPostRepository.saveAndFlush(forumPost);
         }
 
 
         //문서 양식 데이터
         String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "g"};
+        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "empVerification"};
         for (int i = 1; i < 8; i++) {
             DocForm docForm = new DocForm();
             docForm.setFormCode("A0" + i);
@@ -213,7 +216,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             docFormRepository.saveAndFlush(docForm);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
-// Schedule 데이터 생성
+//            Schedule 데이터 생성
             LocalDateTime[] startDates = {
 
                     LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),

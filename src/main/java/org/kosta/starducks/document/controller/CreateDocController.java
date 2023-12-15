@@ -88,8 +88,8 @@ public class CreateDocController {
      */
     @GetMapping("/{formNameEn}/{docId}")
     public String createDocumentTemp(@PathVariable(name = "formNameEn") String formNameEn,
-                                 @PathVariable(name = "docId") Long docId,
-                                 Model model) {
+                                     @PathVariable(name = "docId") Long docId,
+                                     Model model) {
         MenuService.commonProcess(request, model, "document");
 
         docFormRepository.findByFormNameEn(formNameEn)

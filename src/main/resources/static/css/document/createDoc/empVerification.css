@@ -1,0 +1,199 @@
+.preview-layout {
+    width: 1400px;
+    /*height: 1122px;*/
+}
+
+.commonBtn {
+    margin: 30px;
+}
+
+.inputs-div {
+    display: inline-block;
+    border: 1px solid #6B4D27;
+    height: 500px;
+    width: 473px;
+    border-radius: 20px;
+}
+
+.a4-box {
+    display: inline-block;
+    border: 1px solid cadetblue;
+    /*width: 210mm;*/
+    /*height: 297mm;*/
+    width: 794.52px;
+    height: 1122.66px;
+}
+
+#print-div {
+    position: relative;
+    border: 1px solid yellowgreen;
+    /*margin: 10mm;*/
+    margin: 38.7px;
+}
+
+.doc-type-name {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, .col-th {
+    background-color: #dddddd;
+    -webkit-print-color-adjust: exact;
+}
+
+.col-th {
+    width: 80px;
+}
+
+.top-box {
+    height: 120px;
+}
+
+.drafter-box {
+    position: absolute;
+    top: 100px;
+    right: 180px;
+    width: 100%;
+    height: 100%;
+    width: 90px;
+    height: 90px;
+}
+
+.approver-box {
+    position: absolute;
+    top: 100px;
+    right: 0px;
+    width: 160px;
+    height: 90px;
+}
+
+.stamp-box {
+    width: 65px;
+    height: 70px;
+}
+
+.doc-info-box {
+    margin: 20px 0;
+}
+
+.doc-content-box {
+    margin: 20px 0;
+}
+
+.attached-files-box {
+    margin: 20px 0;
+}
+
+.docu-header {
+    background-color: #6B4D27;
+    border-radius: 17px;
+    color: white;
+    font-weight: bolder;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    display: inline-block; /* 요소가 내용물의 길이에 맞춰서 너비를 가짐 */
+}
+
+.selectBox * {
+    box-sizing: border-box;
+}
+
+.selectBox {
+    position: relative;
+    width: 150px;
+    height: 35px;
+    border-radius: 4px;
+    border: 2px solid #6B4D27;
+    cursor: pointer;
+}
+
+.selectBox .fa-angle-down {
+    color: #6B4D27;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.selectBox:after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 35px;
+    background: #6B4D27;
+}
+
+.selectBox .label {
+    display: flex;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 15px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.selectBox .optionList {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    width: 100%;
+    background: #6B4D27;
+    color: #fff;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 0;
+    transition: .3s ease-in;
+}
+
+.selectBox.active .optionList {
+    max-height: 500px;
+}
+
+.selectBox .optionItem {
+    border-bottom: 1px dashed #6B4D27;
+    padding: 5px 15px 5px;
+    transition: .1s;
+}
+
+.selectBox .optionItem:hover {
+    background: #6B4D27;
+}
+
+.selectBox .optionItem:last-child {
+    border-bottom: 0 none;
+}
+
+/*스크롤 커스텀*/
+.selectBox .optionList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.selectBox .optionList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.selectBox .optionList::-webkit-scrollbar-thumb {
+    background: #303030;
+    border-radius: 45px;
+}
+
+.selectBox .optionList::-webkit-scrollbar-thumb:hover {
+    background: #303030;
+}

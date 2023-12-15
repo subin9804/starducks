@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // CSRF 토큰과 헤더 이름을 읽어옴
+    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+
     var calendarEl = document.getElementById('calendar');
     var modal;
     var calendar = new FullCalendar.Calendar(calendarEl, {  // calendarEl 요소에 달력을 초기화
@@ -29,21 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 사용자의 일정 정보를 가져옴
             fetchShowSingleSchedule(empId).then(function (data) {   // 서버에 요청을 보내어 해당 사용자의 일정 정보를 가져옴
-                console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
+                // console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
 
                 var events = data.map(function (schedule) {
-                    console.log(schedule.url)
+                    // console.log(schedule.url)
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
                         title: schedule.title,
                         start: schedule.start,
                         url: schedule.url,   // 해당 일정의 상세 페이지로 이동
-                        end: schedule.end,
-                        // extendedProps: {
-                        //     scheduleType: schedule.scheduleType,
-                        //     notes: schedule.notes,
-                        //     empId: schedule.empId
-                        // }
+                        end: schedule.end
                     };
                     console.log("schedule.scheTitle" + schedule.scheTitle);
                 });
@@ -51,23 +50,23 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         },
         eventClick: function (info) {
-            console.log(info.event.url);
+            // console.log(info.event.url);
             if (info.event.url) {
                 window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
             }
-
-            // console.log(info.event.url);
-            // if (info.event.url) {
-            //     window.open(info.event.url);
-            // }
-
         }
     });
 
     // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
     // fetch를 사용하여 일정 정보를 요청하고, 받은 응답을 JSON 형태로 변환하여 반환
     function fetchShowSingleSchedule(empId) {
-        return fetch('/schedule/show/' + empId)
+        // fetch 요청에 CSRF 토큰을 포함
+        return fetch('/schedule/show/' + empId, {
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfToken // CSRF 토큰을 헤더에 추가
+            }
+        })
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error('네트워크가 좋지 않습니다.');
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.text(); // response.json() 대신 response.text()로 변경
             })
             .then(function (data) {
-                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console..log
+                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
                 return JSON.parse(data); // JSON 형식으로 파싱하여 반환
             })
             .catch(function (error) {
@@ -179,20 +178,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var scheduleType = scheduleTypeDropdown.value;
             var notes = notesInput.value;
 
-            // var start = new Date(scheStartDate);
-            // var end = new Date(scheEndDate);
-
-            // if (scheTitle.trim() !== '' && start && end) {
-            //     calendar.addEvent({
-            //         title: scheTitle,
-            //         start: start,
-            //         end: end,
-            //         extendedProps: {
-            //             calendar: scheduleType,
-            //             notes: notes
-            //         }
-            //     });
-
             var data = {
                 scheTitle: scheTitle,
                 scheStartDate: scheStartDate,
@@ -204,7 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('/schedule/add', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
                 },
                 body: JSON.stringify(data)
             })
