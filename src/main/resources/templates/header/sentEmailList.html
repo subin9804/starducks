@@ -43,16 +43,8 @@
                 </nav>
             </div>
             <div class="flex-1 p-4 bg-white bg-opacity-75">
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between items-center mb-4 mt-2">
                     <h1 class="text-xl font-semibold">보낸편지함</h1>
-                    <div class="flex space-x-2">
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                            ⬅
-                        </button>
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                            ➡
-                        </button>
-                    </div>
                 </div>
                 <div class="overflow-auto">
                     <div class="relative w-full overflow-auto">
@@ -60,13 +52,13 @@
                             <thead class="[&amp;_tr]:border-b">
                             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                 <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[10%]"></th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">
+                                <th class="h-12 px-4 text-left align-middle font-bold text-muted-foreground text-lg [&amp;:has([role=checkbox])]:pr-0 w-[20%]">
                                     수신자
                                 </th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[40%]">
+                                <th class="h-12 px-4 text-left align-middle font-bold text-muted-foreground text-lg [&amp;:has([role=checkbox])]:pr-0 w-[40%]">
                                     제목
                                 </th>
-                                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[30%]">
+                                <th class="h-12 px-4 text-left align-middle font-bold text-muted-foreground text-lg [&amp;:has([role=checkbox])]:pr-0 w-[30%]">
                                     발신일
                                 </th>
 
@@ -97,17 +89,21 @@
                         </table>
 
 
-                        <div th:if="${emails.totalPages > 1}">
-                            <ul class="pagination">
-                                <li th:class="${emails.isFirst() ? 'disabled' : ''}">
-                                    <a th:href="@{/email/sentlist(page=${emails.number - 1}, size=${emails.size})}">Previous</a>
+                        <div th:if="${emails.totalPages > 1}" class="flex justify-center mt-4">
+                            <ul class="inline-flex items-center -space-x-px">
+                                <li th:class="|${emails.isFirst() ? 'disabled opacity-50 cursor-not-allowed' : ''}|">
+                                    <a th:href="@{/email/sentlist(page=${emails.number - 1}, size=${emails.size})}"
+                                       class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white border border-r-0 border-gray-300 hover:bg-gray-100 hover:text-gray-700">Previous</a>
                                 </li>
                                 <li th:each="pageNum : ${#numbers.sequence(0, emails.totalPages - 1)}"
-                                    th:class="${pageNum == emails.number ? 'active' : ''}">
-                                    <a th:href="@{/email/sentlist(page=${pageNum}, size=${emails.size})}" th:text="${pageNum + 1}">Page number</a>
+                                    th:class="|${pageNum == emails.number ? 'active bg-blue-500 text-white' : 'text-gray-700 bg-white'}|">
+                                    <a th:href="@{/email/sentlist(page=${pageNum}, size=${emails.size})}"
+                                       class="py-2 px-3 leading-tight border border-gray-300 hover:bg-gray-100"
+                                       th:text="${pageNum + 1}"></a>
                                 </li>
-                                <li th:class="${emails.last ? 'disabled' : ''}">
-                                    <a th:href="@{/email/sentlist(page=${emails.number + 1}, size=${emails.size})}">Next</a>
+                                <li th:class="|${emails.isLast() ? 'disabled opacity-50 cursor-not-allowed' : ''}|">
+                                    <a th:href="@{/email/sentlist(page=${emails.number + 1}, size=${emails.size})}"
+                                       class="block py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
                                 </li>
                             </ul>
                         </div>

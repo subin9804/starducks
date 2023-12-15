@@ -42,7 +42,7 @@ public class sendEmailService {
 
     //받은 메일함 받아오는 메서드
 
-    public List<RSEmailDto> fetchInboxEmails() throws MessagingException {
+    public Page<RSEmailDto> fetchInboxEmails(Pageable pageable) throws MessagingException {
         String host = "imap.gmail.com";
         String username = "10000@starducks.monster";
         String password = "qgfk uxcn sdea vuwx";
@@ -64,8 +64,28 @@ public class sendEmailService {
             inbox.open(Folder.READ_ONLY);
 
             Message[] messages = inbox.getMessages();
+
+            //메세지의 순서를 내림차순으로 만든다.
+            Arrays.sort(messages, (m1, m2) -> {
+                try {
+                    return m2.getSentDate().compareTo(m1.getSentDate());
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            //할당되는 메세지의 시작과 끝 번호를 계산한다.
+            int start =(int) pageable.getOffset();
+            log.info("start는?"+String.valueOf(start));
+            int end = Math.min((start +pageable.getPageSize()), messages.length);
+            log.info("end는?" + String.valueOf(end));
+
+
+
+
             List<RSEmailDto> messageList = new ArrayList<>();
-            for (Message message : messages) {
+            for (int i = start; i < end; i++) {
+                Message message = messages[i];
                 RSEmailDto mailDto = new RSEmailDto();
                 mailDto.setPeople(getFromAddresses(message));
                 mailDto.setSubject(message.getSubject());
@@ -76,7 +96,7 @@ public class sendEmailService {
                 messageList.add(mailDto);
             }
 
-            return messageList;
+            return new PageImpl<>(messageList,pageable, messages.length);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

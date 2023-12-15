@@ -37,11 +37,14 @@ public class SendEmailController {
     }
 
     @GetMapping("/list")
-    public String getEmailList(Model model) {
+    public String getEmailList(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "9") int size) {
         try {
-            List<RSEmailDto> emails = emailService.fetchInboxEmails();
-            emails.sort(Comparator.comparing(RSEmailDto::getSentDate).reversed());
 
+            //타임리프에서 받아온 page와 size값을 넘겨서 서비스의 메서드 사용해서 해당 이메일만 받아온다.
+            //처음에는 디폴트 값인 0페이지로 이동한다. -> 화면에서 페이지 목차 누르면 이동한다.
+            Page <RSEmailDto> emails = emailService.fetchInboxEmails(PageRequest.of(page, size));
             model.addAttribute("emails", emails);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,12 +59,10 @@ public class SendEmailController {
                                    @RequestParam(defaultValue = "9") int size) {
         try {
 
+            //타임리프에서 받아온 page와 size값을 넘겨서 서비스의 메서드 사용해서 해당 이메일만 받아온다.
+            //처음에는 디폴트 값인 0페이지로 이동한다. -> 화면에서 페이지 목차 누르면 이동한다.
             Page<RSEmailDto> emails =emailService.fetchSentEmails(PageRequest.of(page, size));
-
-
-
             model.addAttribute("emails", emails);
-
 
         } catch (Exception e) {
             e.printStackTrace();
