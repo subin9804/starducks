@@ -90,7 +90,7 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName, MultipartFile file) throws Exception {
+    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName, @RequestParam("file") MultipartFile file) throws Exception {
         Vendor vendorByName = vendorService.getVendorByName(vendorName);
 
         product.setVendor(vendorByName);
