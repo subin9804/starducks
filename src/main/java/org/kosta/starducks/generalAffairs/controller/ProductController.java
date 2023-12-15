@@ -36,36 +36,33 @@ public class ProductController {
 
     @GetMapping("/list")
     public String getAllProducts(Model m,
-                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
-    {
+                                 @PageableDefault(page = 0, size = 3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
         MenuService.commonProcess(request, m, "general");
         Page<Product> allProducts = null;
-        if(searchKeyword == null){
+        if (searchKeyword == null) {
             allProducts = productService.getAllProducts(pageable);
 
-        }
-        else{
-            allProducts = productService.productSearchList(searchKeyword,pageable);
+        } else {
+            allProducts = productService.productSearchList(searchKeyword, pageable);
 
         }
 
-        int nowPage = allProducts.getPageable().getPageNumber()+1;
+        int nowPage = allProducts.getPageable().getPageNumber() + 1;
         //pageable에서 넘어온 현재 페이지를 가져온다.
-        int startPage= Math.max(nowPage-4,1);
-        int endPage= Math.min(nowPage+5,allProducts.getTotalPages());
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, allProducts.getTotalPages());
 
         m.addAttribute("products", allProducts);
-        m.addAttribute("nowPage",nowPage);
-        m.addAttribute("startPage",startPage);
-        m.addAttribute("endPage",endPage);
+        m.addAttribute("nowPage", nowPage);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
         return "generalAffairs/ProductList";
     }
 
     @GetMapping("/info/{productCode}")
     public String getProductInfo(@PathVariable("productCode") Long productCode,
-                                 Model m)
-    {
+                                 Model m) {
         MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
         Product product1 = product.get();
@@ -83,7 +80,6 @@ public class ProductController {
 
         List<String> vendorNames = vendorService.getAllVendorNames();
         m.addAttribute("vendorNames", vendorNames);
-
 
         return "generalAffairs/ProductForm";
     }
@@ -107,13 +103,12 @@ public class ProductController {
         if (product.isPresent()) {
             Product product1 = product.get();
 
-        m.addAttribute("product", product1);
-        m.addAttribute("productCategories",ProductCategory.values());
-        m.addAttribute("productUnit", ProductUnit.values());
-        m.addAttribute("productSelling", product1.isProductSelling());
-        return "generalAffairs/ProductUpdate";
-        }
-        else{
+            m.addAttribute("product", product1);
+            m.addAttribute("productCategories", ProductCategory.values());
+            m.addAttribute("productUnit", ProductUnit.values());
+            m.addAttribute("productSelling", product1.isProductSelling());
+            return "generalAffairs/ProductUpdate";
+        } else {
             return "redirect:/general/products/list";
         }
     }
@@ -135,7 +130,6 @@ public class ProductController {
 //
 //        return "redirect:/product/list";
 //    }
-
 
 
 }
