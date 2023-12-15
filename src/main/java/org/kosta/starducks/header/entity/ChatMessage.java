@@ -1,6 +1,7 @@
 package org.kosta.starducks.header.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,12 +24,14 @@ public class ChatMessage extends BaseTimeEntity {
   private Long id;
 
   //발신자
-  @ManyToOne
-  @JoinColumn(name = "sender_id")
-  private Employee sender;
+//  @ManyToOne
+//  @JoinColumn(name = "sender_id")
+//  private Employee sender;
+
+  private String sender;
 
   //메시지 내용
-  private String content;
+  private String message;
 
   //연결된 채팅방
   @ManyToOne
@@ -37,4 +40,11 @@ public class ChatMessage extends BaseTimeEntity {
 
   //상대방이 메시지 읽었는지. false면 안 읽었으니 숫자 1 표시
   private boolean readStatus = false;
+
+  @Builder
+  public ChatMessage(String sender, String message, ChatRoom chatRoom) {
+    this.sender = sender;
+    this.message = message;
+    this.chatRoom = chatRoom;
+  }
 }
