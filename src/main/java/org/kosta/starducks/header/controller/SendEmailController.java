@@ -63,7 +63,7 @@ public class SendEmailController {
             //처음에는 디폴트 값인 0페이지로 이동한다. -> 화면에서 페이지 목차 누르면 이동한다.
             Page<RSEmailDto> emails =emailService.fetchSentEmails(PageRequest.of(page, size));
             model.addAttribute("emails", emails);
-
+//
         } catch (Exception e) {
             e.printStackTrace();
             // Handle exceptions appropriately
