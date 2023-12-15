@@ -27,7 +27,7 @@ main {
 .content {
     border: 1px solid #6B4D27;
     border-radius: 10px;
-    width: 1300px;
+
 }
 /* 페이지에 가장 크게 들어가는 경계선 + 그림자 */
 .page-border {
