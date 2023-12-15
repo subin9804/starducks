@@ -1,4 +1,30 @@
 /*메일 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*메일 보내기 페이지*/
+#mailwrite{
+    margin-top:10px;
+}
+#mailboxes {
+    margin-top: 20px;
+}
+/*메일 전송 완료 페이지*/
+/* 목록 및 메일쓰기 */
+.graybutton {
+    margin: 15px 5px ;
+    line-height: 27px;
+    width: 90px;
+    height: 30px;
+    border: 1px solid #E6E6EA ;
+
+    border-radius: 10px;
+    cursor: pointer;
+    color: #767678;
+    background-color: #fff;
+
+
+}
+.graybutton:hover {
+    background-color: #F2F2F4; /* 호버 시 배경 색상을 변경합니다. */
+}
 
 /*메일 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*채팅 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

@@ -1,114 +1,142 @@
 <!DOCTYPE html>
-<!--<html xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layouts/main}">-->
-<html lang="en">
+<!--<meta charset="UTF-8">-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 
 <!--<th:block layout:fragment="title">title</th:block>-->
-<!--<th:block layout:fragment="addMore">-->
-<!--    <link rel="stylesheet" type="text/css" th:href="@{draft.css}" href="/css/document/createDoc/draft.css">-->
-<!--    <script th:src="@{draft.js}" src="/js/document/createDoc/draft.js"></script>-->
-<!--</th:block>-->
 
-<head>
-    <link rel="stylesheet" type="text/css" href="/static/css/document/createDoc/draft.css">
-    <script src="/static/js/document/createDoc/draft.js"></script>
-    <meta charset="UTF-8">
-    <title>재직증명서</title>
-</head>
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/document/createDoc/empVerification.css" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}"
+          href="/static/css/document/createDoc/draft.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
 
-<!--<main layout:fragment="content">-->
-<body>
-<h1>시작</h1>
-
-<div class="a4-box">
-    <div id="print-div">
-        <h1 class="doc-form-name">재 직 증 명 서</h1>
-        <div class="top-box">
-            <table class="drafter-box">
-                <tr>
-                    <th rowspan="2">신청</th>
-                    <th>사원</th>
-                </tr>
-                <tr>
-                    <td class="stamp-box">(홍길동인)</td>
-                </tr>
-            </table>
-            <table class="approver-box">
-                <tr>
-                    <th rowspan="2">승인</th>
-                    <th>직급</th>
-                    <th>직급</th>
-                </tr>
-                <tr>
-                    <td class="stamp-box">(김팀장인)</td>
-                    <td class="stamp-box">(김사장인)</td>
-                </tr>
-                <tr>
-                </tr>
-            </table>
+<main layout:fragment="content">
+    <h2 class="frag-title" th:text="|${docForm?.formName} 작성|">재직증명서 작성</h2>
+    <div class="preview-layout">
+        <div class="inputs-div" style="margin-left:100px;">
+            <div style="margin: 10px">
+                <div>
+                    <span class="docu-header">A07 재직증명서</span>
+                    <div>기안일 : 여기는 기안일이 들어갈거다</div>
+                    <div>기안자 : 여기는 기안자가 들어갈거다</div>
+                    <div style="margin-bottom: 20px">결재자 : 여기는 결재자가 들어갈거다</div>
+                    <hr>
+                </div>
+                <br>
+                용도 :&nbsp
+                <div class="selectBox" style="display: inline-block;">
+                    <button class="label">발급용도</button>
+                    <i class="fa-solid fa-angle-down"></i>
+                    <ul class="optionList">
+                        <li class="optionItem">제출용</li>
+                        <li class="optionItem">보관용</li>
+                    </ul>
+                </div>
+                <br><br><br>
+            </div>
         </div>
+        <div class="a4-box" style="float:right">
+            <div id="print-div">
+                <h1 style="text-align: center" class="doc-form-name">재 직 증 명 서</h1>
+                <div class="top-box">
+                    <table class="drafter-box">
+                        <tr>
+                            <th rowspan="2">신청</th>
+                            <th>사원</th>
+                        </tr>
+                        <tr>
+                            <td class="stamp-box">(홍길동인)</td>
+                        </tr>
+                    </table>
+                    <table class="approver-box">
+                        <tr>
+                            <th rowspan="2">승인</th>
+                            <th>직급</th>
+                            <th>직급</th>
+                        </tr>
+                        <tr>
+                            <td class="stamp-box">(김팀장인)</td>
+                            <td class="stamp-box">(김사장인)</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </table>
+                </div>
 
-        <div class="middle-box">
-            <table class="doc-info-box">
-                <tr>
-                    <th class="col-th">성명</th>
-                    <td>내용</td>
-                    <th class="col-th">생년월일</th>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <th class="col-th">소속</th>
-                    <td>내용</td>
-                    <th class="col-th">연락처</th>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <th class="col-th">입사일자</th>
-                    <td>내용</td>
-                    <th class="col-th">직책</th>
-                    <td>내용</td>
-                </tr>
-                <tr>
-                    <th class="col-th">주소</th>
-                    <td>내용</td>
-                    <td class="border-delete" rowspan="2" colspan="2"></td>
-                </tr>
-                <tr>
-                    <th class="col-th">용도</th>
-                    <td>
-                        <select>
-                            <option>제출용</option>
-                            <option>보관용</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <table class="doc-content-box">
-                <tr class="doc-info">
-
-                    <td>
-
-                        <p align="center">위와 같이 재직하고 있음을 증명합니다.</p><br><br><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br><br><br>
-
-                    </td>
-                </tr>
-            </table>
+                <div class="middle-box">
+                    <table class="doc-info-box">
+                        <tr>
+                            <th class="col-th">성명</th>
+                            <td>내용</td>
+                            <th class="col-th">생년월일</th>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <th class="col-th">소속</th>
+                            <td>내용</td>
+                            <th class="col-th">연락처</th>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <th class="col-th">입사일자</th>
+                            <td>내용</td>
+                            <th class="col-th">직책</th>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <th class="col-th">주소</th>
+                            <td>서울 특별시 강남구 부자동 걱정없호</td>
+                            <th class="col-th">발급용도</th>
+                            <td>제출 or 보관</td>
+                        </tr>
+                    </table>
+                    <table class="doc-content-box">
+                        <tr class="doc-info">
+                            <td>
+                                <p style="text-align: center">위와 같이 재직하고 있음을 증명합니다.</p>
+                                <br><br><br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+            </div>
         </div>
-
     </div>
-</div>
 
-<h1>끝</h1>
-<button onclick="startPrint('print-div');">print</button>
-</body>
-<!--</main>-->
+
+    <script>
+        /* 화살표 함수 */
+        const arrow = document.querySelector('.fa-angle-down'); // 화살표 요소 선택
+        const options = document.querySelectorAll('.optionItem');
+
+        // 클릭한 옵션의 텍스트를 라벨 안에 넣음
+        const handleSelect = (item) => {
+            const label = arrow.previousElementSibling; // 버튼 요소 참조
+            label.parentNode.classList.remove('active');
+            label.textContent = item.textContent;
+        }
+
+        // 옵션 클릭시 클릭한 옵션을 넘김
+        options.forEach(option => {
+            option.addEventListener('click', () => handleSelect(option))
+        })
+
+        // 화살표를 클릭시 옵션 목록이 열림/닫힘
+        arrow.addEventListener('click', () => {
+            if (arrow.parentNode.classList.contains('active')) {
+                arrow.parentNode.classList.remove('active');
+            } else {
+                arrow.parentNode.classList.add('active');
+            }
+        })
+
+    </script>
+    </body>
+</main>
 </html>

@@ -47,5 +47,14 @@ public class Employee {
     private Department dept;    // 부서코드
 //    파일
 
+
+    @Transient
+    private String cmpEmail;    // 회사 이메일
+
+    @PrePersist
+    public void generateCmpEmail() {
+        this.cmpEmail = this.empId + "@starbucks.monster";
+    }
+
 }
 

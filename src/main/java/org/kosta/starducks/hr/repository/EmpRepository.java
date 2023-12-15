@@ -4,18 +4,22 @@ import com.querydsl.core.BooleanBuilder;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.entity.QEmployee;
+import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
 
     Employee findTopByOrderByEmpIdDesc();
     Employee findByEmpName(String empName);
+
+    List<Employee> findByPosition(Position position);
 
     // 이메일로 직원 검색
     Optional<Employee> findByEmail(String email);

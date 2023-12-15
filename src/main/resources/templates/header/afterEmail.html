@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header/style.css}">
+    <script th:src="@{/js/header/script.js}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>발송완료</h1>
+    <div class="content">
+        <div class="flex h-screen">
+            <div class="w-60 bg-gray-100 p-4">
+                <a th:href="@{/email}">
+                    <button id="mailwrite"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-700/90 hover:bg-blue-700 h-10 px-4 py-2 w-full mb-4 bg-blue-500 text-white"
+                            th:href="@{/email}">
+                        메일쓰기
+                    </button>
+                </a>
+                <nav class="flex flex-col" id="mailboxes">
+
+                    <a th:href="@{/email/list}">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100">
+                            받은편지함
+                        </button>
+                    </a>
+                    <a th:href="@{/email/sentlist}">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-black text-blue-600 hover:text-white h-10 px-4 py-2 w-full mb-2 text-left bg-blue-100">
+                            보낸편지함
+                        </button>
+                    </a>
+
+
+                </nav>
+
+            </div>
+            <div class="flex-1 p-4 bg-white bg-opacity-75 flex flex-col items-center justify-center h-screen">
+                <img th:src="@{/images/mail/mailSent.png}" class="mb-4" style="width: 200px; height: auto;">
+                <h1>메일을 성공적으로 보냈습니다.</h1>
+                <div class="flex">
+                    <a th:href="@{/email/list}">
+                        <button class="graybutton">메일목록</button>
+                    </a>
+                    <a th:href="@{/email}">
+                        <button class="graybutton">메일 쓰기</button>
+                    </a>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+
+
+</html>
