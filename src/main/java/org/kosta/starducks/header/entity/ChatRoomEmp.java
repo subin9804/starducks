@@ -28,4 +28,12 @@ public class ChatRoomEmp {
   @JoinColumn(name = "emp_id")
   private Employee employee;
 
+  public ChatRoomEmp(ChatRoom chatRoom, Employee employee) {
+    this.chatRoom = chatRoom;
+    this.employee = employee;
+  }
+
+  public ChatRoomEmp() {
+
+  }
 }

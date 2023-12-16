@@ -4,7 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
 import org.kosta.starducks.header.dto.ChatRoomResponseDto;
 import org.kosta.starducks.header.entity.ChatRoom;
+import org.kosta.starducks.header.entity.ChatRoomEmp;
+import org.kosta.starducks.header.repository.ChatRoomEmpRepository;
 import org.kosta.starducks.header.repository.ChatRoomRepository;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.repository.EmpRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +21,15 @@ import java.util.stream.Collectors;
 @Service
 public class ChatRoomService {
 
+  @Autowired
   private final ChatRoomRepository chatRoomRepository;
+
+  @Autowired
+  private final EmpRepository empRepository;
+
+  @Autowired
+  private final ChatRoomEmpRepository chatRoomEmpRepository;
+
 
   //  채팅방 조회
   @Transactional
@@ -29,10 +42,23 @@ public class ChatRoomService {
 
   //  채팅방 생성
   @Transactional
-  public Long save(final ChatRoomRequestDto requestDto) {
+  public Long createChatRoom(ChatRoomRequestDto requestDto) {
+    // 채팅방 엔티티 생성 및 저장
+    ChatRoom chatRoom = new ChatRoom();
+    chatRoom.setRoomName(requestDto.getRoomName());
+    chatRoom = chatRoomRepository.save(chatRoom);
 
-    return this.chatRoomRepository.save(requestDto.toEntity()).getId();
+    // 사원 ID 리스트를 반복하면서 각 사원과 채팅방의 관계 설정
+    for (Long empId : requestDto.getEmpIds()) {
+      Employee employee = empRepository.findById(empId)
+          .orElseThrow(() -> new IllegalArgumentException("사원이 존재하지 않습니다. ID: " + empId));
+      ChatRoomEmp chatRoomEmp = new ChatRoomEmp(chatRoom, employee);
+      chatRoomEmpRepository.save(chatRoomEmp);
+    }
+
+    return chatRoom.getId();
   }
+
 
   //  채팅방 이름 수정
   @Transactional
@@ -67,4 +93,12 @@ public class ChatRoomService {
     List<ChatRoom> chatRoomList = this.chatRoomRepository.findAllByRoomNameContaining(roomName, sort);
     return chatRoomList.stream().map(ChatRoomResponseDto::new).collect(Collectors.toList());
   }
+
+  public List<ChatRoomResponseDto> getChatRoomsForEmployee(Long empId) {
+    List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByEmployeeId(empId);
+    return chatRooms.stream()
+        .map(ChatRoomResponseDto::new)
+        .collect(Collectors.toList());
+  }
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 
   <title>Chat</title>
@@ -10,28 +10,7 @@
 </head>
 <body>
 
-<div id="menu" class="chat-menu" onclick="toggleEmployeeList()">☰</div>
 
-<div class="chat-profile">
-<!--  <img th:src="@{/images/profile.png}" alt="Profile"/>-->
-  <div>
-<!--    <div th:text="${employee.name}">Employee Name</div>-->
-<!--    <div th:text="${employee.department}">Department</div>-->
-<!--  </div>-->
-</div>
-
-<div class="chat-chatRoomList">
-  <ul>
-<!--    <li th:each="chatRoom : ${chatRooms}">-->
-<!--      <img th:src="@{${chatRoom.image}}" alt="Room Image"/>-->
-      <div>
-<!--        <h2 th:text="${chatRoom.name}">Chat Room Name</h2>-->
-<!--        <p th:text="${chatRoom.latestMessage}">Latest message...</p>-->
-<!--        <time th:text="${chatRoom.timestamp}">Timestamp</time>-->
-      </div>
-<!--    </li>-->
-  </ul>
-</div>
 
 <script th:inline="javascript">
   /*<![CDATA[*/
@@ -54,11 +33,6 @@
   function sendMessage() {
     stompClient.send("/app/chat/send", {}, JSON.stringify({'content': 'Hello!'}));
   }
-
-
 </script>
-
-<button onclick="sendMessage()">Send Message</button>
-</div>
 </body>
 </html>

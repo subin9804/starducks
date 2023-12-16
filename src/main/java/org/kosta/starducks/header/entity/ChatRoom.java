@@ -27,6 +27,9 @@ public class ChatRoom extends BaseTimeEntity {
   //채팅방 이름
   private String roomName;
 
+  @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
+  private List<ChatRoomEmp> chatRoomEmps; // 채팅방과 사원들의 관계를 나타내는 필드
+
   //채팅방에 속해있는 메시지 리스트
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
   private List<ChatMessage> chatMessageList;
