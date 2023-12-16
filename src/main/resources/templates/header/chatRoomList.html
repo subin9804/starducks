@@ -5,34 +5,86 @@
   <title>Chat</title>
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/css/header/chat.css}" />
 
 </head>
 <body>
 
-
+<div id="chat-room-list"></div>
 
 <script th:inline="javascript">
   /*<![CDATA[*/
-  function toggleEmployeeList() {
-    // Toggle the visibility of the employee list
-  }
-  /*]]>*/
-</script>
-<script>
-  const socket = new SockJS('/chat');
-  const stompClient = Stomp.over(socket);
+  $(document).ready(function () {
+    // 채팅방 리스트 페이지가 초기 로드됩니다.
+    loadChatRooms();
 
-  stompClient.connect({}, function(frame) {
-    stompClient.subscribe('/topic/messages', function(message) {
-      // 메시지 수신 시 처리
-      alert(JSON.parse(message.body).content);
+    // 사원 목록 페이지로 넘어가는 아이콘 클릭 이벤트
+    $("#employee-list-icon").click(function () {
+      loadChatEmpList();
+    });
+
+    // 메인페이지(채팅방 리스트 페이지) 아이콘 클릭 이벤트
+    $("#chat-room-list-icon").click(function () {
+      loadChatRooms();
     });
   });
 
-  function sendMessage() {
-    stompClient.send("/app/chat/send", {}, JSON.stringify({'content': 'Hello!'}));
+  function loadChatRooms() {
+    $.ajax({
+      url: '/api/chat/rooms/my-rooms', // 채팅방 목록을 불러오는 URL
+      type: 'GET',
+      dataType: 'json',
+      success: function (rooms) {
+        var chatRoomListHtml = "";
+        $.each(rooms, function (index, room) {
+          chatRoomListHtml += `
+            <div class="chat-room">
+              <img src="/path/to/logo.png" alt="logo" />
+              <div class="chat-room-info">
+                <div class="chat-room-name">${room.roomName}</div>
+                <div class="chat-room-employees">${room.employees}</div>
+              </div>
+              <div class="chat-room-action">
+                <button onclick="goToChatRoom(${room.id})">Enter</button>
+              </div>
+            </div>`;
+        });
+        $("#chat-room-list").html(chatRoomListHtml);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error loading chat rooms: ", status, error);
+      }
+    });
   }
+  function loadChatEmpList() {
+    // AJAX 요청을 통해 사원 목록을 불러오고 페이지에 표시
+    $.ajax({
+      url: '/chat/chatEmpList', // 사원 목록 페이지의 URL
+      type: 'GET',
+      success: function (response) {
+        // 페이지 내용을 사원 목록 페이지의 HTML로 교체
+        $('body').html(response);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error loading employee list: ", status, error);
+      }
+    });
+  }
+
+  function goToChatRoom(roomId) {
+    // 채팅방 페이지로 넘어가는 로직
+  }
+  /*]]>*/
 </script>
+
+<!-- 사원 목록 페이지와 채팅방 리스트 페이지 아이콘 -->
+<footer>
+  <div id="footer-icons">
+    <span id="employee-list-icon">Employees</span>
+    <span id="chat-room-list-icon">Chat Rooms</span>
+  </div>
+</footer>
+
 </body>
 </html>
