@@ -48,7 +48,7 @@
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-    const socket = new SockJS('/chat-websocket', null, {
+    const socket = new SockJS('/chat', null, {
       headers: { [csrfHeader]: csrfToken }
     });
 
@@ -76,7 +76,7 @@
         content: messageContent,
         type: 'CHAT'
       };
-      stompClient.send("/app/chat.send/" + roomId, {}, JSON.stringify(chatMessage));
+      stompClient.send("/app/chat/" + roomId + "/send", {}, JSON.stringify(chatMessage));
       document.getElementById('message').value = '';
     }
   }
@@ -86,6 +86,7 @@
     messageElement.classList.add('chat-message');
 
     // 현재 사용자와 메시지 발신자가 같으면 오른쪽에 표시
+    // 왼쪽은 String이고, 오른쪽은 아이디
     if (message.sender === currentUser) {
       messageElement.classList.add('current-user');
     } else {
@@ -94,7 +95,7 @@
 
     const textElement = document.createElement('div');
     textElement.classList.add('message-content');
-    textElement.innerHTML = message.sender + ': ' + message.content;
+    textElement.innerHTML = message.sender + ': ' + message.message;
 
     messageElement.appendChild(textElement);
     document.getElementById('chat-room').appendChild(messageElement);
@@ -107,7 +108,7 @@
   connect();
 
   // 채팅방 페이지를 벗어날 때 WebSocket 연결 해제
-  window.onbeforeunload = function(e) {
+  window.onbeforeunload = function() {
     disconnect();
   };
 </script>
