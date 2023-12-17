@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/fina/client")
 public class ClientController {
 
-//    목록조회
+    /**
+     * 거래처 목록 조회
+     * @return
+     */
     @GetMapping()
     public String clientList() {
         return "/fina/clientList";
