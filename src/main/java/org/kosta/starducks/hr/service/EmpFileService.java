@@ -22,6 +22,11 @@ public class EmpFileService {
 
     private final EmpFileRepository fileRepository;
 
+    public EmpFile getEmpFile(Long empId, String type) {
+
+        return fileRepository.findByEmpIdAndType(empId, type);
+    }
+
 
     // 파일 경로 설정
     public void addFileInfo(EmpFile empFile) {

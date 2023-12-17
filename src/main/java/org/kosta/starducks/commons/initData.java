@@ -39,9 +39,14 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-
+        Department noDept = Department.builder()
+                .deptId(0)
+                .deptName("해당 없음")
+                .deptRepTel("")
+                .build();
         // 초기 부서 데이터
         List<Department> depts = new ArrayList<>();
+        depts.add(new Department(0, "해당 없음", ""));
         depts.add(new Department(1, "사장실", "010-1111-1111"));
         depts.add(new Department(2, "재무부", "010-2222-2222"));
         depts.add(new Department(3, "총무부", "010-3333-3333"));

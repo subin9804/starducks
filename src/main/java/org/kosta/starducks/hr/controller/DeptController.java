@@ -2,6 +2,7 @@ package org.kosta.starducks.hr.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.entity.Department;
+import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.service.EmpFileService;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/hr/dept")
@@ -72,18 +76,32 @@ public class DeptController {
      */
     @GetMapping("/{deptId}")
     public String detail(@PathVariable("deptId") int deptId, Model model, @RequestParam(name = "name", required = false) String name) {
+        // 이름으로 사원 조회
         Department dept = repository.findById(deptId).orElse(null);
         List<Employee> emps = null;
 
-        if(name != null && !name.isBlank() && name != "") {
+        if(name != null && !name.isBlank() && name != "") { // 검색창에 글자가 있는 경우
             emps = empService.getEmp(deptId, name);
 
         } else {
             emps = empService.getEmp(deptId);
         }
 
+        List<Employee> runningEmp = emps.stream().filter(item -> item.isStatus() == false).toList();
+        List<Employee> stoppedEmp = emps.stream().filter(item -> item.isStatus() == true).toList();
+
         model.addAttribute("dept", dept);
-        model.addAttribute("employees", emps);
+        model.addAttribute("running", runningEmp);
+        model.addAttribute("stopped", stoppedEmp);
+
+        // 사원 프로필 이미지
+        Map<Long, String> profiles = new HashMap();
+        for(Employee emp : emps) {
+            String profile = fileService.getFileUrl(emp.getEmpId(), "profile");
+            profiles.put(emp.getEmpId(), profile);
+
+        }
+            model.addAttribute("profiles", profiles);
 
         return "hr/dept/deptDetail";
     }
@@ -134,11 +152,14 @@ public class DeptController {
 
             if(canDelete) {
                 // 삭제할 부서의 직원들 (퇴사한 직원들)의 부서를 'No_Dept'로 표시한다.
-                Department noDept = Department.builder()
+                Department _noDept = Department.builder()
                         .deptId(0)
                         .deptName("해당 없음")
                         .deptRepTel("")
                         .build();
+
+                Department noDept = repository.findById(0).orElse(_noDept);
+
 
                 for(Employee emp : emps) {
                     if(emp.isStatus() == true) {

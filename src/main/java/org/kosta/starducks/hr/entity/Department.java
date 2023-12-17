@@ -25,4 +25,19 @@ public class Department {
         this.deptName = deptName;
         this.deptRepTel = deptRepTel;
     }
+
+    /** 해당 부서에 재직중인 인원 */
+    public int getRunningEmp() {
+        int cnt = 0;
+
+        List<Employee> emps = getEmps();
+        for(Employee emp : emps) {
+            if(!emp.isStatus()) {
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+
 }

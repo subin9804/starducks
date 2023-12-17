@@ -139,6 +139,11 @@ a p.commonBtn {
     display: inline-block;
 }
 
+.search {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -193,8 +198,9 @@ table tr:hover {
 #dept-container button {
     display: inline-block;
 }
-#profile-box {
+.profile-box {
     border-bottom: 1px solid #6B4D27;
+    font-size: 14px;
 }
 #profile-box:last-child > div:last-child{
     min-width: 240px;
@@ -213,6 +219,7 @@ table tr:hover {
 }
 #emp-container p {
     padding-top: 10px;
+    white-space: nowrap;
 }
 
 /*부서 등록*/
