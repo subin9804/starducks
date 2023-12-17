@@ -27,10 +27,8 @@ public class LiveChatController {
   @MessageMapping("/chat/{roomId}/send")
   @SendTo("/topic/chatroom/{roomId}")
   public ChatMessageResponseDto send(@DestinationVariable Long roomId, ChatMessageRequestDto messageRequest) {
-    // 메시지 처리 로직 (메시지 저장 등)
     ChatMessage savedMessage = chatMessageService.save(roomId, messageRequest);
+
     return new ChatMessageResponseDto(savedMessage);
   }
-
-  // 여기에 실시간 채팅 관련 메서드 추가
 }

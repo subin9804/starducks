@@ -15,10 +15,8 @@
 </head>
 <body>
 <div id="chat-room">
-  <div th:each="message : ${messages}">
-    <div th:class="${message.sender == #authentication.name} ? 'chat-message current-user' : 'chat-message other-user'">
-      <div class="message-content" th:text="${message.message}">메시지 내용</div>
-    </div>
+  <div th:each="message : ${messages}" th:class="${message.senderId == currentUserId} ? 'chat-window-message current-user' : 'chat-window-message other-user'">
+    <div class="chat-window-message-content" th:text="${message.senderName + ': ' + message.message}"></div>
   </div>
 </div>
 
@@ -70,10 +68,10 @@
 
   function sendMessage() {
     const messageContent = document.getElementById('message').value.trim();
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
       const chatMessage = {
-        sender: [[${#authentication.name}]], // 현재 로그인한 사용자의 이름
-        content: messageContent,
+        sender: currentUser, // 현재 로그인한 사용자의 ID
+        message: messageContent,
         type: 'CHAT'
       };
       stompClient.send("/app/chat/" + roomId + "/send", {}, JSON.stringify(chatMessage));
@@ -83,22 +81,24 @@
 
   function showMessage(message) {
     const messageElement = document.createElement('div');
-    messageElement.classList.add('chat-message');
+    messageElement.classList.add('chat-window-message');
 
     // 현재 사용자와 메시지 발신자가 같으면 오른쪽에 표시
-    // 왼쪽은 String이고, 오른쪽은 아이디
-    if (message.sender === currentUser) {
+    if (message.sender === currentUser) { // senderId는 사원 ID를 나타냅니다.
       messageElement.classList.add('current-user');
     } else {
       messageElement.classList.add('other-user');
     }
 
     const textElement = document.createElement('div');
-    textElement.classList.add('message-content');
-    textElement.innerHTML = message.sender + ': ' + message.message;
+    textElement.classList.add('chat-window-message-content');
+    textElement.innerHTML = message.senderName + ': ' + message.message; // senderName은 사원 이름을 나타냅니다.
 
     messageElement.appendChild(textElement);
-    document.getElementById('chat-room').appendChild(messageElement);
+
+    // 메시지를 채팅방의 시작 부분에 추가하여 최신 메시지가 하단에 위치하도록 함
+    const chatRoomElement = document.getElementById('chat-room');
+    chatRoomElement.insertBefore(messageElement, chatRoomElement.firstChild);
 
     // 스크롤을 최신 메시지 위치로 이동
     window.scrollTo(0, document.body.scrollHeight);

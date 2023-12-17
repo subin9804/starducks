@@ -7,6 +7,8 @@ import org.kosta.starducks.header.entity.ChatMessage;
 import org.kosta.starducks.header.entity.ChatRoom;
 import org.kosta.starducks.header.repository.ChatMessageRepository;
 import org.kosta.starducks.header.repository.ChatRoomRepository;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ public class ChatMessageService {
 
   private final ChatRoomRepository chatRoomRepository;
   private final ChatMessageRepository chatMessageRepository;
+  private final EmpRepository empRepository;
 
   /** ChatMessage 조회 */
   @Transactional
@@ -36,13 +39,10 @@ public class ChatMessageService {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
         .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
 
-    ChatMessage chatMessage = new ChatMessage();
-    chatMessage.setSender(requestDto.getSender());
-    chatMessage.setMessage(requestDto.getMessage());
-    chatMessage.setChatRoom(chatRoomEntity);
-    // 필요한 경우 여기에 추가적인 설정을 추가합니다.
+    Employee senderEntity = empRepository.findById(requestDto.getSender())
+        .orElseThrow(() -> new IllegalArgumentException("사원이 존재하지 않음: " + requestDto.getSender()));
 
-    return chatMessageRepository.save(chatMessage);
+    return chatMessageRepository.save(requestDto.toEntity(senderEntity, chatRoomEntity));
   }
 
   /** ChatMessage 삭제 */

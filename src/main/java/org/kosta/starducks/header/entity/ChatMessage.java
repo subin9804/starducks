@@ -23,7 +23,9 @@ public class ChatMessage extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String sender;
+  @ManyToOne
+  @JoinColumn(name = "sender_id")
+  private Employee sender; // 발신자
 
   //메시지 내용
   private String message;
@@ -37,7 +39,7 @@ public class ChatMessage extends BaseTimeEntity {
   private boolean readStatus = false;
 
   @Builder
-  public ChatMessage(String sender, String message, ChatRoom chatRoom) {
+  public ChatMessage(Employee sender, String message, ChatRoom chatRoom) {
     this.sender = sender;
     this.message = message;
     this.chatRoom = chatRoom;

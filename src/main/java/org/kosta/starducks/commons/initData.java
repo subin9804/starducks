@@ -266,7 +266,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             }
         }
 
-        // 초기 채팅 데이터 뭐야야야야
+        // 초기 채팅 데이터
         // 사번이 1인 사원과 11인 사원을 가져옵니다.
         Employee emp1 = repository.findById(1L).orElse(null);
         Employee emp11 = repository.findById(11L).orElse(null);
@@ -288,7 +288,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 ChatMessage msg = new ChatMessage();
                 msg.setChatRoom(chatRoom);
                 msg.setMessage("메시지 내용 " + i);
-                msg.setSender(emp1.getEmpName()); // 사번이 1인 사원이 메시지를 보냈다고 가정
+                msg.setSender(emp1); // 사번이 1인 사원이 메시지를 보냈다고 가정
                 msg.setReadStatus(false);
                 chatMessageRepository.save(msg);
             }
