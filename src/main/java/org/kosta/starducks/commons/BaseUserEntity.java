@@ -14,12 +14,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseUserEntity {
 
-    @CreatedBy
-    @Column(updatable = false)
+    @CreatedBy  // 생성한 유저
+    @Column(updatable = false)  // 수정 불가
     private String createdBy;
 
-    @LastModifiedBy
-    @Column(insertable = false)
+    @LastModifiedBy // 마지막으로 수정한 유저
+    @Column(insertable = false) // 생성 불가
     private String modifiedBy;
 
 }
