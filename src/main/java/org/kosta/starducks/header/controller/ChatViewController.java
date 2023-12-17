@@ -2,6 +2,7 @@ package org.kosta.starducks.header.controller;
 
 import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
+import org.kosta.starducks.header.dto.ChatRoomResponseDto;
 import org.kosta.starducks.header.service.ChatRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,10 +23,13 @@ public class ChatViewController {
   private ChatRoomService chatRoomService;
 
 //  메인 페이지. 채팅방 리스트 보여줌
-  @GetMapping("/chatRoomList")
-  public String chatListPage() {
-    return "header/chatRoomList";
-  }
+@GetMapping("/chatRoomList")
+public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+  Long userId = Long.parseLong(userDetails.getUsername()); // 로그인한 사용자의 ID를 가져옴
+  List<ChatRoomResponseDto> chatRooms = chatRoomService.getChatRoomsForEmployee(userId);
+  model.addAttribute("chatRooms", chatRooms);
+  return "header/chatRoomList";
+}
 
   // 사원 목록 페이지
   @GetMapping("/chatEmpList")

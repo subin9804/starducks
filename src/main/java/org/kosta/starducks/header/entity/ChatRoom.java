@@ -34,7 +34,6 @@ public class ChatRoom extends BaseTimeEntity {
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
   private List<ChatMessage> chatMessageList;
 
-
   @Builder
   public ChatRoom(String roomName) {
     this.roomName = roomName;

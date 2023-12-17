@@ -6,50 +6,51 @@
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/header/chat.css}" />
+  <link rel="stylesheet" th:href="@{/css/header/chat.css}" type="text/css"/>
 
 </head>
 <body>
 
-<div id="chat-room-list"></div>
-
+<div id="chat-room-list">
+  <ul>
+    <li th:each="chatRoom : ${chatRooms}">
+      <a th:href="@{/chatRoom/{roomId}(roomId=${chatRoom.id})}" th:text="${chatRoom.roomName}">채팅방 이름</a>
+      <!-- 추가적인 채팅방 정보 렌더링 -->
+    </li>
+  </ul>
+</div>
+<footer>
+  <div id="footer-icons">
+    <span id="employee-list-icon">Employees</span>
+    <span id="chat-room-list-icon">Chat Rooms</span>
+  </div>
+</footer>
 <script th:inline="javascript">
   /*<![CDATA[*/
   $(document).ready(function () {
-    // 채팅방 리스트 페이지가 초기 로드됩니다.
-    loadChatRooms();
+    loadChatRooms(); // 페이지 로드 시 채팅방 목록을 불러옵니다.
 
-    // 사원 목록 페이지로 넘어가는 아이콘 클릭 이벤트
-    $("#employee-list-icon").click(function () {
-      loadChatEmpList();
-    });
-
-    // 메인페이지(채팅방 리스트 페이지) 아이콘 클릭 이벤트
-    $("#chat-room-list-icon").click(function () {
-      loadChatRooms();
-    });
+    $("#employee-list-icon").click(loadChatEmpList);
+    $("#chat-room-list-icon").click(loadChatRooms);
   });
 
   function loadChatRooms() {
+    // 채팅방 목록 불러오기
     $.ajax({
-      url: '/api/chat/rooms/my-rooms', // 채팅방 목록을 불러오는 URL
+      url: '/api/chat/rooms/my-rooms',
       type: 'GET',
       dataType: 'json',
       success: function (rooms) {
-        var chatRoomListHtml = "";
-        $.each(rooms, function (index, room) {
-          chatRoomListHtml += `
-            <div class="chat-room">
-              <img src="/path/to/logo.png" alt="logo" />
-              <div class="chat-room-info">
-                <div class="chat-room-name">${room.roomName}</div>
-                <div class="chat-room-employees">${room.employees}</div>
-              </div>
-              <div class="chat-room-action">
-                <button onclick="goToChatRoom(${room.id})">Enter</button>
-              </div>
-            </div>`;
-        });
+        let chatRoomListHtml = rooms.map(room => `
+                    <div class="chat-room">
+                        <div class="chat-room-info">
+                            <div class="chat-room-name">${room.roomName}</div>
+                        </div>
+                        <div class="chat-room-action">
+                            <button onclick="goToChatRoom(${room.id})">Enter</button>
+                        </div>
+                    </div>
+                `).join('');
         $("#chat-room-list").html(chatRoomListHtml);
       },
       error: function (xhr, status, error) {
@@ -57,13 +58,13 @@
       }
     });
   }
+
   function loadChatEmpList() {
-    // AJAX 요청을 통해 사원 목록을 불러오고 페이지에 표시
+    // 사원 목록 불러오기
     $.ajax({
-      url: '/chat/chatEmpList', // 사원 목록 페이지의 URL
+      url: '/chat/chatEmpList',
       type: 'GET',
       success: function (response) {
-        // 페이지 내용을 사원 목록 페이지의 HTML로 교체
         $('body').html(response);
       },
       error: function (xhr, status, error) {
@@ -73,18 +74,11 @@
   }
 
   function goToChatRoom(roomId) {
-    // 채팅방 페이지로 넘어가는 로직
+    // 채팅방 페이지로 이동
+    window.location.href = '/chatRoom/' + roomId;
   }
+
   /*]]>*/
 </script>
-
-<!-- 사원 목록 페이지와 채팅방 리스트 페이지 아이콘 -->
-<footer>
-  <div id="footer-icons">
-    <span id="employee-list-icon">Employees</span>
-    <span id="chat-room-list-icon">Chat Rooms</span>
-  </div>
-</footer>
-
 </body>
 </html>

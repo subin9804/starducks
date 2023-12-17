@@ -16,6 +16,8 @@ public class ChatRoomResponseDto {
     this.id = chatRoom.getId();
     this.roomName = chatRoom.getRoomName();
     this.createdDate = chatRoom.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
-    this.updatedDate = chatRoom.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    this.updatedDate = (chatRoom.getModifiedAt() != null) ?
+        chatRoom.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) :
+        "N/A"; // 'N/A' 또는 다른 기본값을 사용
   }
 }
