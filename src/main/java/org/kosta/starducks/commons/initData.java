@@ -3,8 +3,10 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.Store;
 import org.kosta.starducks.fina.entity.StoreOperationalYn;
+import org.kosta.starducks.fina.entity.VendorBusinessSector;
 import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.fina.service.StoreService;
 import org.kosta.starducks.forum.entity.ForumPost;
@@ -120,21 +122,26 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Vendor vendor1 = new Vendor();
         vendor1.setVendorName("빈로스터리");
+        vendor1.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
         vendor1.setVendorRegistNum("12458921");
         vendor1.setVendorRepreName("장총명");
         vendor1.setVendorTelephone("010-1212-3434");
         vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
         vendor1.setVendorAddress("서울시 중구 장충동");
+        vendor1.setContractStatus(ContractStatus.CONTRACT_ACTIVE);
         vendorRepository.saveAndFlush(vendor1);
 
         Vendor vendor2 = new Vendor();
         vendor2.setVendorName("대성산업");
+        vendor2.setVendorBusinessSector(VendorBusinessSector.FARMINGANDCULTIVATION);
         vendor2.setVendorRegistNum("46952029");
         vendor2.setVendorRepreName("김찬구");
         vendor2.setVendorTelephone("010-7122-8152");
         vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));
         vendor2.setVendorAddress("부산시 동래구 사직동");
+        vendor2.setContractStatus(ContractStatus.CONTRACT_STOPPED);
         vendorRepository.saveAndFlush(vendor2);
+
 
 
 //        //초기 product 데이터

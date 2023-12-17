@@ -36,21 +36,34 @@
             <th class="th1">사업자번호</th>
             <th class="th1">거래여부</th>
         </tr>
-        <tr class="tr1 trs" th:each="client : ${ clientList }">
-            <td th:text="${ client.cntNo }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntName }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntSectors }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntRepName }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntRepPhone }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntBusinessNum }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
-            <td th:text="${ client.cntTradeYn }"
-                th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+        <tr class="tr1 trs" th:each="vendor : ${ vendorList }">
+            <td th:text="${ vendor.vendorId }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+            <td th:text="${ vendor.vendorName }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+
+<!--            <dl>-->
+<!--                <dt>업종</dt>-->
+<!--                <dd>-->
+<!--                    <select id="businessSector" name="businessSector">-->
+<!--                        <option th:each="sector : ${businessSectors}"-->
+<!--                                th:value="${sector.name()}"-->
+<!--                                th:text="${sector.description}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </dd>-->
+<!--            </dl>-->
+
+            <td th:text="${ vendor.cntSectors }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+            <td th:text="${ vendor.cntRepName }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+            <td th:text="${ vendor.cntRepPhone }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+            <td th:text="${ vendor.cntBusinessNum }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
+            <td th:text="${ vendor.cntTradeYn }"
+                th:onclick="'location.href = \'' + @{/vendor/detail/(vendorId=${vendor.vendorId})} + '\''"></td>
         </tr>
     </table>
     </div>

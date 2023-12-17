@@ -39,4 +39,23 @@ public class VendorService {
     public void saveVendor(Vendor vendor) {
         vendorRepository.save(vendor);
     }
+
+    /**
+     * 거래처 단일 조회
+     * @param vendorId
+     * @return
+     */
+
+    public Vendor findById(int vendorId) {
+        return vendorRepository.findById(vendorId).orElse(null);
+    }
+
+    /**
+     * 거래처 목록 조회
+     * @return
+     */
+    public List<Vendor> findAll() {
+        return vendorRepository.findAll();
+    }
+
 }

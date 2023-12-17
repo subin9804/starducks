@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="searchAddr">
+    <input type="button" onclick="finaStoreAddNo()" id="searchPostBtn" value="우편번호 찾기"><br>
+    <input type="text" id="storeNo" th:field="*{storeAddr}" placeholder="우편번호">
+    <input type="text" id="storeAddr" th:field="*{addr}" placeholder="주소">
+    <input type="text" id="storeDetailAddr" th:field="*{dAddr}" placeholder="상세주소">
+    <input type="hidden" id="storeExtraAddress" th:field="*{extraAddr}" placeholder="참고항목">
+
+
+    <script>
+        function finaStoreAddNo() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
+                    // 주소 및 우편번호 정보를 Thymeleaf 필드에 설정합니다.
+                    document.getElementById('storeNo').value = data.zonecode;
+                    document.getElementById('storeAddr').value = data.roadAddress || data.jibunAddress;
+                    document.getElementById('storeDetailAddr').value = '';
+                    document.getElementById('storeExtraAddress').value = '';
+
+                    // 주소 입력 필드에 값이 설정되면, 해당 필드에 값을 설정했음을 Thymeleaf에 알려줍니다.
+                    // 이것은 필요하지 않은 경우 삭제할 수 있습니다.
+                    document.getElementById('storeNo').dispatchEvent(new Event('input'));
+                    document.getElementById('storeAddr').dispatchEvent(new Event('input'));
+                    document.getElementById('storeDetailAddr').dispatchEvent(new Event('input'));
+                    document.getElementById('storeExtraAddress').dispatchEvent(new Event('input'));
+                }
+            }).open();
+        }
+    </script>
+</div>
+
+</div>
+</html>

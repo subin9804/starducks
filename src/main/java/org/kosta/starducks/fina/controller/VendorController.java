@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -29,6 +32,7 @@ public class VendorController {
 
     /**
      * 거래처 추가
+     *
      * @param model
      * @return
      */
@@ -50,12 +54,13 @@ public class VendorController {
 
     /**
      * 거래처 추가 폼 데이터 받기
+     *
      * @param vendorAndProductDTO
      * @return
      */
     @PostMapping("/create")
     public String newVendor(VendorAndProductDTO vendorAndProductDTO) {
-        log.info("나오니??????????? vendorAndProductDTO.toString() ==> " + vendorAndProductDTO.toString());
+        log.info("vendorAndProductDTO.toString() ==> " + vendorAndProductDTO.toString());
         // 1. DTO를 엔티티로 변환
         Vendor vendor = VendorEntity(vendorAndProductDTO);
         // 2. 리파지터리로 엔티티를 DB에 저장
@@ -64,12 +69,32 @@ public class VendorController {
     }
 
     /**
-     * 거래처 목록 조회
+     * 거래처 단일 조회
+     *
      * @return
      */
-    @GetMapping()
-    public String vendorList() {
-        return "vendorList";
+    @GetMapping("/single/{vendorId}")
+    public String showSingleVendor(@PathVariable("vendorId") int vendorId, Model model) {
+        log.info("vendorId를 잘 받았는지 확인 ==> " + vendorId);
+//        1. id를 조회해 데이터 가져오기
+        Vendor vendorEntity = vendorService.findById(vendorId);
+//        2. 모델에 데이터 등록하기
+        model.addAttribute("vendor", vendorEntity);
+//        3. 뷰 페이지 반환하기
+        return "fina/vendorDetail";
+    }
+
+    /**
+     * 거래처 전체 조회
+     */
+    @GetMapping("/list")
+    public String showVendorList(Model model) {
+//        1. 모든 데이터 가져오기
+        List<Vendor> vendorList = vendorService.findAll();
+//        2. 모델에 데이터 등록하기
+        model.addAttribute("vendorList", vendorList);
+//        3. 뷰 페이지 설정하기
+        return "fina/vendorList";
     }
 
 }
