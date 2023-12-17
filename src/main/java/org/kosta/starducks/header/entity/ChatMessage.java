@@ -23,11 +23,6 @@ public class ChatMessage extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  //발신자
-//  @ManyToOne
-//  @JoinColumn(name = "sender_id")
-//  private Employee sender;
-
   private String sender;
 
   //메시지 내용

@@ -20,7 +20,7 @@ public class ChatMessageRestController {
 
   @PostMapping("/send")
   public Long sendMessage(@RequestBody ChatMessageRequestDto requestDto) {
-    return chatMessageService.save(requestDto.getChatRoom().getId(), requestDto);
+    return chatMessageService.save(requestDto.getChatRoomId(), requestDto).getId();
   }
 
   @GetMapping("/{id}")

@@ -32,12 +32,17 @@ public class ChatMessageService {
 
   /** ChatMessage 생성 */
   @Transactional
-  public Long save(final Long chatRoomId, final ChatMessageRequestDto requestDto) {
-    ChatRoom chatRoomEntity = this.chatRoomRepository.findById(chatRoomId).orElseThrow(
-        () -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
-    requestDto.setChatRoom(chatRoomEntity);
+  public ChatMessage save(final Long chatRoomId, final ChatMessageRequestDto requestDto) {
+    ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
 
-    return this.chatMessageRepository.save(requestDto.toEntity()).getId();
+    ChatMessage chatMessage = new ChatMessage();
+    chatMessage.setSender(requestDto.getSender());
+    chatMessage.setMessage(requestDto.getMessage());
+    chatMessage.setChatRoom(chatRoomEntity);
+    // 필요한 경우 여기에 추가적인 설정을 추가합니다.
+
+    return chatMessageRepository.save(chatMessage);
   }
 
   /** ChatMessage 삭제 */

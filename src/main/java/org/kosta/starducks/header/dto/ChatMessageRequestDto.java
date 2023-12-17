@@ -18,20 +18,20 @@ public class ChatMessageRequestDto {
 
   private String sender;
   private String message;
-  private ChatRoom chatRoom;
+  private Long chatRoomId;
 
   @Builder
-  public ChatMessageRequestDto(String sender, String message, ChatRoom chatRoom) {
+  public ChatMessageRequestDto(String sender, String message, Long chatRoomId) {
     this.sender = sender;
     this.message = message;
-    this.chatRoom = chatRoom;
+    this.chatRoomId = chatRoomId;
   }
 
-  public ChatMessage toEntity() {
+  public ChatMessage toEntity(ChatRoom chatRoom) {
     return ChatMessage.builder()
         .sender(this.sender)
         .message(this.message)
-        .chatRoom(this.chatRoom)
+        .chatRoom(chatRoom)
         .build();
   }
 }

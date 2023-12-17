@@ -1,5 +1,11 @@
 package org.kosta.starducks.header.controller;
 
+import org.kosta.starducks.header.dto.ChatMessageRequestDto;
+import org.kosta.starducks.header.dto.ChatMessageResponseDto;
+import org.kosta.starducks.header.entity.ChatMessage;
+import org.kosta.starducks.header.service.ChatMessageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -11,11 +17,19 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class LiveChatController {
 
-  @MessageMapping("/chat/send")
-  @SendTo("/topic/messages")
-  public String send(String message) {
-    // 메시지 처리 로직
-    return message;
+  private final ChatMessageService chatMessageService;
+
+  @Autowired
+  public LiveChatController(ChatMessageService chatMessageService) {
+    this.chatMessageService = chatMessageService;
+  }
+
+  @MessageMapping("/chat/{roomId}/send")
+  @SendTo("/topic/chatroom/{roomId}")
+  public ChatMessageResponseDto send(@DestinationVariable Long roomId, ChatMessageRequestDto messageRequest) {
+    // 메시지 처리 로직 (메시지 저장 등)
+    ChatMessage savedMessage = chatMessageService.save(roomId, messageRequest);
+    return new ChatMessageResponseDto(savedMessage);
   }
 
   // 여기에 실시간 채팅 관련 메서드 추가
