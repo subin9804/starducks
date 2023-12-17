@@ -1,8 +1,11 @@
 package org.kosta.starducks.header.controller;
 
 import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.header.dto.ChatMessageResponseDto;
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
 import org.kosta.starducks.header.dto.ChatRoomResponseDto;
+import org.kosta.starducks.header.entity.ChatMessage;
+import org.kosta.starducks.header.service.ChatMessageService;
 import org.kosta.starducks.header.service.ChatRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +24,9 @@ public class ChatViewController {
 
   @Autowired
   private ChatRoomService chatRoomService;
+
+  @Autowired
+  private ChatMessageService chatMessageService;
 
 //  메인 페이지. 채팅방 리스트 보여줌
 @GetMapping("/chatRoomList")
@@ -55,8 +61,11 @@ public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetai
 
   // 채팅방 상세 페이지
   @GetMapping("/chatRoom/{roomId}")
-  public String chatRoomPage(@PathVariable Long roomId, Model model) {
-    model.addAttribute("roomId", roomId);
+  public String chatRoomPage(@PathVariable Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+    // ChatMessageService에서 ChatMessageResponseDto 객체의 리스트를 받습니다.
+    List<ChatMessageResponseDto> messages = chatMessageService.getMessagesForChatRoom(roomId);
+    model.addAttribute("messages", messages);
+    model.addAttribute("currentUserId", currentUser.getUsername()); // 현재 로그인한 사용자의 ID를 추가
     return "header/chatRoom"; // 채팅방 상세 페이지의 뷰 이름
   }
 }

@@ -17,12 +17,14 @@ public class ChatMessageResponseDto {
   private String message;
   private String createdDate;
   private String updatedDate;
+  private boolean readStatus;
 
   public ChatMessageResponseDto(ChatMessage chatMessage) {
     this.id = chatMessage.getId();
     this.sender = chatMessage.getSender();
     this.message = chatMessage.getMessage();
-    this.createdDate = chatMessage.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
-    this.updatedDate = chatMessage.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    this.createdDate = chatMessage.getCreatedAt() != null ? chatMessage.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) : null;
+    this.updatedDate = chatMessage.getModifiedAt() != null ? chatMessage.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) : null;
+    this.readStatus = chatMessage.isReadStatus(); // 메시지 읽음 상태를 설정
   }
 }

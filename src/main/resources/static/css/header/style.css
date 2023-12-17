@@ -29,61 +29,99 @@
 /*메일 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*채팅 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-.chat-menu {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-    font-size: 24px;
+/*채팅방 목록 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
+.chat-list-body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
 }
 
-.chat-profile {
-    display: flex;
-    align-items: center;
+.chat-list-room-container {
     padding: 20px;
-    background-color: #f5f5f5;
 }
 
-.chat-profile img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.chat-chatRoomList ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.chat-chatRoomList li {
+.chat-list-room {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.chat-chatRoomList li img {
-    width: 50px;
-    height: 50px;
+.chat-list-room:hover {
+    background-color: #eaeaea;
+}
+
+.chat-list-room img {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
-.chat-chatRoomList h2 {
+.chat-list-room-name {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.chat-list-room-employees {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+/*채팅방 목록 페이지 끝 ~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*채팅방 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
+/* chat-window-styles.css */
+.chat-window-body {
     margin: 0;
-    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
 }
 
-.chat-chatRoomList p {
-    margin: 0;
-    font-size: 0.8em;
+.chat-window-message-container {
+    padding: 20px;
+    margin-bottom: 50px; /* To avoid overlapping with the message input area */
 }
 
-.chat-chatRoomList time {
-    font-size: 0.7em;
-    color: #999;
+.chat-window-message {
+    display: flex;
+    margin-bottom: 10px;
 }
+
+.chat-window-message.other-user {
+    justify-content: start;
+}
+
+.chat-window-message.current-user {
+    justify-content: end;
+}
+
+.chat-window-message-content {
+    max-width: 60%;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+}
+
+.current-user .chat-window-message-content {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.other-user .chat-window-message-content {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+/*채팅방 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~*/
+
 
 
 /*채팅 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

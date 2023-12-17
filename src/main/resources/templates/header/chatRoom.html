@@ -1,22 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>Chat</title>
+
+  <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+
+<!--  웹소켓 연결할 때는 토큰 필요 -->
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}" />
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}" />
 </head>
 <body>
-채팅방임
+<div id="chat-room">
+  <div th:each="message : ${messages}">
+    <div th:class="${message.sender == #authentication.name} ? 'chat-message current-user' : 'chat-message other-user'">
+      <div class="message-content" th:text="${message.message}">메시지 내용</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <form id="messageForm">
+    <input type="text" id="message" placeholder="메시지 입력"/>
+    <button type="button" onclick="sendMessage()">전송</button>
+  </form>
+</footer>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const roomId = [[${roomId}]]; // 채팅방 ID
+  /*]]>*/
+</script>
 <script>
+  window.onload = function() {
+    // 페이지가 로드되면 스크롤을 가장 아래로 이동
+    window.scrollTo(0, document.body.scrollHeight);
+  };
+
   let stompClient = null;
 
   function connect() {
-    const socket = new SockJS('/chat-websocket');
+    // CSRF 토큰과 헤더 이름 읽기
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    const socket = new SockJS('/chat-websocket', null, {
+      headers: { [csrfHeader]: csrfToken }
+    });
+
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
-      // 구독할 대상 지정, 예를 들어 '/topic/chatroom/1' 등
-      stompClient.subscribe('/topic/chatroom/' + roomId, function(message) {
-        // 메시지를 받았을 때의 처리 로직
-        showMessage(JSON.parse(message.body).content);
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/chatroom/' + roomId, function(messageOutput) {
+        showMessage(JSON.parse(messageOutput.body));
       });
     });
   }
@@ -28,6 +64,34 @@
     console.log("Disconnected");
   }
 
+  function sendMessage() {
+    const messageContent = document.getElementById('message').value.trim();
+    if(messageContent && stompClient) {
+      const chatMessage = {
+        sender: [[${#authentication.name}]], // 현재 로그인한 사용자의 이름
+        content: messageContent,
+        type: 'CHAT'
+      };
+      stompClient.send("/app/chat.send/" + roomId, {}, JSON.stringify(chatMessage));
+      document.getElementById('message').value = '';
+    }
+  }
+
+  function showMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message');
+
+    const textElement = document.createElement('div');
+    textElement.classList.add('message-content');
+    textElement.innerHTML = message.sender + ': ' + message.content;
+
+    messageElement.appendChild(textElement);
+    document.getElementById('chat-room').appendChild(messageElement);
+
+    // 스크롤을 최신 메시지 위치로 이동
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   // 채팅방 페이지가 로드될 때 WebSocket 연결을 시작
   connect();
 
@@ -35,7 +99,6 @@
   window.onbeforeunload = function(e) {
     disconnect();
   };
-
 </script>
 </body>
 </html>

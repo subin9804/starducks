@@ -70,4 +70,18 @@ public class ChatMessageService {
 
     return chatMessageList.stream().map(ChatMessageResponseDto::new).collect(Collectors.toList());
   }
+
+  /** 특정 채팅방의 모든 메시지를 최신순으로 조회 */
+  @Transactional(readOnly = true)
+  public List<ChatMessageResponseDto> getMessagesForChatRoom(final Long chatRoomId) {
+    ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
+
+    Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+    List<ChatMessage> messages = chatMessageRepository.findAllByChatRoom(chatRoomEntity, sort);
+
+    return messages.stream()
+        .map(ChatMessageResponseDto::new)
+        .collect(Collectors.toList());
+  }
 }

@@ -12,6 +12,7 @@ public class ChatRoomResponseDto {
   private String createdDate;
   private String updatedDate;
 
+
   public ChatRoomResponseDto(ChatRoom chatRoom) {
     this.id = chatRoom.getId();
     this.roomName = chatRoom.getRoomName();
