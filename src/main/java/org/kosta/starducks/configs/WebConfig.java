@@ -2,7 +2,7 @@ package org.kosta.starducks.configs;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.kosta.starducks.commons.MenuInterceptor;
+import org.kosta.starducks.commons.menus.MenuInterceptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

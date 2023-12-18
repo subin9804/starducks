@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons;
+package org.kosta.starducks.commons.menus;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
