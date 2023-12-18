@@ -40,6 +40,13 @@ public class ChatRoomService {
     return new ChatRoomResponseDto(chatRoom);
   }
 
+  //채팅방 id를 통해서 이름 조회
+  public String getRoomName(final Long id) {
+    ChatRoom chatRoom = this.chatRoomRepository.findById(id)
+        .orElseThrow(() -> new IllegalStateException("해당 채팅방이 존재하지 않습니다. id=" + id));
+    return chatRoom.getRoomName();
+  }
+
   //  채팅방 생성
   @Transactional
   public Long createChatRoom(ChatRoomRequestDto requestDto) {

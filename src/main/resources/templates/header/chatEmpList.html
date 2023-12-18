@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>사원 목록</title>
+  <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+  <!-- Other necessary scripts and styles -->
 </head>
 <body>
+
+<header class="header-container">
+  <input type="search" placeholder="부서/사원 검색" />
+  <button onclick="createChatRoom()">채팅방 만들기</button>
+</header>
+
+<div class="department-list">
+  <div th:each="department : ${departments}">
+    <h2 th:text="${department.deptName}">부서명</h2>
+    <ul>
+      <li th:each="employee : ${department.emps}">
+        <span th:text="${employee.empName}">사원명</span>
+        <!-- 사원 선택 체크박스 또는 기타 요소 추가 가능 -->
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script th:inline="javascript">
+  // 필요한 스크립트 추가
+</script>
+
+<script>
+  function createChatRoom() {
+    // 선택된 사원들로 채팅방 생성 로직 구현
+  }
+</script>
 
 </body>
 </html>

@@ -10,7 +10,6 @@
 
 </head>
 <body>
-
 <div id="chat-room-list">
   <ul>
     <li th:each="chatRoom : ${chatRooms}">
@@ -21,7 +20,7 @@
 </div>
 <footer>
   <div id="footer-icons">
-    <span id="employee-list-icon">Employees</span>
+    <span id="employee-list-icon" th:href="@{/chatEmpList}">Employees</span>
     <span id="chat-room-list-icon">Chat Rooms</span>
   </div>
 </footer>

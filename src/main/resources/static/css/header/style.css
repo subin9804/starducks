@@ -80,15 +80,42 @@
 
 /*채팅방 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
 
-/* 채팅 메시지 스타일링 */
-/* 채팅 메시지 스타일링 */
+.header-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center; /* 전체 헤더를 가운데 정렬 */
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    box-sizing: border-box;
+    background-color: white; /* 스크롤 시 배경이 보이는 것을 방지 */
+    z-index: 1000; /* 다른 요소 위에 헤더가 오도록 설정 */
+}
 
-/* 메시지 폼 스타일링 */
+.back-button {
+    position: absolute;
+    left: 10px; /* 왼쪽에 위치 */
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.chat-room-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    text-align: center;
+    flex-grow: 1; /* 제목 영역 확장 */
+}
 
 #chat-room {
     width: 100%; /* 전체 폭 사용 */
+    padding-top: 60px;
     padding-bottom: 60px;
-    /* 기타 스타일링... */
 }
 
 .chat-message-other {
@@ -103,7 +130,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    /*max-width: 99%;*/
 }
 
 /* 메시지 내용과 날짜를 포함하는 컨테이너 */

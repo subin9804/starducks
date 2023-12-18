@@ -274,7 +274,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         if (emp1 != null && emp11 != null) {
             // 채팅방 생성
             ChatRoom chatRoom = new ChatRoom();
-            chatRoom.setRoomName("채팅방 이름");
+            chatRoom.setRoomName("더미 채팅방 이름");
             chatRoom = chatRoomRepository.save(chatRoom);
 
             // 채팅방 참여자 연결
