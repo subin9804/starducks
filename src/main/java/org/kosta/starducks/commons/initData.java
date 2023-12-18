@@ -17,10 +17,13 @@ import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
+
+import org.kosta.starducks.header.repository.ChatRoomRepository;
 import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.mypage.dto.Room;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.entity.ScheduleType;
 import org.kosta.starducks.mypage.repository.ScheduleRepository;
@@ -49,8 +52,10 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
-    private final StoreRepository storeRepository;
     private final StoreService storeService;
+    private final StoreRepository storeRepository;
+    //    private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
 
     @Override
@@ -89,7 +94,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             repository.saveAndFlush(emp);
         }
 
-        // empId가 11이고, empPwd가 11을 만족하는 사원 생성
+        // 점검용 사원
         Employee specificEmp = new Employee();
         specificEmp.setEmpId(11L); // empId를 11로 설정
         specificEmp.setStatus(false);
@@ -97,14 +102,14 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setEmpTel("010-9999-9990");
         specificEmp.setGender("man");
         specificEmp.setEmail("lhg0529@gmail.com");
-        specificEmp.setAddr("부천시");
+        specificEmp.setAddr("수원시");
         specificEmp.setEmpName("이현기");
         specificEmp.setPostNo("00025");
-        specificEmp.setDAddr("수원시");
+        specificEmp.setDAddr("권선구");
         specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
         specificEmp.setDept(deptRepository.findById(2).orElse(null));
-        specificEmp.setPwd(passwordEncoder.encode("11")); // 비밀번호를 "11"로 설정
+        specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
 
         //초기 vendor 데이터
@@ -141,7 +146,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendor2.setVendorAddress("부산시 동래구 사직동");
         vendor2.setContractStatus(ContractStatus.CONTRACT_STOPPED);
         vendorRepository.saveAndFlush(vendor2);
-
 
 
 //        //초기 product 데이터
@@ -200,12 +204,13 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product6);
 
         //초기 지점 데이터
+
         Store store = new Store();
         store.setEmployee(specificEmp);
         store.setStoreName("미금역점");
         store.setBusinessNum(1148600675L);
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse("2023-08-08",dateFormat);
+        LocalDate date = LocalDate.parse("2023-08-08", dateFormat);
         store.setStoreOpenDate(date);
         store.setAddNo("05704");
         store.setStoreAddr("경기도 성남시 분당구 ");
@@ -278,6 +283,27 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
                 scheduleRepository.saveAndFlush(scheduleData);
             }
+        }
+
+//        // 초기 채팅 데이터 뭐야야야야
+//        for (int i = 0; i < 5; i++) {
+//            ChatRoom chatRoom = new ChatRoom();
+//            chatRoom.setRoomName("채팅방" + i);
+//
+////            ChatRoomRepository.save(chatRoom);
+//        }
+
+        for (int i = 0; i < 5; i++) {
+
+
+//            ChatMessage msg = new ChatMessage();
+////            msg.setChatRoom();
+//            msg.setMessage("내용임" + 1);
+//            msg.setSender("이현기");
+//            msg.setReadStatus(false);
+//
+////            ChatMessageRepository.save(msg);
+//        }
         }
     }
 }

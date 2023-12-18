@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class BaseTimeEntity {
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false)  // 수정 불가
     private LocalDateTime CreatedAt;   // 생성시각
 
     @LastModifiedDate
-    @Column(insertable = false)
+    @Column(insertable = false)     // 생성 불가
     private LocalDateTime modifiedAt;   // 수정시각
 }

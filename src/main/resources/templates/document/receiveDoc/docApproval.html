@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/docDetail.css}" href="/static/css/document/createDoc/docDetail.css">
+  <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+  <h1 class="page-title">상신 문서 상세</h1>
+  <div class="page-border">
+<!--    <div class="document" th:include="${'document/submitDoc/' + formNameEn + '::document'}"></div>-->
+      <div th:if="${formNameEn == 'draft'}" class="document" th:include="~{document/submitDoc/_draftDetail::document}"></div>
+
+    <div class="approval-state">
+        <form th:action th:method="post" th:object="${approval}">
+          <div class="avp1-wrap">
+              <div class="avp1-title">
+                <span>결재상태 : </span>
+                <select class="docStatus" th:field="*{apvStatus}">
+                    <option th:value="PENDING" selected disabled hidden>대기</option>
+                    <option th:value="APPROVED">승인</option>
+                    <option th:value="REJECTED">반려</option>
+                </select>
+              </div>
+              <div>
+                <span>내용 : </span>
+                <textarea th:field="*{apvComment}"></textarea>
+              </div>
+          </div>
+
+          <div class="buttons">
+            <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
+            <button class="edit-button" type="submit" th:text="결재">결재</button>
+          </div>
+
+<!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->
+        </form>
+    </div>
+  </div>
+</main>
+</html>

@@ -3,6 +3,8 @@ package org.kosta.starducks.generalAffairs.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.kosta.starducks.logistic.entity.StoreInventory;
+import java.util.List;
 
 @Entity
 @Getter
@@ -55,9 +57,17 @@ public class Product {
     private String filePath;
 
 
+    @OneToMany(mappedBy ="product")
+    private List<StoreInventory> inventories;
+
 
     public void increaseCnt(int inboundQuantity){
         int totalQuantity = this.productCnt + inboundQuantity;
+
+        this.productCnt = totalQuantity;
+    }
+    public void decreaseCnt(int outboundQuantity){
+        int totalQuantity = this.productCnt - outboundQuantity;
 
         this.productCnt = totalQuantity;
     }

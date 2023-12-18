@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.logistic.entity.StoreInventory;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -39,5 +41,8 @@ public class Store {
     @Enumerated(EnumType.STRING)
     @Column(name = "store_operational_yn")
     private StoreOperationalYn storeOperationalYn;
+
+    @OneToMany(mappedBy = "store")
+    private List<StoreInventory> inventories;
 
 }

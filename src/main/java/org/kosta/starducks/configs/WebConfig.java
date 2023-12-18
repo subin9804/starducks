@@ -2,7 +2,7 @@ package org.kosta.starducks.configs;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.kosta.starducks.commons.MenuInterceptor;
+import org.kosta.starducks.commons.menus.MenuInterceptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
     public MessageSource messageSource () {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
         ms.setDefaultEncoding("UTF-8");
-        ms.setBasenames("messages.commons", "messages.errors");
+        ms.setBasenames("messages.commons", "messages.validations", "messages.errors");
         return ms;
     }
 
