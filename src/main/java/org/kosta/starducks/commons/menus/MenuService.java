@@ -59,7 +59,7 @@ public class MenuService {
                 menus.add(new MenuDetail("warehouseinbound", "재고 관리", "/logistic/warehouseinbound"));
                 break;
             case "general":
-                menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));
+                menus.add(new MenuDetail("schedule", "전사 일정 관리", "/general/schedule"));
                 menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
                 menus.add(new MenuDetail("products", "품목 관리", "/general/products"));

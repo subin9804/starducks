@@ -1,4 +1,4 @@
-package org.kosta.starducks.mypage.entity;
+package org.kosta.starducks.generalAffairs.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QSchedule is a Querydsl query type for Schedule
+ * QOffiSchedule is a Querydsl query type for OffiSchedule
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QSchedule extends EntityPathBase<Schedule> {
+public class QOffiSchedule extends EntityPathBase<OffiSchedule> {
 
-    private static final long serialVersionUID = -128236719L;
+    private static final long serialVersionUID = 2113488466L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QSchedule schedule = new QSchedule("schedule");
+    public static final QOffiSchedule offiSchedule = new QOffiSchedule("offiSchedule");
 
     public final org.kosta.starducks.hr.entity.QEmployee employee;
 
@@ -34,23 +34,23 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath scheTitle = createString("scheTitle");
 
-    public QSchedule(String variable) {
-        this(Schedule.class, forVariable(variable), INITS);
+    public QOffiSchedule(String variable) {
+        this(OffiSchedule.class, forVariable(variable), INITS);
     }
 
-    public QSchedule(Path<? extends Schedule> path) {
+    public QOffiSchedule(Path<? extends OffiSchedule> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QSchedule(PathMetadata metadata) {
+    public QOffiSchedule(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QSchedule(PathMetadata metadata, PathInits inits) {
-        this(Schedule.class, metadata, inits);
+    public QOffiSchedule(PathMetadata metadata, PathInits inits) {
+        this(OffiSchedule.class, metadata, inits);
     }
 
-    public QSchedule(Class<? extends Schedule> type, PathMetadata metadata, PathInits inits) {
+    public QOffiSchedule(Class<? extends OffiSchedule> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
     }

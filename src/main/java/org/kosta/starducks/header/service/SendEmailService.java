@@ -23,7 +23,7 @@ import java.util.Properties;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class sendEmailService {
+public class SendEmailService {
 
     private final JavaMailSender javaMailSender;
 

@@ -1,10 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{mypage/layouts/main}">
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/index.css}"></link>
+    <script th:src="@{/js/mypage/index.js}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+</th:block>
 
 <main layout:fragment="content">
-    <p th:text="'test. ' + ${data}" >test. test!</p>
+    <section class="widget" id="widgetAttend">
+        <div th:replace="~{hr/attend/_profile::profile}"></div>
 
+        <!-- 출퇴근 버튼 -->
+        <div>
+            <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
+                <button class="attd-btn" type="submit" th:text="출근">출근</button>
+            </form>
+            <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>근태 이력</h3>
+            <ul>
+                <li th:text="${workDays}"></li>
+                <li th:text="${lateDays}"></li>
+                <li th:text="${absentDays}"></li>
+                <li th:text="15"></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 전자결재함 -->
+    <section class="widget" id="widgetDoc">
+
+    </section>
+
+    <!-- 일정 -->
+    <section class="widget" id="widgetCal">
+        <div id='calendar'></div>
+    </section>
 </main>
 </html>

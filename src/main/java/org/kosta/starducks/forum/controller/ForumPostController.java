@@ -45,7 +45,6 @@ public class ForumPostController {
     // 게시판 메인 페이지
     @GetMapping
     public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        MenuService.commonProcess(request, model, "forum");
 
         Page<ForumPost> posts = null;
 

@@ -26,4 +26,6 @@ public interface ForumPostService {
 
   List<ForumPost> getTopNotice();
 
+  List<ForumPost> getForumList();
+
 }
