@@ -110,13 +110,14 @@ public class StoreInboundService {
             StoreInventoryId storeInventoryId = new StoreInventoryId();
             storeInventory.setProduct(product);
             storeInventory.setStore(store);
-            //복합 키가 적용되었으므로 자동으로 Id가 생성되는 게 아니므로,
-            //id값 역시 setter로 설정해주어야 한다.
+
+            //복합 키가 적용되었으므로 자동으로 Id가 생성되는 게 아니므로, id값 역시 setter로 설정해주어야 한다.
             storeInventory.setId(storeInventoryId);
 
             //입고량 등록
             storeInventory.setInventoryCnt(inboundQuantity);
         }
+        //StoreInventory 엔티티에 저장한다.
         storeInventoryRepository.save(storeInventory);
 
 
