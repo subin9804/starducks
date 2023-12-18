@@ -127,6 +127,23 @@
 
 
 }
+/*왼쪽으로 정렬*/
+.left-align{
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    margin-left: 140px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+
+}
+.left-align input[type="checkbox"] {
+    width: 24px; /* 체크박스의 크기를 조절 */
+    height: 24px;
+    margin-right: 10px; /* 체크박스와 글자 사이의 간격을 조절 */
+}
 
 /** ----- 버튼 S------ */
 /*버튼 위치설정*/

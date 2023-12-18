@@ -28,15 +28,13 @@
             </a>
         </div>
         <form>
-            <label>
+            <label class="left-align">
                 <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}"
                        onchange="handleCheckboxClick()">
                 <input type="hidden" name="_bulkInboundCheckbox" value="on">
-                대량 입고
+                 대량 입고
             </label>
         </form>
-
-        <input type="text" th:value="${checkbox}" readonly>
 
         <table class="list-table">
 
