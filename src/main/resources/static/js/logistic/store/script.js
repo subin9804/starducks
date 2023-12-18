@@ -8,7 +8,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
     let num = 1;
     const productSelect = document.getElementById("product");
     const quantityInput = document.getElementById("quantity");
-    const employeeSelect = document.getElementById("employee");
+    const storeSelect = document.getElementById("store");
 
 
     add.addEventListener("click", handleClick);
@@ -17,9 +17,10 @@ window.document.addEventListener("DOMContentLoaded", function() {
     function handleClick(e) {
         e.preventDefault()
         console.log("버튼 눌림")
+        console.log(productSelect.value)
 
         let item = {
-            empId: employeeSelect.value,
+            storeNo: storeSelect.value,
             productCode: productSelect.value,
             inboundQuantity: quantityInput.value
         };
@@ -49,15 +50,18 @@ window.document.addEventListener("DOMContentLoaded", function() {
             let itemName = selectedOption.getAttribute("data-name");
             let itemCategory=selectedOption.getAttribute("data-category");
             let itemPrice   = selectedOption.getAttribute("data-price");
-            let itemStock   =  selectedOption.getAttribute("data-cnt")
+            //let itemCode =selectedOption.getAttribute("value");
+            let selectedOption2 = storeSelect.options[storeSelect.selectedIndex];
+            let storeStock = selectedOption2.getAttribute("????")
+            // let itemStock   =  selectedOption.getAttribute("data-cnt")
 
             cell1.innerHTML = num;
             cell2.innerHTML = itemCategory;
             cell3.innerHTML = itemName;
             cell4.innerHTML = itemPrice;
-            cell5.innerHTML = itemStock;
-            cell6.innerHTML = quantityInput.value;
-            cell7.innerHTML = `<button class="commonBtn delete-button" type="button" onclick="deleteRow(this)">X</button>`;
+            //cell5.innerHTML = itemCode;
+            cell5.innerHTML = quantityInput.value;
+            cell6.innerHTML = `<button class="commonBtn delete-button" type="button" onclick="deleteRow(this)">X</button>`;
 
             num++;
 
@@ -70,13 +74,13 @@ window.document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
 
         // list를 숨겨진 입력 필드에 저장
-        document.getElementById("warehouseInboundDtos").value = JSON.stringify(list);
+        document.getElementById("storeInboundDtos").value = JSON.stringify(list);
         console.log(JSON.stringify(list));
 
 
         $.ajax({
             type: "POST",
-            url: "/logistic/warehouseinbound/add",
+            url: "/logistic/storeinbound/add",
             contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
             data:JSON.stringify(list),
                 //JSON.stringify({
@@ -90,7 +94,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
                 console.log("Server response:", response);
 
                 //입고내역 보여주는 페이지로 리디렉션
-                window.location.href = '/logistic/warehouseinbound/list'
+                window.location.href = '/logistic/storeinbound/list'
 
                 // 성공적으로 서버로 전송한 후에 리스트 초기화
                 list.length = 0;

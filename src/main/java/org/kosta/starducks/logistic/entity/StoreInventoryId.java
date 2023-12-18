@@ -2,17 +2,19 @@ package org.kosta.starducks.logistic.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class StoreInventoryId implements Serializable {
 
-    @Column(name = "product_code")
+    @Column(name = "product_code", nullable = false)
     private Long productCode;
 
-    @Column(name = "store_no")
+    @Column(name = "store_no", nullable = false)
     private Long storeNo;
 
     //생성자 및 getter setter 추가

@@ -9,11 +9,13 @@ import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.service.EmpService;
+import org.kosta.starducks.logistic.dto.StoreInboundDto;
 import org.kosta.starducks.logistic.dto.WarehouseInboundDto;
 import org.kosta.starducks.logistic.entity.StoreInbound;
 import org.kosta.starducks.logistic.entity.StoreInventory;
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
 import org.kosta.starducks.logistic.service.StoreInboundService;
+import org.kosta.starducks.logistic.service.StoreInventoryService;
 import org.kosta.starducks.logistic.service.WarehouseInboundService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -32,10 +34,24 @@ import java.util.List;
 @Slf4j
 public class StoreInboundController {
     private final ProductService productService;
+    private final StoreInventoryService storeInventoryService;
     private final EmpService employeeService;
     private final StoreService storeService;
     private final StoreInboundService storeInboundService;
     private final HttpServletRequest request;
+
+
+    @GetMapping("/list1")
+    public String getAllInventories(Model m)
+    {
+        List<StoreInventory> allInventories = storeInventoryService.getAllInventories();
+
+        m.addAttribute("products", allInventories);
+        return "logistic/StoreInventoryList";
+
+    }
+
+
 
     //재고 목록 조회
 //    @GetMapping("/list1")
@@ -70,7 +86,6 @@ public class StoreInboundController {
     public String getAllInbounds(Model m)
 //    ,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
-        MenuService.commonProcess(request, m, "logistic");
 
         List<StoreInbound> inbounds;
 
@@ -130,11 +145,11 @@ public class StoreInboundController {
 
 
 
-//    @PostMapping("/add")
-//    public String addOrder(@RequestBody List<WarehouseInboundDto> warehouseInboundDtos)  {
-//        warehouseInboundService.addWarehouseInbound(warehouseInboundDtos);
-//        return "redirect:/logistic/storeinbound/list";
-//    }
+    @PostMapping("/add")
+    public String addOrder(@RequestBody List<StoreInboundDto> storeInboundDtos)  {
+        storeInboundService.addStoreInbound(storeInboundDtos);
+        return "redirect:/logistic/storeinbound/list";
+    }
 
 
 }

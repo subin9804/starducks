@@ -21,13 +21,13 @@ public class StoreInventory implements Serializable {
 
     @MapsId("productCode") //복합키를 가진 엔티티에서 식별자 매핑할 때 사용된다.
     @ManyToOne
-    @JoinColumn(name = "product_code")
+    @JoinColumn(name = "product_code", nullable = false)
     private Product product;
 
 
     @MapsId("storeNo")
     @ManyToOne
-    @JoinColumn(name = "store_no")
+    @JoinColumn(name = "store_no", nullable = false)
     private Store store;
 
 
@@ -42,6 +42,15 @@ public class StoreInventory implements Serializable {
         int totalQuantity = this.inventoryCnt + inboundQuantity;
 
         this.inventoryCnt = totalQuantity;
+
+        // store와 product가 null인 경우 초기화
+        if (this.store == null) {
+            this.store = new Store();  // Store 클래스에 대한 생성자가 필요함
+        }
+
+        if (this.product == null) {
+            this.product = new Product();  // Product 클래스에 대한 생성자가 필요함
+        }
     }
 
 

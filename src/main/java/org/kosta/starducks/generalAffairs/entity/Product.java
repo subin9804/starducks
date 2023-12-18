@@ -60,5 +60,10 @@ public class Product {
 
         this.productCnt = totalQuantity;
     }
+    public void decreaseCnt(int outboundQuantity){
+        int totalQuantity = this.productCnt - outboundQuantity;
+
+        this.productCnt = totalQuantity;
+    }
 
 }

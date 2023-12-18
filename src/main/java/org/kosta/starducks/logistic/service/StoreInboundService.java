@@ -62,6 +62,18 @@ public class StoreInboundService {
             if ( stDto.getProductCode() != null) {
             Product product = productRepository.findById(stDto.getProductCode()).orElse(null);
 
+                if (product != null) {
+                    // 로깅 추가
+                    System.out.println("Product Code: " + stDto.getProductCode());
+                    continue; // 다음 iteration으로 건너뛰기
+                }
+                // store 검색
+                if (store == null) {
+                    // 로깅 추가
+                    System.out.println("Store not found for store number: " + stDto.getStoreNo());
+                    continue; // 다음 iteration으로 건너뛰기
+                }
+
             if (store != null && product != null) {
                 //입고 상품 생성
                 StoreInboundProduct storeProduct = StoreInboundProduct.createStoreProduct(product, stDto.getInboundQuantity());
@@ -70,7 +82,7 @@ public class StoreInboundService {
                 //WarehouseInbound 객체 안에 있는 inboundProducts 리스트 객체 안으로 들어가야함.
                 storeInbound1.addOrderProduct(storeProduct);
                 // 여기서 재고 업데이트
-                updateStock(store,product, stDto.getInboundQuantity());
+                updateStock(store,product,stDto.getInboundQuantity());
             }
             }
             }

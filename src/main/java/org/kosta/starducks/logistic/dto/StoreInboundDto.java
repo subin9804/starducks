@@ -4,13 +4,12 @@ package org.kosta.starducks.logistic.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @NoArgsConstructor
 public class StoreInboundDto {
 
-    @JsonProperty("empId")
-    private Long empId;
     @JsonProperty("productCode")
     private Long productCode;
 
@@ -19,4 +18,5 @@ public class StoreInboundDto {
 
     @JsonProperty("inboundQuantity")
     private int inboundQuantity;
+
 }
