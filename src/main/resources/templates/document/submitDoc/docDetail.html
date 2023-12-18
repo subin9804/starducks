@@ -30,8 +30,8 @@
         </span>
       </div>
       <div>
-        <span class="avp1-title" th:text="${apv1?.apvComment}">내용 : </span>
-        <textarea disabled></textarea>
+        <span class="avp1-title" >내용 : </span>
+        <textarea th:text="${apv1?.apvComment}" th:disabled="disabled"></textarea>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
       </div>
       <div>
         <span class="avp2-title">내용 : </span>
-        <textarea th:text="${apv2?.apvComment}" disabled></textarea>
+        <textarea th:text="${apv2?.apvComment}" th:disabled="disabled"></textarea>
       </div>
     </div>
 

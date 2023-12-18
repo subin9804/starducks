@@ -31,7 +31,7 @@
       </div>
       <div>
         <span class="avp1-title">내용 : </span>
-        <textarea th:text="${apv1?.apvComment}" disabled></textarea>
+        <textarea th:text="${apv1?.apvComment}" th:disabled="disabled"></textarea>
 <!--          <input type="text" th:attr="${someCondition} ? '' : 'disabled'='disabled'" />-->
       </div>
     </div>
@@ -49,7 +49,7 @@
       </div>
       <div>
         <span class="avp2-title">내용 : </span>
-        <textarea th:text="${apv2?.apvComment}" disabled></textarea>
+        <textarea th:text="${apv2?.apvComment}" th:disabled="disabled"></textarea>
       </div>
     </div>
 
