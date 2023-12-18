@@ -27,14 +27,14 @@ public class ChatViewController {
   @Autowired
   private ChatMessageService chatMessageService;
 
-//  메인 페이지. 채팅방 리스트 보여줌
-@GetMapping("/chatRoomList")
-public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-  Long userId = Long.parseLong(userDetails.getUsername()); // 로그인한 사용자의 ID를 가져옴
-  List<ChatRoomResponseDto> chatRooms = chatRoomService.getChatRoomsForEmployee(userId);
-  model.addAttribute("chatRooms", chatRooms);
-  return "header/chatRoomList";
-}
+  //  메인 페이지. 채팅방 리스트 보여줌
+  @GetMapping("/chatRoomList")
+  public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    Long userId = Long.parseLong(userDetails.getUsername()); // 로그인한 사용자의 ID를 가져옴
+    List<ChatRoomResponseDto> chatRooms = chatRoomService.getChatRoomsForEmployee(userId);
+    model.addAttribute("chatRooms", chatRooms);
+    return "header/chatRoomList";
+  }
 
   // 사원 목록 페이지
   @GetMapping("/chatEmpList")

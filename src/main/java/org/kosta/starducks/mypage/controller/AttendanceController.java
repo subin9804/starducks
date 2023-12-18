@@ -30,16 +30,36 @@ public class AttendanceController {
         return attendanceService.getDailyAttendance(empId);
     }
 
+//    /**
+//     * 일별 출근 정보 Json List API
+//     */
+//    @GetMapping("/daily") // json api endPoint
+//    @ResponseBody
+//    public List<Map<String, Object>> getDailyAttendance(@AuthenticationPrincipal CustomUserDetails details, Model model) {
+//        // 로그인 안했을 때 임의의 아이디
+//        Long empId = 1L;
+//
+//        // 로그인 했을 때 유저 정보 받아오기
+//        if(details != null) {
+//            empId = details.getEmployee().getEmpId();
+//        }
+//
+//        return attendanceService.getDailyAttendance(empId);
+//    }
+
     /**
      * 마이페이지 근태기록 컨트롤러 함수
      */
     @GetMapping
-    public String Attendance(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String Attendance(Model model, @AuthenticationPrincipal CustomUserDetails details) {
+        // 로그인 안했을 때 임의의 아이디
         Long empId = 1L;
 
-        if(userDetails != null) {
-            empId = userDetails.getEmployee().getEmpId();
+        // 로그인 했을 때 유저 정보 받아오기
+        if(details != null) {
+            empId = details.getEmployee().getEmpId();
         }
+        model.addAttribute("empId", empId);
 
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
@@ -49,6 +69,10 @@ public class AttendanceController {
                 .filter(Objects::isNull)
                 .count();
         int workDays = (int)attendanceForMonth.stream().count() - absentDays;
+
+//        int absentDays = attendanceService.getAbsentDays(empId);
+//        int workDays = attendanceService.getWorkDays(empId);
+
         model.addAttribute("absentDays", absentDays);
         model.addAttribute("workDays", workDays);
 //        model.addAttribute("isVacation", attendanceService.getIsVacation);

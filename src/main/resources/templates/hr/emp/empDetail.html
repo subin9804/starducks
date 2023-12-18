@@ -15,11 +15,11 @@
     <div id="form">
         <div class="photos">
             <div class="photo">
-                <img src="#" />
+                <img th:src="${profile}" />
                 <p>프로필사진</p>
             </div>
             <div class="photo">
-                <img src="#" />
+                <img th:src="${stamp}" />
                 <p>도장사진</p>
             </div>
         </div>
@@ -62,7 +62,14 @@
 
                 <dl>
                     <dt>직급</dt>
-                    <dd><p th:text="*{position}"></p></dd>
+                    <dd>
+                        <p th:if="*{position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+                        <p th:if="*{position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+                        <p th:if="*{position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+                        <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
+                        <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+                    </dd>
+
                 </dl>
 
                 <dl>

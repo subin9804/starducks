@@ -14,5 +14,5 @@ public class EmpSearchCond {
     private String sopt;
 
     private String text;    // 키워드
-    private String status;
+    private String status = "running";
 }

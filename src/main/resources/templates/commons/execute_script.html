@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<main layout:fragment="content">
+
+    <!--controller에서 model로 script에 간단한 설정 가능-->
+    <script th:if="${script != null}" th:utext="${script}"></script>
+</main>
+</html>

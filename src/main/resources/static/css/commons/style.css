@@ -235,3 +235,7 @@ a p.commonBtn {
     border-radius: 5px;
     color: white;
 }
+
+#profile-box {
+    font-size: 14px;
+}

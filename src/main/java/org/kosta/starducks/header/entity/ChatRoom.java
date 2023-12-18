@@ -39,7 +39,7 @@ public class ChatRoom extends BaseTimeEntity {
     this.roomName = roomName;
   }
 
-//  채팅방 이름 변경 때 사용
+  //  채팅방 이름 변경 때 사용
   public Long updateRoomName(ChatRoomRequestDto requestDto) {
     this.roomName = requestDto.getRoomName();
     return this.id;

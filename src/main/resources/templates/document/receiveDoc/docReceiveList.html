@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/submitList.css}" href="/static/css/document/createDoc/docDetail.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="page-title">결재 수신함</h1>
+
+    <!-- 전체 글 보기 링크 -->
+    <div class="forum-header">
+        <div class="view-all-posts">
+            <a class="listBtn" href="/document/receiveDoc" th:href="@{/document/receiveDoc}">전체 글 보기</a>
+        </div>
+        <!-- 검색창. 제목 + 내용 검색 가능 -->
+        <form class="search-form" method="get" th:action="@{/document/receiveDoc}">
+            <input name="searchKeyword" placeholder="검색어 입력" type="text">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <div class="page-border">
+    <table class="table list-table table-hover">
+        <thead class="list-thead">
+            <tr>
+                <th class="docId-th">문서번호</th>
+                <th class="formName-th">구분</th>
+                <th class="docTitle-th">문서제목</th>
+                <th class="docWriter-th">기안자</th>
+                <th class="docDate-th">기안일</th>
+                <th class="urgent-th">긴급여부</th>
+                <th class="docStatus-th">결재상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="document : ${documents}"
+                th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${document?.getDocForm().formNameEn},docId=${document?.docId})}'|">
+                <td th:text="${document?.docId}">문서번호</td>
+                <td th:text="${document?.docForm?.formName}">구분</td>
+                <td th:text="${document?.docTitle}">문서제목</td>
+                <td th:text="${document?.docWriter?.empName}">기안자</td>
+                <td th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</td>
+                <td><div class="urgent" th:if="${document?.urgent}">긴급</div></td>
+                <td>
+                    <th:block th:switch="${document.docStatus.toString()}">
+                        <div th:case="PENDING_DOC" class="docStatus" style="background-color:#FDF290;">대기</div>
+                        <div th:case="IN_PROGRESS" class="docStatus" style="background-color:#BCE784;">진행중</div>
+                        <div th:case="APPROVED_DOC" class="docStatus" style="background-color:#52B788;">승인</div>
+                        <div th:case="REJECTED_DOC" class="docStatus" style="background-color:#D6D6D6;">반려</div>
+                    </th:block>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <div class="pagination">
+            <!-- 첫 번째 페이지로 이동 -->
+            <a th:href="@{/document/submitDoc(page=0)}"> << </a>
+
+            <!-- 이전 페이지로 이동 -->
+            <a th:classappend="${nowPage == 1} ? 'disabled' : ''"
+               th:href="@{/document/submitDoc(page=${nowPage - 2})}"> < </a>
+
+            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                <a th:href="@{/document/submitDoc(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
+                   th:text="${page}"></a>
+                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
+            </th:block>
+
+            <!-- 다음 페이지 이동 -->
+            <a th:classappend="${nowPage == totalPages} ? 'disabled' : ''"
+               th:href="@{/document/submitDoc(page=${nowPage})}"> > </a>
+
+            <!-- 마지막 페이지로 이동 -->
+            <a th:href="@{/document/submitDoc(page=${totalPages - 1})}"> >> </a>
+        </div>
+    </div>
+</main>
+</html>

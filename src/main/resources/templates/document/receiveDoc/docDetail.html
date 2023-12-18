@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/docDetail.css}" href="/static/css/document/createDoc/docDetail.css">
+  <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+  <h1 class="page-title">수신 문서 상세</h1>
+  <div class="page-border">
+<!--    <div class="document" th:include="${'document/submitDoc/' + formNameEn + '::document'}"></div>-->
+      <div th:if="${formNameEn == 'draft'}" class="document" th:include="~{document/submitDoc/_draftDetail::document}"></div>
+
+    <div class="approval-state">
+      <div class="avp1-wrap">
+        <div class="avp1-title">
+        <span>1차 결재상태 : </span>
+        <span class="state-sticker docStatus">
+            <th:block th:switch="${apv1?.apvStatus?.toString()}">
+                <span th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</span>
+                <span th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</span>
+                <span th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</span>
+            </th:block>
+        </span>
+      </div>
+      <div>
+        <span class="avp1-title">내용 : </span>
+        <textarea th:text="${apv1?.apvComment}" th:disabled="disabled"></textarea>
+<!--          <input type="text" th:attr="${someCondition} ? '' : 'disabled'='disabled'" />-->
+      </div>
+    </div>
+
+    <div class="avp2-wrap">
+      <div class="avp2-title">
+        <span>2차 결재상태 : </span>
+          <span class="state-sticker docStatus">
+            <th:block th:switch="${apv2?.apvStatus?.toString()}">
+                <span th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</span>
+                <span th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</span>
+                <span th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</span>
+            </th:block>
+        </span>
+      </div>
+      <div>
+        <span class="avp2-title">내용 : </span>
+        <textarea th:text="${apv2?.apvComment}" th:disabled="disabled"></textarea>
+      </div>
+    </div>
+
+      <div class="buttons">
+        <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
+        <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/receiveDoc}'|" th:text="목록으로">목록으로</button>
+<!--          th:if="${iApproved}" : iApproved는 컨트롤러에서 내가 해당되는 결재단계가 결재됐는지 불리언으로 만들어서 넘긴 값-->
+          <button class="edit-button" type="button"
+                  th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}/apv(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
+                  th:text="결재">결재</button>
+<!--          <button class="edit-button" type="button" th:text="결재" disabled>결재</button>-->
+      </div>
+
+<!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->
+    </div>
+  </div>
+</main>
+</html>

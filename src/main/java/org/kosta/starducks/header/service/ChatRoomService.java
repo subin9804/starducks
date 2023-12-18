@@ -86,7 +86,7 @@ public class ChatRoomService {
     return chatRoomList.stream().map(ChatRoomResponseDto::new).collect(Collectors.toList());
   }
 
-   // ChatRoom 검색목록조회 - 최신순, List
+  // ChatRoom 검색목록조회 - 최신순, List
   @Transactional
   public List<ChatRoomResponseDto> findAllByRoomNameDesc(String roomName) {
     Sort sort = Sort.by(Sort.Direction.DESC, "id");

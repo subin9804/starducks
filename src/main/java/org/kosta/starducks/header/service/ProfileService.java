@@ -21,7 +21,7 @@ public class ProfileService {
 
   public boolean checkCurrentPassword(String currentPassword, Employee employee) {
 
-      return passwordEncoder.matches(currentPassword, employee.getPwd());
+    return passwordEncoder.matches(currentPassword, employee.getPwd());
   }
 
   public boolean isValidPassword(String password) {
@@ -64,4 +64,3 @@ public class ProfileService {
     }
   }
 }
-

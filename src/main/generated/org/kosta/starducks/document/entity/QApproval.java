@@ -26,6 +26,8 @@ public class QApproval extends EntityPathBase<Approval> {
 
     public final DateTimePath<java.time.LocalDateTime> apvDate = createDateTime("apvDate", java.time.LocalDateTime.class);
 
+    public final org.kosta.starducks.hr.entity.QEmployee apvEmp;
+
     public final NumberPath<Long> apvId = createNumber("apvId", Long.class);
 
     public final EnumPath<ApvStatus> apvStatus = createEnum("apvStatus", ApvStatus.class);
@@ -33,8 +35,6 @@ public class QApproval extends EntityPathBase<Approval> {
     public final NumberPath<Integer> apvStep = createNumber("apvStep", Integer.class);
 
     public final QDocument document;
-
-    public final org.kosta.starducks.hr.entity.QEmployee employee;
 
     public QApproval(String variable) {
         this(Approval.class, forVariable(variable), INITS);
@@ -54,8 +54,8 @@ public class QApproval extends EntityPathBase<Approval> {
 
     public QApproval(Class<? extends Approval> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.apvEmp = inits.isInitialized("apvEmp") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("apvEmp"), inits.get("apvEmp")) : null;
         this.document = inits.isInitialized("document") ? new QDocument(forProperty("document"), inits.get("document")) : null;
-        this.employee = inits.isInitialized("employee") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("employee"), inits.get("employee")) : null;
     }
 
 }

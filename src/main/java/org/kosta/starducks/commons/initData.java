@@ -3,7 +3,10 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.entity.Store;
+import org.kosta.starducks.fina.entity.StoreOperationalYn;
 import org.kosta.starducks.fina.repository.StoreRepository;
+import org.kosta.starducks.fina.service.StoreService;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.kosta.starducks.generalAffairs.entity.Product;
@@ -52,6 +55,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
+    private final StoreService storeService;
     private final StoreRepository storeRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
@@ -198,6 +202,19 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         product6.setProductUnit(ProductUnit.HUNDRED_EA);
         productRepository.saveAndFlush(product6);
 
+        Store store = new Store();
+        store.setEmployee(specificEmp);
+        store.setStoreName("미금역점");
+        store.setBusinessNum(1148600675L);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse("2023-08-08",dateFormat);
+        store.setStoreOpenDate(date);
+        store.setAddNo("05704");
+        store.setStoreAddr("경기도 성남시 분당구 ");
+        store.setStoreDetailAddr("금곡동 168");
+        store.setStoreOperationalYn(StoreOperationalYn.storeOperationalY);
+        storeService.createStore(store);
+
         // 초기 게시글 데이터
         for (int i = 0; i < 33; i++) {
             ForumPost forumPost = new ForumPost();
@@ -273,6 +290,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         if (emp1 != null && emp11 != null) {
             // 채팅방 생성
+
             ChatRoom chatRoom = new ChatRoom();
             chatRoom.setRoomName("채팅방 이름");
             chatRoom = chatRoomRepository.save(chatRoom);
