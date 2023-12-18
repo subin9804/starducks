@@ -15,7 +15,12 @@ import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
-
+import org.kosta.starducks.header.entity.ChatMessage;
+import org.kosta.starducks.header.entity.ChatRoom;
+import org.kosta.starducks.header.entity.ChatRoomEmp;
+import org.kosta.starducks.header.repository.ChatMessageRepository;
+import org.kosta.starducks.header.repository.ChatRoomEmpRepository;
+import org.kosta.starducks.header.repository.ChatRoomRepository;
 import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
@@ -45,13 +50,15 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ForumPostRepository forumPostRepository;
     private final DocFormRepository docFormRepository;
     private final ProductRepository productRepository;
+    private final ChatRoomEmpRepository chatRoomEmpRepository;
 
     private final DeptRepository deptRepository;
     private final PasswordEncoder passwordEncoder; //시큐리티 통과용 비밀번호 복호화
     private final ScheduleRepository scheduleRepository;
     private final StoreService storeService;
     private final StoreRepository storeRepository;
-
+    private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
 
     @Override
@@ -276,6 +283,33 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             }
         }
 
+        // 초기 채팅 데이터
+        // 사번이 1인 사원과 11인 사원을 가져옵니다.
+        Employee emp1 = repository.findById(1L).orElse(null);
+        Employee emp11 = repository.findById(11L).orElse(null);
 
+        if (emp1 != null && emp11 != null) {
+            // 채팅방 생성
+
+            ChatRoom chatRoom = new ChatRoom();
+            chatRoom.setRoomName("채팅방 이름");
+            chatRoom = chatRoomRepository.save(chatRoom);
+
+            // 채팅방 참여자 연결
+            ChatRoomEmp emp1ChatRoom = new ChatRoomEmp(chatRoom, emp1);
+            chatRoomEmpRepository.save(emp1ChatRoom);
+            ChatRoomEmp emp11ChatRoom = new ChatRoomEmp(chatRoom, emp11);
+            chatRoomEmpRepository.save(emp11ChatRoom);
+
+            // 메시지 생성
+            for (int i = 0; i < 3; i++) {
+                ChatMessage msg = new ChatMessage();
+                msg.setChatRoom(chatRoom);
+                msg.setMessage("메시지 내용 " + i);
+                msg.setSender(emp1); // 사번이 1인 사원이 메시지를 보냈다고 가정
+                msg.setReadStatus(false);
+                chatMessageRepository.save(msg);
+            }
+        }
     }
 }

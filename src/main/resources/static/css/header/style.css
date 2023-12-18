@@ -1,18 +1,21 @@
+/*메일 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*메일 보내기 페이지*/
-#mailwrite{
-    margin-top:10px;
+#mailwrite {
+    margin-top: 10px;
 }
+
 #mailboxes {
     margin-top: 20px;
 }
+
 /*메일 전송 완료 페이지*/
 /* 목록 및 메일쓰기 */
 .graybutton {
-    margin: 15px 5px ;
+    margin: 15px 5px;
     line-height: 27px;
     width: 90px;
     height: 30px;
-    border: 1px solid #E6E6EA ;
+    border: 1px solid #E6E6EA;
 
     border-radius: 10px;
     cursor: pointer;
@@ -21,31 +24,205 @@
 
 
 }
+
 .graybutton:hover {
     background-color: #F2F2F4; /* 호버 시 배경 색상을 변경합니다. */
 }
 
-/* 기본 스타일 */
+/*메일 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*채팅 관련 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*채팅방 목록 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
+.chat-list-body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+}
+
+.chat-list-room-container {
+    padding: 20px;
+}
+
+.chat-list-room {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.chat-list-room:hover {
+    background-color: #eaeaea;
+}
+
+.chat-list-room img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.chat-list-room-name {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.chat-list-room-employees {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+/*채팅방 목록 페이지 끝 ~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*채팅방 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* 채팅 메시지 스타일링 */
+/* 채팅 메시지 스타일링 */
+
+/* 메시지 폼 스타일링 */
+
+#chat-room {
+    width: 100%; /* 전체 폭 사용 */
+    padding-bottom: 60px;
+    /* 기타 스타일링... */
+}
+
+.chat-message-other {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10px;
+}
+
+/* 로그인한 사용자의 메시지 스타일링 */
+.chat-message-mine {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /*max-width: 99%;*/
+}
+
+/* 메시지 내용과 날짜를 포함하는 컨테이너 */
+.chat-message-container {
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* 로그인한 사용자의 메시지 컨테이너 스타일링 */
+.chat-message-mine .chat-message-container {
+    flex-direction: row-reverse; /* 날짜와 메시지 순서 반전 */
+}
+
+/* 메시지 내용 스타일링 */
+.chat-message-content {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-right: 10px; /* 메시지와 날짜 사이 간격 */
+}
+
+/* 로그인한 사용자의 메시지 내용 스타일링 */
+.chat-message-mine .chat-message-content {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+/* 날짜 스타일링 */
+.chat-message-date {
+    color: #888;
+    font-size: 0.8em;
+    padding-right: 5px;
+    align-self: center; /* 날짜를 메시지 내용과 같은 라인에 정렬 */
+}
+
+/* 발신자 이름 스타일 */
+.chat-message-sender-name {
+    margin-bottom: 5px; /* 이름과 메시지 사이의 간격 */
+}
+/* 채팅 푸터 스타일링 */
+.chat-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ccc;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* 메시지 입력 폼 스타일링 */
+#messageForm {
+    display: flex;
+    width: 100%;
+}
+
+/* 메시지 입력 필드 스타일링 */
+.messageForm-input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+/* 메시지 전송 버튼 스타일링 */
+.messageForm-button {
+    white-space: nowrap;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.messageForm-button:hover {
+    background-color: #0056b3;
+}
+
+
+/*채팅방 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~*/
+/*채팅 관련 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* 개인 정보 수정 페이지 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 .ul-custom {
     list-style: none;
-    padding: 0; margin: 0;
+    padding: 0;
+    margin: 0;
 }
+
 .li-custom {
-    padding: 0; margin: 0;
+    padding: 0;
+    margin: 0;
     display: block;
 }
+
 .dl-custom {
-    margin: 0; padding: 20px 0;
+    margin: 0;
+    padding: 20px 0;
 }
+
 .dt-custom {
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     display: inline-block;
 }
+
 .dd-custom {
     text-align: right;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     display: inline-block;
 }
+
 .dd-custom p {
     width: 185px;
     border-radius: 10px;
@@ -54,14 +231,17 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 2px 10px;
 }
+
 .form-custom {
     border: 1px solid #6B4D27;
     border-radius: 10px;
     padding: 40px 100px;
 }
+
 .p-custom {
     margin: 0;
 }
+
 .photos-custom {
     text-align: center;
     display: flex;
@@ -69,7 +249,8 @@
     margin-bottom: 40px;
     gap: 50px;
 }
-.photo-custom img{
+
+.photo-custom img {
     width: 120px;
     height: 120px;
     border: 1px solid #6B4D27;
@@ -83,12 +264,14 @@
     flex-direction: row;
     gap: 80px;
 }
+
 .formSection-custom section:first-child {
     width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
 .formSection-custom section .dl-custom {
     display: flex;
     justify-content: space-between;
@@ -103,8 +286,11 @@
 }
 
 /* 드롭다운 셀렉트 박스 스타일 */
-.selectbox-custom {display: none;}
-.selectbox-custom+label {
+.selectbox-custom {
+    display: none;
+}
+
+.selectbox-custom + label {
     display: block;
     border-radius: 10px;
     width: 185px;
@@ -112,13 +298,15 @@
     height: 30px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
-    position:relative;
+    position: relative;
 }
-.drop-custom{
+
+.drop-custom {
     position: absolute;
     top: 5px;
     right: 10px;
 }
+
 .options1-custom, .options2-custom {
     position: absolute;
     height: 150px;
@@ -130,10 +318,12 @@
     border: 1px solid #6B4D27;
     z-index: 5;
 }
+
 .option1-custom, .option2-custom {
     padding: 5px;
     text-align: center;
 }
+
 .option1-custom:hover, .option2-custom:hover {
     background-color: #ddd;
 }
@@ -143,7 +333,8 @@
     display: inline-block !important;
     width: 150px;
 }
-.postNo-custom+span {
+
+.postNo-custom + span {
     cursor: pointer;
     background-color: #ddd;
     display: inline-block;
@@ -152,15 +343,17 @@
 }
 
 /* 하단 버튼 스타일 */
-button-custom {
+.button-custom {
     margin: 40px 10px 0 10px;
 }
+
 .btns-custom {
     text-align: center;
 }
+
 a p.commonBtn-custom {
     line-height: 50px;
     display: inline-block;
 }
 
-
+/*개인 정보 수정 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
