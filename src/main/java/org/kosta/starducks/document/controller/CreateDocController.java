@@ -46,8 +46,10 @@ public class CreateDocController {
     /**
      * 문서 작성 페이지
      */
-    @GetMapping("/{formNameEn}")
-    public String createDocument(@PathVariable(name = "formNameEn") String formNameEn, Model model) {
+    @GetMapping("/draft")
+    public String createDocument(Model model) {
+        String formNameEn = "draft";
+
         //라디오로 입력 받을 apvEmpId1,2
         Long apvEmpId1 = null, apvEmpId2 = null;
         model.addAttribute("apvEmpId1", apvEmpId1);
@@ -78,10 +80,10 @@ public class CreateDocController {
     /**
      * 문서 수정 페이지 (submit 이력 있는 경우 - 임시저장, 상신 모두 포함)
      */
-    @GetMapping("/{formNameEn}/{docId}")
-    public String updateDocument(@PathVariable(name = "formNameEn") String formNameEn,
-                                 @PathVariable(name = "docId") Long docId,
+    @GetMapping("/{docId}")
+    public String updateDocument(@PathVariable(name = "docId") Long docId,
                                  Model model) {
+        String formNameEn = "draft";
 
         //기존에 선택했던 apvEmpId1,2 라디오 정보
         List<Long> apvEmpIdList = documentService.getApvEmpIdsByDocId(docId);
@@ -116,16 +118,13 @@ public class CreateDocController {
     /**
      * 문서 작성 상신 처리 - 첫 submit이 상신 - /{formNameEn} 에서 진입
      */
-    @PostMapping("/{formNameEn}")
-    public String submitDocument(@PathVariable(name = "formNameEn") String formNameEn,
-                                 @ModelAttribute(name = "document") Document document,
+    @PostMapping("/draft")
+    public String submitDocument(@ModelAttribute(name = "document") Document document,
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                  RedirectAttributes redirectAttributes) {
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId1ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId1);
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapvEmpId2ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+apvEmpId2);
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
+        String formNameEn = "draft";
 
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
@@ -141,14 +140,14 @@ public class CreateDocController {
     /**
      * 문서 작성 상신 처리 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우) - /{formNameEn}/{docId} 에서 진입
      */
-    @PostMapping("/{formNameEn}/{docId}")
-    public String submitDocument2(@PathVariable(name = "formNameEn") String formNameEn,
-                                  @PathVariable(name = "docId") Long docId,
+    @PostMapping("/draft/{docId}")
+    public String submitDocument2(@PathVariable(name = "docId") Long docId,
                                   Document document,
                                   @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                   @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                   @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                   RedirectAttributes redirectAttributes) {
+        String formNameEn = "draft";
 
         List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
         documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIdList);
@@ -188,7 +187,6 @@ public class CreateDocController {
      */
     @PostMapping("/temp2")
     public String submitDocumentTemp2(Document document,
-//                                      @RequestParam(name = "document.docId", required = false) Long docId,
                                       @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
                                       @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
                                       @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
