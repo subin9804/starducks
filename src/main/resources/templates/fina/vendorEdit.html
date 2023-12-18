@@ -23,7 +23,7 @@
     <div id="form" style="display: flex;">
         <div style="flex: 1;">
             <form class="container" action="/fina/vendor/update" method="post">
-                <input th:name="vendorId" type="hidden" th:value="${vendor.venderId}">
+                <input th:name="vendorId" type="hidden" th:value="${vendor.vendorId}">
 
                 <dl>
                     <dt>거래처명</dt>
@@ -32,13 +32,13 @@
                 </dl>
 
                 <dl>
-                    <dt><label for="businessSector">업종</label></dt>
+                    <dt><label for="vendorBusinessSector">업종</label></dt>
                     <dd>
-                        <select id="businessSector" name="businessSector" th:field="*{vendor.businessSector}">
-                            <option th:each="sector : ${VendorBusinessSector.values()}"
+                        <select id="vendorBusinessSector" name="vendorBusinessSector">
+                            <option th:each="sector : ${vendorBusinessSector}"
                                     th:value="${sector.name()}"
                                     th:text="${sector.description}"
-                                    th:selected="${vendor.businessSector == sector}"></option>
+                                    th:selected="${sector.name() == vendor.vendorBusinessSector.name()}"></option>
                         </select>
                     </dd>
                 </dl>
@@ -46,20 +46,21 @@
                 <dl>
                     <dt>사업자 번호</dt>
                     <dd><input class="form-control" type="text" id="vendorRegistNum" name="vendorRegistNum"
-                               th:value="${vendor.vendorRegistNum}" ></dd>
+                               th:value="${vendor.vendorRegistNum}"></dd>
                 </dl>
 
                 <dl>
                     <dt>대표자</dt>
                     <dd><input type="text" id="vendorRepreName" name="vendorRepreName"
-                               th:value="${vendor.vendorRepreName}" ></dd>
+                               th:value="${vendor.vendorRepreName}"></dd>
                 </dl>
         </div>
 
         <div style="flex: 1;">
             <dl>
                 <dt>연락처</dt>
-                <dd><input type="text" id="vendorTelephone" name="vendorTelephone" placeholder="-를 포함해서 입력해주세요" th:value="${vendor.vendorTelephone}">
+                <dd><input type="text" id="vendorTelephone" name="vendorTelephone" placeholder="-를 포함해서 입력해주세요"
+                           th:value="${vendor.vendorTelephone}">
                 </dd>
             </dl>
             <dl>
@@ -81,14 +82,15 @@
             </dl>
 
             <dl>
-                <dt>운영여부</dt>
-                <dd><select id="contractStatus" name="contractStatus"
-                            th:field="*{vendor.contractStatus}">
-                    <option th:each="option : ${contractStatus}"
-                            th:value="${option}"
-                            th:text="${option.description}"
-                            th:selected="${vendor.contractStatus == option}"></option>
-                </select></dd>
+                <dt>계약 여부</dt>
+                <dd>
+                    <select id="contractStatus" name="contractStatus" th:field="*{contractStatus}">
+                        <option th:each="option : ${contractStatus}"
+                                th:value="${option}"
+                                th:text="${option.description}"
+                                th:selected="${vendor.contractStatus == option}"></option>
+                    </select>
+                </dd>
             </dl>
         </div>
     </div>

@@ -101,13 +101,16 @@ public class VendorController {
         Vendor vendorEntity = vendorService.findById(vendorId);
 //        2. 모델에 데이터 등록하기
         model.addAttribute("vendor", vendorEntity);
+        model.addAttribute("businessSectors", VendorBusinessSector.values());   // 업종
+        model.addAttribute("contractStatus", ContractStatus.values());  // 계약 상태
 //        3. 뷰 페이지 설정하기
         return "fina/vendorEdit";
     }
 
     @PostMapping("/update")
-    public String updateVendor(@ModelAttribute Vendor vendor) {
-
+    public String updateVendor(VendorAndProductDTO vendorAndProductDTO) {   // 매개변수로 DTO 받아오기
+        vendorService.updateVendor(vendorAndProductDTO);
+        return "redirect:/fina/vendor/single/" + vendorAndProductDTO.getVendorId();
     }
 
 

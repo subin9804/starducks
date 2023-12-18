@@ -2,10 +2,13 @@ package org.kosta.starducks.generalAffairs.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.kosta.starducks.fina.dto.VendorAndProductDTO;
 import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.VendorBusinessSector;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +18,19 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class VendorService {
     /**
      * 총무부 - 품목 관리 영역
      */
     private final VendorRepository vendorRepository;
+    private final ModelMapper modelMapper;
 
-    public List<String> getAllVendorNames(){
+
+    public List<String> getAllVendorNames() {
         List<String> vendorNames = vendorRepository.findAllVendorNames();
-    return vendorNames;}
+        return vendorNames;
+    }
 
     public Vendor getVendorByName(String vendorName) {
         return vendorRepository.findVendorByVendorName(vendorName);
@@ -37,6 +44,7 @@ public class VendorService {
 
     /**
      * 거래처 추가하기
+     *
      * @param vendor
      */
     public void saveVendor(Vendor vendor) {
@@ -45,6 +53,7 @@ public class VendorService {
 
     /**
      * 거래처 단일 조회
+     *
      * @param vendorId
      * @return
      */
@@ -55,6 +64,7 @@ public class VendorService {
 
     /**
      * 거래처 목록 조회
+     *
      * @return
      */
     public List<Vendor> findAll() {
@@ -63,6 +73,7 @@ public class VendorService {
 
     /**
      * 거래처 수정
+     *
      * @param vendorId
      * @return
      */
@@ -80,9 +91,23 @@ public class VendorService {
 
     public void updateVendor(Vendor vendor) {
         Vendor target = vendorRepository.findById(vendor.getVendorId()).orElse(null);
-        if(target != null) {
+        if (target != null) {
             vendorRepository.save(vendor);
         }
     }
 
+    public void updateVendor(VendorAndProductDTO vendorAndProductDTO) {
+//        1. DTO를 엔티티로 변환하기
+        Vendor vendorEntity = modelMapper.map(vendorAndProductDTO, Vendor.class);
+        log.info("vendorEntity.toString() ==> " + vendorEntity.toString());
+
+//        2. 엔티티를 DB에 저장하기
+//        2 - 1. DB에서 기존 데이터 가져오기
+        Vendor target = vendorRepository.findById(vendorEntity.getVendorId()).orElse(null);
+//        2 - 2. 기존 데이터 값을 갱신하기
+        if (target != null) {
+            vendorRepository.save(vendorEntity);
+        }
+
+    }
 }
