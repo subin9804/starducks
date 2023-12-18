@@ -68,7 +68,7 @@
         <div class="head">
             <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('logistic')} ? true">
-            <label for="logistic"><a th:href="@{/logistic/warehouseinbound/list}">물류유통부</a></label>
+            <label for="logistic"><a th:href="@{/logistic/inbound/warehouse/list}">물류유통부</a></label>
         </div>
         <ul id="flush-logistic"
             th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('logistic')}? 'display: none;'">

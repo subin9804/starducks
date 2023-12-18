@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/logistic/storeinbound")
+@RequestMapping("/logistic/inbound/store")
 @RequiredArgsConstructor
 @Slf4j
 public class StoreInboundController {
@@ -148,7 +148,7 @@ public class StoreInboundController {
     @PostMapping("/add")
     public String addOrder(@RequestBody List<StoreInboundDto> storeInboundDtos)  {
         storeInboundService.addStoreInbound(storeInboundDtos);
-        return "redirect:/logistic/storeinbound/list";
+        return "redirect:/logistic/inbound/store/list";
     }
 
 

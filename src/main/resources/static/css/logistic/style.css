@@ -140,6 +140,54 @@
 
 
 }
+
+
+.middle-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.middle-btn button {
+    margin: 0 10px;
+}
+
+.wideBtn {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    width: 300px;
+    height: 50px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+}
+
+.switch-button1 {
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: #AF9A63;
+}
+.switch-button1:hover {
+    background-color: #6B4D27; /* hover 시 배경색을 starducks 대표 색상으로 변화시킨다. */
+}
+
+.switch-button2 {
+
+    color: #AF9A63;
+
+    background-color: #FFFFFF;
+    border: 1px solid #AF9A63;
+    border-radius: 10px;
+}
+
+.switch-button2:hover {
+    color: #ffffff;
+    background-color: #6B4D27;
+    /* hover 시 선택된 항목처럼 색상을 변화시킨다.*/
+}
+
+
 /* 버튼 공통 디자인 */
 .commonBtn {
     font-weight: 600;
