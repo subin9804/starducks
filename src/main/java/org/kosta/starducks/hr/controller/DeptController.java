@@ -1,10 +1,11 @@
 package org.kosta.starducks.hr.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.entity.Department;
-import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
+import org.kosta.starducks.hr.service.AlreadyExistDeptException;
 import org.kosta.starducks.hr.service.EmpFileService;
 import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +27,7 @@ public class DeptController {
     private final DeptRepository repository;
     private final EmpService empService;
     private final EmpFileService fileService;
+    private final HttpServletResponse response;
 
     /**
      * 부서 전체조회
@@ -63,6 +64,10 @@ public class DeptController {
      */
     @PostMapping("/add")
     public String addDept(Department department) {
+        if(repository.existsByDeptId(department.getDeptId())) {
+            throw new AlreadyExistDeptException("dept.error.alreadyExists");
+        }
+
         repository.saveAndFlush(department);
 
         return "redirect:/hr/dept";
@@ -173,4 +178,5 @@ public class DeptController {
 
         return "redirect:/hr/dept";
     }
+
 }
