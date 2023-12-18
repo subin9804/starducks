@@ -45,10 +45,12 @@ public class Document {
     private Employee docWriter;
 
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private List<Approval> approval = new ArrayList<>();
+    private List<Approval> approvals = new ArrayList<>();
 
-    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private List<RefEmployee> refEmployee = new ArrayList<>();
+    private String refEmpIds;
+
+//    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+//    private List<RefEmployee> refEmployee = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 //    private List<AttachedFile> attachedFile = new ArrayList<>();
