@@ -11,17 +11,17 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1 class="page-title">결재 상신함</h1>
+    <h1 class="page-title">결재 수신함</h1>
 
     <!-- 전체 글 보기 링크 -->
     <div class="forum-header">
         <div class="view-all-posts">
-            <a class="listBtn" href="/document/submitDoc" th:href="@{/document/submitDoc}">전체 글 보기</a>
+            <a class="listBtn" href="/document/receiveDoc" th:href="@{/document/receiveDoc}">전체 글 보기</a>
         </div>
         <!-- 검색창. 제목 + 내용 검색 가능 -->
-        <form class="search-form" method="get" th:action="@{/document/submitDoc}">
+        <form class="search-form" method="get" th:action="@{/document/receiveDoc}">
             <input name="searchKeyword" placeholder="검색어 입력" type="text">
-            <button class="search-button" type="submit">검색</button>
+            <button type="submit">검색</button>
         </form>
     </div>
 
@@ -32,6 +32,7 @@
                 <th class="docId-th">문서번호</th>
                 <th class="formName-th">구분</th>
                 <th class="docTitle-th">문서제목</th>
+                <th class="docWriter-th">기안자</th>
                 <th class="docDate-th">기안일</th>
                 <th class="urgent-th">긴급여부</th>
                 <th class="docStatus-th">결재상태</th>
@@ -39,10 +40,11 @@
         </thead>
         <tbody>
             <tr th:each="document : ${documents}"
-                th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${document?.getDocForm().formNameEn},docId=${document?.docId})}'|">
+                th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${document?.getDocForm().formNameEn},docId=${document?.docId})}'|">
                 <td th:text="${document?.docId}">문서번호</td>
                 <td th:text="${document?.docForm?.formName}">구분</td>
                 <td th:text="${document?.docTitle}">문서제목</td>
+                <td th:text="${document?.docWriter?.empName}">기안자</td>
                 <td th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</td>
                 <td><div class="urgent" th:if="${document?.urgent}">긴급</div></td>
                 <td>
@@ -56,7 +58,6 @@
             </tr>
         </tbody>
     </table>
-        <!-- 페이지네이션 -->
         <div class="pagination">
             <!-- 첫 번째 페이지로 이동 -->
             <a th:href="@{/document/submitDoc(page=0)}"> << </a>

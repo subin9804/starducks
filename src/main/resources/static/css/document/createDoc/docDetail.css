@@ -36,3 +36,11 @@ textarea {
 .buttons {
     margin: 110px 0;
 }
+.docStatus {
+    display: inline-block;
+    margin: 0 5px;
+    width: 120px;
+    height: 24px;
+    border-radius: 15px;
+    text-align: center;
+}

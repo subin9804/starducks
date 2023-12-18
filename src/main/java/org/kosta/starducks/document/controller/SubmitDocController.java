@@ -2,16 +2,21 @@ package org.kosta.starducks.document.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.MenuService;
 import org.kosta.starducks.document.entity.Document;
-import org.kosta.starducks.document.repository.CreateDocRepository;
+import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
-import org.kosta.starducks.document.service.CreateDocService;
+import org.kosta.starducks.document.service.DocumentService;
+import org.kosta.starducks.forum.entity.ForumPost;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,21 +24,44 @@ import java.util.List;
 @RequestMapping("/document/submitDoc")
 @RequiredArgsConstructor
 public class SubmitDocController {
-    private final CreateDocService createDocService;
+    private final DocumentService documentService;
 
     private final DocFormRepository docFormRepository;
-    private final CreateDocRepository createDocRepository;
-
-    private final HttpServletRequest request;
+    private final DocumentRepository documentRepository;
 
     /**
      * 결재 상신 리스트 페이지
      */
     @GetMapping
-    public String docSubmitList(Model model) {
-        MenuService.commonProcess(request, model, "document");
-        List<Document> documents = createDocRepository.findAll();
-        model.addAttribute("documents", documents);
+    public String docSubmitList(Model model,
+                                @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
+                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+//        List<Document> documents = documentRepository.findAll();
+//        model.addAttribute("documents", documents);
+
+        Long empId = 1L; //로그인한 사원 번호
+
+        Page<Document> documents = null;
+
+        //검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 있으면 키워드에 맞게 글을 필터링(검색)처리까지 해서 보여줌
+        if (searchKeyword == null) {
+            documents = documentService.submitDocuments(empId, pageable);
+        } else {
+            documents = documentService.searchSubmitDocuments(empId, searchKeyword, pageable);
+        }
+
+        // 페이지 조건 생성
+        int nowPage = documents.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, documents.getTotalPages());
+        int totalPages = documents.getTotalPages();
+
+        model.addAttribute("documents", documents.getContent());
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPages", totalPages);
+
         return "document/submitDoc/docSubmitList";
     }
 
@@ -44,14 +72,46 @@ public class SubmitDocController {
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
-        MenuService.commonProcess(request, model, "document");
 
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        createDocRepository.findByDocId(docId)
+        documentRepository.findByDocId(docId)
                 .ifPresent(document -> model.addAttribute("document", document));
 
         return "document/submitDoc/docDetail";
+    }
+
+    /**
+     * 임시저장함 페이지
+     */
+    @GetMapping("/tempList")
+    public String docTempList(Model model,
+                                @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
+                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+        Long empId = 1L; //로그인한 사원 번호
+
+        Page<Document> documents = null;
+
+        //검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 있으면 키워드에 맞게 글을 필터링(검색)처리까지 해서 보여줌
+        if (searchKeyword == null) {
+            documents = documentService.tempDocuments(empId, pageable);
+        } else {
+            documents = documentService.searchTempDocuments(empId, searchKeyword, pageable);
+        }
+
+        // 페이지 조건 생성
+        int nowPage = documents.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, documents.getTotalPages());
+        int totalPages = documents.getTotalPages();
+
+        model.addAttribute("documents", documents.getContent());
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPages", totalPages);
+
+        return "document/submitDoc/docTempList";
     }
 }

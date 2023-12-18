@@ -28,6 +28,19 @@ myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus()
 })
 
+//임시저장 submit 처리
+function submit2(form) {
+    form.action = '/document/createDoc/temp';
+    form.submit();
+    return true;
+}
+function submit3(form) {
+    form.action = '/document/createDoc/temp2';
+    form.submit();
+    return true;
+}
+
+//문서 미리보기 실시간
 function displaySelectedApv1(element) {
     var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;
     document.getElementById('selectedApv1').innerText = selectedEmpName;
