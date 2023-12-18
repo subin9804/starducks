@@ -3,15 +3,13 @@ package org.kosta.starducks.hr.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 
-@Getter @Setter @Entity
-@NoArgsConstructor
+@Getter @Setter @Entity @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Department {
 
     @Id
@@ -27,4 +25,19 @@ public class Department {
         this.deptName = deptName;
         this.deptRepTel = deptRepTel;
     }
+
+    /** 해당 부서에 재직중인 인원 */
+    public int getRunningEmp() {
+        int cnt = 0;
+
+        List<Employee> emps = getEmps();
+        for(Employee emp : emps) {
+            if(!emp.isStatus()) {
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+
 }

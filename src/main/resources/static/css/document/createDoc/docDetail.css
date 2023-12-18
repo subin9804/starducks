@@ -1,11 +1,46 @@
 .page-border {
     width: 1300px;
+    height: 1210px;
+    position: relative;
 }
 .document, .a4-box {
     display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
-
 .approval-state {
     display: inline-block;
     width: 370px;
+    height: 600px;
+    position: absolute;
+    top: 200px;
+    right: 30px;
+}
+textarea {
+    display: inline-block;
+    /*width: 300px;*/
+    padding: 20px;
+}
+.avp1-title, .avp2-title {
+    padding: 10px;
+}
+.avp1-wrap, .avp2-wrap {
+    margin: 40px 0;
+
+}
+.commonBtn {
+    margin: 0;
+    padding: 0;
+}
+.buttons {
+    margin: 110px 0;
+}
+.docStatus {
+    display: inline-block;
+    margin: 0 5px;
+    width: 120px;
+    height: 24px;
+    border-radius: 15px;
+    text-align: center;
 }

@@ -16,11 +16,11 @@ public class RefEmployee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long refEmpId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_id", nullable = false)
     private Document document;
 }

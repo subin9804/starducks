@@ -33,9 +33,9 @@ function deletePostComment(commentId) {
 
 // 댓글 수정 폼을 수정 누르기 전까지는 숨겼다가 누르면 표시하고, 수정된 내용을 AJAX 요청으로 전송
 function showEditForm(commentId) {
-  const contentElement = document.getElementById('comment-content-' + commentId);
-  const editForm = document.getElementById('edit-comment-form-' + commentId);
-  const editTextarea = document.getElementById('edit-comment-textarea-' + commentId);
+  var contentElement = document.getElementById('comment-content-' + commentId);
+  var editForm = document.getElementById('edit-comment-form-' + commentId);
+  var editTextarea = document.getElementById('edit-comment-textarea-' + commentId);
 
   // 기존 댓글 내용을 수정 폼의 textarea에 설정
   if (contentElement && editTextarea) {
