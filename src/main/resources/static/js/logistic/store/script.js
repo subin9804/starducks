@@ -18,6 +18,9 @@ window.document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault()
         console.log("버튼 눌림")
         console.log(productSelect.value)
+        console.log(storeSelect.value)
+        console.log(quantityInput)
+
 
         let item = {
             storeNo: storeSelect.value,
