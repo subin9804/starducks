@@ -1,10 +1,13 @@
 package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Product {
 
     @Id
@@ -37,8 +40,9 @@ public class Product {
     @Column(nullable = false)
     private boolean productSelling;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id",nullable = false)
+    @ToString.Exclude
     private Vendor vendor;
 
     @Column(length = 150)

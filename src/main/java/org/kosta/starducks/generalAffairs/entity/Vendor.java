@@ -1,7 +1,9 @@
 package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.VendorBusinessSector;
 
@@ -9,7 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Vendor {
     /**
      * 공급업체
@@ -36,5 +39,6 @@ public class Vendor {
      * Vendor는 여러 Product를 가질 수 있다
      */
     @OneToMany(mappedBy = "vendor")
+    @ToString.Exclude
     private List<Product> products;
 }

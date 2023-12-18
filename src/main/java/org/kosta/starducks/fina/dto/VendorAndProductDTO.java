@@ -3,8 +3,9 @@ package org.kosta.starducks.fina.dto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.VendorBusinessSector;
 
@@ -12,7 +13,8 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class VendorAndProductDTO {
     private int vendorId;   // 거래처 번호
     private String vendorName;  // 거래처명
@@ -30,6 +32,8 @@ public class VendorAndProductDTO {
 
     @Enumerated(EnumType.STRING)
     private ContractStatus contractStatus; // 계약 상태
+
+//    private List<Product> products;
 }
 
 /**
