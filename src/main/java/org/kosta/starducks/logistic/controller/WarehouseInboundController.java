@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/logistic/warehouseinbound")
+@RequestMapping("/logistic/inbound")
 @RequiredArgsConstructor
 @Slf4j
 public class WarehouseInboundController {
@@ -33,7 +33,7 @@ public class WarehouseInboundController {
     private final HttpServletRequest request;
 
     //재고 목록 조회
-    @GetMapping("/list1")
+    @GetMapping("/warehouse/list1")
     public String getAllInventories(Model m,
                                  @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(name="searchKeyword", required = false) String searchKeyword)
@@ -62,7 +62,7 @@ public class WarehouseInboundController {
     }
 
 
-    @GetMapping("/list")
+    @GetMapping("/warehouse/list")
     public String getAllInbounds(Model m,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
         MenuService.commonProcess(request, m, "logistic");
@@ -86,7 +86,7 @@ public class WarehouseInboundController {
         return "logistic/InboundList";
     }
 
-    @GetMapping("/info/{warehouseInboundId}")
+    @GetMapping("/warehouse/info/{warehouseInboundId}")
     public String getInboundInfo(@PathVariable("warehouseInboundId") Long warehouseInboundId,
                                  Model m)
     {
@@ -107,7 +107,7 @@ public class WarehouseInboundController {
 
 
 
-    @GetMapping("/add")
+    @GetMapping("/warehouse/add")
     public String addOrder(Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
 
     {
@@ -123,10 +123,10 @@ public class WarehouseInboundController {
 
 
 
-    @PostMapping("/add")
+    @PostMapping("/warehouse/add")
     public String addOrder(@RequestBody List<WarehouseInboundDto> warehouseInboundDtos)  {
         warehouseInboundService.addWarehouseInbound(warehouseInboundDtos);
-        return "redirect:/logistic/warehouseinbound/list";
+        return "redirect:/logistic/inbound/warehouse/list";
     }
 
 

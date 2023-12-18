@@ -17,9 +17,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
     function handleClick(e) {
         e.preventDefault()
         console.log("버튼 눌림")
-        console.log(productSelect.value)
-        console.log(storeSelect.value)
-        console.log(quantityInput)
+
 
 
         let item = {
@@ -31,11 +29,6 @@ window.document.addEventListener("DOMContentLoaded", function() {
         if (!isProductCodeInList(item.productCode)) {
             list.push(item);
 
-            // let li = document.createElement("li");
-            // let selectedOption = productSelect.options[productSelect.selectedIndex]
-            // let itemName = selectedOption.getAttribute("data-name")
-            // li.innerHTML = list.length + "." + itemName + "|수량 : "  + quantityInput.value;
-            // contentList.appendChild(li);
 
             let row = contentTable.insertRow(-1);
             let cell1 = row.insertCell(0);
@@ -53,7 +46,6 @@ window.document.addEventListener("DOMContentLoaded", function() {
             let itemName = selectedOption.getAttribute("data-name");
             let itemCategory=selectedOption.getAttribute("data-category");
             let itemPrice   = selectedOption.getAttribute("data-price");
-            //let itemCode =selectedOption.getAttribute("value");
             let selectedOption2 = storeSelect.options[storeSelect.selectedIndex];
             let storeStock = selectedOption2.getAttribute("????")
             // let itemStock   =  selectedOption.getAttribute("data-cnt")
@@ -83,21 +75,15 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
         $.ajax({
             type: "POST",
-            url: "/logistic/storeinbound/add",
+            url: "/logistic/inbound/store/add",
             contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
             data:JSON.stringify(list),
-                //JSON.stringify({
-                //warehouseInboundDtos: list
-            //}) ,
-               // {
-               // warehouseInboundDtos: document.getElementById("warehouseInboundDtos").value
-           // }, // 폼 데이터를 직렬화하여 전송
             success: function(response) {
                 // 서버 응답에 대한 처리
                 console.log("Server response:", response);
 
                 //입고내역 보여주는 페이지로 리디렉션
-                window.location.href = '/logistic/storeinbound/list'
+                window.location.href = '/logistic/inbound/store/list'
 
                 // 성공적으로 서버로 전송한 후에 리스트 초기화
                 list.length = 0;

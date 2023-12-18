@@ -83,55 +83,6 @@ public class WarehouseInboundService {
 
 
 
-//    public void addWarehouseInbound(List<WarehouseInboundDto> warehouseInboundDtos) {//userid,[productId,orderQuantity]
-//
-//
-//
-//        for (WarehouseInboundDto wiDto : warehouseInboundDtos) {
-//            if (wiDto.getEmpId() != null && wiDto.getProductCode() != null) {
-//                Employee employee = empRepository.findById(wiDto.getEmpId()).orElse(null);
-//                Product product = productRepository.findById(wiDto.getProductCode()).orElse(null);
-//
-//                if (employee != null && product != null) {
-//                    //입고 상품 생성
-//                    WarehouseInboundProduct warehouseProduct = WarehouseInboundProduct.createWarehouseProduct(product, wiDto.getInboundQuantity());
-//                    //주문생성 -> 여러개의 입고물품에 대해서 1개의 주문 내역만 생성되도록 만들고 싶음.
-//                    //for문 안에 들어가면 안됨.
-//                    //WarehouseInbound 객체 안에 있는 inboundProducts 리스트 객체 안으로 들어가야함.
-//
-//
-//                    WarehouseInbound warehouseInbound = WarehouseInbound.createInbound(employee, warehouseProduct);
-//                    wiRepository.save(warehouseInbound);
-//
-//                    // 여기서 재고 업데이트
-//                    updateStock(product, wiDto.getInboundQuantity());
-//                }
-//            }
-//        }
-//
-//
-//    }
-//
-//    private void updateStock(Product product, int inboundQuantity) {
-//        product.setProductCnt(product.getProductCnt() + inboundQuantity);
-//        productRepository.save(product);
-//    }
-//    public void cancelOrder(long orderId) {
-//        Order order = orderRepository.findById(orderId).get();
-//        order.cancel();
-//
-//        productRepository.save(order.getOrderProducts().get(0).getProduct());
-//        orderRepository.save(order);
-//    }
-
-//    public Order getOrderInfo(Long orderId){
-//        return orderRepository.findById(orderId).get();
-//    }
-
-//    public void updateOrder(Order order){
-//        orderRepository.save(order);
-//    }
-
 
 
 
