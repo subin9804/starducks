@@ -2,6 +2,9 @@ package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.kosta.starducks.logistic.entity.StoreInventory;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -47,6 +50,9 @@ public class Product {
     @Column(length = 300)
     private String filePath;
 
+
+    @OneToMany(mappedBy ="product")
+    private List<StoreInventory> inventories;
 
 
     public void increaseCnt(int inboundQuantity){

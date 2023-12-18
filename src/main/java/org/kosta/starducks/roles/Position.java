@@ -6,4 +6,5 @@ public enum Position {
     ROLE_TEAMLEADER,
     ROLE_EMPLOYEE,
     ROLE_STOREMANAGER,
+    
 }
