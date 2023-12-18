@@ -22,7 +22,7 @@
         <div class="avp1-title">
         <span>1차 결재상태 : </span>
         <span class="state-sticker docStatus">
-            <th:block th:switch="${apv1.apvStatus.toString()}">
+            <th:block th:switch="${apv1?.apvStatus?.toString()}">
                 <span th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</span>
                 <span th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</span>
                 <span th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</span>
@@ -31,7 +31,7 @@
       </div>
       <div>
         <span class="avp1-title">내용 : </span>
-        <textarea th:text="${apv1.apvComment} disabled"></textarea>
+        <textarea th:text="${apv1?.apvComment} disabled"></textarea>
 <!--          <input type="text" th:attr="${someCondition} ? '' : 'disabled'='disabled'" />-->
       </div>
     </div>
@@ -40,7 +40,7 @@
       <div class="avp2-title">
         <span>2차 결재상태 : </span>
           <span class="state-sticker docStatus">
-            <th:block th:switch="${apv2.apvStatus.toString()}">
+            <th:block th:switch="${apv2?.apvStatus?.toString()}">
                 <span th:case="PENDING" class="docStatus" style="background-color:#FDF290;">대기</span>
                 <span th:case="APPROVED" class="docStatus" style="background-color:#52B788;">승인</span>
                 <span th:case="REJECTED" class="docStatus" style="background-color:#D6D6D6;">반려</span>
@@ -49,7 +49,7 @@
       </div>
       <div>
         <span class="avp2-title">내용 : </span>
-        <textarea th:text="${apv2.apvComment}" disabled></textarea>
+        <textarea th:text="${apv2?.apvComment}" disabled></textarea>
       </div>
     </div>
 

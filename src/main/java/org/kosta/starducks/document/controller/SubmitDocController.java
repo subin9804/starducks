@@ -3,6 +3,7 @@ package org.kosta.starducks.document.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.Document;
+import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.DocumentService;
@@ -28,6 +29,7 @@ public class SubmitDocController {
 
     private final DocFormRepository docFormRepository;
     private final DocumentRepository documentRepository;
+    private final ApprovalRepository approvalRepository;
 
     /**
      * 결재 상신 리스트 페이지
@@ -78,6 +80,12 @@ public class SubmitDocController {
 
         documentRepository.findByDocId(docId)
                 .ifPresent(document -> model.addAttribute("document", document));
+
+        approvalRepository.findByApvStepAndDocument_DocId(1, docId)
+                .ifPresent(apv1 -> model.addAttribute("apv1", apv1));
+
+        approvalRepository.findByApvStepAndDocument_DocId(2, docId)
+                .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
 
         return "document/submitDoc/docDetail";
     }
