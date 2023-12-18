@@ -15,10 +15,7 @@ import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
-import org.kosta.starducks.header.entity.ChatMessage;
-import org.kosta.starducks.header.entity.ChatRoom;
-import org.kosta.starducks.header.repository.ChatMessageRepository;
-import org.kosta.starducks.header.repository.ChatRoomRepository;
+
 import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
@@ -54,8 +51,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ScheduleRepository scheduleRepository;
     private final StoreService storeService;
     private final StoreRepository storeRepository;
-    private final ChatMessageRepository chatMessageRepository;
-    private final ChatRoomRepository chatRoomRepository;
+
 
 
     @Override
@@ -280,25 +276,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             }
         }
 
-        // 초기 채팅 데이터 뭐야야야야
-        for (int i = 0; i < 5; i++) {
-            ChatRoom chatRoom = new ChatRoom();
-            chatRoom.setRoomName("채팅방" + i);
 
-//            ChatRoomRepository.save(chatRoom);
-        }
-
-        for (int i = 0; i < 5; i++) {
-
-
-
-            ChatMessage msg = new ChatMessage();
-//            msg.setChatRoom();
-            msg.setMessage("내용임"+1);
-            msg.setSender("이현기");
-            msg.setReadStatus(false);
-
-//            ChatMessageRepository.save(msg);
-        }
     }
 }

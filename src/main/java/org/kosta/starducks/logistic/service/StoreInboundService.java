@@ -62,17 +62,17 @@ public class StoreInboundService {
             if ( stDto.getProductCode() != null) {
             Product product = productRepository.findById(stDto.getProductCode()).orElse(null);
 
-                if (product != null) {
-                    // 로깅 추가
-                    System.out.println("Product Code: " + stDto.getProductCode());
-                    continue; // 다음 iteration으로 건너뛰기
-                }
-                // store 검색
-                if (store == null) {
-                    // 로깅 추가
-                    System.out.println("Store not found for store number: " + stDto.getStoreNo());
-                    continue; // 다음 iteration으로 건너뛰기
-                }
+//                if (product != null) {
+//                    // 로깅 추가
+//                    System.out.println("Product Code: " + stDto.getProductCode());
+//                    continue; // 다음 iteration으로 건너뛰기
+//                }
+//                // store 검색
+//                if (store == null) {
+//                    // 로깅 추가
+//                    System.out.println("Store not found for store number: " + stDto.getStoreNo());
+//                    continue; // 다음 iteration으로 건너뛰기
+//                }
 
             if (store != null && product != null) {
                 //입고 상품 생성
@@ -93,6 +93,7 @@ public class StoreInboundService {
         stRepository.save(storeInbound);
 
 
+
     }
 
     private void updateStock(Store store, Product product, int inboundQuantity) {
@@ -106,8 +107,13 @@ public class StoreInboundService {
         } else {
             //기존에 해당 항목이 없으면, 목록에 새롭게 추가해야한다.
             storeInventory = new StoreInventory();
+            StoreInventoryId storeInventoryId = new StoreInventoryId();
             storeInventory.setProduct(product);
             storeInventory.setStore(store);
+            //복합 키가 적용되었으므로 자동으로 Id가 생성되는 게 아니므로,
+            //id값 역시 setter로 설정해주어야 한다.
+            storeInventory.setId(storeInventoryId);
+
             //입고량 등록
             storeInventory.setInventoryCnt(inboundQuantity);
         }
