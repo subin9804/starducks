@@ -27,3 +27,42 @@ const myInput = document.getElementById('myInput')
 myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus()
 })
+
+//임시저장 submit 처리
+function submit2(form) {
+    form.action = '/document/createDoc/temp';
+    form.submit();
+    return true;
+}
+function submit3(form) {
+    form.action = '/document/createDoc/temp2';
+    form.submit();
+    return true;
+}
+
+//문서 미리보기 실시간
+function displaySelectedApv1(element) {
+    var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;
+    document.getElementById('selectedApv1').innerText = selectedEmpName;
+}
+function displaySelectedApv2(element) {
+    var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;
+    document.getElementById('selectedApv2').innerText = selectedEmpName;
+}
+
+function displaySelectedRefs() {
+    // 여러 군데에 값을 출력할 때 각 출력 위치의 id를 배열로 저장
+    var selectedRefsIds = ['selectedRefs', 'selectedRefs2'];
+
+    // 반복문을 통해 각 출력 위치에 값을 설정
+    selectedRefsIds.forEach(function (refsId) {
+        var selectedValues = document.querySelectorAll('input[name="refEmpIdList"]:checked');
+        var selectedValuesText = Array.from(selectedValues).map(function (checkbox) {
+            var selectedEmpName = checkbox.nextElementSibling.querySelector('.searchEmpName').innerText;
+            // return checkbox.value + ' (' + selectedEmpName + ')';
+            return selectedEmpName;
+        }).join(', ');
+
+        document.getElementById(refsId).innerText = selectedValuesText;
+    });
+}
