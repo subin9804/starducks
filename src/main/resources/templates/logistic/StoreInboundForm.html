@@ -7,24 +7,26 @@
 <th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
+    <script th:src="@{/js/logistic/store/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
     <h1>입고 등록</h1>
     <div class="content">
-        <form id="addForm"  action="/logistic/warehouseinbound/add" method="post">
+        <form id="addForm"  action="/logistic/storeinbound/add" method="post">
 
                 <div>
-                    <label for="employee">담당자명 : </label>
-                    <select id="employee" name="empId">
-                        <option value="">담당자를 선택하세요</option>
-                        <option th:each="e : ${employees}" th:value="${e.getEmpId()}" th:text="${e.getEmpName()}"></option>
+                    <label for="store">지점 이름 : </label>
+                    <select id="store" name="storeNo">
+                        <option value="">지점을 선택하세요</option>
+                        <option th:each=" s: ${stores}"
+                                th:value="${s.getStoreNo()}"
+                                th:text="${s.getStoreName()}"></option>
                     </select>
                 </div>
                 <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
                 <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
-                <input type="hidden" id="warehouseInboundDtos" name="warehouseInboundDtos" value="">
+                <input type="hidden" id="storeInboundDtos" name="storeInboundDtos" value="">
         </form>
 
         <form id="itemForm" >
@@ -39,10 +41,11 @@
                         th:data-name="${p.productName}"
                         th:data-category="${p.productCategory}"
                         th:data-price="${p.productPrice}"
-                        th:data-cnt="${p.productCnt}"
                         th:text="${p.productName}">
-                    고객명
+                    상품
                 </option>
+
+<!--                th:data-cnt="${p.productCnt}"-->
             </select>
 
             <label for="quantity"> 입고 수량</label>
@@ -65,7 +68,7 @@
                 <th>카테고리</th>
                 <th>품목명</th>
                 <th>가격</th>
-                <th>창고보유재고</th>
+<!--                <th>지점보유재고</th>-->
                 <th>입고 수량</th>
                 <th>삭제</th>
 

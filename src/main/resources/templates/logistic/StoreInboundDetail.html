@@ -15,11 +15,13 @@
     <div class="content">
 
         <div>
-            입고 ID : <input type="text" th:value="${inbound.warehouseInboundId}" readonly>
+            입고 ID : <input type="text" th:value="${inbound.getStoreInboundId()}" readonly>
             <br>
-            입고 등록인 : <input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>
+            입고 지점 : <input type="text" th:value="${inbound.getStore().getStoreName()}" readonly>
             <br>
-            입고 일자 : <input type="text" th:value="${inbound.getWarehouseInboundDate()}" readonly>
+            입고 등록인 : <input type="text" th:value="${inbound.getStore().getEmployee().getEmpName()}" readonly>
+            <br>
+            입고 일자 : <input type="text" th:value="${inbound.getStoreInboundDate()}" readonly>
             <br>
         </div>
 
