@@ -2,6 +2,7 @@ package org.kosta.starducks.fina.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.fina.dto.VendorAndProductDTO;
+import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.VendorBusinessSector;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.VendorService;
@@ -9,10 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -96,5 +94,21 @@ public class VendorController {
 //        3. 뷰 페이지 설정하기
         return "fina/vendorList";
     }
+
+    @GetMapping("/edit/{vendorId}")
+    public String editVendor(@PathVariable("vendorId") int vendorId, Model model) {
+//        1. 수정할 데이터 가져오기
+        Vendor vendorEntity = vendorService.findById(vendorId);
+//        2. 모델에 데이터 등록하기
+        model.addAttribute("vendor", vendorEntity);
+//        3. 뷰 페이지 설정하기
+        return "fina/vendorEdit";
+    }
+
+    @PostMapping("/update")
+    public String updateVendor(@ModelAttribute Vendor vendor) {
+
+    }
+
 
 }
