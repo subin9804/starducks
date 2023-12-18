@@ -37,8 +37,8 @@
   window.onload = function() {
     // 페이지가 로드되면 스크롤을 가장 아래로 이동
     window.scrollTo(0, document.body.scrollHeight);
-  };
 
+  };
   let stompClient = null;
 
   function connect() {
@@ -80,11 +80,17 @@
   }
 
   function showMessage(message) {
+    // 메시지 ID를 기반으로 중복 렌더링 방지
+    if (document.getElementById(`message-${message.id}`)) {
+      return; // 이미 렌더링된 메시지는 추가하지 않음
+    }
+
     const messageElement = document.createElement('div');
+    messageElement.id = `message-${message.id}`; // 메시지 요소에 고유 ID 할당
     messageElement.classList.add('chat-window-message');
 
     // 현재 사용자와 메시지 발신자가 같으면 오른쪽에 표시
-    if (message.sender === currentUser) { // senderId는 사원 ID를 나타냅니다.
+    if (message.senderId === currentUser) {
       messageElement.classList.add('current-user');
     } else {
       messageElement.classList.add('other-user');
@@ -92,13 +98,13 @@
 
     const textElement = document.createElement('div');
     textElement.classList.add('chat-window-message-content');
-    textElement.innerHTML = message.senderName + ': ' + message.message; // senderName은 사원 이름을 나타냅니다.
+    textElement.innerHTML = message.senderName + ': ' + message.message;
 
     messageElement.appendChild(textElement);
 
-    // 메시지를 채팅방의 시작 부분에 추가하여 최신 메시지가 하단에 위치하도록 함
+    // 메시지를 채팅방의 끝에 추가하여 최신 메시지가 하단에 위치하도록 함
     const chatRoomElement = document.getElementById('chat-room');
-    chatRoomElement.insertBefore(messageElement, chatRoomElement.firstChild);
+    chatRoomElement.appendChild(messageElement); // 변경된 부분
 
     // 스크롤을 최신 메시지 위치로 이동
     window.scrollTo(0, document.body.scrollHeight);

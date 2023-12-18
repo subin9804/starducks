@@ -65,24 +65,14 @@ public class ChatMessageService {
     return chatMessageList.stream().map(ChatMessageResponseDto::new).collect(Collectors.toList());
   }
 
-  /** 특정 채팅방 ChatMessage 목록조회 - 최신순, List, ChatRoomId 검색 */
-  @Transactional
-  public List<ChatMessageResponseDto> findAllByChatRoomIdDesc(final Long chatRoomId) {
-    ChatRoom chatRoomEntity = this.chatRoomRepository.findById(chatRoomId).orElseThrow(
-        () -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
-    Sort sort = Sort.by(Sort.Direction.DESC, "id");
-    List<ChatMessage> chatMessageList = this.chatMessageRepository.findAllByChatRoom(chatRoomEntity, sort);
 
-    return chatMessageList.stream().map(ChatMessageResponseDto::new).collect(Collectors.toList());
-  }
-
-  /** 특정 채팅방의 모든 메시지를 최신순으로 조회 */
+//  채팅방의 메시지를 작성순으로 조회
   @Transactional(readOnly = true)
   public List<ChatMessageResponseDto> getMessagesForChatRoom(final Long chatRoomId) {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
         .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
 
-    Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+    Sort sort = Sort.by(Sort.Direction.ASC, "createdAt");
     List<ChatMessage> messages = chatMessageRepository.findAllByChatRoom(chatRoomEntity, sort);
 
     return messages.stream()
