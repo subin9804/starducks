@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+    <main layout:fragment="content">
+        <h1>부서 관리</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>부서 번호</th>
+                    <th>부서명</th>
+                    <th>대표 연락처</th>
+                    <th>인원</th>
+                </tr>
+            </thead>
+            <tbody th:each="dept : ${depts}" th:object="${dept}">
+
+                <tr th:onclick="'location.href=\'' + @{/hr/dept/{deptId}(deptId=*{deptId})} + '\''">
+                    <td th:text="*{deptId}"></td>
+                    <td th:text="*{deptName}"></td>
+                    <td th:text="*{deptRepTel}"></td>
+                    <td th:text="${dept.getRunningEmp()}"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div>
+            <!-- 페이지네이션 -->
+            <nav aria-label="Page navigation example" style="display: flex; justify-content: center; align-items: center;">
+                <ul class="pagination">
+                    <!-- 첫 번째 페이지로 이동 -->
+                    <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">
+                        <a class="page-link" th:href="@{/hr/dept(page=0)}" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- 이전 페이지로 이동 -->
+                    <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">
+                        <a class="page-link" th:href="@{/hr/dept(page=${nowPage - 2})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- 페이지 번호 -->
+                    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <li class="page-item" th:classappend="${page == nowPage} ? 'active' : ''">
+                            <a class="page-link" th:href="@{/hr/dept(page=${page - 1})}" th:text="${page}"></a>
+                        </li>
+                    </th:block>
+
+                    <!-- 다음 페이지 이동 -->
+                    <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">
+                        <a class="page-link" th:href="@{/hr/dept(page=${nowPage})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">
+                        <a class="page-link" th:href="@{/hr/dept(page=${totalPages - 1})}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    <button id="addBtn" class="commonBtn register-button">+부서등록</button>
+        <div id="add" class="w-50 dept-table d-none">
+            <form th:action="@{/hr/dept/add}" method="post" th:object="${newDept}">
+                <table>
+                    <tr>
+                        <th>부서번호</th>
+                        <td>
+                            <input type="text" name="deptId" id="deptId" th:field="*{deptId}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>부서명</th>
+                        <td><input type="text" name="deptName" id="deptName" th:field="*{deptName}"></td>
+                    </tr>
+                    <tr>
+                        <th>대표연락처</th>
+                        <td><input type="text" name="deptRepTel" id="deptRepTel" th:field="*{deptRepTel}"></td>
+                    </tr>
+                </table>
+                <button id="hideBtn" class="commonBtn cancel-button">취소</button>
+                <button type="submit" id="saveBtn" class="commonBtn register-button">저장</button>
+            </form>
+        </div>
+    </main>
+</html>

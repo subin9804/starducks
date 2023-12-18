@@ -39,13 +39,22 @@ public class Employee {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate leaveDate;        // 퇴사일자
 
-    private boolean status;      // 퇴사여부
+    private boolean status;      // 퇴사여부 (false = 재직중 / true = 퇴사)
     private String pwd;     // 비밀번호
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department dept;    // 부서코드
-//    파일
+
+
+    @Transient
+    private String cmpEmail;    // 회사 이메일
+
+    @PrePersist
+    public void generateCmpEmail() {
+        this.cmpEmail = this.empId + "@starbucks.monster";
+    }
 
 }
 

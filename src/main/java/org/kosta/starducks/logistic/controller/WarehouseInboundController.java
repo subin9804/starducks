@@ -26,8 +26,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class WarehouseInboundController {
-
-
     private final ProductService productService;
     private final VendorService vendorService;
     private final EmpService employeeService;
