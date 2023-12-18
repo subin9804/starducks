@@ -21,17 +21,12 @@
     font-size: 18px;
     text-align: center;
 
-
 }
-
-
-
 
 
 .list-table th,
 .list-table td {
     padding: 12px 15px;
-
 
 }
 
@@ -39,6 +34,7 @@
     border-top: 1px solid #6B4D27
 
 }
+
 .list-table tfoot {
     font-weight: bold;
 
@@ -145,6 +141,52 @@
     margin-right: 10px; /* 체크박스와 글자 사이의 간격을 조절 */
 }
 
+
+/*재고 목록에서 첫번째 줄*/
+
+.one-line {
+    width: 100%;
+    margin-top: 70px;
+
+    display: flex;
+    justify-content: space-between; /* 자식 요소들을 양쪽 끝에 정렬 */
+    align-items: center; /* 세로 방향 가운데 정렬 */
+}
+
+.one-line form {
+    display: flex;
+    align-items: center;
+    margin-left: 135px;
+
+}
+
+/*검색창을 조절하자*/
+form input[type="text"] {
+    height: 40px; /* 원하는 높이로 조절 */
+    width: 500px; /* 원하는 가로 길이로 조절 */
+    margin-right: 10px; /* input과 button 사이의 간격을 조절 */
+    padding: 5px;
+    background-color: #6B4D27;
+    color: white;
+}
+form input[type="text"]::placeholder {
+    color: white;
+    text-indent: 13px;
+
+}
+
+.search {
+    background-color: white;
+    height: 40px;
+    color: #AF9A63;
+    border: 1px #AF9A63 solid;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+
 /** ----- 버튼 S------ */
 /*버튼 위치설정*/
 .right-top-btn{
@@ -158,8 +200,23 @@
 
 }
 
+/*스위치 버튼의 위치*/
+
+.top-btn {
+    margin-top: 70px;
+
+    width: 100%;
+    text-align: center;
+}
+
+.top-btn button {
+    margin: 0 10px;
+}
+
+
 
 .middle-btn {
+    margin-top: 10px;
     width: 100%;
     text-align: center;
 }
