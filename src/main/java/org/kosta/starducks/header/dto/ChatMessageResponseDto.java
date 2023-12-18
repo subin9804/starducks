@@ -31,7 +31,7 @@ public class ChatMessageResponseDto {
       this.senderName = "알 수 없는 사용자";
     }
     this.message = chatMessage.getMessage();
-    this.createdDate = chatMessage.getCreatedAt() != null ? chatMessage.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) : null;
+    this.createdDate = chatMessage.getCreatedAt() != null ? chatMessage.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd a hh:mm")) : null;
     this.updatedDate = chatMessage.getModifiedAt() != null ? chatMessage.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) : null;
     this.readStatus = chatMessage.isReadStatus();
   }

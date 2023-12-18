@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,11 +73,16 @@ public class ChatMessageService {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
         .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 존재하지 않습니다. chatRoomId = " + chatRoomId));
 
-    Sort sort = Sort.by(Sort.Direction.ASC, "createdAt");
+    Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
     List<ChatMessage> messages = chatMessageRepository.findAllByChatRoom(chatRoomEntity, sort);
 
-    return messages.stream()
+    List<ChatMessageResponseDto> responseDtos = messages.stream()
         .map(ChatMessageResponseDto::new)
         .collect(Collectors.toList());
+
+    // 메시지 목록을 역순으로 정렬. 메시지를 서버에서 최신 것부터 불러오면서 그걸 타임리프에서 출력할 떄는 아래가 최신이게 하기 위해서
+    Collections.reverse(responseDtos);
+
+    return responseDtos;
   }
 }
