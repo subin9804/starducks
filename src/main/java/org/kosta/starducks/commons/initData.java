@@ -1,6 +1,7 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
@@ -197,16 +198,16 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
 
         //문서 양식 데이터
-//        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-//        String[] formNamesEn = {"draft", "b", "c", "vacation", "cancel", "f", "g"};
-//        for (int i = 1; i < 8; i++) {
-//            DocForm docForm = new DocForm();
-//            docForm.setFormCode("A0" + i);
-//            docForm.setFormName(formNames[i - 1]);
-//            docForm.setFormNameEn(formNamesEn[i - 1]);
-//
-//            docFormRepository.saveAndFlush(docForm);
-//        }
+        String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
+        String[] formNamesEn = {"draft", "b", "c", "vacation", "cancel", "f", "g"};
+        for (int i = 1; i < 8; i++) {
+            DocForm docForm = new DocForm();
+            docForm.setFormCode("A0" + i);
+            docForm.setFormName(formNames[i - 1]);
+            docForm.setFormNameEn(formNamesEn[i - 1]);
+
+            docFormRepository.saveAndFlush(docForm);
+        }
 
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
