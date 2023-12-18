@@ -22,7 +22,7 @@ public class VendorAndProductDTO {
     @Enumerated(EnumType.STRING)
     private VendorBusinessSector businessSector;    // 거래처 업종
     private String vendorRepreName; // 대표자명
-    private Long vendorRegistNum; // 사업자 등록번호
+    private String vendorRegistNum; // 사업자 등록번호
     private String vendorTelephone; // 거래처 연락처('-' 포함)
     private LocalDate vendorStartDate;  // 거래 시작일
 

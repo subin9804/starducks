@@ -1,13 +1,15 @@
 package org.kosta.starducks.generalAffairs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Product {
 
     @Id
@@ -43,6 +45,7 @@ public class Product {
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id",nullable = false)
     @ToString.Exclude
+    @JsonIgnore
     private Vendor vendor;
 
     @Column(length = 150)

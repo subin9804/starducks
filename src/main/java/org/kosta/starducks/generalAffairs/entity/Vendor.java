@@ -1,9 +1,7 @@
 package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.VendorBusinessSector;
 
@@ -13,6 +11,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Vendor {
     /**
      * 공급업체
