@@ -32,6 +32,67 @@
 /*메일 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*채팅 관련 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*채팅 사원 목록 페이지 시작~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/* 헤더 컨테이너 스타일링 */
+.emp-list-header-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #6B4D27; /* 어두운 배경색 */
+    color: #fff; /* 흰색 글씨 */
+    padding: 10px 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+/* 채팅방 목록 버튼 스타일링 */
+.emp-list-header-container .back-button {
+    margin-right: auto;
+}
+
+/* 사원 목록 스타일링 */
+.chat-emp-list {
+    padding-top: 60px; /* 헤더 높이만큼 패딩을 줘서 내용이 가려지지 않도록 함 */
+    background-color: #978268; /* 목록의 배경색 */
+    padding-bottom: 20px;
+    padding-right: 20px; /* 오른쪽에도 검정색 배경이 보이도록 패딩 추가 */
+}
+
+/* 부서 제목 스타일링 */
+.chat-emp-list h3 {
+    background-color: #6B4D27; /* 부서 제목의 배경색 */
+    color: #fff; /* 흰색 글씨 */
+    padding: 10px;
+    margin-top: 0;
+    border-bottom: 1px solid #777;
+}
+
+/* 사원 이름 목록 스타일링 */
+.chat-emp-list li {
+    background-color: #fff; /* 흰색 배경 */
+    list-style-type: none; /* 목록 스타일 제거 */
+    padding: 10px;
+    border-bottom: 1px solid #eee; /* 경계선 */
+    display: flex; /* Flexbox를 사용하여 체크박스와 이름을 나란히 배치 */
+    justify-content: space-between; /* 요소들을 양 끝에 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.chat-emp-list li span {
+    flex: 1; /* 사용 가능한 공간 모두 채우기 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+/* 체크박스 스타일링 */
+.chat-emp-list input[type="checkbox"] {
+    margin: 0; /* 체크박스 주변 여백 제거 */
+}
+
 /* 모달 컨테이너 */
 .chat-modal {
     display: none; /* 기본적으로 숨겨진 상태 */
@@ -46,28 +107,69 @@
     background-color: rgba(0,0,0,0.4); /* 약간 투명한 배경 */
 }
 
+/* 모달 제목 스타일링 */
+.chat-modal-title {
+    font-size: 20px;
+    margin-bottom: 15px; /* 제목과 인풋 사이의 간격 */
+}
 /* 모달 내용 */
 .chat-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 페이지 중앙에 위치 */
     padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* 적절한 너비 */
+    width: 40%; /* 적절한 너비 조정 */
+    text-align: center; /* 모든 내용을 중앙에 배치 */
+    border-radius: 5px;
 }
 
-/* 닫기 버튼 */
-.chat-close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+/* 모달 입력창 스타일링 */
+.modal-input {
+    width: 80%; /* 인풋 너비를 모달 너비에 맞춤 */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 5px; /* 인풋과 버튼 사이 간격 */
+    box-sizing: border-box
 }
 
-.chat-close-btn:hover,
-.chat-close-btn:focus {
-    color: black;
-    text-decoration: none;
+.modal-buttons {
+    margin-top: 5px; /* 인풋과 버튼 사이 간격 */
+    text-align: center; /* 버튼들을 중앙에 배치 */
+}
+
+/* 확인 버튼 스타일링 */
+.chat-ok-btn {
+    padding: 10px 20px;
+    margin-right: 10px; /* 확인 버튼과의 간격 */
+    background-color: #4A85F6;
+    color: white; /* 흰색 글씨 */
+    border: none;
+    border-radius: 4px; /* 둥근 모서리 */
     cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.chat-ok-btn:hover {
+    background-color: #471fff; /* 호버 시 좀 더 어두운 빨간색 */
+}
+
+/* 닫기 버튼 스타일링 */
+.chat-close-btn {
+    padding: 10px 20px;
+    margin-left: 10px; /* 확인 버튼과의 간격 */
+    background-color: #f44336; /* 빨간색 배경 */
+    color: white; /* 흰색 글씨 */
+    border: none;
+    border-radius: 4px; /* 둥근 모서리 */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.chat-close-btn:hover {
+    background-color: #d32f2f; /* 호버 시 좀 더 어두운 빨간색 */
 }
 
 /*채팅 사원 목록 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~*/

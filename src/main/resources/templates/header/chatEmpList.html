@@ -11,30 +11,32 @@
 
 </head>
 <body>
-<header class="header-container">
-  <input type="search" placeholder="부서/사원 검색" />
+<header class="emp-list-header-container">
+  <button class="commonBtn back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">채팅방 목록</button>
+  <input type="search" placeholder="부서/사원 검색"/>
   <button id="openCreateRoomModal">채팅방 만들기</button>
 </header>
-<br><br><br><br>
-<button class="back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">임시 뒤로가기버튼</button>
-<br>
-<div th:each="deptEntry : ${groupedEmployees.entrySet()}">
-  <h3 th:text="${deptEntry.key.deptName}"></h3>
-  <ul>
-    <li th:each="emp : ${deptEntry.value}">
-      <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>
-      <span th:text="${emp.empName}"></span>
-    </li>
-  </ul>
+<div class="chat-emp-list">
+  <div th:each="deptEntry : ${groupedEmployees.entrySet()}">
+    <h3 th:text="${deptEntry.key.deptName}">부서명</h3>
+    <ul>
+      <li th:each="emp : ${deptEntry.value}">
+        <span th:text="${emp.empName}">사원 이름</span>
+        <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>
+      </li>
+    </ul>
+  </div>
 </div>
 
-<div id="createRoomModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
+<div id="createRoomModal" class="chat-modal">
+  <div class="chat-modal-content">
     <form id="createRoomForm" action="/createChatRoom" method="post">
-      <label for="roomName">채팅방 이름:</label>
-      <input type="text" id="roomName" name="roomName" required>
-      <button type="submit">확인</button>
+      <div class="chat-modal-title">채팅방 이름</div>
+      <input type="text" id="roomName" name="roomName" class="modal-input" required>
+      <div class="modal-buttons">
+        <button type="submit" class="chat-ok-btn">생성</button>
+        <button type="button" class="chat-close-btn">취소</button>
+      </div>
     </form>
   </div>
 </div>
@@ -42,28 +44,27 @@
   // 모달 열기
   const modal = document.getElementById("createRoomModal");
   const btn = document.getElementById("openCreateRoomModal");
-  btn.onclick = function() {
+  btn.onclick = function () {
     modal.style.display = "block";
   }
 
   // 모달 닫기
-  const span = document.getElementsByClassName("close")[0];
-  span.onclick = function() {
+  document.querySelector('.chat-close-btn').addEventListener('click', function () {
     modal.style.display = "none";
-  }
+  });
 
   // 창 밖 클릭 시 모달 닫기
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target === modal) {
       modal.style.display = "none";
     }
   }
 
-  document.getElementById('createRoomForm').addEventListener('submit', function(e) {
+  document.getElementById('createRoomForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const selectedEmpIds = [];
-    document.querySelectorAll('input[name="empCheckbox"]:checked').forEach(function(checkbox) {
+    document.querySelectorAll('input[name="empCheckbox"]:checked').forEach(function (checkbox) {
       selectedEmpIds.push(checkbox.value);
     });
 
@@ -80,9 +81,9 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
       },
       body: JSON.stringify(data)
-    }).then(function(response) {
+    }).then(function (response) {
       return response.json();
-    }).then(function(data) {
+    }).then(function (data) {
       window.location.href = '/chatRoomList';
     });
   });
