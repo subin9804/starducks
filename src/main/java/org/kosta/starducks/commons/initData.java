@@ -17,13 +17,10 @@ import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
-
-import org.kosta.starducks.header.repository.ChatRoomRepository;
 import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.kosta.starducks.mypage.dto.Room;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.entity.ScheduleType;
 import org.kosta.starducks.mypage.repository.ScheduleRepository;
@@ -55,7 +52,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final StoreService storeService;
     private final StoreRepository storeRepository;
     //    private final ChatMessageRepository chatMessageRepository;
-    private final ChatRoomRepository chatRoomRepository;
+//    private final ChatRoomRepository chatRoomRepository;
 
 
     @Override

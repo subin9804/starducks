@@ -32,13 +32,12 @@
                 </dl>
 
                 <dl>
-                    <dt><label for="vendorBusinessSector">업종</label></dt>
+                    <dt>업종</dt>
                     <dd>
-                        <select id="vendorBusinessSector" name="vendorBusinessSector">
-                            <option th:each="sector : ${vendorBusinessSector}"
-                                    th:value="${sector.name()}"
+                        <select id="businessSector" name="businessSector" class="form-control">
+                            <option th:each="sector : ${businessSectors}" th:value="${sector}"
                                     th:text="${sector.description}"
-                                    th:selected="${sector.name() == vendor.vendorBusinessSector.name()}"></option>
+                                    th:selected="${vendor.vendorBusinessSector == sector}"></option>
                         </select>
                     </dd>
                 </dl>
@@ -84,11 +83,13 @@
             <dl>
                 <dt>계약 여부</dt>
                 <dd>
-                    <select id="contractStatus" name="contractStatus" th:field="*{contractStatus}">
+                    <select id="contractStatus" name="contractStatus">
                         <option th:each="option : ${contractStatus}"
-                                th:value="${option}"
-                                th:text="${option.description}"
-                                th:selected="${vendor.contractStatus == option}"></option>
+                                th:value="${option.name()}"
+                                th:text="${option.getDisplayName()}" <!-- getDisplayName() 사용 -->
+                        th:selected="${vendor?.contractStatus != null and option.name() ==
+                        vendor?.contractStatus.name()}">
+                        </option>
                     </select>
                 </dd>
             </dl>

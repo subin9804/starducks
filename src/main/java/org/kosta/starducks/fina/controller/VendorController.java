@@ -78,6 +78,8 @@ public class VendorController {
         Vendor vendorEntity = vendorService.findById(vendorId);
 //        2. 모델에 데이터 등록하기
         model.addAttribute("vendor", vendorEntity);
+        model.addAttribute("businessSectors", VendorBusinessSector.values());
+        model.addAttribute("contractStatus", ContractStatus.values());
 //        3. 뷰 페이지 반환하기
         return "fina/vendorDetail";
     }
@@ -98,12 +100,17 @@ public class VendorController {
     @GetMapping("/edit/{vendorId}")
     public String editVendor(@PathVariable("vendorId") int vendorId, Model model) {
 //        1. 수정할 데이터 가져오기
-        Vendor vendorEntity = vendorService.findById(vendorId);
-//        2. 모델에 데이터 등록하기
-        model.addAttribute("vendor", vendorEntity);
+        Vendor vendor = vendorService.findById(vendorId);
+
+        // 2. 업종 정보가 없는 경우 초기화 (예시)
+        if (vendor.getVendorBusinessSector() == null) {
+            vendor.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
+        }
+//        3. 모델에 데이터 등록하기
+        model.addAttribute("vendor", vendor);
         model.addAttribute("businessSectors", VendorBusinessSector.values());   // 업종
         model.addAttribute("contractStatus", ContractStatus.values());  // 계약 상태
-//        3. 뷰 페이지 설정하기
+//        4. 뷰 페이지 설정하기
         return "fina/vendorEdit";
     }
 
@@ -112,6 +119,4 @@ public class VendorController {
         vendorService.updateVendor(vendorAndProductDTO);
         return "redirect:/fina/vendor/single/" + vendorAndProductDTO.getVendorId();
     }
-
-
 }

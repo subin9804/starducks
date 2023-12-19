@@ -36,8 +36,8 @@
 
                     <dl>
                         <dt>업종</dt>
-                        <dd>
-                            <span th:if="${vendor.vendorBusinessSector != null}" th:text="${vendor.vendorBusinessSector.description}" class="form-control" readonly></span>
+                        <dd><span th:if="${vendor.vendorBusinessSector != null}"
+                                  th:text="${vendor.vendorBusinessSector.description}"></span>
                         </dd>
                     </dl>
 
@@ -56,7 +56,8 @@
 
                     <dl>
                         <dt>연락처</dt>
-                        <dd><input type="text" id="vendorTelephone" name="vendorTelephone" th:value="${vendor.vendorTelephone}"
+                        <dd><input type="text" id="vendorTelephone" name="vendorTelephone"
+                                   th:value="${vendor.vendorTelephone}"
                                    class="form-control" readonly></dd>
                     </dl>
             </div>
@@ -64,7 +65,8 @@
             <div style="flex: 1;">
                 <dl>
                     <dt>거래시작일</dt>
-                    <dd><input type="text" id="vendorStartDate" name="vendorStartDate" th:value="${vendor.vendorStartDate}" class="form-control"
+                    <dd><input type="text" id="vendorStartDate" name="vendorStartDate"
+                               th:value="${vendor.vendorStartDate}" class="form-control"
                                readonly></dd>
                 </dl>
 
@@ -85,9 +87,7 @@
                 <!-- 계약 여부 -->
                 <dl>
                     <dt>계약 상태</dt>
-                    <dd><input type="text" id="contractStatus" name="contractStatus"
-                               th:value="${T(org.kosta.starducks.fina.entity.ContractStatus).CONTRACT_ACTIVE.displayName}" class="form-control" readonly></dd>
-                </dl>
+                    <dd><span th:if="${vendor?.contractStatus != null}" th:text="${vendor?.contractStatus.description}"></span></dd>
 
             </div>
         </div>
