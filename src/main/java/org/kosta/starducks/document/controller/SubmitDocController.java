@@ -58,6 +58,11 @@ public class SubmitDocController {
         int endPage = Math.min(nowPage + 5, documents.getTotalPages());
         int totalPages = documents.getTotalPages();
 
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
         model.addAttribute("documents", documents.getContent());
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
@@ -113,6 +118,11 @@ public class SubmitDocController {
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, documents.getTotalPages());
         int totalPages = documents.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
 
         model.addAttribute("documents", documents.getContent());
         model.addAttribute("nowPage", nowPage);
