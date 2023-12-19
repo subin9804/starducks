@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">logistic</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>매장 재고 상세</h1>
+    <div class="content">
+
+        <div>
+            입고 ID : <input type="text" th:value="${inventory.getProductName()}" readonly>
+            <br>
+<!--            입고 등록인 : <input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>-->
+<!--            <br>-->
+<!--            입고 일자 : <input type="text" th:value="${inbound.getWarehouseInboundDate()}" readonly>-->
+<!--            <br>-->
+        </div>
+
+
+
+
+    </div>
+</main>
+
+
+</html>

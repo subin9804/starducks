@@ -33,33 +33,33 @@ public class WarehouseInboundController {
     private final HttpServletRequest request;
 
     //재고 목록 조회
-    @GetMapping("/warehouse/list1")
-    public String getAllInventories(Model m,
-                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
-    {
-        MenuService.commonProcess(request, m, "logistic");
-        Page<Product> allInventory = null;
-        if(searchKeyword == null){
-            allInventory = productService.getAllProducts(pageable);
-
-        }
-        else{
-            allInventory = productService.productSearchList(searchKeyword,pageable);
-
-        }
-
-        int nowPage = allInventory.getPageable().getPageNumber()+1;
-        //pageable에서 넘어온 현재 페이지를 가져온다.
-        int startPage= Math.max(nowPage-4,1);
-        int endPage= Math.min(nowPage+5,allInventory.getTotalPages());
-
-        m.addAttribute("products", allInventory);
-        m.addAttribute("nowPage",nowPage);
-        m.addAttribute("startPage",startPage);
-        m.addAttribute("endPage",endPage);
-        return "logistic/InventoryList";
-    }
+//    @GetMapping("/warehouse/list1")
+//    public String getAllInventories(Model m,
+//                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
+//                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
+//    {
+//        MenuService.commonProcess(request, m, "logistic");
+//        Page<Product> allInventory = null;
+//        if(searchKeyword == null){
+//            allInventory = productService.getAllProducts(pageable);
+//
+//        }
+//        else{
+//            allInventory = productService.productSearchList(searchKeyword,pageable);
+//
+//        }
+//
+//        int nowPage = allInventory.getPageable().getPageNumber()+1;
+//        //pageable에서 넘어온 현재 페이지를 가져온다.
+//        int startPage= Math.max(nowPage-4,1);
+//        int endPage= Math.min(nowPage+5,allInventory.getTotalPages());
+//
+//        m.addAttribute("products", allInventory);
+//        m.addAttribute("nowPage",nowPage);
+//        m.addAttribute("startPage",startPage);
+//        m.addAttribute("endPage",endPage);
+//        return "logistic/InventoryList";
+//    }
 
 
     @GetMapping("/warehouse/list")
