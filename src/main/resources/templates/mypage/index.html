@@ -10,7 +10,8 @@
 </th:block>
 
 <main layout:fragment="content">
-    <section class="widget" id="widgetAttend">
+    <section class="widget content" id="widgetAttend">
+        <h4>근태 관리</h4>
         <div th:replace="~{hr/attend/_profile::profile}"></div>
 
         <!-- 출퇴근 버튼 -->
@@ -23,25 +24,59 @@
             </form>
         </div>
 
+        <!-- 출퇴근 기록 -->
         <div>
-            <h3>근태 이력</h3>
-            <ul>
-                <li th:text="${workDays}"></li>
-                <li th:text="${lateDays}"></li>
-                <li th:text="${absentDays}"></li>
-                <li th:text="15"></li>
+            <span>출근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
+            <span>퇴근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
+        </div>
+
+        <hr/>
+        <div>
+            <h4>근태 이력</h4>
+            <ul class="d-flex">
+                <li>
+                    <p th:text="${workDays}"></p>
+                    <p>근무</p>
+                </li>
+                <li>
+                    <p th:text="${lateDays}"></p>
+                    <p>지각</p>
+                </li>
+                <li>
+                    <p th:text="${absentDays}"></p>
+                    <p>결근</p>
+                </li>
+                <li>
+                    <p th:text="15"></p>
+                    <p>연차</p>
+                </li>
             </ul>
         </div>
     </section>
 
     <!-- 전자결재함 -->
-    <section class="widget" id="widgetDoc">
-
+    <section class="widget content" id="widgetDoc">
+        전자결재함
     </section>
 
     <!-- 일정 -->
-    <section class="widget" id="widgetCal">
+    <section class="widget content" id="widgetCal">
         <div id='calendar'></div>
+        <hr/>
+        <table>
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>내용</th>
+                </tr>
+            </thead>
+            <tbody th:object="">
+                <tr>
+                    <td th:text=""></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 </main>
 </html>

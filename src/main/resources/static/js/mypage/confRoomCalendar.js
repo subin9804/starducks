@@ -414,10 +414,7 @@ function isOverlapping(room, newStart, newEnd, events) {
         const eventStart = new Date((existingEvent.runningDay + 'T' + existingEvent.startTime));
         const eventEnd = new Date((existingEvent.runningDay + 'T' + existingEvent.endTime));
 
-        if (
-            (infoStartStr < eventEnd) &&
-            (infoEndStr > eventStart)
-        ) {
+        if ((infoStartStr < eventEnd) && (infoEndStr > eventStart)) {
             // 중복되는 경우
             if (room == existingEvent.room) {
 

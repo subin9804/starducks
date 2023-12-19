@@ -2,7 +2,6 @@ package org.kosta.starducks.mypage.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.dto.ConfBookDto;
@@ -12,11 +11,11 @@ import org.kosta.starducks.mypage.entity.ConfRoomEN;
 import org.kosta.starducks.mypage.service.ConfRoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +30,16 @@ public class ConfController {
 
 
     @GetMapping
-    public String index(Model model, @AuthenticationPrincipal CustomUserDetails details) {
+    public String index(Model model, Principal principal) {
 
-        Employee emp = empService.getEmp(1L);
+        Long empId = 1L;
+
         // 유저 정보 받아오기
-        if(details != null) {
-            emp = details.getEmployee();
-
+        if(principal != null) {
+            empId = Long.valueOf(principal.getName());
         }
+        Employee emp = empService.getEmp(empId);
+
         // 화면에 전달
         model.addAttribute("emp", emp);
 

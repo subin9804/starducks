@@ -1,8 +1,70 @@
-#calendar {
-    width: 320px;
-    height: 480px;
+main {
+    font-size: 13px;
+    display: grid;
+    grid-template-areas:
+    'attend calendar forum'
+    'document wether mail';
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
 }
+h4 {text-align: left;}
 
+#calendar {
+    width: 280px;
+    height: 405px;
+}
+/* 스크롤을 숨기는 CSS */
+.fc-scroller.fc-scroller-liquid {
+    overflow: hidden !important;
+}
 .widget {
     width: 360px;
+    padding: 20px 40px;
+}
+
+.attd-btn {
+    width: 100px;
+    height: 50px;
+    background-color: #6B4D27;
+    /*border: none;*/
+    color: #ffffff;
+    border-radius: 20px;
+    margin: auto
+}
+.attd-btn:hover {
+     cursor: pointer;
+}
+
+
+/*근태관리*/
+#widgetAttend {
+    grid-area: attend;
+    text-align: center;
+}
+#widgetAttend span {
+    display: inline-block;
+    padding: 0 10px;
+}
+#widgetAttend > div{
+    padding: 10px 0;
+}
+#widgetAttend ul {
+    display: flex;
+    justify-content: space-between;
+}
+#widgetAttend ul li p:first-child {
+    background-color: #6B4D27;
+    color: #fff;
+    width: 50px;
+    padding: 5px 0;
+    border-radius: 15px;
+}
+
+#widgetDoc {
+    grid-area: document;
+
+}
+#widgetCal {
+    grid-area: calendar;
 }

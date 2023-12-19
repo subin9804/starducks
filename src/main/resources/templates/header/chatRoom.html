@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+
+  <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
+
+
+  <!--  웹소켓 연결할 때는 토큰 필요 -->
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+</head>
+<body>
+<div id="chat-room">
+  <!-- 메시지 반복 출력 -->
+  <div th:each="message : ${messages}"
+       th:class="${message.senderId == currentUserId} ? 'chat-message-mine' : 'chat-message-other'">
+    <div th:if="${message.senderId != currentUserId}" class="chat-message-sender-name"
+         th:text="${message.senderName}"></div>
+
+    <div class="chat-message-container"> <!-- 메시지 및 날짜 컨테이너 -->
+      <div class="chat-message-content" th:text="${message.message}"></div>
+      <div class="chat-message-date" th:text="${message.createdDate}"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="chat-footer">
+  <form id="messageForm" onsubmit="sendMessage(event);">
+    <input type="text" id="message" class="messageForm-input" placeholder="메시지 입력"/>
+    <button type="submit" class="messageForm-button">전송</button>
+  </form>
+</footer>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const roomId = [[${roomId}]]; // 채팅방 ID
+  const currentUser = [[${currentUserId}]]; // 현재 로그인한 사용자의 ID
+  /*]]>*/
+</script>
+<script>
+  window.onload = function () {
+    // 페이지가 로드되면 스크롤을 가장 아래로 이동
+    window.scrollTo(0, document.body.scrollHeight);
+
+  };
+  let stompClient = null;
+
+  function connect() {
+    // CSRF 토큰과 헤더 이름 읽기
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    const socket = new SockJS('/chat', null, {
+      headers: {[csrfHeader]: csrfToken}
+    });
+
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/chatroom/' + roomId, function (messageOutput) {
+        showMessage(JSON.parse(messageOutput.body));
+      });
+    });
+  }
+
+  function disconnect() {
+    if (stompClient !== null) {
+      stompClient.disconnect();
+    }
+    console.log("Disconnected");
+  }
+
+  function getCurrentFormattedDate() {
+    const now = new Date();
+    return now.toLocaleDateString('ko-KR', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: true
+    });
+  }
+
+  //메시지 전송 버튼을 눌렀을 때 진행되는 함수
+  function sendMessage(event) {
+    event.preventDefault(); // 폼 제출 이벤트 방지
+    const messageContent = document.getElementById('message').value.trim();
+    if (messageContent && stompClient) {
+      const chatMessage = {
+        sender: currentUser,
+        message: messageContent,
+        createdDate: getCurrentFormattedDate(), // 현재 시간을 포맷팅하여 설정
+        type: 'CHAT'
+      };
+      stompClient.send("/app/chat/" + roomId + "/send", {}, JSON.stringify(chatMessage));
+      document.getElementById('message').value = '';
+    }
+  }
+
+
+  // 페이지에서 메시지 출력 방식
+  function showMessage(message) {
+    if (document.getElementById(`message-${message.id}`)) {
+      return; // 이미 렌더링된 메시지는 추가하지 않음
+    }
+
+    const messageContainer = document.createElement('div');
+    messageContainer.classList.add('chat-message-container');
+
+    // 메시지 내용 요소 추가
+    const textElement = document.createElement('div');
+    textElement.classList.add('chat-message-content');
+    textElement.innerText = message.message;
+    messageContainer.appendChild(textElement);
+
+    // 날짜 요소 추가
+    const dateElement = document.createElement('div');
+    dateElement.classList.add('chat-message-date');
+    dateElement.innerText = message.createdDate; // 서버에서 받은 날짜를 직접 사용
+    messageContainer.appendChild(dateElement);
+
+    // 메시지 요소 생성 및 추가
+    const messageElement = document.createElement('div');
+    messageElement.id = `message-${message.id}`;
+    messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
+    messageElement.appendChild(messageContainer);
+
+    // 이름 요소 추가 (다른 사용자의 경우)
+    if (message.senderId !== currentUser) {
+      const senderNameElement = document.createElement('div');
+      senderNameElement.classList.add('chat-message-sender-name');
+      senderNameElement.innerText = message.senderName;
+      messageElement.appendChild(senderNameElement);
+    }
+
+    // 메시지를 채팅방에 추가
+    const chatRoomElement = document.getElementById('chat-room');
+    chatRoomElement.appendChild(messageElement);
+
+    // 스크롤 조정
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  // 채팅방 페이지가 로드될 때 WebSocket 연결을 시작
+  connect();
+
+  // 채팅방 페이지를 벗어날 때 WebSocket 연결 해제
+  window.onbeforeunload = function () {
+    disconnect();
+  };
+</script>
+</body>
+</html>

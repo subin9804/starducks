@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        height: '460',  // 높이를 조절
+        height: '405',  // 높이를 조절
         headerToolbar: {
             right: '',
             center: 'prev title next',
             left: ''
         },
 
-        scrollTime: "00:00",
+        scrollTime: null,
         // eventContent: function (arg) {
         //
         // },

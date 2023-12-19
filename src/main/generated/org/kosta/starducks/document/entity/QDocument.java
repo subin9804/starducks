@@ -22,6 +22,8 @@ public class QDocument extends EntityPathBase<Document> {
 
     public static final QDocument document = new QDocument("document");
 
+    public final ListPath<Approval, QApproval> approvals = this.<Approval, QApproval>createList("approvals", Approval.class, QApproval.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> apvDeadline = createDateTime("apvDeadline", java.time.LocalDateTime.class);
 
     public final BooleanPath deleted = createBoolean("deleted");
@@ -41,6 +43,8 @@ public class QDocument extends EntityPathBase<Document> {
     public final DateTimePath<java.time.LocalDateTime> docUpdateDate = createDateTime("docUpdateDate", java.time.LocalDateTime.class);
 
     public final org.kosta.starducks.hr.entity.QEmployee docWriter;
+
+    public final StringPath refEmpIds = createString("refEmpIds");
 
     public final BooleanPath urgent = createBoolean("urgent");
 

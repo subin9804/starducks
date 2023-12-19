@@ -7,13 +7,13 @@
 <th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/script.js}"></script>
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
     <h1>입고 등록</h1>
     <div class="content">
-        <form id="addForm"  action="/logistic/warehouseinbound/add" method="post">
+        <form id="addForm"  action="/logistic/inbound/warehouse/add" method="post">
 
                 <div>
                     <label for="employee">담당자명 : </label>
