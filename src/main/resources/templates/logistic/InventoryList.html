@@ -7,56 +7,71 @@
 <th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/warehouse/script.js/logistic/script.js}"></script>
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
     <h1>재고 목록</h1>
     <div class="content">
 
-    <form th:action="@{/logistic/warehouseinbound/list1}" method="get">
-        <input type="text" name="searchKeyword" placeholder="품목 이름 입력">
-        <button type="submit">검색</button>
-    </form>
+        <div class="top-btn">
+            <a th:href="@{/logistic/inbound/warehouse/list1}">
+                <button class="wideBtn switch-button1"> 창고 재고</button>
+            </a>
+            <a th:href="@{/logistic/inbound/store/list1}">
+                <button class="wideBtn switch-button2"> 매장 재고</button>
+            </a>
+        </div>
+        <div class="one-line">
+            <form th:action="@{/logistic/inbound/warehouse/list1}" method="get">
+                <input type="text" name="searchKeyword" placeholder="찾으실 품목 이름 입력하세요">
+                <button class="search" type="submit">검색</button>
+            </form>
+            <a th:href="@{/logistic/inbound/warehouse/add}">
+                <button class="commonBtn register-button" type="submit"> + 발주 신청</button>
+            </a>
+        </div>
 
 
 
-    <table class="styled-table">
-        <thead>
-        <tr>
-            <th>품목 Code</th>
-            <th>품목 이름</th>
-            <th>카테고리</th>
-            <th>창고 보유 재고</th>
-            <th>단위</th>
-            <th>거래여부</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="p : ${products}">
-            <td th:text="${p.productCode}">p.productCode</td>
-            <td>
-                <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
-            </td>
-            <td th:text="${p.productCategory}">카테고리</td>
+        <table class="list-table">
+            <thead>
+            <tr>
+                <th>품목 Code</th>
+                <th>품목 이름</th>
+                <th>카테고리</th>
+                <th>창고 보유 재고</th>
+                <th>단위</th>
+                <th>거래여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${products}">
+                <td th:text="${p.productCode}">p.productCode</td>
+                <td>
+                    <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
+                </td>
+                <td th:text="${p.productCategory}">카테고리</td>
 
-            <td th:text="${p.productCnt}">창고 보유재고</td>
-            <td th:text="${p.productUnit}">p.unit</td>
-            <td>
-                <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <td th:text="${p.productCnt}">창고 보유재고</td>
+                <td th:text="${p.productUnit}">p.unit</td>
+                <td>
+                    <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-    <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
+        <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
 
-        <a th:if="${page != nowPage}" th:href="@{/logistic/warehouseinbound/list1(page = ${page - 1}, searchKeyword =${param.searchKeyword})}" th:text="${page}"></a>
-<!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
+            <a th:if="${page != nowPage}"
+               th:href="@{/logistic/inbound/warehouse/list1(page = ${page - 1}, searchKeyword =${param.searchKeyword})}"
+               th:text="${page}"></a>
+            <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
 
-        <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
 
-    </th:block>
+        </th:block>
     </div>
 
 </main>

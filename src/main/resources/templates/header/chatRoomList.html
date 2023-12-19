@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <title>Chat</title>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+
+</head>
+<body>
+
+<div id="chat-room-list">
+  <ul>
+    <li th:each="chatRoom : ${chatRooms}">
+      <a th:href="@{/chatRoom/{roomId}(roomId=${chatRoom.id})}" th:text="${chatRoom.roomName}">채팅방 이름</a>
+      <!-- 추가적인 채팅방 정보 렌더링 -->
+    </li>
+  </ul>
+</div>
+<footer>
+  <div id="footer-icons">
+    <span id="employee-list-icon">Employees</span>
+    <span id="chat-room-list-icon">Chat Rooms</span>
+  </div>
+</footer>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  $(document).ready(function () {
+    loadChatRooms(); // 페이지 로드 시 채팅방 목록을 불러옵니다.
+
+    $("#employee-list-icon").click(loadChatEmpList);
+    $("#chat-room-list-icon").click(loadChatRooms);
+  });
+
+  function loadChatRooms() {
+    // 채팅방 목록 불러오기
+    $.ajax({
+      url: '/api/chat/rooms/my-rooms',
+      type: 'GET',
+      dataType: 'json',
+      success: function (rooms) {
+        let chatRoomListHtml = rooms.map(room => `
+                    <div class="chat-room">
+                        <div class="chat-room-info">
+                            <div class="chat-room-name">${room.roomName}</div>
+                        </div>
+                        <div class="chat-room-action">
+                            <button onclick="goToChatRoom(${room.id})">Enter</button>
+                        </div>
+                    </div>
+                `).join('');
+        $("#chat-room-list").html(chatRoomListHtml);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error loading chat rooms: ", status, error);
+      }
+    });
+  }
+
+  function loadChatEmpList() {
+    // 사원 목록 불러오기
+    $.ajax({
+      url: '/chat/chatEmpList',
+      type: 'GET',
+      success: function (response) {
+        $('body').html(response);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error loading employee list: ", status, error);
+      }
+    });
+  }
+
+  function goToChatRoom(roomId) {
+    // 채팅방 페이지로 이동
+    window.location.href = '/chatRoom/' + roomId;
+  }
+
+  /*]]>*/
+</script>
+</body>
+</html>

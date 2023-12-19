@@ -77,7 +77,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
         $.ajax({
             type: "POST",
-            url: "/logistic/warehouseinbound/add",
+            url: "/logistic/inbound/warehouse/add",
             contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
             data:JSON.stringify(list),
                 //JSON.stringify({
@@ -91,7 +91,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
                 console.log("Server response:", response);
 
                 //입고내역 보여주는 페이지로 리디렉션
-                window.location.href = '/logistic/warehouseinbound/list'
+                window.location.href = '/logistic/inbound/warehouse/list'
 
                 // 성공적으로 서버로 전송한 후에 리스트 초기화
                 list.length = 0;

@@ -4,10 +4,11 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
+
 <th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/script.js}"></script>
+    <script th:src="@{/js/logistic/store/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
@@ -19,9 +20,25 @@
 <!--        <button type="submit">검색</button>-->
 <!--    </form>-->
 
+        <div class="top-btn">
+            <a th:href="@{/logistic/inbound/warehouse/list1}">
+                <button class="wideBtn switch-button2"> 창고 재고</button>
+            </a>
+            <a th:href="@{/logistic/inbound/store/list1}">
+                <button class="wideBtn switch-button1"> 매장 재고</button>
+            </a>
+        </div>
+        <div class="one-line">
+            <form th:action="@{/logistic/inbound/store/list1}" method="get">
+                <input type="text" name="searchKeyword" placeholder="품목 이름 입력">
+                <button class="search" type="submit">검색</button>
+            </form>
+            <a th:href="@{/logistic/inbound/warehouse/add}">
+                <button class="commonBtn register-button" type="submit"> + 발주 신청</button>
+            </a>
+        </div>
 
-
-    <table class="styled-table">
+    <table class="list-table">
         <thead>
         <tr>
             <th>품목 Code</th>

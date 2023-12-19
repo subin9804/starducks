@@ -7,7 +7,7 @@
 <th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/warehouse/script.js/logistic/script.js}"></script>
+    <script th:src="@{/js/logistic/store/script.js}"></script>
 </th:block>
 
 
@@ -15,78 +15,89 @@
     <h1>입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
-        <a th:href="@{/logistic/storeinbound/add}" >
-            <button class="commonBtn register-button" type="submit"> + 입고 등록 </button>
-        </a>
+            <a th:href="@{/logistic/inbound/store/add}">
+                <button class="commonBtn register-button" type="submit"> + 입고 등록</button>
+            </a>
         </div>
-<!--        <form>-->
-<!--        <label>-->
-<!--            <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">-->
-<!--            <input type="hidden" name="_bulkInboundCheckbox" value="on">-->
-<!--            대량 입고-->
-<!--        </label>-->
-<!--        </form>-->
+        <div class="middle-btn">
+            <a th:href="@{/logistic/inbound/warehouse/list}">
+                <button class="wideBtn switch-button2"> 창고 입고</button>
+            </a>
+            <a th:href="@{/logistic/inbound/store/list}">
+                <button class="wideBtn switch-button1"> 매장 입고</button>
+            </a>
+        </div>
 
-<!--        <input type="text" th:value="${checkbox}" readonly>-->
+        <!--        <form>-->
+        <!--        <label>-->
+        <!--            <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">-->
+        <!--            <input type="hidden" name="_bulkInboundCheckbox" value="on">-->
+        <!--            대량 입고-->
+        <!--        </label>-->
+        <!--        </form>-->
 
-            <table class="list-table">
+        <!--        <input type="text" th:value="${checkbox}" readonly>-->
+
+        <table class="list-table">
 
 
-                <thead>
-                <tr>
-                    <th>입고번호</th><th>입고일자</th><th>입고지점</th><th>총입고수량</th><th>구분</th>
-                </tr>
-                </thead>
-                <tbody th:fragment="inboundTableBody" id="inboundTableBody">
-                <tr th:each="i:${inbounds}">
+            <thead>
+            <tr>
+                <th>입고번호</th>
+                <th>입고일자</th>
+                <th>입고지점</th>
+                <th>총입고수량</th>
+                <th>구분</th>
+            </tr>
+            </thead>
+            <tbody th:fragment="inboundTableBody" id="inboundTableBody">
+            <tr th:each="i:${inbounds}">
 
-                    <td>
-                        <a th:text="${i.getStoreInboundId()}" th:href="@{/logistic/storeinbound/info/{Id}(Id=${i.getStoreInboundId()})}">
-                            주문 Id
-                        </a>
-                    </td>
+                <td>
+                    <a th:text="${i.getStoreInboundId()}"
+                       th:href="@{/logistic/inbound/store/info/{Id}(Id=${i.getStoreInboundId()})}">
+                        주문 Id
+                    </a>
+                </td>
 
-                    <td th:text="${i.getStoreInboundDate()}">입고일자</td>
-                    <td  th:text="${i.getStore().getStoreName()}">지점 명</td>
-                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
-                    <td >비고</td>
-                </tr>
+                <td th:text="${i.getStoreInboundDate()}">입고일자</td>
+                <td th:text="${i.getStore().getStoreName()}">지점 명</td>
+                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                <td>비고</td>
+            </tr>
 
-                </tbody>
+            </tbody>
 
-            </table>
-
+        </table>
 
 
     </div>
-<!--    <script th:inline="javascript">-->
+    <!--    <script th:inline="javascript">-->
 
-<!--        function handleCheckboxClick() {-->
-<!--            var isChecked = document.getElementById('bulkInboundCheckbox').checked;-->
-<!--            console.log(isChecked);-->
+    <!--        function handleCheckboxClick() {-->
+    <!--            var isChecked = document.getElementById('bulkInboundCheckbox').checked;-->
+    <!--            console.log(isChecked);-->
 
-<!--            var xhr = new XMLHttpRequest();-->
-<!--            xhr.open('GET', '/logistic/warehouseinbound/list?bulkInboundCheckbox=' + isChecked, true);-->
-<!--            //업데이트 하는 부분-->
-<!--            xhr.onreadystatechange = function () {-->
-<!--                if (xhr.readyState === 4 && xhr.status === 200) {-->
-<!--                    // 'inboundTableBody' fragment를 가진 테이블의 내용을 업데이트-->
-<!--                    var parser = new DOMParser();-->
-<!--                    var responseDoc = parser.parseFromString(xhr.responseText, 'text/html');-->
+    <!--            var xhr = new XMLHttpRequest();-->
+    <!--            xhr.open('GET', '/logistic/warehouseinbound/list?bulkInboundCheckbox=' + isChecked, true);-->
+    <!--            //업데이트 하는 부분-->
+    <!--            xhr.onreadystatechange = function () {-->
+    <!--                if (xhr.readyState === 4 && xhr.status === 200) {-->
+    <!--                    // 'inboundTableBody' fragment를 가진 테이블의 내용을 업데이트-->
+    <!--                    var parser = new DOMParser();-->
+    <!--                    var responseDoc = parser.parseFromString(xhr.responseText, 'text/html');-->
 
-<!--                    // 조건 추가: 'inboundTableBody' ID를 가진 요소를 찾을 수 있는 경우에만 업데이트-->
-<!--                    var updatedTableBody = responseDoc.getElementById('inboundTableBody');-->
-<!--                    if (updatedTableBody) {-->
-<!--                        document.getElementById('inboundTableBody').innerHTML = updatedTableBody.innerHTML;-->
-<!--                    }-->
-<!--                }-->
-<!--            };-->
-<!--            xhr.send();-->
-<!--        }-->
-
-
+    <!--                    // 조건 추가: 'inboundTableBody' ID를 가진 요소를 찾을 수 있는 경우에만 업데이트-->
+    <!--                    var updatedTableBody = responseDoc.getElementById('inboundTableBody');-->
+    <!--                    if (updatedTableBody) {-->
+    <!--                        document.getElementById('inboundTableBody').innerHTML = updatedTableBody.innerHTML;-->
+    <!--                    }-->
+    <!--                }-->
+    <!--            };-->
+    <!--            xhr.send();-->
+    <!--        }-->
 
 
-<!--    </script>-->
+    <!--    </script>-->
 </main>
 </html>
