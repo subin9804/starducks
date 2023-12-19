@@ -11,10 +11,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
 
-
-  <!--  웹소켓 연결할 때는 토큰 필요 -->
   <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
   <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+
 </head>
 <body>
 <header>
@@ -117,6 +116,14 @@
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('chat-message-container');
 
+    // 이름 요소 추가 (로그인한 사람 제외한 다른 사용자의 경우)
+    if (message.senderId !== currentUser) {
+      const senderNameElement = document.createElement('div');
+      senderNameElement.classList.add('chat-message-sender-name');
+      senderNameElement.innerText = message.senderName;
+      messageElement.appendChild(senderNameElement);
+    }
+
     // 메시지 내용 요소 추가
     const textElement = document.createElement('div');
     textElement.classList.add('chat-message-content');
@@ -134,14 +141,6 @@
     messageElement.id = `message-${message.id}`;
     messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
     messageElement.appendChild(messageContainer);
-
-    // 이름 요소 추가 (다른 사용자의 경우)
-    if (message.senderId !== currentUser) {
-      const senderNameElement = document.createElement('div');
-      senderNameElement.classList.add('chat-message-sender-name');
-      senderNameElement.innerText = message.senderName;
-      messageElement.appendChild(senderNameElement);
-    }
 
     // 메시지를 채팅방에 추가
     const chatRoomElement = document.getElementById('chat-room');

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
@@ -78,4 +79,10 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
 
     }
+
+    /**
+     * 부서 id 순서대로 사원들 정렬해서 가져오기. 채팅 사원 목록에 사용
+     */
+    @Query("SELECT e FROM Employee e JOIN e.dept d ORDER BY d.deptId ASC")
+    List<Employee> findAllEmployeesWithDepartmentOrder();
 }

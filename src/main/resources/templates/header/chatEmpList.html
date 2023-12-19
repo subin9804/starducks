@@ -2,38 +2,93 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>사원 목록</title>
   <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
-  <!-- Other necessary scripts and styles -->
+
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+
+  <title>사원 목록</title>
+
 </head>
 <body>
-
 <header class="header-container">
   <input type="search" placeholder="부서/사원 검색" />
-  <button onclick="createChatRoom()">채팅방 만들기</button>
+  <button id="openCreateRoomModal">채팅방 만들기</button>
 </header>
-
-<div class="department-list">
-  <div th:each="department : ${departments}">
-    <h2 th:text="${department.deptName}">부서명</h2>
-    <ul>
-      <li th:each="employee : ${department.emps}">
-        <span th:text="${employee.empName}">사원명</span>
-        <!-- 사원 선택 체크박스 또는 기타 요소 추가 가능 -->
-      </li>
-    </ul>
-  </div>
+<br><br><br><br>
+<button class="back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">임시 뒤로가기버튼</button>
+<br>
+<div th:each="deptEntry : ${groupedEmployees.entrySet()}">
+  <h3 th:text="${deptEntry.key.deptName}"></h3>
+  <ul>
+    <li th:each="emp : ${deptEntry.value}">
+      <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>
+      <span th:text="${emp.empName}"></span>
+    </li>
+  </ul>
 </div>
 
-<script th:inline="javascript">
-  // 필요한 스크립트 추가
+<div id="createRoomModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form id="createRoomForm" action="/createChatRoom" method="post">
+      <label for="roomName">채팅방 이름:</label>
+      <input type="text" id="roomName" name="roomName" required>
+      <button type="submit">확인</button>
+    </form>
+  </div>
+</div>
+<script>
+  // 모달 열기
+  const modal = document.getElementById("createRoomModal");
+  const btn = document.getElementById("openCreateRoomModal");
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  // 모달 닫기
+  const span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // 창 밖 클릭 시 모달 닫기
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  document.getElementById('createRoomForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const selectedEmpIds = [];
+    document.querySelectorAll('input[name="empCheckbox"]:checked').forEach(function(checkbox) {
+      selectedEmpIds.push(checkbox.value);
+    });
+
+    const roomName = document.getElementById('roomName').value;
+    const data = {
+      roomName: roomName,
+      empIds: selectedEmpIds
+    };
+
+    fetch('/createChatRoom', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+      },
+      body: JSON.stringify(data)
+    }).then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      window.location.href = '/chatRoomList';
+    });
+  });
+
 </script>
 
-<script>
-  function createChatRoom() {
-    // 선택된 사원들로 채팅방 생성 로직 구현
-  }
-</script>
 
 </body>
 </html>

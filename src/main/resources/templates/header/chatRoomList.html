@@ -8,8 +8,12 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
 
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+
 </head>
 <body>
+<button class="back-button" th:onclick="'window.location.href=\'' + @{/chatEmpList} + '\''"><</button>
 <div id="chat-room-list">
   <ul>
     <li th:each="chatRoom : ${chatRooms}">

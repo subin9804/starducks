@@ -31,6 +31,46 @@
 
 /*메일 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*채팅 관련 페이지~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*채팅 사원 목록 페이지 시작~~~~~~~~~~~~~~~~~~~~~~~*/
+/* 모달 컨테이너 */
+.chat-modal {
+    display: none; /* 기본적으로 숨겨진 상태 */
+    position: fixed; /* 화면에 고정 */
+    z-index: 1; /* 다른 요소들 위에 나타나도록 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 전체 너비 */
+    height: 100%; /* 전체 높이 */
+    overflow: auto; /* 내부 콘텐츠가 넘칠 경우 스크롤 */
+    background-color: rgb(0,0,0); /* 약간 어두운 배경 */
+    background-color: rgba(0,0,0,0.4); /* 약간 투명한 배경 */
+}
+
+/* 모달 내용 */
+.chat-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 페이지 중앙에 위치 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* 적절한 너비 */
+}
+
+/* 닫기 버튼 */
+.chat-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.chat-close-btn:hover,
+.chat-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*채팅 사원 목록 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*채팅방 목록 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
 .chat-list-body {
@@ -75,6 +115,8 @@
     font-size: 0.9em;
     color: #6c757d;
 }
+
+
 
 /*채팅방 목록 페이지 끝 ~~~~~~~~~~~~~~~~~~~~~~~*/
 
