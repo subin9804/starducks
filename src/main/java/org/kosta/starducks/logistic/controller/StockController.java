@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/logistic/stock")
@@ -65,6 +66,17 @@ public class StockController {
     }
 
 
+    @GetMapping("/warehouse/info/{code}")
+    public String getwInventoryInfo(
+            @PathVariable("code") Long productCode,
+            Model m)
+    {
+        Optional<Product> product = productService.getProduct(productCode);
+        m.addAttribute("inventory",product.get());
+
+        return "logistic/InventoryDetail";
+    }
+
     @GetMapping("/store/list")
     public String getAllInventories(Model m)
     {
@@ -80,8 +92,12 @@ public class StockController {
 
 
 
+
+
+
+
     @GetMapping("/store/info/{productCode}/{storeNo}")
-    public String getInventoryInfo(@PathVariable("storeNo") Long storeNo,
+    public String getsInventoryInfo(@PathVariable("storeNo") Long storeNo,
                                    @PathVariable("productCode") Long productCode,
                                    Model m)
     {
