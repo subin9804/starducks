@@ -26,6 +26,8 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath filePath = createString("filePath");
 
+    public final ListPath<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory> inventories = this.<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory>createList("inventories", org.kosta.starducks.logistic.entity.StoreInventory.class, org.kosta.starducks.logistic.entity.QStoreInventory.class, PathInits.DIRECT2);
+
     public final EnumPath<ProductCategory> productCategory = createEnum("productCategory", ProductCategory.class);
 
     public final NumberPath<Integer> productCnt = createNumber("productCnt", Integer.class);
