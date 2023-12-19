@@ -34,23 +34,9 @@ import java.util.List;
 @Slf4j
 public class StoreInboundController {
     private final ProductService productService;
-    private final StoreInventoryService storeInventoryService;
-    private final EmpService employeeService;
     private final StoreService storeService;
     private final StoreInboundService storeInboundService;
     private final HttpServletRequest request;
-
-
-    @GetMapping("/list1")
-    public String getAllInventories(Model m)
-    {
-        List<StoreInventory> allInventories = storeInventoryService.getAllInventories();
-
-        m.addAttribute("products", allInventories);
-        return "logistic/StoreInventoryList";
-
-    }
-
 
 
     //재고 목록 조회
