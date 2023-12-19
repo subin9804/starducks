@@ -301,8 +301,7 @@
 }
 
 .form-custom {
-    border: 1px solid #6B4D27;
-    border-radius: 10px;
+    border-bottom: 1px solid #6B4D27;
     padding: 40px 100px;
 }
 
