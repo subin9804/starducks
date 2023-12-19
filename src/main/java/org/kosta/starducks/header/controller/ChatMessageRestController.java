@@ -24,7 +24,7 @@ public class ChatMessageRestController {
   }
 
   @GetMapping("/{id}")
-  public ChatMessageResponseDto getMessage(@PathVariable Long id) {
+  public ChatMessageResponseDto getMessage(@PathVariable("id") Long id) {
     return chatMessageService.findById(id);
   }
 

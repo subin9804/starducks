@@ -60,7 +60,7 @@ public class ChatViewController {
 
   // 채팅방 상세 페이지
   @GetMapping("/chatRoom/{roomId}")
-  public String chatRoomPage(@PathVariable Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+  public String chatRoomPage(@PathVariable("roomId") Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
     List<ChatMessageResponseDto> messages = chatMessageService.getMessagesForChatRoom(roomId);
     model.addAttribute("messages", messages);
     model.addAttribute("currentUserId", Long.parseLong(currentUser.getUsername())); // 현재 로그인한 사용자의 ID

@@ -27,7 +27,7 @@ public class ChatRoomRestController {
   }
 
   @GetMapping("/{id}")
-  public ChatRoomResponseDto getRoom(@PathVariable Long id) {
+  public ChatRoomResponseDto getRoom(@PathVariable("id") Long id) {
     return chatRoomService.findById(id);
   }
 
