@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-  <title>Chat</title>
+  <title>채팅방 목록</title>
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -13,21 +13,26 @@
 
 </head>
 <body>
-<button class="back-button" th:onclick="'window.location.href=\'' + @{/chatEmpList} + '\''"><</button>
-<div id="chat-room-list">
+<header class="emp-list-header-container">
+<button class="chat-back-button" th:onclick="'window.location.href=\'' + @{/chatEmpList} + '\''">사원 목록</button>
+</header>
+<div class="emp-search-form">
+  <input type="search" placeholder="제목/사원 검색"/>
+  <button id="searchButton" class="search-button">검색</button>
+</div>
+<div id="chat-room-list" class="chat-room-list">
   <ul>
-    <li th:each="chatRoom : ${chatRooms}">
-      <a th:href="@{/chatRoom/{roomId}(roomId=${chatRoom.id})}" th:text="${chatRoom.roomName}">채팅방 이름</a>
-      <!-- 추가적인 채팅방 정보 렌더링 -->
+    <li th:each="chatRoom : ${chatRooms}" class="chat-room-item chat-room-each">
+      <div class="chat-room-entry">
+        <img alt="Chat Room Logo" class="chat-room-logo" th:src="@{/images/Starducks_Logo.png}">
+        <div class="chat-room-info">
+          <a th:href="@{/chatRoom/{roomId}(roomId=${chatRoom.id})}" class="chat-room-name" th:text="${chatRoom.roomName}">채팅방 이름</a>
+<!--          <div class="chat-room-employees" th:text="${#strings.arrayJoin(chatRoom.employees, ', ')}">사원 이름들</div>-->
+        </div>
+      </div>
     </li>
   </ul>
 </div>
-<footer>
-  <div id="footer-icons">
-    <span id="employee-list-icon" th:href="@{/chatEmpList}">Employees</span>
-    <span id="chat-room-list-icon">Chat Rooms</span>
-  </div>
-</footer>
 <script th:inline="javascript">
   /*<![CDATA[*/
   $(document).ready(function () {

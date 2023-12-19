@@ -12,10 +12,13 @@
 </head>
 <body>
 <header class="emp-list-header-container">
-  <button class="commonBtn back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">채팅방 목록</button>
-  <input type="search" placeholder="부서/사원 검색"/>
+  <button class="chat-back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">채팅방 목록</button>
   <button id="openCreateRoomModal">채팅방 만들기</button>
 </header>
+<div class="emp-search-form">
+  <input type="search" placeholder="부서/사원 검색"/>
+  <button id="searchButton" class="search-button">검색</button>
+</div>
 <div class="chat-emp-list">
   <div th:each="deptEntry : ${groupedEmployees.entrySet()}">
     <h3 th:text="${deptEntry.key.deptName}">부서명</h3>
