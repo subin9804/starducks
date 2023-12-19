@@ -9,7 +9,10 @@ import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpFileService;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.entity.Attendance;
+import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.service.AttendanceService;
+import org.kosta.starducks.mypage.service.ScheduleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,7 @@ public class IndexController {
     private final ForumPostService forumService;
     private final SendEmailService emailService;
     private final EmpFileService fileService;
+    private final ScheduleService scheduleService;
 
 
     // 6개의 위젯 구현
@@ -87,10 +92,36 @@ public class IndexController {
         return "mypage/index";
     }
 
+    /**
+     * 일정을 내보내는 api
+     * @return
+     */
     @GetMapping("/api/show")
     @ResponseBody
-    public List<Map<String, Object>> showSchedule() {
+    public ResponseEntity<List<Schedule>> showSchedule(Principal principal) {
+
+        Long empId = 1L;
+        // 유저 정보 받아오기
+        if(principal != null) {
+            empId = Long.valueOf(principal.getName());
+        }
+
+        List<Schedule> schedules = scheduleService.findByEmployeeEmpId(empId);
+        System.out.println("=============================" + schedules);
+
+        return ResponseEntity.ok(schedules);
+    }
+
+    /**
+     * 메일을 가져오는 api
+     * @return
+     */
+    @GetMapping("/api/mail")
+    @ResponseBody
+    public List<Map<String, Object>> showMail () {
 
         return null;
     }
+
+
 }

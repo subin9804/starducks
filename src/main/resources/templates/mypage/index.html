@@ -70,13 +70,44 @@
                     <th>내용</th>
                 </tr>
             </thead>
-            <tbody th:object="">
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 날씨 -->
+    <section class="widget content" id="widgetWether">
+        날씨
+    </section>
+
+    <!-- 전사게시판 -->
+    <section class="widget content" id="widgetForum">
+        <table>
+            <thead>
                 <tr>
-                    <td th:text=""></td>
-                    <td></td>
+                    <th>No</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="notice" th:each="notice : ${topNotices}" th:object="${notice}">
+                    <td th:text="*{postId}"></td>
+                    <td th:text="*{postTitle}"></td>
+                    <td th:text="*{Employee.empName}"></td>
+                </tr>
+                <tr th:each="post : ${posts}" th:object="${post}">
+                    <td th:text="*{postId}"></td>
+                    <td th:text="*{postTitle}"></td>
+                    <td th:text="*{Employee.empName}"></td>
                 </tr>
             </tbody>
         </table>
+    </section>
+
+    <!-- 메일수신함-->
+    <section class="widget content" id="widgetMail">
+        메일
     </section>
 </main>
 </html>

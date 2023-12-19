@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +50,22 @@ public class ScheduleService {
         return null;
     }
 
-    // 해당 월 일정 조회
+    // 해당 월 일정 조회 - 안쓸거같음,,
+    public List<Schedule> getSomeSchedule(int year, int month) {
 
+        LocalDate startDay = LocalDate.of(2023, 01, 1);
+        int days = startDay.getDayOfMonth();
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime start = LocalDateTime.parse(year + "-" + month + "-01 00:00:00", dtf);
+        LocalDateTime end = LocalDateTime.parse(year + "-" + month + "-" + days + " 00:00:00", dtf);
+
+        System.out.println("start" + start);
+        System.out.println("end" + end);
+
+        return scheduleRepository.findByStartAndEnd(start, end);
+
+    }
 
     public void deleteSchedule(Long scheNo) {
         scheduleRepository.deleteById(scheNo);
