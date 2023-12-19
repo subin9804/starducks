@@ -10,18 +10,22 @@ table {
     background-color: #ffffff;
 }
 
+
 th, td {
     text-align: left;
     padding: 12px 15px;
     border-bottom: 1px solid #e0e0e0;
 }
 
+
+
 th {
-    background-color: #f9f9f9;
+    background-color:#f2f2f2;
     color: #333333;
 }
 
-tr:hover {
+
+tbody tr:hover {
     background-color: #f2f2f2;
 }
 
