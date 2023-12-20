@@ -50,7 +50,7 @@
         </thead>
         <tbody>
         <tr th:each="i : ${inventories}">
-            <td th:text="${i.getProduct().productCode}">p.productCode</td>
+            <td th:text="${i.getProduct().getProductCode()}">p.productCode</td>
             <td>
                 <a th:text="${i.getProduct()?.productName}" th:href="@{/logistic/stock/store/info/{productCode}/{storeNo}(productCode=${i.getProduct()?.productCode},storeNo=${i.getStore()?.storeNo})}">p.name</a>
             </td>

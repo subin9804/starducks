@@ -5,7 +5,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.commons.menus.MenuService;
+import org.kosta.starducks.generalAffairs.dto.ProductStockUpdateDto;
+import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
+import org.kosta.starducks.generalAffairs.entity.ProductCategory;
+import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.logistic.entity.StoreInbound;
 import org.kosta.starducks.logistic.entity.StoreInventory;
@@ -17,10 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +78,40 @@ public class StockController {
 
         return "logistic/InventoryDetail";
     }
+
+    @GetMapping("/warehouse/update/{code}")
+    public String updatewStock(@PathVariable("code") Long productCode,
+                               Model m){
+        Optional<Product> product = productService.getProduct(productCode);
+        if(product.isPresent()) {
+            Product product1 = product.get();
+            m.addAttribute("inventory",product1);
+
+            return "logistic/InventoryUpdate";
+        }
+        else {
+            return "redirect:/logistic/stock/warehouse/list";
+        }
+    }
+
+
+    @PostMapping("/warehouse/update/{productCode}")
+    public String updatewStock(@ModelAttribute ProductStockUpdateDto productStockUpdateDto){
+        productService.updateProductStock(productStockUpdateDto);
+        return "redirect:/logistic/stock/warehouse/list";
+    }
+//
+//    @PostMapping("/update/{productCode}")
+//    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto,
+//                                @PathVariable("productCode") Long productCode) {
+//        //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
+//
+//        productService.updateProduct(productUpdateDto);
+//
+//        return "redirect:/general/products/list";
+//    }
+
+
 
     @GetMapping("/store/list")
     public String getAllInventories(Model m)
