@@ -13,12 +13,14 @@
 <main layout:fragment="content">
     <h1>창고 재고 상세</h1>
     <div class="content">
+        <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}" th:method="post" class="form">
         <div class="small-content">
+
             <table class="vertical-table">
                 <tbody>
                 <tr>
                     <th>품목 ID</th>
-                    <td th:text="${inventory.getProductCode()}">p.productCode</td>
+                    <td th:text="${inventory.getProductCode()}" name="productCode">p.productCode</td>
                 </tr>
                 <tr>
                     <th>카테고리</th>
@@ -38,12 +40,15 @@
                 </tr>
                 <tr>
                     <th>창고 재고 수량</th>
-                    <td th:text="${inventory.productCnt}">p.productCode</td>
+                    <!--                    <input type="number" th:value="${product.productPrice}" name="productPrice" >-->
+                    <td>
+                        <input type="number" th:value="${inventory.productCnt}" name="productCnt">
+                    </td>
                 </tr>
 
                 <tr>
                     <th>최근 입고일</th>
-<!--                    th<td th:text="${inventory}">p.productCode</td>-->
+                    <!--                    th<td th:text="${inventory}">p.productCode</td>-->
                 </tr>
                 <tr>
                     <th>판매 여부</th>
@@ -56,13 +61,14 @@
         </div>
 
         <div class="bottom-button">
-            <a th:href="@{/logistic/stock/warehouse/list}">
-                <button class="commonBtn cancel-button"> 목록으로</button>
+            <a th:href="@{/logistic/stock/warehouse/info/{code}(code=${inventory.productCode})}">
+                <button class="commonBtn cancel-button"> 수정 취소</button>
             </a>
-            <a th:href="@{/logistic/stock/warehouse/update/{code}(code=${inventory.getProductCode()})}">
-                <button class="commonBtn edit-button"> 수정하기</button>
-            </a>
+
+            <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
+
         </div>
+        </form>
     </div>
 </main>
 

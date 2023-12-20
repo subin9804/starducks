@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -50,6 +50,7 @@
                 <td th:text="${p.productCode}">p.productCode</td>
                 <td>
                     <a th:text="${p.productName}" th:href="@{/logistic/stock/warehouse/info/{code}(code=${p.productCode})}">p.name</a>
+
                 </td>
                 <td th:text="${p.productCategory}">카테고리</td>
 
