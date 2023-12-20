@@ -14,10 +14,10 @@ public class MenuService {
 
 
     // 이름       코드      하위메뉴
-    // 마이페이지  mypage    attend, schedule, confroom
-    // 전자결재   document   mydocu, writedocu, recieved, tempsaved
+    // 마이페이지  mypage    attendance, schedule, conf
+    // 전자결재   document   mydocu, createDoc, recieved, tempsaved
     // 전사게시판  forum
-    // 인사부     hr        employee(사원관리), attend, vacation, dept, docu
+    // 인사부     hr        emp(사원관리), attend, vacation, dept, docu
     // 물류유통부 logistic   store(입고), release(출고), inventory(재고)
     // 총무부     general   adschedule, adforum, adconf, adproduct
     // 재무부     fina      point(지점), vendor(거래처)
@@ -41,22 +41,22 @@ public class MenuService {
                 menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
-                menus.add(new MenuDetail("mydocu", "나의 결재", "/"));
+                menus.add(new MenuDetail("submitDoc", "결재 상신함", "/document/submitDoc"));
                 menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
-                menus.add(new MenuDetail("recieved", "수신함", "/"));
-                menus.add(new MenuDetail("tempsaved", "임시저장함", "/"));
+                menus.add(new MenuDetail("receiveDoc", "결재 수신함", "/document/receiveDoc"));
+                menus.add(new MenuDetail("tempList", "임시저장함", "/document/submitDoc/tempList"));
                 break;
             case "hr":
                 menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
-                menus.add(new MenuDetail("attend", "근태 관리", "/"));
+                menus.add(new MenuDetail("attend", "근태 관리", "/hr/attend"));
                 menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
-                menus.add(new MenuDetail("dept", "부서 관리", "/"));
+                menus.add(new MenuDetail("dept", "부서 관리", "/hr/dept"));
                 menus.add(new MenuDetail("docu", "문서 관리", "/"));
                 break;
             case "logistic":
-                menus.add(new MenuDetail("store", "입고 관리", "/"));
+                menus.add(new MenuDetail("inbound", "입고 관리", "/logistic/inbound/warehouse/list"));
                 menus.add(new MenuDetail("release", "출고 관리", "/"));
-                menus.add(new MenuDetail("warehouseinbound", "재고 관리", "/logistic/warehouseinbound"));
+                menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
                 menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));

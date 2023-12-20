@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>부서 정보 조회</h1>
+    <div id="dept-container">
+        <th:block th:replace="~{hr/dept/_deptInfo::info}"></th:block>
+        <th:block th:replace="~{hr/dept/_deptEdit::edit}"></th:block>
+        <div class="w-50" id="emp-container">
+            <form><input name="name" id="name" type="text" placeholder="이름을 입력해 주세요."><button class="search-button">찾기</button></form>
+
+<!--            개별 사원 프로필-->
+<!--            1. 재직중인 사원들-->
+            <div id="profile-box">
+                <div th:each="employee : ${running}" class="profile-box attd-check-box d-flex align-items-center justify-content-evenly">
+                    <div>
+                        <img th:src="${profiles.get(employee.empId)}" width="80" height="80" class="rounded-circle border-3 border border-dark">
+                        <p class="bg-danger text-white" th:if="${employee.status == true}">퇴사</p>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between gap-2">
+                        <div class="fw-bolder">
+                            <p>이름</p>
+                            <p>직급</p>
+                            <p>부서</p>
+                            <p>사번</p>
+                        </div>
+                        <div>
+                            <p th:text="${employee.empName}">이름</p>
+
+                            <p th:if="${employee.position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_BOSS'}">사장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+
+                            <p th:text="${employee.dept.deptName}">부서</p>
+                            <p th:text="${employee.empId}">사번</p>
+                        </div>
+                    </div>
+                </div>
+                <div th:each="employee : ${stopped}" class="profile-box attd-check-box d-flex align-items-center justify-content-evenly">
+                    <div>
+                        <img th:src="${profiles.get(employee.empId)}" width="80" height="80" class="rounded-circle border-3 border border-dark">
+                        <p class="bg-danger text-white" th:if="${employee.status == true}">퇴사</p>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between gap-2">
+                        <div class="fw-bolder">
+                            <p>이름</p>
+                            <p>직급</p>
+                            <p>부서</p>
+                            <p>사번</p>
+                        </div>
+                        <div>
+                            <p th:text="${employee.empName}">이름</p>
+
+                            <p th:if="${employee.position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_BOSS'}">사장</p>
+                            <p th:if="${employee.position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+
+                            <p th:text="${employee.dept.deptName}">부서</p>
+                            <p th:text="${employee.empId}">사번</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+</html>

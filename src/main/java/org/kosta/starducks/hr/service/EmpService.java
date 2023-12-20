@@ -39,6 +39,8 @@ public class EmpService {
 
     /**
      * 직원 검색
+     * @param cond 검색조건
+     * @return
      */
     @Transactional
     public Page<Employee> toSearchEmp (EmpSearchCond cond) {
@@ -48,8 +50,29 @@ public class EmpService {
     }
 
     /**
+     * 직원 검색
+     * @param deptId 부서번호와 사원이름으로 검색하는 쿼리
+     * @return
+     */
+    @Transactional
+    public List<Employee> getEmp(int deptId, String name) {
+
+        return repository.findDeptEmployee(deptId, name);
+    }
+    /**
+     * 직원 검색
+     * @param deptId 부서번호로 검색하는 쿼리
+     * @return
+     */
+    @Transactional
+    public List<Employee> getEmp(int deptId) {
+
+        return repository.findByDept_deptId(deptId);
+    }
+
+    /**
      * 한명의 직원 조회
-     * @param empId
+     * @param empId 아이디로 조회
      * @return
      */
     @Transactional
@@ -57,6 +80,7 @@ public class EmpService {
 
         return repository.findById(empId).orElse(null);
     }
+
 
 
     /**

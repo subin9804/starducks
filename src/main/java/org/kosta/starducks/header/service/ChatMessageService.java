@@ -67,7 +67,7 @@ public class ChatMessageService {
   }
 
 
-//  채팅방의 메시지를 작성순으로 조회
+  //  채팅방의 메시지를 작성순으로 조회
   @Transactional(readOnly = true)
   public List<ChatMessageResponseDto> getMessagesForChatRoom(final Long chatRoomId) {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)

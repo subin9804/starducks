@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+<th:block layout:fragment="title">사원정보</th:block>
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <script th:src="@{/js/hr/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>사원정보조회</h1>
+    <div id="form">
+        <div class="photos">
+            <div class="photo">
+                <img th:src="${profile}" />
+                <p>프로필사진</p>
+            </div>
+            <div class="photo">
+                <img th:src="${stamp}" />
+                <p>도장사진</p>
+            </div>
+        </div>
+        <div id="formSection" th:object="${employee}">
+            <section>
+                <dl>
+                    <dt>사원번호</dt>
+                    <dd><p th:text="*{empId}"></p></dd>
+                </dl>
+                <dl>
+                    <dt>초기비밀번호</dt>
+                    <dd><p th:text="*{pwd}" style="overflow: hidden"></dd>
+                </dl>
+                <dl>
+                    <dt>사원이름</dt>
+                    <dd><p th:text="*{empName}"></dd>
+                </dl>
+                <dl>
+                    <dt>연락처</dt>
+                    <dd><p th:text="*{empTel}"></dd>
+                </dl>
+                <dl>
+                    <dt>이메일</dt>
+                    <dd><p th:text="*{email}"></dd>
+                </dl>
+                <dl>
+                    <dt>성별</dt>
+                    <dd><p th:text="*{gender}"></dd>
+                </dl>
+                <dl>
+                    <dt>생년월일</dt>
+                    <dd><p th:text="*{birth}"></dd>
+                </dl>
+            </section>
+            <section>
+                <dl>
+                    <dt>부서</dt>
+                    <dd><p th:text="*{dept.deptName}"></p></dd>
+                </dl>
+
+                <dl>
+                    <dt>직급</dt>
+                    <dd>
+                        <p th:if="*{position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
+                        <p th:if="*{position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
+                        <p th:if="*{position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
+                        <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
+                        <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
+                    </dd>
+
+                </dl>
+
+                <dl>
+                    <dt>입사일자</dt>
+                    <dd><p th:text="*{joinDate}"></dd>
+                </dl>
+
+                <dl>
+                    <dt>퇴사여부</dt>
+                    <dd><p th:text="*{status}"</dd>
+                </dl>
+
+                <dl>
+                    <dt>퇴사일자</dt>
+                    <dd>
+                        <p th:if="*{leaveDate != null}" th:text="*{leaveDate}">
+                        <p th:if="*{leaveDate == null}" th:text="|0000-00-00|">
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>우편번호</dt>
+                    <dd><p th:text="*{postNo}"></dd>
+                </dl>
+                <dl>
+                    <dt>주소</dt>
+                    <dd><p th:text="*{addr}"> </dd>
+                </dl>
+                <dl>
+                    <dt>상세주소</dt>
+                    <dd><p th:text="*{dAddr}"> </dd>
+                </dl>
+            </section>
+        </div>
+        <div class="btns">
+            <a th:href="@{/hr/emp}"><button class="commonBtn cancel-button">목록</button></a>
+            <a th:href="@{edit/{id}(id=${empId})}"><button class="commonBtn edit-button">수정</button></a>
+        </div>
+    </div>
+</main>
+</html>

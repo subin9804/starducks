@@ -37,16 +37,15 @@ public class ChatViewController {
   @Autowired
   private EmpService empService;
 
-//  메인 페이지. 채팅방 리스트 보여줌
-@GetMapping("/chatRoomList")
-public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-  Long userId = Long.parseLong(userDetails.getUsername());
-  List<ChatRoomResponseDto> chatRoomDtos = chatRoomService.getChatRoomsForEmployee(userId);
+  //  메인 페이지. 채팅방 리스트 보여줌
+  @GetMapping("/chatRoomList")
+  public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    Long userId = Long.parseLong(userDetails.getUsername());
+    List<ChatRoomResponseDto> chatRoomDtos = chatRoomService.getChatRoomsForEmployee(userId);
 
-  model.addAttribute("chatRooms", chatRoomDtos);
-  return "header/chatRoomList";
-}
-
+    model.addAttribute("chatRooms", chatRoomDtos);
+    return "header/chatRoomList";
+  }
 
   // 사원 목록 페이지
   @GetMapping("/chatEmpList")
@@ -72,13 +71,13 @@ public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetai
 
   // 채팅방 상세 페이지
   @GetMapping("/chatRoom/{roomId}")
-  public String chatRoomPage(@PathVariable Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
+  public String chatRoomPage(@PathVariable("roomId") Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
     List<ChatMessageResponseDto> messages = chatMessageService.getMessagesForChatRoom(roomId);
     String roomName = chatRoomService.getRoomName(roomId);
 
     model.addAttribute("messages", messages);
     model.addAttribute("currentUserId", Long.parseLong(currentUser.getUsername())); // 현재 로그인한 사용자의 ID
-    model.addAttribute("roomName",roomName);
+    model.addAttribute("roomName", roomName);
 
     return "header/chatRoom";
   }

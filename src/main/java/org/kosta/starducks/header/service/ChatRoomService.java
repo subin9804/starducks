@@ -82,7 +82,6 @@ public class ChatRoomService {
     this.chatRoomRepository.delete(chatRoom);
   }
 
-
   public List<ChatRoomResponseDto> getChatRoomsForEmployee(Long empId) {
     List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByEmployeeId(empId);
     return chatRooms.stream()

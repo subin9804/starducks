@@ -2,17 +2,19 @@ package org.kosta.starducks.hr.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
+import org.kosta.starducks.hr.repository.EmpFileRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpFileService;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/hr/emp")
@@ -23,6 +25,8 @@ public class EmpController {
     private final EmpRepository repository;
     private final HttpServletRequest request;
     private final DeptRepository deptRepository;
+    private final EmpFileService fileService;
+    private final EmpFileRepository fileRepository;
 
     /**
      * 인사부 홈 (사원 전체조회 및 검색)
@@ -39,8 +43,7 @@ public class EmpController {
         System.out.println(emps.stream().toList());
         model.addAttribute("employees", emps);
 
-
-        return "hr/hrIndex";
+        return "hr/emp/hrIndex";
     }
 
     /**
@@ -58,22 +61,24 @@ public class EmpController {
         model.addAttribute("positions", Position.values());
         model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "register");
-        return "hr/empWriter";
+        return "hr/emp/empWriter";
     }
 
 
     /**
-     * 사원등록 post
+     * 사원등록 및 수정 post
      *
      * @param employee
      * @return
      */
     @PostMapping("/save")
-    public String save(@ModelAttribute Employee employee, Model model) {
+    public String save(@ModelAttribute Employee employee, Model model,
+                       @RequestParam("profile") MultipartFile profile,
+                       @RequestParam("stamp") MultipartFile stamp) {
 
         Employee savedEmp = service.saveEmp(employee);
-//        model.addAttribute("result", true);
-//        return ResponseEntity.ok("Employee information saved successfully.");
+        fileService.upload(profile, "profile", employee.getEmpId());
+        fileService.upload(stamp, "stamp", employee.getEmpId());
 
         Long id = savedEmp.getEmpId();
 
@@ -89,11 +94,19 @@ public class EmpController {
      */
     @GetMapping("/{empId}")
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
-        MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
 
-        return "hr/empDetail";
+
+        // 파일
+        String profile = fileService.getFileUrl(empId, "profile");
+        String stamp = fileService.getFileUrl(empId, "stamp");
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("stamp", stamp);
+
+
+        return "hr/emp/empDetail";
     }
 
     /**
@@ -105,14 +118,20 @@ public class EmpController {
      */
     @GetMapping("/edit/{empId}")
     public String empEdit (@PathVariable("empId") Long empId, Model model) {
-        MenuService.commonProcess(request, model, "hr");
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
         model.addAttribute("positions", Position.values());
         model.addAttribute("depts", deptRepository.findAll());
         model.addAttribute("name", "edit");
 
-        return "hr/empWriter";
+        // 파일
+        String profile = fileService.getFileUrl(empId, "profile");
+        String stamp = fileService.getFileUrl(empId, "stamp");
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("stamp", stamp);
+
+        return "hr/emp/empWriter";
     }
 }
 

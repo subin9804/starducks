@@ -28,6 +28,8 @@ public class QStore extends EntityPathBase<Store> {
 
     public final org.kosta.starducks.hr.entity.QEmployee employee;
 
+    public final ListPath<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory> inventories = this.<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory>createList("inventories", org.kosta.starducks.logistic.entity.StoreInventory.class, org.kosta.starducks.logistic.entity.QStoreInventory.class, PathInits.DIRECT2);
+
     public final StringPath storeAddr = createString("storeAddr");
 
     public final StringPath storeDetailAddr = createString("storeDetailAddr");

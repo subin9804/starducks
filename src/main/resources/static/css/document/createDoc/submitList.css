@@ -1,8 +1,11 @@
 .top-button {
 
 }
+.page-border {
+    height: 800px;
+}
 .list-table {
-    width: 1050px;
+    width: 1200px;
     margin: 30px;
 }
 .list-thead {
@@ -17,7 +20,7 @@
 .docDate-th {
     width: 200px;
 }
-.formName-th, .docStatus-th, .urgent-th {
+.formName-th, .docWriter-th, .docStatus-th, .urgent-th {
     width: 130px;
 }
 .docStatus, .urgent {
@@ -31,4 +34,52 @@
 .urgent {
     background-color: #FF5B5B;
     color: white;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination a,
+.pagination strong {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #f4f4f4;
+}
+
+.pagination .current-page,
+.pagination a:hover {
+    background-color: #f0f0f0;
+    border-color: #666;
+}
+
+/* Style for current page */
+.pagination .current-page {
+    background-color: #fff;
+    border-color: #666;
+    color: red;
+    font-weight: bold;
+}
+
+/* Custom styles for first and last page links */
+.pagination a:first-child,
+.pagination a:last-child {
+    background-color: #ddd;
+}
+
+/* Styles for disabled previous and next links */
+.pagination a[disabled],
+.disabled {
+    color: grey;
+    pointer-events: none;
+    cursor: default;
 }

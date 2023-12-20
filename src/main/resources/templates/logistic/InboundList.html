@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/script.js}"></script>
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
 
@@ -16,47 +15,58 @@
     <h1>입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
-        <a th:href="@{/logistic/warehouseinbound/add}" >
-            <button class="commonBtn register-button" type="submit"> + 입고 등록 </button>
-        </a>
+            <a th:href="@{/logistic/inbound/warehouse/add}">
+                <button class="commonBtn register-button" type="submit"> + 입고 등록</button>
+            </a>
+        </div>
+        <div class="middle-btn">
+            <a th:href="@{/logistic/inbound/warehouse/list}">
+                <button class="wideBtn switch-button1"> 창고 입고</button>
+            </a>
+            <a th:href="@{/logistic/inbound/store/list}">
+                <button class="wideBtn switch-button2"> 매장 입고</button>
+            </a>
         </div>
         <form>
-        <label>
-            <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}" onchange="handleCheckboxClick()">
-            <input type="hidden" name="_bulkInboundCheckbox" value="on">
-            대량 입고
-        </label>
+            <label class="left-align">
+                <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}"
+                       onchange="handleCheckboxClick()">
+                <input type="hidden" name="_bulkInboundCheckbox" value="on">
+                 대량 입고
+            </label>
         </form>
 
-        <input type="text" th:value="${checkbox}" readonly>
-
-            <table class="list-table">
+        <table class="list-table">
 
 
-                <thead>
-                <tr>
-                    <th>입고번호</th><th>입고일자</th><th>담당자</th><th>총입고수량</th><th>구분</th>
-                </tr>
-                </thead>
-                <tbody th:fragment="inboundTableBody" id="inboundTableBody">
-                <tr th:each="i:${inbounds}">
+            <thead>
+            <tr>
+                <th>입고번호</th>
+                <th>입고일자</th>
+                <th>담당자</th>
+                <th>총입고수량</th>
+                <th>구분</th>
+            </tr>
+            </thead>
+            <tbody th:fragment="inboundTableBody" id="inboundTableBody">
+            <tr th:each="i:${inbounds}">
 
-                    <td>
-                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
-                            주문 Id
-                        </a>
-                    </td>
+                <td>
+                    <a th:text="${i.warehouseInboundId}"
+                       th:href="@{/logistic/inbound/warehouse/info/{Id}(Id=${i.warehouseInboundId})}">
+                        주문 Id
+                    </a>
+                </td>
 
-                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
-                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
-                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
-                    <td >비고</td>
-                </tr>
+                <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
+                <td th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
+                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                <td>비고</td>
+            </tr>
 
-                </tbody>
+            </tbody>
 
-            </table>
-
+        </table>
 
 
     </div>
@@ -67,7 +77,7 @@
             console.log(isChecked);
 
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/logistic/warehouseinbound/list?bulkInboundCheckbox=' + isChecked, true);
+            xhr.open('GET', '/logistic/inbound/warehouse/list?bulkInboundCheckbox=' + isChecked, true);
             //업데이트 하는 부분
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -84,8 +94,6 @@
             };
             xhr.send();
         }
-
-
 
 
     </script>

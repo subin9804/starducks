@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +23,16 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
     List<Employee> findByPosition(Position position);
 
+    // 퇴사여부로 직원 검색
+    List<Employee> findByStatus(Boolean status);
+
     // 이메일로 직원 검색
     Optional<Employee> findByEmail(String email);
 
-//    List<Employee> dynamicSearch(EmpSearchCond empSearch);
-//    Page<Employee> pagination(EmpSearchCond empSearch, Pageable pageable);
+    @Query("SELECT e FROM Employee e WHERE e.dept.deptId = :deptId AND e.empName LIKE %:name%")
+    List<Employee> findDeptEmployee (@Param("deptId") int deptId,@Param("name") String name);
+
+    List<Employee> findByDept_deptId (int deptId);
 
     default Page<Employee> getEmployees(EmpSearchCond empSearch) {
         /** 페이징 처리 */
@@ -59,7 +65,6 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
         }
 
         /** 퇴사여부 옵션 선택 시 */
-
         if (status != null && !status.isBlank()) {
             if ("stopped".equals(status)) {
                 builder.and(employee.status.isTrue());
@@ -71,8 +76,6 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
             builder.andAnyOf(employee.status.isFalse(),
                     employee.status.isTrue());
         }
-
-//        builder.and(andBuilder);
 
         Page<Employee> data = findAll(builder, pageable);
         return data;

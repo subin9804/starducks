@@ -13,9 +13,11 @@
   <title>개인 정보 수정</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/header/style.css}">
   <script th:src="@{/js/header/script.js}"></script>
+
 </th:block>
 
 <main layout:fragment="content">
+
   <h1 class="p-custom">개인 정보 수정</h1>
   <div class="content">
     <form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}"

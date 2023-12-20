@@ -27,8 +27,8 @@ public class StoreDTO {
     private StoreOperationalYn storeOperationalYn; // 운영 여부
 
 
-    public Store toEntity() {
-        return new Store(storeNo, storeName, businessNum, employee, storeOpenDate,
-                addNo, storeAddr, storeDetailAddr,storeOperationalYn);
-    }
+//    public Store toEntity() {
+//        return new Store(storeNo, storeName, businessNum, employee, storeOpenDate,
+//                addNo, storeAddr, storeDetailAddr,storeOperationalYn);
+//    }
 }

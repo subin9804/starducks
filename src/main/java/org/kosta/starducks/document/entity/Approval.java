@@ -20,14 +20,15 @@ public class Approval {
 
     private int apvStep;
     private String apvComment;
+
     private LocalDateTime apvDate;
 
     @Enumerated(EnumType.STRING)
     private ApvStatus apvStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "apv_emp_id", nullable = false)
-    private Employee employee;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_id", nullable = false)
+    private Employee apvEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_id", nullable = false)
