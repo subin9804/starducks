@@ -202,8 +202,9 @@ public class EmpService {
     @Transactional
     public Map<Department, List<Employee>> getAllEmpExcludingLoggedInUser(Long loggedInUserId) {
         List<Employee> employees = repository.findAll();
-      return employees.stream()
+        return employees.stream()
             .filter(emp -> !emp.getEmpId().equals(loggedInUserId)) // 로그인한 사용자 제외
+            .filter(emp -> !emp.isStatus()) // 퇴사한 사원 제외 (status가 true인 사람 제외)
             .collect(Collectors.groupingBy(Employee::getDept, LinkedHashMap::new, Collectors.toList()));
     }
 }
