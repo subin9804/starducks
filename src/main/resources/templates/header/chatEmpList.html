@@ -19,18 +19,28 @@
   <input type="search" placeholder="부서/사원 검색"/>
   <button id="searchButton" class="search-button">검색</button>
 </div>
+<!--<div class="chat-emp-list">-->
+<!--  <div th:each="deptEntry : ${groupedEmployees.entrySet()}">-->
+<!--    <h3 th:text="${deptEntry.key.deptName}">부서명</h3>-->
+<!--    <ul>-->
+<!--      <li th:each="emp : ${deptEntry.value}">-->
+<!--        <span th:text="${emp.empName}">사원 이름</span>-->
+<!--        <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</div>-->
 <div class="chat-emp-list">
   <div th:each="deptEntry : ${groupedEmployees.entrySet()}">
     <h3 th:text="${deptEntry.key.deptName}">부서명</h3>
-    <ul>
-      <li th:each="emp : ${deptEntry.value}">
+    <ul th:each="emp : ${deptEntry.value}" class="employee-list">
+      <li class="employee" th:data-emp-id="${emp.empId}">
         <span th:text="${emp.empName}">사원 이름</span>
         <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>
       </li>
     </ul>
   </div>
 </div>
-
 <div id="createRoomModal" class="chat-modal">
   <div class="chat-modal-content">
     <form id="createRoomForm" action="/createChatRoom" method="post">
@@ -43,6 +53,31 @@
     </form>
   </div>
 </div>
+<script>
+  // 검색 필드와 검색 버튼의 참조를 가져옵니다.
+  const searchInput = document.querySelector('.emp-search-form input[type="search"]');
+  const searchButton = document.getElementById('searchButton');
+
+  // 검색 버튼에 클릭 이벤트 리스너를 추가합니다.
+  searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    // 모든 사원 목록을 가져옵니다.
+    const employees = document.querySelectorAll('.employee');
+
+    // 각 사원을 숨기거나 보여줍니다.
+    employees.forEach(function(emp) {
+      const empName = emp.querySelector('span').textContent.toLowerCase();
+      const empDept = emp.closest('.chat-emp-list').querySelector('h3').textContent.toLowerCase();
+
+      if (empName.includes(searchTerm) || empDept.includes(searchTerm)) {
+        emp.style.display = ""; // 검색어가 포함되어 있다면 보여줍니다.
+      } else {
+        emp.style.display = "none"; // 검색어가 포함되어 있지 않다면 숨깁니다.
+      }
+    });
+  });
+</script>
 <script>
   // 모달 열기
   const modal = document.getElementById("createRoomModal");
@@ -66,6 +101,7 @@
   document.getElementById('createRoomForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
+    // 체크박스를 체크하면 채팅방 생성 때 포함된다
     const selectedEmpIds = [];
     document.querySelectorAll('input[name="empCheckbox"]:checked').forEach(function (checkbox) {
       selectedEmpIds.push(checkbox.value);
@@ -90,9 +126,6 @@
       window.location.href = '/chatRoomList';
     });
   });
-
 </script>
-
-
 </body>
 </html>

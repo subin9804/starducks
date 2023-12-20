@@ -236,60 +236,48 @@ input[type="search"] {
 /*채팅 사원 목록 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*채팅방 목록 페이지 ~~~~~~~~~~~~~~~~~~~~~~~*/
-.chat-room-list {
-    margin: 0;
-    padding: 0;
-    list-style: none; /* 기본 목록 스타일 제거 */
+
+/* 채팅방 목록 전체에 적용되는 스타일 */
+#chat-room-list .chat-room {
+     background-color: #6B4D27;
+     border: 1px solid #6B4D27;
+     border-radius: 8px;
+     margin: 10px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 15px;
+ }
+
+#chat-room-list .chat-room-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 20%;
+    margin-right: 15px;
 }
 
-.chat-room-each {
-    border: 1px solid black;
-}
-
-.chat-room-item {
-    background-color: #ffffff;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    overflow: hidden; /* 내용이 넘칠 경우 잘림 */
-}
-
-.chat-room-entry {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-}
-
-.chat-room-logo {
-    width: 6px;
-    height: 6px;
-    /*border-radius: 50%;*/
-    /*margin-right: 15px;*/
-}
-
-.chat-room-info {
+#chat-room-list .chat-room-info {
     flex-grow: 1;
 }
 
-.chat-room-name {
+#chat-room-list .chat-room-name {
     font-size: 1.1em;
     font-weight: bold;
-    display: block; /* 링크를 블록 요소로 만들어 줄 바꿈 */
-    margin-bottom: 5px; /* 이름과 사원 목록 사이 간격 */
-    color: #333; /* 링크 색상 */
-    text-decoration: none; /* 밑줄 제거 */
+    color: #ffffff;
+    text-decoration: none;
 }
 
-.chat-room-employees {
-    font-size: 0.9em;
-    color: #6c757d;
-    white-space: nowrap; /* 공간이 부족하면 줄바꿈 없이 한 줄에 표시 */
-    overflow: hidden; /* 내용이 넘칠 경우 잘림 */
-    text-overflow: ellipsis; /* 잘리는 내용은 말줄임표로 표시 */
+#chat-room-list .chat-room-action button {
+    padding: 5px 10px; /* 버튼 내부 여백 조정 */
+    background-color: #6B4D27; /* 버튼 배경색 */
+    border: none; /* 버튼 테두리 제거 */
+    box-shadow: none; /* 버튼 그림자 제거 */
+    color: white; /* 버튼 글자색 */
+    cursor : pointer;
 }
 
-.chat-room-item:hover {
-    background-color: #eaeaea;
+#chat-room-list .chat-room-action button i {
+    font-size: 2em; /* 아이콘 크기 조정 */
 }
 
 
@@ -318,7 +306,7 @@ input[type="search"] {
     border: none;
     background: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 30px;
 }
 
 .chat-room-title {
@@ -425,6 +413,7 @@ input[type="search"] {
     color: white;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .messageForm-button:hover {

@@ -3,9 +3,12 @@
 <head>
 
   <title>채팅방 목록</title>
+
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
 
   <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
@@ -51,13 +54,14 @@
       success: function (rooms) {
         let chatRoomListHtml = rooms.map(room => `
                     <div class="chat-room">
-                        <div class="chat-room-info">
-                            <div class="chat-room-name">${room.roomName}</div>
-                        </div>
-                        <div class="chat-room-action">
-                            <button onclick="goToChatRoom(${room.id})">Enter</button>
-                        </div>
+                    <img alt="Chat Room Logo" class="chat-room-logo" src="/images/Starducks_Logo.png">
+                    <div class="chat-room-info">
+                        <div class="chat-room-name">${room.roomName}</div>
                     </div>
+                    <div class="chat-room-action">
+                        <button onclick="goToChatRoom(${room.id})"><i class="fa-solid fa-right-to-bracket"></i></button>
+                    </div>
+                </div>
                 `).join('');
         $("#chat-room-list").html(chatRoomListHtml);
       },
@@ -87,6 +91,26 @@
   }
 
   /*]]>*/
+</script>
+<script>
+  // 검색 버튼 클릭 이벤트 리스너
+  document.getElementById('chatRoomSearchButton').addEventListener('click', function() {
+    const searchTerm = document.getElementById('chatRoomSearchInput').value.toLowerCase();
+
+    // 모든 채팅방 항목을 가져옵니다.
+    const chatRoomItems = document.querySelectorAll('.chat-room-each');
+
+    // 각 채팅방을 숨기거나 보여줍니다.
+    chatRoomItems.forEach(function(chatRoomItem) {
+      const chatRoomName = chatRoomItem.querySelector('.chat-room-name').textContent.toLowerCase();
+      // 채팅방 이름에 검색어가 포함되어 있는 경우에만 보여줍니다.
+      if (chatRoomName.includes(searchTerm)) {
+        chatRoomItem.style.display = '';
+      } else {
+        chatRoomItem.style.display = 'none';
+      }
+    });
+  });
 </script>
 </body>
 </html>

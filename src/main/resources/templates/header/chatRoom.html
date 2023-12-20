@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
 
@@ -18,7 +20,7 @@
 <body>
 <header>
   <div class="header-container">
-    <button class="back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''"><</button>
+    <button class="back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''"><i class="fa-solid fa-right-from-bracket"></i></button>
     <h1 class="chat-room-title" th:text="${roomName}"></h1>
   </div>
 </header>
