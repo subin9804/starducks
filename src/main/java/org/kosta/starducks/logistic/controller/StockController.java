@@ -100,16 +100,6 @@ public class StockController {
         productService.updateProductStock(productStockUpdateDto);
         return "redirect:/logistic/stock/warehouse/list";
     }
-//
-//    @PostMapping("/update/{productCode}")
-//    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto,
-//                                @PathVariable("productCode") Long productCode) {
-//        //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
-//
-//        productService.updateProduct(productUpdateDto);
-//
-//        return "redirect:/general/products/list";
-//    }
 
 
 
