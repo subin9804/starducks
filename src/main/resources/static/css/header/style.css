@@ -461,7 +461,7 @@ input[type="search"] {
 
 .dl-custom {
     margin: 0;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .dt-custom {
@@ -488,7 +488,7 @@ input[type="search"] {
 
 .form-custom {
     border-bottom: 1px solid #6B4D27;
-    padding: 40px 100px;
+    padding: 30px 50px;
 }
 
 .p-custom {
@@ -515,7 +515,7 @@ input[type="search"] {
     width: 100%;
     display: inline-flex;
     flex-direction: row;
-    gap: 80px;
+    gap: 40px;
 }
 
 .formSection-custom section:first-child {
@@ -581,19 +581,18 @@ input[type="search"] {
     background-color: #ddd;
 }
 
-/* 우편번호 스타일 */
-.postNo-custom {
-    display: inline-block !important;
-    width: 150px;
+
+.postNo-container {
+    padding-top: 10px; !important;
+    display: flex !important;
+    justify-content: flex-end !important;
 }
 
-.postNo-custom + span {
-    cursor: pointer;
-    background-color: #ddd;
-    display: inline-block;
-    padding: 6px;
-    border-radius: 10px;
+/* 우편번호 스타일 */
+.postNo-custom {
+ margin-right: 10px;
 }
+
 
 /* 하단 버튼 스타일 */
 .button-custom {
@@ -609,4 +608,16 @@ a p.commonBtn-custom {
     display: inline-block;
 }
 
+.pwd-container {
+    border: 1px solid black;
+}
+
+
+.dd-custom-pwd {
+    display: flex; /* 요소들을 flex 컨테이너로 만들어 줌 */
+    align-items: center; /* 수직 방향 가운데 정렬 */
+    text-align: right;
+    margin: 0;
+    padding: 0;
+}
 /*개인 정보 수정 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

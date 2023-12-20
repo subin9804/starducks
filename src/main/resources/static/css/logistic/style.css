@@ -7,6 +7,7 @@
     border-radius: 10px;
     background-color: rgba(255, 255, 255,0.75);
     min-height: 800px;
+    flex-grow: 1; /* This line is added */
 }
 
 
@@ -47,6 +48,13 @@
 .form{
     width: 100%;
     height: 100%;
+}
+
+.inventoryUpdate-form {
+    width: 100%;
+    flex-grow: 1; /* This line is added */
+    display: flex; /* This line is added */
+    flex-direction: column; /* This line is added */
 }
 
 /*목록 페이지의 표에 대한 스타일 적용*/
