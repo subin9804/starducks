@@ -70,6 +70,13 @@ public class VendorService {
     public List<Vendor> findAll() {
         return vendorRepository.findAll();
     }
+//    public Page<Vendor> getAllVendors(Pageable pageable) {
+//        return vendorRepository.findAll(pageable);
+//    }
+//
+//    public Page<Vendor> vendorSearchList(String searchKeyword, Pageable pageable) {
+//        return vendorRepository.findByVendorNameContaining(searchKeyword, pageable);
+//    }
 
     /**
      * 거래처 수정
@@ -110,4 +117,17 @@ public class VendorService {
         }
 
     }
+
+    /**
+     * 거래처 삭제하기
+     * @param vendorId
+     * @param rttr
+     */
+//    public void deleteVendor(int vendorId, RedirectAttributes rttr) {
+//        Vendor vendorTarget = vendorRepository.findById(vendorId).orElse(null);
+//        if(vendorTarget != null) {
+//            vendorRepository.delete(vendorTarget);
+//            rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");
+//        }
+//    }
 }

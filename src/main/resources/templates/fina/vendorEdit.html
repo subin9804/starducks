@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fina/style.css}">
 
 </th:block>
 
@@ -34,7 +35,7 @@
                 <dl>
                     <dt>업종</dt>
                     <dd>
-                        <select id="businessSector" name="businessSector" class="form-control">
+                        <select id="businessSector" name="businessSector" class="form-select">
                             <option th:each="sector : ${businessSectors}" th:value="${sector}"
                                     th:text="${sector.description}"
                                     th:selected="${vendor.vendorBusinessSector == sector}"></option>
@@ -83,7 +84,7 @@
             <dl>
                 <dt>계약 여부</dt>
                 <dd>
-                    <select id="contractStatus" name="contractStatus">
+                    <select id="contractStatus" name="contractStatus" class="form-select">
                         <option th:each="option : ${contractStatus}"
                                 th:value="${option.name()}"
                                 th:text="${option.getDisplayName()}" <!-- getDisplayName() 사용 -->

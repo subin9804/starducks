@@ -8,6 +8,9 @@ import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,13 +91,40 @@ public class VendorController {
      * 거래처 전체 조회
      */
     @GetMapping("/list")
-    public String showVendorList(Model model) {
-//        1. 모든 데이터 가져오기
+    public String showVendorList(Model model,
+                                 @PageableDefault(page = 0, size = 5, sort = "vendorId", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+
+//        Page<Vendor> vendors = null;
+//
+//        // 검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
+//        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+//            vendors = vendorService.vendorSearchList(searchKeyword, pageable);
+//        } else {
+//            vendors = vendorService.getAllVendors(pageable);
+//        }
+//
+////        페이지 블럭 처리
+//        int nowPage = vendors.getPageable().getPageNumber() + 1;
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, vendors.getTotalPages());
+//        int totalPages = vendors.getTotalPages();
+//
+//        if (totalPages == 0) {
+//            endPage = 1;
+//        }
+//
+//        model.addAttribute("vendors", vendors);
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        model.addAttribute("totalPages", totalPages);
+
         List<Vendor> vendorList = vendorService.findAll();
-//        2. 모델에 데이터 등록하기
         model.addAttribute("vendorList", vendorList);
-//        3. 뷰 페이지 설정하기
         return "fina/vendorList";
+
+//        return "fina/vendorList";
     }
 
     @GetMapping("/edit/{vendorId}")
@@ -102,7 +132,7 @@ public class VendorController {
 //        1. 수정할 데이터 가져오기
         Vendor vendor = vendorService.findById(vendorId);
 
-        // 2. 업종 정보가 없는 경우 초기화 (예시)
+        // 2. 업종 정보가 없는 경우 초기화
         if (vendor.getVendorBusinessSector() == null) {
             vendor.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
         }
@@ -119,4 +149,13 @@ public class VendorController {
         vendorService.updateVendor(vendorAndProductDTO);
         return "redirect:/fina/vendor/single/" + vendorAndProductDTO.getVendorId();
     }
+
+    /**
+     * vendorId가 총무부의 Product의 FK라 삭제 불가
+     */
+//    @GetMapping("/delete/{vendorId}")
+//    public String deleteVendor(@PathVariable("vendorId") int vendorId, RedirectAttributes rttr) {
+//        vendorService.deleteVendor(vendorId, rttr);
+//        return "redirect:/fina/vendor/list";
+//    }
 }

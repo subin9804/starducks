@@ -39,7 +39,7 @@
 
                 <dl>
                     <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
-                    <dd><select id="storeManager" name="storeManager">
+                    <dd><select id="storeManager" name="storeManager" class="form-select">
                         <option th:each="storeManager : ${storeManagers}"
                                 th:value="${storeManager}"
                                 th:text="${storeManager}"></option>
@@ -73,7 +73,7 @@
             <dl>
                 <dt><label for="storeOperationalYn">운영여부</label></dt>
                 <dd><select id="storeOperationalYn" name="storeOperationalYn"
-                            th:field="*{store.storeOperationalYn}">
+                            th:field="*{store.storeOperationalYn}" class="form-select">
                     <option th:each="option : ${storeOperationalYn}"
                             th:value="${option}"
                             th:text="${option.description}"
@@ -93,24 +93,5 @@
         </button>
         </form>
     </div>
-<!--    <script>-->
-    <!--    function confirmSave(storeNo) {-->
-    <!--        Swal.fire({-->
-    <!--            title: '저장 확인',-->
-    <!--            text: '해당 정보를 저장 하시겠습니까?',-->
-    <!--            icon: 'warning',-->
-    <!--            showCancelButton: true,-->
-    <!--            confirmButtonColor: '#3085d6',-->
-    <!--            cancelButtonColor: '#d33',-->
-    <!--            confirmButtonText: '확인',-->
-    <!--            cancelButtonText: '취소'-->
-    <!--        }).then((result) => {-->
-    <!--            if (result.isConfirmed) {-->
-    <!--                document.getElementById('saveAlert').submit();-->
-    <!--            }-->
-    <!--        })-->
-    <!--        return false;-->
-    <!--    }-->
-    <!--</script>-->
 </main>
 </html>

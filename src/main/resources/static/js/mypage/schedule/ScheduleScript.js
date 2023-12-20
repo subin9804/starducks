@@ -29,10 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
         events: function (fetchInfo, successCallback, errorCallback) {
-            var empId = 1;
 
             // 사용자의 일정 정보를 가져옴
-            fetchShowSingleSchedule(empId).then(function (data) {   // 서버에 요청을 보내어 해당 사용자의 일정 정보를 가져옴
+            fetchShowSingleSchedule().then(function (data) {
                 // console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
 
                 var events = data.map(function (schedule) {
@@ -59,19 +58,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
     // fetch를 사용하여 일정 정보를 요청하고, 받은 응답을 JSON 형태로 변환하여 반환
-    function fetchShowSingleSchedule(empId) {
-        // fetch 요청에 CSRF 토큰을 포함
-        return fetch('/schedule/show/' + empId, {
+    function fetchShowSingleSchedule() {
+// 사용자의 empId를 얻어오는 함수 호출
+        var empId = getEmpId();
+        return fetch('/mypage/schedule/api/show', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                [csrfHeaderName]: csrfToken // CSRF 토큰을 헤더에 추가
+                [csrfHeaderName]: csrfToken
             }
         })
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error('네트워크가 좋지 않습니다.');
                 }
-                return response.text(); // response.json() 대신 response.text()로 변경
+                return response.json(); // response.json() 대신 response.text()로 변경
             })
             .then(function (data) {
                 console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
@@ -80,6 +81,34 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(function (error) {
                 console.error("에러 발생: " + error); // 에러가 발생한 경우 콘솔에 출력
                 throw error; // 에러를 다시 던져서 처리
+            });
+    }
+
+// Principal 객체를 사용하여 empId를 추출하는 방법
+    function getEmpId() {
+        return fetch('/mypage/schedule/api/show', { // RESTful 엔드포인트의 URL을 사용하여 사용자 정보 가져오기
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfToken
+            }
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('네트워크가 좋지 않습니다.');
+                }
+                return response.json();
+            })
+            .then(function (userData) {
+                if (userData.empId) {
+                    return userData.empId;
+                } else {
+                    throw new Error('사용자 정보를 가져오지 못했습니다.');
+                }
+            })
+            .catch(function (error) {
+                console.error("에러 발생: " + error);
+                throw error;
             });
     }
 
@@ -186,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 notes: notes
             };
 
-            fetch('/schedule/add', {
+            fetch('/mypage/schedule/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: scheTitle,
                         start: scheStartDate,
                         end: scheEndDate,
-                        url: '/schedule/detail/' + responseData.scheNo,
+                        url: '/mypage/schedule/detail/' + responseData.scheNo,
                     };
                     console.log("responseData.scheNo ==> " + responseData.scheNo);
                     calendar.addEvent(newEvent);

@@ -122,7 +122,7 @@ public class StoreController {
      * @param model
      * @return
      */
-    @GetMapping("edit/{storeNo}")
+    @GetMapping("/edit/{storeNo}")
     public String editStore(@PathVariable("storeNo") Long storeNo, Model model) {
         Store storeEntity = storeService.getStoreById(storeNo);
         model.addAttribute("store", storeEntity);
@@ -146,7 +146,7 @@ public class StoreController {
         return "redirect:/fina/store/single/" + store.getStoreNo();
     }
 
-    @GetMapping("delete/{storeNo}")
+    @GetMapping("/delete/{storeNo}")
     public String deleteStore(@PathVariable("storeNo") Long storeNo, RedirectAttributes rttr) {
         storeService.deleteStore(storeNo, rttr);
         return "redirect:/fina/store/list";

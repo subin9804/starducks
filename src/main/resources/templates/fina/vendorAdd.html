@@ -83,22 +83,23 @@
 
                 <dl>
                     <dt><label for="storeOperationalYn">거래여부</label></dt>
-                <select id="storeOperationalYn" name="contractStatus">
-                    <option value="CONTRACT_ACTIVE"
-                            th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_ACTIVE'}">계약 중</option>
-                    <option value="CONTRACT_INACTIVE"
-                            th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_INACTIVE'}">계약 중지</option>
-                </select>
-                <dl>
+                    <select id="storeOperationalYn" name="contractStatus">
+                        <option value="CONTRACT_ACTIVE"
+                                th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_ACTIVE'}">계약 중
+                        </option>
+                        <option value="CONTRACT_INACTIVE"
+                                th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_INACTIVE'}">계약 중지
+                        </option>
+                    </select>
+                    <dl>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <button class="btn btn-primary" id="submitBtn" type="submit">등록</button>
+                <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
+                    목록
+                </button>
             </div>
         </div>
-    </div>
-
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <button class="btn btn-primary" id="submitBtn" type="submit">등록</button>
-        <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
-            목록
-        </button>
     </div>
     </form>
     </div>
