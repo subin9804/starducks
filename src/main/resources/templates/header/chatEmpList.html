@@ -19,19 +19,8 @@
   <input type="search" placeholder="부서/사원 검색"/>
   <button id="searchButton" class="search-button">검색</button>
 </div>
-<!--<div class="chat-emp-list">-->
-<!--  <div th:each="deptEntry : ${groupedEmployees.entrySet()}">-->
-<!--    <h3 th:text="${deptEntry.key.deptName}">부서명</h3>-->
-<!--    <ul>-->
-<!--      <li th:each="emp : ${deptEntry.value}">-->
-<!--        <span th:text="${emp.empName}">사원 이름</span>-->
-<!--        <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </div>-->
-<!--</div>-->
 <div class="chat-emp-list">
-  <div th:each="deptEntry : ${groupedEmployees.entrySet()}">
+  <div th:each="deptEntry : ${groupedEmployees.entrySet()}" class="chat-emp-dept">
     <h3 th:text="${deptEntry.key.deptName}">부서명</h3>
     <ul th:each="emp : ${deptEntry.value}" class="employee-list">
       <li class="employee" th:data-emp-id="${emp.empId}">
@@ -53,7 +42,24 @@
     </form>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+  // 채팅방 만들기 버튼 클릭 이벤트 핸들러
+  // 채팅방 만들기 버튼 클릭 이벤트 핸들러
+  document.getElementById("openCreateRoomModal").addEventListener("click", function () {
+    const selectedEmpCheckboxes = document.querySelectorAll('input[name="empCheckbox"]:checked');
+    if (selectedEmpCheckboxes.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: '사원을 선택해 주세요',
+      });
+    } else {
+      // 채팅방 만들기 모달 열기
+      const modal = document.getElementById("createRoomModal");
+      modal.style.display = "block";
+    }
+  });
+
   // 검색 필드와 검색 버튼의 참조를 가져옵니다.
   const searchInput = document.querySelector('.emp-search-form input[type="search"]');
   const searchButton = document.getElementById('searchButton');
@@ -82,9 +88,6 @@
   // 모달 열기
   const modal = document.getElementById("createRoomModal");
   const btn = document.getElementById("openCreateRoomModal");
-  btn.onclick = function () {
-    modal.style.display = "block";
-  }
 
   // 모달 닫기
   document.querySelector('.chat-close-btn').addEventListener('click', function () {

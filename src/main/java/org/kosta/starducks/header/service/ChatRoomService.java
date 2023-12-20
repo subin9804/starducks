@@ -30,7 +30,6 @@ public class ChatRoomService {
   @Autowired
   private final ChatRoomEmpRepository chatRoomEmpRepository;
 
-
   //  채팅방 조회
   @Transactional
   public ChatRoomResponseDto findById(final Long id) {
@@ -66,7 +65,6 @@ public class ChatRoomService {
     return chatRoom.getId();
   }
 
-
   //  채팅방 이름 수정
   @Transactional
   public Long update(final Long id, ChatRoomRequestDto requestDto) {
@@ -84,22 +82,6 @@ public class ChatRoomService {
     this.chatRoomRepository.delete(chatRoom);
   }
 
-  // ChatRoom 목록조회 - 최신순, List
-  @Transactional
-  public List<ChatRoomResponseDto> findALlDesc() {
-    Sort sort = Sort.by(Sort.Direction.DESC, "id");
-    List<ChatRoom> chatRoomList = this.chatRoomRepository.findAll(sort);
-
-    return chatRoomList.stream().map(ChatRoomResponseDto::new).collect(Collectors.toList());
-  }
-
-   // ChatRoom 검색목록조회 - 최신순, List
-  @Transactional
-  public List<ChatRoomResponseDto> findAllByRoomNameDesc(String roomName) {
-    Sort sort = Sort.by(Sort.Direction.DESC, "id");
-    List<ChatRoom> chatRoomList = this.chatRoomRepository.findAllByRoomNameContaining(roomName, sort);
-    return chatRoomList.stream().map(ChatRoomResponseDto::new).collect(Collectors.toList());
-  }
 
   public List<ChatRoomResponseDto> getChatRoomsForEmployee(Long empId) {
     List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByEmployeeId(empId);

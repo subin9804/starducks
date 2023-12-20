@@ -30,7 +30,7 @@
         <img alt="Chat Room Logo" class="chat-room-logo" th:src="@{/images/Starducks_Logo.png}">
         <div class="chat-room-info">
           <a th:href="@{/chatRoom/{roomId}(roomId=${chatRoom.id})}" class="chat-room-name" th:text="${chatRoom.roomName}">채팅방 이름</a>
-<!--          <div class="chat-room-employees" th:text="${#strings.arrayJoin(chatRoom.employees, ', ')}">사원 이름들</div>-->
+          <div th:text="${#strings.listJoin(chatRoom.empNames, ', ')}" class="chat-room-employees"></div>
         </div>
       </div>
     </li>
@@ -52,17 +52,23 @@
       type: 'GET',
       dataType: 'json',
       success: function (rooms) {
-        let chatRoomListHtml = rooms.map(room => `
-                    <div class="chat-room">
-                    <img alt="Chat Room Logo" class="chat-room-logo" src="/images/Starducks_Logo.png">
-                    <div class="chat-room-info">
-                        <div class="chat-room-name">${room.roomName}</div>
-                    </div>
-                    <div class="chat-room-action">
-                        <button onclick="goToChatRoom(${room.id})"><i class="fa-solid fa-right-to-bracket"></i></button>
-                    </div>
-                </div>
-                `).join('');
+        let chatRoomListHtml = rooms.map(room => {
+          // 사원 이름들을 콤마로 구분하여 하나의 문자열로 결합
+          const empNamesString = room.empNames.join(', ');
+
+          return `
+          <div class="chat-room">
+            <img alt="Chat Room Logo" class="chat-room-logo" src="/images/Starducks_Logo.png">
+            <div class="chat-room-info">
+              <div class="chat-room-name">${room.roomName}</div>
+              <div class="chat-room-employees">${empNamesString}</div> <!-- 사원 이름들 출력 -->
+            </div>
+            <div class="chat-room-action">
+              <button onclick="goToChatRoom(${room.id})"><i class="fa-solid fa-right-to-bracket"></i></button>
+            </div>
+          </div>
+        `;
+        }).join('');
         $("#chat-room-list").html(chatRoomListHtml);
       },
       error: function (xhr, status, error) {
@@ -94,20 +100,41 @@
 </script>
 <script>
   // 검색 버튼 클릭 이벤트 리스너
-  document.getElementById('chatRoomSearchButton').addEventListener('click', function() {
-    const searchTerm = document.getElementById('chatRoomSearchInput').value.toLowerCase();
+  document.getElementById('searchButton').addEventListener('click', function() {
+    const searchTerm = document.querySelector('.emp-search-form input[type="search"]').value.toLowerCase();
 
-    // 모든 채팅방 항목을 가져옵니다.
-    const chatRoomItems = document.querySelectorAll('.chat-room-each');
+    // AJAX 요청을 다시 보내어 채팅방 목록을 불러옵니다.
+    $.ajax({
+      url: '/api/chat/rooms/my-rooms',
+      type: 'GET',
+      dataType: 'json',
+      success: function (rooms) {
+        // 검색어에 맞는 채팅방만 필터링합니다.
+        const filteredRooms = rooms.filter(room => {
+          return room.roomName.toLowerCase().includes(searchTerm) ||
+            room.empNames.some(empName => empName.toLowerCase().includes(searchTerm));
+        });
 
-    // 각 채팅방을 숨기거나 보여줍니다.
-    chatRoomItems.forEach(function(chatRoomItem) {
-      const chatRoomName = chatRoomItem.querySelector('.chat-room-name').textContent.toLowerCase();
-      // 채팅방 이름에 검색어가 포함되어 있는 경우에만 보여줍니다.
-      if (chatRoomName.includes(searchTerm)) {
-        chatRoomItem.style.display = '';
-      } else {
-        chatRoomItem.style.display = 'none';
+        // 필터링된 채팅방 목록을 화면에 표시합니다.
+        let chatRoomListHtml = filteredRooms.map(room => {
+          const empNamesString = room.empNames.join(', ');
+          return `
+          <div class="chat-room">
+            <img alt="Chat Room Logo" class="chat-room-logo" src="/images/Starducks_Logo.png">
+            <div class="chat-room-info">
+              <div class="chat-room-name">${room.roomName}</div>
+              <div class="chat-room-employees">${empNamesString}</div>
+            </div>
+            <div class="chat-room-action">
+              <button onclick="goToChatRoom(${room.id})"><i class="fa-solid fa-right-to-bracket"></i></button>
+            </div>
+          </div>
+        `;
+        }).join('');
+        $("#chat-room-list").html(chatRoomListHtml);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error loading chat rooms: ", status, error);
       }
     });
   });
