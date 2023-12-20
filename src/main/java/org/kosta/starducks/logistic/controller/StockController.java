@@ -88,14 +88,6 @@ public class StockController {
     }
 
 
-
-
-
-
-
-
-
-
     @GetMapping("/store/info/{productCode}/{storeNo}")
     public String getsInventoryInfo(@PathVariable("storeNo") Long storeNo,
                                    @PathVariable("productCode") Long productCode,

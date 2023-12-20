@@ -3,17 +3,19 @@ package org.kosta.starducks.logistic.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.kosta.starducks.commons.BaseTimeEntity;
 import org.kosta.starducks.fina.entity.Store;
 import org.kosta.starducks.generalAffairs.entity.Product;
 
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
 @Data
-public class StoreInventory implements Serializable {
-    //지점 재고 entity
+public class StoreInventory extends BaseTimeEntity implements Serializable {
 
+    //지점 재고 entity
 
     @EmbeddedId
     //복합식별자 지정하기
@@ -35,7 +37,6 @@ public class StoreInventory implements Serializable {
     @Column
     private int inventoryCnt;
 
-    private Date LastUpdateDate;
 
 
     public void increaseCnt(int inboundQuantity){

@@ -50,6 +50,7 @@
                 <td th:text="${p.productCode}">p.productCode</td>
                 <td>
                     <a th:text="${p.productName}" th:href="@{/logistic/stock/warehouse/info/{code}(code=${p.productCode})}">p.name</a>
+
                 </td>
                 <td th:text="${p.productCategory}">카테고리</td>
 
