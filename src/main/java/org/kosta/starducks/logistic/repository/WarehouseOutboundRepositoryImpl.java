@@ -16,7 +16,7 @@ public class WarehouseOutboundRepositoryImpl implements WarehouseOutboundReposit
 
     private final JPAQueryFactory jpaQueryFactory;
 
-  @Override
+    @Override
     public List<WarehouseOutbound> findRecentHighTotalPriceOutbounds() {
 
         /*
@@ -25,17 +25,22 @@ public class WarehouseOutboundRepositoryImpl implements WarehouseOutboundReposit
         WHERE
         */
 
-      //한달 이내에 백만원이상이거나 100개이상의 출고가 이루어 진 경우
-      LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-      BooleanBuilder whereBuilder = new BooleanBuilder();
-      whereBuilder.and(QWarehouseOutbound.warehouseOutbound.warehouseOutboundDate.after(oneMonthAgo));
-      whereBuilder.or(QWarehouseOutbound.warehouseOutbound.totalPrice.gt(1000000L));
-      whereBuilder.or(QWarehouseOutbound.warehouseOutbound.totalQuantity.gt(100));
+        //한달 이내에 백만원이상이거나 100개이상의 출고가 이루어 진 경우
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        BooleanBuilder whereBuilder = new BooleanBuilder();
+        whereBuilder.or(
+                QWarehouseOutbound.warehouseOutbound.warehouseOutboundDate.after(oneMonthAgo)
+                        .and(QWarehouseOutbound.warehouseOutbound.totalPrice.gt(1000000L))
+        );
+        whereBuilder.or(
+                QWarehouseOutbound.warehouseOutbound.warehouseOutboundDate.after(oneMonthAgo)
+                        .and(QWarehouseOutbound.warehouseOutbound.totalQuantity.gt(100))
+        );
 
-      return jpaQueryFactory
-              .selectFrom(QWarehouseOutbound.warehouseOutbound)
-              .where(whereBuilder)
-              .fetch();
+        return jpaQueryFactory
+                .selectFrom(QWarehouseOutbound.warehouseOutbound)
+                .where(whereBuilder)
+                .fetch();
 
 
     }

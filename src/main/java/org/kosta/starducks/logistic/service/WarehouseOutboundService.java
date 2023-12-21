@@ -75,7 +75,7 @@ public class WarehouseOutboundService {
     }
 
     private void updateStock(Product product, int outboundQuantity) {
-        product.setProductCnt(product.getProductCnt() - outboundQuantity);
+        product.setProductCnt(product.getProductCnt()-outboundQuantity);
         productRepository.save(product);
     }
 

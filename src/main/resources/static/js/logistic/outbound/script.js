@@ -22,7 +22,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         let item = {
             empId: employeeSelect.value,
             productCode: productSelect.value,
-            inboundQuantity: quantityInput.value
+            outboundQuantity: quantityInput.value
         };
 
         if (!isProductCodeInList(item.productCode)) {

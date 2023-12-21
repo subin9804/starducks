@@ -86,9 +86,9 @@
                     var responseDoc = parser.parseFromString(xhr.responseText, 'text/html');
 
                     // 조건 추가: 'outboundTableBody' ID를 가진 요소를 찾을 수 있는 경우에만 업데이트
-                    var updatedTableBody = responseDoc.getElementById('OutboundTableBody');
+                    var updatedTableBody = responseDoc.getElementById('outboundTableBody');
                     if (updatedTableBody) {
-                        document.getElementById('OutboundTableBody').innerHTML = updatedTableBody.innerHTML;
+                        document.getElementById('outboundTableBody').innerHTML = updatedTableBody.innerHTML;
                     }
                 }
             };
