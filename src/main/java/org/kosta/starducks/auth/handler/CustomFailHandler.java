@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -28,11 +29,16 @@ public class CustomFailHandler extends SimpleUrlAuthenticationFailureHandler {
     String errorMessage;
     if (exception instanceof BadCredentialsException) {
       errorMessage = "정보가 일치하지 않습니다.";
+
     } else {
-      errorMessage = "알 수 없는 이유로 로그인에 실패하였습니다. 관리자에게 문의하세요.";
+      errorMessage = "로그인에 실패하였습니다. 관리자에게 문의하세요.";
     }
-    errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8); //인코딩을 해줘야 주소창에서 한글을 인식한다
-    setDefaultFailureUrl("/login?error=true&exception=" + errorMessage); //주소창에 에러 메시지가 추가됨
+
+    if (exception instanceof DisabledException) {
+      errorMessage = "퇴사한 직원은 로그인할 수 없습니다."; // 퇴사한 직원에 대한 메시지
+    }
+    errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
+    setDefaultFailureUrl("/login?error=true&exception=" + errorMessage);
 
     super.onAuthenticationFailure(request, response, exception);
   }
