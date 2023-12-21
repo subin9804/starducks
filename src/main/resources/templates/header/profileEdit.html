@@ -32,13 +32,13 @@
           <!-- 사원번호 -->
           <dl class="dl-custom">
             <dt class="dt-custom">사원 번호</dt>
-            <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
+            <dd class="dd-custom"><input type="text" th:value="*{empId}" class="input-disabled-custom" disabled></dd>
             <input type="hidden" th:field="*{empId}" id="empId"/>
           </dl>
           <!-- 사원 이름 -->
           <dl class="dl-custom">
             <dt class="dt-custom">사원 이름</dt>
-            <dd class="dd-custom"><input type="text" th:value="*{empName}" disabled></dd>
+            <dd class="dd-custom"><input type="text" th:value="*{empName}" class="input-disabled-custom" disabled></dd>
           </dl>
           <!-- 연락처 -->
           <dl class="dl-custom">
@@ -48,29 +48,29 @@
           <!-- 이메일 -->
           <dl class="dl-custom">
             <dt class="dt-custom">이메일</dt>
-            <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
+            <dd class="dd-custom"><input type="email" class="mail-custom" th:field="*{email}"></dd>
           </dl>
           <!-- 생년월일 -->
           <dl class="dl-custom">
             <dt class="dt-custom">생년월일</dt>
-            <dd class="dd-custom"><input type="date" th:value="*{birth}" disabled></dd>
+            <dd class="dd-custom"><input type="date" th:value="*{birth}" class="input-disabled-custom" disabled></dd>
           </dl>
         </section>
         <section>
           <!-- 부서 -->
           <dl class="dl-custom">
             <dt class="dt-custom">부서</dt>
-            <dd class="dd-custom"><input type="text" th:value="*{dept.deptName}" disabled></dd>
+            <dd class="dd-custom"><input type="text" th:value="*{dept.deptName}" class="input-disabled-custom" disabled></dd>
           </dl>
           <!-- 직급 -->
           <dl class="dl-custom">
             <dt class="dt-custom">직급</dt>
-            <dd class="dd-custom"><input type="text" th:value="*{position}" disabled></dd>
+            <dd class="dd-custom"><input type="text" th:value="*{position}" class="input-disabled-custom" disabled></dd>
           </dl>
           <!-- 입사 일자 -->
           <dl class="dl-custom">
             <dt class="dt-custom">입사 일자</dt>
-            <dd class="dd-custom"><input type="date" th:value="*{joinDate}" disabled></dd>
+            <dd class="dd-custom"><input type="date" th:value="*{joinDate}" class="input-disabled-custom" disabled></dd>
           </dl>
           <!-- 주소 -->
           <dl class="dl-custom postNo-container">
@@ -255,6 +255,7 @@
         .then(data => {
           if (data) {
             alert("비밀번호가 변경되었습니다.");
+            window.location.href = '/profileEdit';
           } else {
             alert("비밀번호 변경 실패");
           }
