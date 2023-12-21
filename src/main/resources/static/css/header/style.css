@@ -488,6 +488,8 @@ input[type="search"] {
 
 .form-custom {
     padding: 30px 50px;
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
     background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경, 50% 투명도 */
 }
 
