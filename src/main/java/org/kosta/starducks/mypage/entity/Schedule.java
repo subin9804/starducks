@@ -34,8 +34,6 @@ public class Schedule {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", referencedColumnName = "empId") // 여기서 변경
+    @JoinColumn(name = "emp_id", referencedColumnName = "empId")
     private Employee employee;
-
-
 }

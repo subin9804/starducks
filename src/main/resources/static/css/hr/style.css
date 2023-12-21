@@ -94,7 +94,7 @@ input[type='checkbox'].selectbox {display: none;}
     top: 5px;
     right: 10px;
 }
-.options1, .options2 {
+#options1, #options2 {
     position: absolute;
     max-height: 200px;
     overflow-y: scroll;

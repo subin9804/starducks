@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
+import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +30,6 @@ public class EmpService {
 
     /**
      * 모든 직원 조회
-     * @return
      */
     @Transactional
     public List<Employee> getAllEmp() {
@@ -179,4 +182,29 @@ public class EmpService {
         return false;
     }
 
+    /**
+     * 부서별로 직원 조회 하기
+     */
+    @Transactional
+    public Map<Department, List<Employee>> getAllEmpGroupedByDept() {
+        List<Employee> employees = repository.findAllEmployeesWithDepartmentOrder();
+        return employees.stream()
+            .collect(Collectors.groupingBy(Employee::getDept,
+                LinkedHashMap::new, // 정렬 순서 유지
+                Collectors.toList()));
+    }
+
+    /**
+     * 로그인한 사원 제외하고 모든 사원을 부서별로 가져오기
+     * @param loggedInUserId
+     * @return
+     */
+    @Transactional
+    public Map<Department, List<Employee>> getAllEmpExcludingLoggedInUser(Long loggedInUserId) {
+        List<Employee> employees = repository.findAll();
+        return employees.stream()
+            .filter(emp -> !emp.getEmpId().equals(loggedInUserId)) // 로그인한 사용자 제외
+            .filter(emp -> !emp.isStatus()) // 퇴사한 사원 제외 (status가 true인 사람 제외)
+            .collect(Collectors.groupingBy(Employee::getDept, LinkedHashMap::new, Collectors.toList()));
+    }
 }

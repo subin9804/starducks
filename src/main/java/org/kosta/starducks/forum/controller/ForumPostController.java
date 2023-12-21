@@ -44,14 +44,13 @@ public class ForumPostController {
 
     // 게시판 메인 페이지
     @GetMapping
-    public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+    public String listPosts(Model model,@PageableDefault(page = 0,size = 10,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
         Page<ForumPost> posts = null;
 
         List<ForumPost> topNotices = forumPostService.getTopNotice(); // 최신 공지 2개 조회
 
         model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
-
 
 //        검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
         if(searchKeyword == null) {
@@ -86,7 +85,6 @@ public class ForumPostController {
     // 게시글 작성 페이지로 이동
     @GetMapping("/add")
     public String addPostForm(Model model) {
-        MenuService.commonProcess(request, model, "forum");
         model.addAttribute("post", new ForumPost()); //타임리프에서 참조하는 이름 현재는 post
         return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
     }
@@ -107,7 +105,6 @@ public class ForumPostController {
     // 게시글 상세 페이지
     @GetMapping("/post/{id}")
     public String getPostDetails(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -117,7 +114,6 @@ public class ForumPostController {
     // 게시글 수정 페이지로 이동
     @GetMapping("/edit/{id}")
     public String editPostForm(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -145,7 +141,6 @@ public class ForumPostController {
     // 게시글 삭제
     @GetMapping("/delete/{id}")
     public String deletePost(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         forumPostService.deleteForumPost(id);
         return "redirect:/forum";
     }

@@ -33,7 +33,6 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
 @RequiredArgsConstructor
 public class IndexController {
 
@@ -50,7 +49,7 @@ public class IndexController {
 
 
     // 6개의 위젯 구현
-    @GetMapping
+    @GetMapping("/")
     public String index(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long empId = userDetails != null ? userDetails.getEmployee().getEmpId() : 1L;
 
@@ -111,7 +110,7 @@ public class IndexController {
      * 일정을 내보내는 api
      * @return
      */
-    @GetMapping("mypage/api/show")
+    @GetMapping("/mypage/api/show")
     @ResponseBody
     public ResponseEntity<List<Schedule>> showSchedule(Principal principal) {
 
@@ -131,7 +130,7 @@ public class IndexController {
      * 메일을 가져오는 api
      * @return
      */
-    @GetMapping("mypage/api/mail")
+    @GetMapping("/mypage/api/mail")
     @ResponseBody
     public Page<RSEmailDto> showMail (Model model) {
         Pageable pageable = PageRequest.of(0, 10);

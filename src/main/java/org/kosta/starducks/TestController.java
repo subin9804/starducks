@@ -15,7 +15,6 @@ public class TestController {
 
     @GetMapping("/test")
     public String index(Model model) {
-        MenuService.commonProcess(request, model, "mypage");
 
         return "index";
     }

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/document/submitDoc")
+@RequestMapping("/document")
 @RequiredArgsConstructor
 public class SubmitDocController {
     private final DocumentService documentService;
@@ -34,7 +34,7 @@ public class SubmitDocController {
     /**
      * 결재 상신 리스트 페이지
      */
-    @GetMapping
+    @GetMapping("/submitDoc")
     public String docSubmitList(Model model,
                                 @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
@@ -58,6 +58,11 @@ public class SubmitDocController {
         int endPage = Math.min(nowPage + 5, documents.getTotalPages());
         int totalPages = documents.getTotalPages();
 
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
         model.addAttribute("documents", documents.getContent());
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
@@ -70,7 +75,7 @@ public class SubmitDocController {
     /**
      * 상신 문서 상세 페이지
      */
-    @GetMapping("/{formNameEn}/{docId}")
+    @GetMapping("/submitDoc/{formNameEn}/{docId}")
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
                                  Model model) {
@@ -113,6 +118,11 @@ public class SubmitDocController {
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, documents.getTotalPages());
         int totalPages = documents.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
 
         model.addAttribute("documents", documents.getContent());
         model.addAttribute("nowPage", nowPage);

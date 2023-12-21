@@ -36,37 +36,32 @@ public class ProductController {
 
     @GetMapping("/list")
     public String getAllProducts(Model m,
-                                 @PageableDefault(page = 0, size=3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                 @RequestParam(name="searchKeyword", required = false) String searchKeyword)
-    {
-        MenuService.commonProcess(request, m, "general");
+                                 @PageableDefault(page = 0, size = 3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
         Page<Product> allProducts = null;
-        if(searchKeyword == null){
+        if (searchKeyword == null) {
             allProducts = productService.getAllProducts(pageable);
 
-        }
-        else{
-            allProducts = productService.productSearchList(searchKeyword,pageable);
+        } else {
+            allProducts = productService.productSearchList(searchKeyword, pageable);
 
         }
 
-        int nowPage = allProducts.getPageable().getPageNumber()+1;
+        int nowPage = allProducts.getPageable().getPageNumber() + 1;
         //pageable에서 넘어온 현재 페이지를 가져온다.
-        int startPage= Math.max(nowPage-4,1);
-        int endPage= Math.min(nowPage+5,allProducts.getTotalPages());
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, allProducts.getTotalPages());
 
         m.addAttribute("products", allProducts);
-        m.addAttribute("nowPage",nowPage);
-        m.addAttribute("startPage",startPage);
-        m.addAttribute("endPage",endPage);
+        m.addAttribute("nowPage", nowPage);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
         return "generalAffairs/ProductList";
     }
 
     @GetMapping("/info/{productCode}")
     public String getProductInfo(@PathVariable("productCode") Long productCode,
-                                 Model m)
-    {
-        MenuService.commonProcess(request, m, "general");
+                                 Model m) {
         Optional<Product> product = productService.getProduct(productCode);
         Product product1 = product.get();
         m.addAttribute("p", product1);
@@ -77,20 +72,18 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model m) {
-        MenuService.commonProcess(request, m, "general");
         m.addAttribute("productCategories", ProductCategory.values());
         m.addAttribute("productUnit", ProductUnit.values());
 
         List<String> vendorNames = vendorService.getAllVendorNames();
         m.addAttribute("vendorNames", vendorNames);
 
-
         return "generalAffairs/ProductForm";
     }
 
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName, MultipartFile file) throws Exception {
+    public String addProduct(@ModelAttribute Product product, @RequestParam("vendorName") String vendorName, @RequestParam("file") MultipartFile file) throws Exception {
         Vendor vendorByName = vendorService.getVendorByName(vendorName);
 
         product.setVendor(vendorByName);
@@ -101,19 +94,17 @@ public class ProductController {
 
     @GetMapping("/update/{productCode}")
     public String updateProduct(@PathVariable("productCode") Long productCode, Model m) {
-        MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
 
         if (product.isPresent()) {
             Product product1 = product.get();
 
-        m.addAttribute("product", product1);
-        m.addAttribute("productCategories",ProductCategory.values());
-        m.addAttribute("productUnit", ProductUnit.values());
-        m.addAttribute("productSelling", product1.isProductSelling());
-        return "generalAffairs/ProductUpdate";
-        }
-        else{
+            m.addAttribute("product", product1);
+            m.addAttribute("productCategories", ProductCategory.values());
+            m.addAttribute("productUnit", ProductUnit.values());
+            m.addAttribute("productSelling", product1.isProductSelling());
+            return "generalAffairs/ProductUpdate";
+        } else {
             return "redirect:/general/products/list";
         }
     }
@@ -135,7 +126,6 @@ public class ProductController {
 //
 //        return "redirect:/product/list";
 //    }
-
 
 
 }

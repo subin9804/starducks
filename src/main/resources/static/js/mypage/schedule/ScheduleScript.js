@@ -1,11 +1,44 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // CSRF 토큰과 헤더 이름을 읽어옴
-    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
-    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+    // // CSRF 토큰과 헤더 이름을 읽어옴
+    // var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    // console.log("CSRF Token ==> " + csrfToken);
+
+    // var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+    // console.log("CSRF Header Name ==> " + csrfHeaderName);
 
     var calendarEl = document.getElementById('calendar');
     var modal;
-    var calendar = new FullCalendar.Calendar(calendarEl, {  // calendarEl 요소에 달력을 초기화
+
+    function getEmpId() {
+        var empId = sessionStorage.getItem('empId');
+        return empId;
+    }
+
+    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
+    function fetchShowSingleSchedule(empId) {
+        return fetch('/mypage/schedule/api/show', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // [csrfHeaderName]: csrfToken
+            }
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('네트워크가 좋지 않습니다.');
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                return data;
+            })
+            .catch(function (error) {
+                console.error("에러 발생: " + error);
+                throw error;
+            });
+    }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
             center: 'prev title next',
@@ -16,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navLinks: true,
         selectable: true,
         selectMirror: true,
+        // 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용..
         select: function (arg) {
             if (arg.start && arg.end) { // 빈 셀을 선택했을 때만 모달 생성
                 if (!modal) { // 모달이 생성되지 않았을 때만 생성
@@ -26,28 +60,29 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
-
         // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
         events: function (fetchInfo, successCallback, errorCallback) {
-            var empId = 1;
+            // 사용자의 ID를 얻어오는 함수 호출
+            var empId = getEmpId();
 
-            // 사용자의 일정 정보를 가져옴
-            fetchShowSingleSchedule(empId).then(function (data) {   // 서버에 요청을 보내어 해당 사용자의 일정 정보를 가져옴
-                // console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
-
+            // 해당 사용자의 일정 정보를 가져옴
+            fetchShowSingleSchedule(empId).then(function (data) {
                 var events = data.map(function (schedule) {
-                    // console.log(schedule.url)
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        title: schedule.title,
-                        start: schedule.start,
-                        url: schedule.url,   // 해당 일정의 상세 페이지로 이동
-                        end: schedule.end
+                        title: schedule.scheTitle,      // 일정 제목
+                        start: schedule.scheStartDate, // 시작일시
+                        end: schedule.scheEndDate,     // 종료일시
+                        url: '/mypage/schedule/detail/' + schedule.scheNo, // 상세 페이지 UR
                     };
-                    console.log("schedule.scheTitle" + schedule.scheTitle);
                 });
+                // 변환한 이벤트 데이터를 FullCalendar에 성공 콜백으로 전달합니다.
                 successCallback(events);    // FullCalendar에 가져온 이벤트 데이터를 전달
             })
+                .catch(function (error) {
+                    console.error("에러 발생: " + error);
+                    throw error;
+                });
         },
         eventClick: function (info) {
             // console.log(info.event.url);
@@ -56,32 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-
-    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
-    // fetch를 사용하여 일정 정보를 요청하고, 받은 응답을 JSON 형태로 변환하여 반환
-    function fetchShowSingleSchedule(empId) {
-        // fetch 요청에 CSRF 토큰을 포함
-        return fetch('/schedule/show/' + empId, {
-            headers: {
-                'Content-Type': 'application/json',
-                [csrfHeaderName]: csrfToken // CSRF 토큰을 헤더에 추가
-            }
-        })
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('네트워크가 좋지 않습니다.');
-                }
-                return response.text(); // response.json() 대신 response.text()로 변경
-            })
-            .then(function (data) {
-                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
-                return JSON.parse(data); // JSON 형식으로 파싱하여 반환
-            })
-            .catch(function (error) {
-                console.error("에러 발생: " + error); // 에러가 발생한 경우 콘솔에 출력
-                throw error; // 에러를 다시 던져서 처리
-            });
-    }
 
     function createModal() {
         modal = document.createElement('div');
@@ -168,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
         form.appendChild(notesInput);
 
         var submitButton = document.createElement('button');
-
         submitButton.textContent = '일정 등록';
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -186,11 +194,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 notes: notes
             };
 
-            fetch('/schedule/add', {
+            fetch('/mypage/schedule/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
+                    // [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
                 },
                 body: JSON.stringify(data)
             })
@@ -208,17 +216,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: scheTitle,
                         start: scheStartDate,
                         end: scheEndDate,
-                        url: '/schedule/detail/' + responseData.scheNo,
+                        url: '/mypage/schedule/detail/' + responseData.scheNo,
                     };
                     console.log("responseData.scheNo ==> " + responseData.scheNo);
                     calendar.addEvent(newEvent);
 
-
                     modal.style.display = 'none';
-
                 })
                 .catch(function (error) {
-                    alert('일정 추가 중 오류 발생: ' + error.message);
+                    console.error("에러 발생: " + error);
+                    throw error;
                 });
         });
 
@@ -227,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
+
+    fetchShowSingleSchedule();
 
     calendar.render();
 });

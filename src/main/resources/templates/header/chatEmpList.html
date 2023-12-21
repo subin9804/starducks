@@ -1,10 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+
+  <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
+  <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+
+  <title>사원 목록</title>
+
 </head>
 <body>
+<header class="emp-list-header-container">
+  <button class="chat-back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''">채팅방 목록</button>
+  <button id="openCreateRoomModal">채팅방 만들기</button>
+</header>
+<div class="emp-search-form">
+  <input type="search" placeholder="사원 검색"/>
+  <button id="searchButton" class="search-button">검색</button>
+</div>
+<div class="chat-emp-list">
+  <div th:each="deptEntry : ${groupedEmployees.entrySet()}" class="chat-emp-dept">
+    <h3 th:text="${deptEntry.key.deptName}">부서명</h3>
+    <ul th:each="emp : ${deptEntry.value}" class="employee-list">
+      <li class="employee" th:data-emp-id="${emp.empId}">
+        <span th:text="${emp.empName}">사원 이름</span>
+        <input type="checkbox" th:value="${emp.empId}" name="empCheckbox"/>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="createRoomModal" class="chat-modal">
+  <div class="chat-modal-content">
+    <form id="createRoomForm" action="/createChatRoom" method="post">
+      <div class="chat-modal-title">채팅방 이름</div>
+      <input type="text" id="roomName" name="roomName" class="modal-input" required>
+      <div class="modal-buttons">
+        <button type="submit" class="chat-ok-btn">생성</button>
+        <button type="button" class="chat-close-btn">취소</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // 채팅방 만들기 버튼 클릭 이벤트 핸들러
+  // 채팅방 만들기 버튼 클릭 이벤트 핸들러
+  document.getElementById("openCreateRoomModal").addEventListener("click", function () {
+    const selectedEmpCheckboxes = document.querySelectorAll('input[name="empCheckbox"]:checked');
+    if (selectedEmpCheckboxes.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: '사원을 선택해 주세요',
+      });
+    } else {
+      // 채팅방 만들기 모달 열기
+      const modal = document.getElementById("createRoomModal");
+      modal.style.display = "block";
+    }
+  });
 
+  // 검색 필드와 검색 버튼의 참조를 가져옵니다.
+  const searchInput = document.querySelector('.emp-search-form input[type="search"]');
+  const searchButton = document.getElementById('searchButton');
+
+  // 검색 버튼에 클릭 이벤트 리스너를 추가합니다.
+  searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    // 모든 사원 목록을 가져옵니다.
+    const employees = document.querySelectorAll('.employee');
+
+    // 각 사원을 숨기거나 보여줍니다.
+    employees.forEach(function(emp) {
+      const empName = emp.querySelector('span').textContent.toLowerCase();
+      const empDept = emp.closest('.chat-emp-list').querySelector('h3').textContent.toLowerCase();
+
+      if (empName.includes(searchTerm) || empDept.includes(searchTerm)) {
+        emp.style.display = ""; // 검색어가 포함되어 있다면 보여줍니다.
+      } else {
+        emp.style.display = "none"; // 검색어가 포함되어 있지 않다면 숨깁니다.
+      }
+    });
+  });
+</script>
+<script>
+  // 모달 열기
+  const modal = document.getElementById("createRoomModal");
+  const btn = document.getElementById("openCreateRoomModal");
+
+  // 모달 닫기
+  document.querySelector('.chat-close-btn').addEventListener('click', function () {
+    modal.style.display = "none";
+  });
+
+  // 창 밖 클릭 시 모달 닫기
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  document.getElementById('createRoomForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // 체크박스를 체크하면 채팅방 생성 때 포함된다
+    const selectedEmpIds = [];
+    document.querySelectorAll('input[name="empCheckbox"]:checked').forEach(function (checkbox) {
+      selectedEmpIds.push(checkbox.value);
+    });
+
+    const roomName = document.getElementById('roomName').value;
+    const data = {
+      roomName: roomName,
+      empIds: selectedEmpIds
+    };
+
+    fetch('/createChatRoom', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+      },
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      window.location.href = '/chatRoomList';
+    });
+  });
+</script>
 </body>
 </html>

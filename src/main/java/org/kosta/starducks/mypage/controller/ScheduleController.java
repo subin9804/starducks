@@ -14,10 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -35,29 +34,21 @@ public class ScheduleController {
      * @param
      * @return
      */
-    @GetMapping("/show/{empId}")
+    @GetMapping("/api/show")
     @ResponseBody
-    public List<Map<String, Object>> showSingleSchedule(@PathVariable("empId") Long empId, Model model) {
-//        scheduleService를 통해 모든 일정을 가져옴
+    public ResponseEntity<List<Schedule>> showSingleSchedule(Principal principal) {
 
-//        System.out.println("아이디!!!!!" + empId);
-        List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
-//        System.out.println("스케쥴리스트" + scheduleList);
-
-        // JSON 배열을 담을 리스트를 생성
-        List<Map<String, Object>> scheduleDataList = new ArrayList<>();
-        // 각 일정의 정보를 해시맵에 담고 JSON 객체로 변환하여 리스트에 추가
-        for (Schedule schedule : scheduleList) {
-            HashMap<String, Object> scheduleData = new HashMap<>();
-            scheduleData.put("title", schedule.getScheTitle());
-            scheduleData.put("start", schedule.getScheStartDate());
-            scheduleData.put("end", schedule.getScheEndDate());
-            scheduleData.put("url", "/schedule/detailSche/" + schedule.getScheNo());
-            // 리스트에 일정 정보를 추가
-            scheduleDataList.add(scheduleData);
+        // 유저 정보 받아오기
+        if (principal == null) {
+            // 로그인되지 않은 경우 예외 처리 또는 다른 처리 방식을 선택할 수 있습니다.
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        System.out.println("데이터리스트 : " + scheduleDataList);
-        return scheduleDataList;
+
+        String empIdString = principal.getName();
+        Long empId = Long.valueOf(empIdString);
+
+        List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
+        return ResponseEntity.ok(scheduleList);
     }
 
     /**
@@ -68,7 +59,6 @@ public class ScheduleController {
      */
     @GetMapping("/show")
     public String showSchedule(Model model) {
-        MenuService.commonProcess(request, model, "mypage");
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
         return "mypage/schedule/schedule";
@@ -83,17 +73,12 @@ public class ScheduleController {
     @PostMapping("/add")
     public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         try {
-            Schedule schedule = scheduleDTO.toEntity();
-            schedule = scheduleService.saveSchedule(schedule); // 새로 저장된 Schedule 객체를 반환받음
+            Schedule schedule = scheduleService.saveSchedule(scheduleDTO.toEntity());
 
-            ModelMapper modelMapper = new ModelMapper();
-            ScheduleDTO responseDTO = modelMapper.map(schedule, ScheduleDTO.class); // Schedule 객체를 ScheduleDTO로 매핑
-
-            return ResponseEntity.ok(responseDTO); // ScheduleDTO로 응답
+            return ResponseEntity.ok(new ModelMapper().map(schedule, ScheduleDTO.class));
         } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "일정 저장 중 오류 발생: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "일정 저장 중 오류 발생 ==> " + e.getMessage()));
         }
     }
 

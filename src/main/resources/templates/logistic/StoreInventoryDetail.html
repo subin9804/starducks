@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -13,19 +13,60 @@
 <main layout:fragment="content">
     <h1>매장 재고 상세</h1>
     <div class="content">
+        <div class="small-content">
+            <table class="vertical-table">
+                <tbody>
+                <tr>
+                    <th>품목 ID</th>
+                    <td th:text="${inventory.getProduct().getProductCode()}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>카테고리</th>
+                    <td th:text="${inventory.getProduct().productCategory}">카테고리</td>
+                </tr>
+                <tr>
+                    <th>품목 이름</th>
+                    <td th:text="${inventory.getProduct().productName}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>품목 가격</th>
+                    <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>품목 단위</th>
+                    <td th:text="${inventory.getProduct().productUnit}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>매장 이름</th>
+                    <td th:text="${inventory.getStore().getStoreName()}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>매장 담당자</th>
+                    <td th:text="${inventory.getStore().getEmployee().getEmpName()}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>매장 재고 수량</th>
+                    <td th:text="${inventory.getInventoryCnt()}">p.productCode</td>
+                </tr>
+                <tr>
+                    <th>최근 입고일</th>
+                    <td th:if="${inventory.getModifiedAt() != null}" th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
+                    <td th:if="${inventory.getModifiedAt() == null}" th:text="${#temporals.format(inventory.getCreatedAt(),'yyyy.MM.dd a hh:mm')}"></td>
 
-        <div>
-            입고 ID : <input type="text" th:value="${inventory.getProduct().productName}" readonly>
-            <br>
-<!--            입고 등록인 : <input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>-->
-<!--            <br>-->
-<!--            입고 일자 : <input type="text" th:value="${inbound.getWarehouseInboundDate()}" readonly>-->
-<!--            <br>-->
+                </tr>
+                </tbody>
+            </table>
+
         </div>
 
-
-
-
+        <div class="bottom-button">
+            <a th:href="@{/logistic/stock/store/list}">
+                <button class="commonBtn cancel-button"> 목록으로</button>
+            </a>
+            <a th:href="@{/logistic/stock/store/update/{code}/{no}(code=${inventory.getProduct()?.productCode},no=${inventory.getStore()?.storeNo})}">
+                <button class="commonBtn edit-button"> 수정하기</button>
+            </a>
+        </div>
     </div>
 </main>
 

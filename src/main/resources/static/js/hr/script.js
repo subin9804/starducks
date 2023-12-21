@@ -1,6 +1,6 @@
 function toggleOptions1(checkbox) {
     // 선택 상자의 상태에 따라 .options1를 표시하거나 숨깁니다.
-    let options1 = $(checkbox).siblings(".options1");
+    let options1 = $(checkbox).siblings("#options1");
     if (checkbox.checked) {
         options1.show();
     } else {
@@ -9,13 +9,15 @@ function toggleOptions1(checkbox) {
 }
 function toggleOptions2(checkbox) {
     // 선택 상자의 상태에 따라 .options2를 표시하거나 숨깁니다.
-    let options2 = $(checkbox).siblings(".options2");
+    let options2 = $(checkbox).siblings("#options2");
     if (checkbox.checked) {
         options2.show();
     } else {
         options2.hide();
     }
 }
+
+
 
 window.document.addEventListener("DOMContentLoaded", function() {
 
@@ -34,6 +36,10 @@ window.document.addEventListener("DOMContentLoaded", function() {
         console.log("position" + $("#dept").val())
         $("#allLabel1").text(text);
         console.log($("#allLabel1").val())
+
+        // 선택 후 모달 숨기기
+        $("#options1").hide();
+        $("#options2").hide();
     })
 
     // 직급
@@ -48,7 +54,11 @@ window.document.addEventListener("DOMContentLoaded", function() {
         $("#position").val(value)
         console.log("position" + $("#position").val())
         $("#allLabel2").text(text);
-        console.log($("#allLabel2").val())
+        // console.log($("#allLabel2").val())
+
+        // 선택 후 모달 숨기기
+        $("#options1").hide();
+        $("#options2").hide();
     })
 
     // 프로필 및 도장 이미지
@@ -60,6 +70,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
     $("#stampImg").click(() => {
         $("#stamp").click();
         $("#stamp").val("");
+
     })
 
     // input 요소에 파일이 선택되었을 때 이벤트를 처리하는 부분

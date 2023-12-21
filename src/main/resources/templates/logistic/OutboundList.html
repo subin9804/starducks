@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
+</th:block>
+
+
+<main layout:fragment="content">
+    <h1>출고 목록</h1>
+    <div class="content">
+        <div class="right-top-btn">
+            <a th:href="@{/logistic/outbound/warehouse/add}">
+                <button class="commonBtn register-button" type="submit">  출고 등록</button>
+            </a>
+        </div>
+<!--        <div class="middle-btn">-->
+<!--            <a th:href="@{/logistic/inbound/warehouse/list}">-->
+<!--                <button class="wideBtn switch-button1"> 창고 입고</button>-->
+<!--            </a>-->
+<!--            <a th:href="@{/logistic/inbound/store/list}">-->
+<!--                <button class="wideBtn switch-button2"> 매장 입고</button>-->
+<!--            </a>-->
+<!--        </div>-->
+        <form>
+            <label class="left-align">
+                <input type="checkbox" id="bulkOutboundCheckbox" name="bulkOutboundCheckbox" th:checked="${checkbox}"
+                       onchange="handleCheckboxClick()">
+                <input type="hidden" name="_bulkOutboundCheckbox" value="on">
+                 대량 출고
+            </label>
+        </form>
+
+        <table class="list-table">
+
+
+            <thead>
+            <tr>
+                <th>출고번호</th>
+                <th>출고일자</th>
+                <th>담당자</th>
+                <th>총츨고수량</th>
+                <th>구분</th>
+            </tr>
+            </thead>
+            <tbody th:fragment="outboundTableBody" id="outboundTableBody">
+            <tr th:each="o:${outbounds}">
+
+                <td>
+                    <a th:text="${o.warehouseoutboundId}"
+                       th:href="@{/logistic/outbound/warehouse/info/{Id}(Id=${o.warehouseoutboundId})}">
+                        주문 Id
+                    </a>
+                </td>
+
+                <td th:text="${o.getWarehouseOutboundDate()}">입고일자</td>
+                <td th:text="${o.getEmployee().getEmpName()}">담당자 명</td>
+                <td th:text="${o.getTotalQuantity()}">총 입고수량</td>
+                <td>비고</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+    <script th:inline="javascript">
+
+        function handleCheckboxClick() {
+            var isChecked = document.getElementById('bulkOutboundCheckbox').checked;
+            console.log(isChecked);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/logistic/outbound/warehouse/list?bulkOutboundCheckbox=' + isChecked, true);
+            //업데이트 하는 부분
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 'outboundTableBody' fragment를 가진 테이블의 내용을 업데이트
+                    var parser = new DOMParser();
+                    var responseDoc = parser.parseFromString(xhr.responseText, 'text/html');
+
+                    // 조건 추가: 'outboundTableBody' ID를 가진 요소를 찾을 수 있는 경우에만 업데이트
+                    var updatedTableBody = responseDoc.getElementById('outboundTableBody');
+                    if (updatedTableBody) {
+                        document.getElementById('outboundTableBody').innerHTML = updatedTableBody.innerHTML;
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+
+    </script>
+</main>
+</html>

@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/store/script.js}"></script>
@@ -15,15 +15,18 @@
     <div class="content">
         <form id="addForm"  action="/logistic/inbound/store/add" method="post">
 
-                <div>
-                    <label for="store">지점 이름 : </label>
-                    <select id="store" name="storeNo">
-                        <option value="">지점을 선택하세요</option>
-                        <option th:each=" s: ${stores}"
-                                th:value="${s.getStoreNo()}"
-                                th:text="${s.getStoreName()}"></option>
-                    </select>
-                </div>
+<!--                    <label for="store">지점 이름 : </label>-->
+<!--                    <select id="store" name="storeNo">-->
+<!--                        <option value="">지점을 선택하세요</option>-->
+<!--                        <option th:each=" s: ${stores}"-->
+<!--                                th:value="${s.getStoreNo()}"-->
+<!--                                th:text="${s.getStoreName()}"></option>-->
+<!--                    </select>-->
+                    <div>
+                        지점 이름 :<span th:text="${store.getStoreName()}"></span>
+                        <input type="hidden" id="store" name="storeNo" th:value="${store.getStoreNo()}">
+                    </div>
+
                 <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
                 <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
                 <input type="hidden" id="storeInboundDtos" name="storeInboundDtos" value="">

@@ -41,10 +41,10 @@ public class MenuService {
                 menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
-                menus.add(new MenuDetail("mydocu", "나의 결재", "/"));
+                menus.add(new MenuDetail("submitDoc", "결재 상신함", "/document/submitDoc"));
                 menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
-                menus.add(new MenuDetail("recieved", "수신함", "/"));
-                menus.add(new MenuDetail("tempsaved", "임시저장함", "/"));
+                menus.add(new MenuDetail("receiveDoc", "결재 수신함", "/document/receiveDoc"));
+                menus.add(new MenuDetail("tempList", "임시저장함", "/document/tempList"));
                 break;
             case "hr":
                 menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
@@ -55,7 +55,7 @@ public class MenuService {
                 break;
             case "logistic":
                 menus.add(new MenuDetail("inbound", "입고 관리", "/logistic/inbound/warehouse/list"));
-                menus.add(new MenuDetail("release", "출고 관리", "/"));
+                menus.add(new MenuDetail("outbound", "출고 관리", "/logistic/outbound/warehouse/list"));
                 menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
@@ -64,9 +64,9 @@ public class MenuService {
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
                 menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
                 break;
-            case "fina":
+            case "fina" :
                 menus.add(new MenuDetail("store", "지점 정보 관리", "/fina/store/list"));
-                menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
+                menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/fina/vendor/list"));
                 break;
             default:
                 menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));
@@ -88,23 +88,5 @@ public class MenuService {
         String URI = request.getRequestURI();
 //        System.out.println("uri: " + URI);
         return URI.substring(URI.indexOf("/") + 1);
-    }
-
-    public static void commonProcess(HttpServletRequest request, Model model, String code) {
-        String URI = request.getRequestURI();
-
-        // 메뉴
-        model.addAttribute("menuCode", code);
-
-        // 서브 메뉴 처리
-        String subMenuCode = getSubMenuCode(request);
-        model.addAttribute("subMenuCode", subMenuCode);
-        model.addAttribute("URI", URI);
-
-        List<MenuDetail> submenus = gets(code);
-        if (submenus.size() > 0) {
-            model.addAttribute("submenus", submenus);
-        }
-
     }
 }

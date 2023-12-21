@@ -1,33 +1,45 @@
 package org.kosta.starducks.generalAffairs.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.kosta.starducks.fina.entity.ContractStatus;
+import org.kosta.starducks.fina.entity.VendorBusinessSector;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Vendor {
-
+    /**
+     * 공급업체
+     */
     @Id
-    @GeneratedValue
-    private int vendorId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int vendorId;   // 거래처번호
 
-    private String vendorName;
-    private String vendorRegistNum;
-    private String vendorRepreName;
-    private String vendorTelephone;
-    private LocalDate vendorStartDate;
-    private String vendorAddress;
+    @Enumerated(EnumType.STRING)
+    private VendorBusinessSector vendorBusinessSector;  // 업종
 
+    private String vendorName;  // 거래처명
+    private String vendorRegistNum; // 사업자등록번호
+    private String vendorRepreName; // 대표자명
+    private String vendorTelephone; // 거래처 연락처('-' 포함)
+    private LocalDate vendorStartDate;  // 거래시작일
+    private String vendorAddress;   // 거래처 주소
 
+    @Enumerated(EnumType.STRING)
+    private ContractStatus contractStatus; // 계약 상태
 
-
-
-
-
-
-
+    /** Product 추가*/
+    /**
+     * Vendor는 여러 Product를 가질 수 있다
+     */
+    @OneToMany(mappedBy = "vendor")
+    @ToString.Exclude
+    private List<Product> products;
 }
