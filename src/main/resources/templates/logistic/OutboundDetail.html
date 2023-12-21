@@ -11,22 +11,22 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1>입고 등록</h1>
+    <h1>출고 내역 상세</h1>
     <div class="content">
 
         <div>
-            입고 ID : <input type="text" th:value="${outbound.warehouseoutboundId}" readonly>
+            출고 ID : <input type="text" th:value="${outbound.warehouseoutboundId}" readonly>
             <br>
-            입고 등록인 : <input type="text" th:value="${outbound.getEmployee().getEmpName()}" readonly>
+            출고 등록인 : <input type="text" th:value="${outbound.getEmployee().getEmpName()}" readonly>
             <br>
-            입고 일자 : <input type="text" th:value="${outbound.getWarehouseOutboundDate()}" readonly>
+            출고 일자 : <input type="text" th:value="${outbound.getWarehouseOutboundDate()}" readonly>
             <br>
         </div>
 
         <table class="detail-table">
             <thead>
             <tr>
-                <th>품목Code</th><th>품목 이름</th><th>거래처</th><th>거래단가</th><th>입고수량</th><th>단위</th><th>입고금액</th>
+                <th>품목Code</th><th>품목 이름</th><th>거래처</th><th>거래단가</th><th>출고수량</th><th>단위</th><th>출고금액</th>
             </tr>
             </thead>
             <tbody>
@@ -37,9 +37,9 @@
                 <td th:text="${o.getProduct().getVendor().getVendorName()}">거래처</td>
                 <td th:text="${o.getProduct().productPrice}">거래단가</td>
 
-                <td th:text="${o.getOutboundQuantity()}">입고수량</td>
+                <td th:text="${o.getOutboundQuantity()}">출고수량</td>
                 <td th:text="${o.getProduct().productUnit}">단위</td>
-                <td th:text="${o.getOutboundPrice()}">입고금액</td>
+                <td th:text="${o.getOutboundPrice()}">출고금액</td>
 
             </tr>
             </tbody>

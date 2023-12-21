@@ -7,29 +7,32 @@
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-    <script th:src="@{/js/logistic/outbound/script.js}"></script>
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
-    <h1>출고 등록</h1>
+    <h1>입고 등록</h1>
     <div class="content">
-        <form id="addForm"  action="/logistic/outbound/warehouse/add" method="post">
+        <form id="addForm"  action="/logistic/inbound/warehouse/add" method="post" >
+
+                <div>
+                    <label for="employee">담당자명 : </label>
+                    <select id="employee" name="empId">
+                        <option value="">담당자를 선택하세요</option>
+                        <option th:each="e : ${employees}" th:value="${e.getEmpId()}" th:text="${e.getEmpName()}"></option>
+                    </select>
+                </div>
+                <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
 
 
-
-            <div>
-                담당자명 :<span th:text="${employee.empName}"></span>
-                <input type="hidden" id="employee" name="empId" th:value="${employee.empId}">
-            </div>
-
-                <button type="submit" id="submitBtn" value="출고등록">출고등록</button>
+<!--            입고등록 버튼 클릭시 재고 부족하면 못넘어가게 막아야함.-->
                 <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
-                <input type="hidden" id="warehouseOutboundDtos" name="warehouseOutboundDtos" value="">
+                <input type="hidden" id="warehouseInboundDtos" name="warehouseInboundDtos" value="">
         </form>
 
         <form id="itemForm" >
 
-            <label for="product">출고상품 : </label>
+            <label for="product">입고상품 : </label>
             <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
             <select  id="product" name="productCode">
             <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
@@ -45,8 +48,8 @@
                 </option>
             </select>
 
-            <label for="quantity"> 출고 수량</label>
-            <input type="number" id="quantity" name="outboundQuantity">
+            <label for="quantity"> 입고 수량</label>
+            <input type="number" id="quantity" name="inboundQuantity">
 
 <!--            <p>가격 * 수량 <span id="result"></span></p>-->
             <button type="button" id="addBtn">추가</button>
@@ -66,7 +69,7 @@
                 <th>품목명</th>
                 <th>가격</th>
                 <th>창고보유재고</th>
-                <th>출고 수량</th>
+                <th>입고 수량</th>
                 <th>삭제</th>
 
             </tr>
@@ -74,6 +77,9 @@
             <tbody id="contentTableBody"></tbody>
         </table>
     </div>
+
+
+
 
 </main>
 

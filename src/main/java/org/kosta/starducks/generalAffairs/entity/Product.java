@@ -2,6 +2,9 @@ package org.kosta.starducks.generalAffairs.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
 import org.kosta.starducks.commons.BaseTimeEntity;
@@ -18,7 +21,9 @@ public class Product extends BaseTimeEntity {
     @Column(name = "product_code")
     private Long productCode;
 
+    @NotBlank
     @Column(nullable = false)
+    @Size(min = 5, message = "최소 5개이상의 문자가 되어야 합니다.")
     private String productName;
 
     /*

@@ -25,6 +25,20 @@ window.document.addEventListener("DOMContentLoaded", function() {
             outboundQuantity: quantityInput.value
         };
 
+        //출고 수량이 원래 재고의 양보다 작은 지 check 하기
+        let selectedOption1 =productSelect.options[productSelect.selectedIndex];
+        let itemStock = selectedOption1.getAttribute("data-cnt");
+        if(parseInt(quantityInput.value)>parseInt(itemStock)){
+
+            Swal.fire({
+                icon: "error",
+                title: "재고 부족",
+                text: "선택하신 품목의 재고수량은 "+ itemStock+"개 입니다."
+
+            });
+            return;
+        }
+
         if (!isProductCodeInList(item.productCode)) {
             list.push(item);
 
