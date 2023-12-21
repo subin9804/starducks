@@ -111,7 +111,7 @@ public class IndexController {
      * 일정을 내보내는 api
      * @return
      */
-    @GetMapping("/api/show")
+    @GetMapping("mypage/api/show")
     @ResponseBody
     public ResponseEntity<List<Schedule>> showSchedule(Principal principal) {
 
@@ -131,7 +131,7 @@ public class IndexController {
      * 메일을 가져오는 api
      * @return
      */
-    @GetMapping("/api/mail")
+    @GetMapping("mypage/api/mail")
     @ResponseBody
     public Page<RSEmailDto> showMail (Model model) {
         Pageable pageable = PageRequest.of(0, 10);

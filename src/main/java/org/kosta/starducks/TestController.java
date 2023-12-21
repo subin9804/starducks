@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
-@Controller("/")
+@Controller
 public class TestController {
 
     @Autowired
     private HttpServletRequest request;
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public String index(Model model) {
         MenuService.commonProcess(request, model, "mypage");
 
