@@ -78,7 +78,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         }
 
         // 초기 사원 데이터
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             Employee emp = new Employee();
             emp.setEmpId((long) i);
             emp.setStatus(false);
