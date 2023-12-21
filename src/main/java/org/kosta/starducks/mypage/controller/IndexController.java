@@ -1,9 +1,13 @@
 package org.kosta.starducks.mypage.controller;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.document.entity.Document;
+import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.service.ForumPostService;
+import org.kosta.starducks.header.dto.RSEmailDto;
 import org.kosta.starducks.header.service.SendEmailService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpFileService;
@@ -12,6 +16,11 @@ import org.kosta.starducks.mypage.entity.Attendance;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.service.AttendanceService;
 import org.kosta.starducks.mypage.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,12 +31,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
-@RequestMapping("/mypage")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class IndexController {
+
+    @Value("${weather-key}")
+    private String apiKey;
 
     private final AttendanceService attendService;
     private final EmpService empService;
@@ -35,13 +46,13 @@ public class IndexController {
     private final SendEmailService emailService;
     private final EmpFileService fileService;
     private final ScheduleService scheduleService;
+    private final DocumentService documentService;
 
 
     // 6개의 위젯 구현
     @GetMapping
     public String index(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long empId = userDetails != null ? userDetails.getEmployee().getEmpId() : 1L;
-
 
         // 1. 근태관리
         Employee emp = empService.getEmp(empId);
@@ -65,29 +76,33 @@ public class IndexController {
 
 
         // 3. 전사게시판
+        // 공지
         List<ForumPost> topNotices = forumService.getTopNotice(); // 최신 공지 2개 조회
-        List<ForumPost> posts = forumService.getForumList();
+        // 일반 글
+        Sort sort = Sort.by (Sort.Order.desc("postDate"));
+        Pageable pageable = PageRequest.of(0, 12, sort);
+        Page<ForumPost> posts = forumService.postList(pageable);
 
         model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
         model.addAttribute("posts", posts);
 
 
         // 4. 메일함
-//        Pageable pageable = PageRequest.of(0, 10);
-//        Page<RSEmailDto> mails = null;
-//        try {
-//            mails = emailService.fetchSentEmails(pageable);
-//        } catch (MessagingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        model.addAttribute("mails", mails);
+
 
 
         // 5. 전자결재함
+        Sort forumSort = Sort.by (
+                Sort.Order.desc("docDate"),
+                Sort.Order.desc("urgent")
+        );
+        Pageable forumPageable = PageRequest.of(0, 12, forumSort);
+        Page<Document> documents = documentService.receiveDocuments(empId, forumPageable);
+
+        model.addAttribute("documents", documents);
 
         // 6. 날씨 위젯
-
+        model.addAttribute("apiKey", apiKey);
 
         return "mypage/index";
     }
@@ -118,9 +133,18 @@ public class IndexController {
      */
     @GetMapping("/api/mail")
     @ResponseBody
-    public List<Map<String, Object>> showMail () {
+    public Page<RSEmailDto> showMail (Model model) {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<RSEmailDto> mails = null;
+        try {
+            mails = emailService.fetchSentEmails(pageable);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
-        return null;
+        model.addAttribute("mails", mails);
+
+        return mails;
     }
 
 

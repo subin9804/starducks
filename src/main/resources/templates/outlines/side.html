@@ -9,7 +9,7 @@
             <input class="" type="radio" id="myPage" name="nav" aria-controls="flush-myPage"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('mypage')} ? true">
             <label for="myPage">
-                <a th:href="@{/mypage}">마이페이지</a>
+                <a th:href="@{/mypage/attendance}">마이페이지</a>
             </label>
         </div>
         <ul id="flush-myPage"
