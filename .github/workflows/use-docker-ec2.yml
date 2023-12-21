@@ -35,7 +35,7 @@ jobs:
 ## 해당 내용은 깃허브 레포지토리의 Settings > Secrets > Actions > New repository secret 버튼을 통해 만들 수 있음
     - name: make application.properties
       if: contains(github.ref, 'master') # branch가 master일 때
-      run: |
+      run: | 
         	# spring의 resources 경로로 이동
           cd ./src/main/resources 
           
@@ -49,7 +49,7 @@ jobs:
 
 ## gradle build
     - name: Build with Gradle
-      run: |
+      run: | 
           chmod +x ./gradlew
           ./gradlew clean build -x test
 
@@ -57,7 +57,7 @@ jobs:
 ## docker build & push to production
     - name: Docker build & push to repo
       if: contains(github.ref, 'master')
-      run: |
+      run: | 
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t ${{ secrets.DOCKER_REPO }} starducks-repo .
           docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
@@ -73,7 +73,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
-          script: |
+          script: | 
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO }}/starducks-repo
               sudo docker run -d -p 8080:8080 --name starducks-repo ${{ secrets.DOCKER_REPO }}/starducks-repo
