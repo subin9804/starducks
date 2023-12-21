@@ -28,11 +28,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         if (!isProductCodeInList(item.productCode)) {
             list.push(item);
 
-            // let li = document.createElement("li");
-            // let selectedOption = productSelect.options[productSelect.selectedIndex]
-            // let itemName = selectedOption.getAttribute("data-name")
-            // li.innerHTML = list.length + "." + itemName + "|수량 : "  + quantityInput.value;
-            // contentList.appendChild(li);
+
 
             let row = contentTable.insertRow(-1);
             let cell1 = row.insertCell(0);
