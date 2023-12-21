@@ -18,6 +18,13 @@ import java.util.List;
       + "ORDER BY MAX(cm.createdAt) DESC")
   List<ChatRoom> findAllOrderByLatestMessage();
 
-  @Query("SELECT cr FROM ChatRoom cr JOIN cr.chatRoomEmps cre WHERE cre.employee.empId = :empId")
-  List<ChatRoom> findChatRoomsByEmployeeId(@Param("empId") Long empId);
+    // 채팅방과 관련된 사원들의 정보도 함께 로드하는 쿼리
+    @Query("SELECT DISTINCT cr FROM ChatRoom cr " +
+        "JOIN cr.chatRoomEmps cre " +
+        "JOIN cre.employee emp " +
+        "LEFT JOIN cr.chatMessageList cm " +
+        "WHERE emp.empId = :empId " +
+        "GROUP BY cr " +
+        "ORDER BY MAX(cm.createdAt) DESC")
+    List<ChatRoom> findChatRoomsByEmployeeId(@Param("empId") Long empId);
 }
