@@ -11,7 +11,7 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1>창고 재고 상세</h1>
+    <h1>창고 재고 수정</h1>
     <div class="content">
         <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}" th:method="post" class="inventoryUpdate-form">
             <div class="small-content">
@@ -49,7 +49,7 @@
 
                     <tr>
                         <th>최근 입고일</th>
-                        <!--                    th<td th:text="${inventory}">p.productCode</td>-->
+                        <td th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
                     </tr>
                     <tr>
                         <th>판매 여부</th>
@@ -62,20 +62,20 @@
             </div>
 
             <div class="bottom-button">
-
-                    <button type="button" class="commonBtn cancel-button" onclick="cancelUpdate()"> 수정 취소</button>
+                <a th:href="@{/logistic/stock/warehouse/info/{code}(code=${inventory.productCode})}">
+                    <button type="button" class="commonBtn cancel-button" > 수정 취소</button>
+                </a>
                     <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
-
             </div>
         </form>
     </div>
-    <script type="text/javascript">
-        function cancelUpdate() {
-            var code = document.getElementById("productCode").value;
+<!--    <script type="text/javascript">-->
+<!--        function cancelUpdate() {-->
+<!--            var code = document.getElementById("productCode").value;-->
 
-            window.location.href = "/logistic/stock/warehouse/info/"+code;
-        }
-    </script>
+<!--            window.location.href = "/logistic/stock/warehouse/info/"+code;-->
+<!--        }-->
+<!--    </script>-->
 </main>
 
 

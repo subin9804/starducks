@@ -2,13 +2,14 @@ package org.kosta.starducks.generalAffairs.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.kosta.starducks.commons.BaseTimeEntity;
 import org.kosta.starducks.logistic.entity.StoreInventory;
 
 import java.util.List;
 
 @Entity
 @Data
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
