@@ -29,10 +29,10 @@ public class SecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/login", "/forgotPwd").permitAll() // 로그인 페이지 및 비밀번호 찾기 페이지 접근 허용
-                    .requestMatchers("/fina/**").hasRole("FINA")        // 재무부 페이지에 대한 접근 제어
-                    .requestMatchers("/hr/**").hasRole("HR")            // 인사부 페이지에 대한 접근 제어
-                    .requestMatchers("/logistic/**").hasRole("LOGISTIC")// 물류유통부 페이지에 대한 접근 제어
-                    .requestMatchers("/general/**").hasRole("GENERAL")  // 총무부 페이지에 대한 접근 제어
+                    .requestMatchers("/fina/**").hasAuthority("FINA")        // 재무부 페이지에 대한 접근 제어
+                    .requestMatchers("/hr/**").hasAuthority("HR")            // 인사부 페이지에 대한 접근 제어
+                    .requestMatchers("/logistic/**").hasAuthority("LOGISTIC")// 물류유통부 페이지에 대한 접근 제어
+                    .requestMatchers("/general/**").hasAuthority("GENERAL")  // 총무부 페이지에 대한 접근 제어
                     .anyRequest().authenticated())                             // 그 외 모든 요청은 인증 필요
             .formLogin(form -> form
                         .loginPage("/login") //로그인 하는 페이지

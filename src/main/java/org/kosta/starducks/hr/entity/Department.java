@@ -39,21 +39,5 @@ public class Department {
         return count;
     }
 
-    public String getRoleForDeptName() {
-        switch(this.deptName) {
-            case "재무부":
-                return "ROLE_FINA";
-            case "인사부":
-                return "ROLE_HR";
-            case "물류유통부":
-                return "ROLE_LOGISTIC";
-            case "총무부":
-                return "ROLE_GENERAL";
-            case "사장실":
-                return "ROLE_EXEC";
-            default:
-                return "ROLE_UNKNOWN";
-        }
-    }
 }
 
