@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpService;
 
 import org.kosta.starducks.logistic.dto.WarehouseOutboundDto;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -72,11 +74,14 @@ public class WarehouseOutboundController {
 
 
     @GetMapping("/warehouse/add")
-    public String addOrder(Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
+    public String addOrder(Principal p,
+                           Model m,
+                           @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
 
     {
+        Employee emp = employeeService.getEmp(Long.parseLong(p.getName()));
+        m.addAttribute("employee",emp);
 
-        m.addAttribute("employees",employeeService.getAllEmp());
         Page<Product> products = productService.getAllProducts(pageable);
         m.addAttribute("products",products);
 
