@@ -46,7 +46,7 @@ jobs:
     - name: Build with Gradle
       run: | 
           chmod +x ./gradlew
-          ./gradlew clean build -x test -x ktlintCheck -x ktlintTestSourceSetCheck -x ktlintMainSourceSetCheck -x ktlintKotlinScriptCheck
+          ./gradlew clean build -x test
 
 
 ## docker build & push to production
