@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/forgotPwd") //로그인 안해도 접속 가능한 주소 /**는 모든 하위 주소에 접근 가능하게 만듦. 나중에 지울 예정
+                        .requestMatchers("/**","/login", "/forgotPwd") //로그인 안해도 접속 가능한 주소 /**는 모든 하위 주소에 접근 가능하게 만듦. 나중에 지울 예정
                         .permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form

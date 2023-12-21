@@ -4,6 +4,7 @@ import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +26,7 @@ public class AccountService implements UserDetailsService {
 
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
     // String으로 저장돼있는 username(empId)을 Long으로 복구
     Long empId;
     try {
@@ -35,6 +36,12 @@ public class AccountService implements UserDetailsService {
 
     Employee employee = empRepository.findById(empId)
         .orElseThrow(() -> new UsernameNotFoundException("Employee not found with empId: " + empId));
+
+    if (employee.isStatus()) { // status가 true이면 퇴사한 상태
+      System.out.println("퇴사한 직원 로그인 시도: " + username);
+      throw new DisabledException("This account has been disabled."); // 계정 비활성화 예외 발생
+    }
+
 
     return new CustomUserDetails(employee);
   }

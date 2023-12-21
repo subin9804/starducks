@@ -43,7 +43,7 @@ public class ProfileController {
 
   // 사용자가 수정한 프로필 정보를 처리하는 메소드
   @PostMapping("/profileEdit/update")
-  public String updateEmployee(@ModelAttribute Employee employee, Principal principal) {
+  public String updateEmployee(Employee employee, Principal principal) {
     profileService.updateProfile(employee); // ProfileService를 통해 프로필 업데이트 처리
 
     // 새로운 정보 다시 로드
