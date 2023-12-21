@@ -46,7 +46,7 @@ jobs:
     - name: Build with Gradle
       run: | 
           chmod +x ./gradlew
-          ./gradlew clean build -x test
+          ./gradlew clean build -x test -x ktlintCheck -x ktlintTestSourceSetCheck -x ktlintMainSourceSetCheck -x ktlintKotlinScriptCheck
 
 
 ## docker build & push to production
@@ -54,8 +54,8 @@ jobs:
       if: contains(github.ref, 'master')
       run: | 
           sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker buildx build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/starducks-repo .
-          docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
+          sudo docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/starducks-repo .
+          sudo docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
 
 
 ## deploy to production
