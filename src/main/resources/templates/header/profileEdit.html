@@ -102,24 +102,23 @@
   </div>
   <div class="pwd-container">
     <h2>비밀번호 변경</h2>
-    <dl class="dl-custom">
-      <dt class="dt-custom">기존 비밀번호</dt>
-      <dd class="dd-custom-pwd">
+    <div class="passwordChangeContainer">
+      <div class="left-section">
+        <label for="currentPassword">기존 비밀번호</label>
+        <label for="newPassword">새 비밀번호</label>
+        <label for="newPasswordConfirm">새 비밀번호 확인</label>
+      </div>
+      <div class="center-section">
         <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
-        <button type="button" onclick="checkCurrentPassword()">확인</button>
-      </dd>
-      <!-- 새 비밀번호 입력 -->
-      <dt class="dt-custom">새 비밀번호</dt>
-      <dd class="dd-custom">
         <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
-      </dd>
-      <!-- 새 비밀번호 확인 -->
-      <dt class="dt-custom">새 비밀번호 확인</dt>
-      <dd class="dd-custom">
         <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
-      </dd>
-    </dl>
-    <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+        <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+      </div>
+      <div class="right-section">
+        <button type="button" class="cpwd-confirmBtn" onclick="checkCurrentPassword()">확인</button>
+      </div>
+
+    </div>
   </div>
   <script>
     function sample6_execDaumPostcode() {
