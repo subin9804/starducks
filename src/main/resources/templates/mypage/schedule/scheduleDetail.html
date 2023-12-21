@@ -17,51 +17,60 @@
 </script>
 
 <main layout:fragment="content">
-    <h2>마이페이지</h2>
-    <br><br>
-    <h5>일정상세보기</h5>
-    <br>
-
-    <div style="text-align: center;">
+    <h1>일정정보조회</h1>
+    <div id="form" style="display: flex;">
         <section>
-            <dl>
-                <dt>일정번호</dt>
-                <dd><input type="text" id="scheNo" name="scheNo" th:value="${detailSchedule.scheNo}"
-                           class="form-control" readonly></dd>
-            </dl>
-            <dl>
-                <dt>일정명</dt>
-                <dd>
-                <dd><input type="text" id="scheTitle" name="scheTitle" th:value="${detailSchedule.scheTitle}"
-                           class="form-control" readonly></dd>
-                </dd>
-            </dl>
-            <dl>
-                <dt>시작일</dt>
-                <dd><input type="text" id="scheStartDate" name="scheStartDate" th:value="${detailSchedule.scheStartDate}"
-                           class="form-control" readonly></dd>
-                </dd>
-            </dl>
-            <dl>
-                <dt>종료일</dt>
-                <dd><input type="text" id="scheEndDate" name="scheEndDate" th:value="${detailSchedule.scheEndDate}"
-                           class="form-control" readonly></dd>
-                </dd>
-            </dl>
-            <dl>
-                <dt>일정 종류</dt>
-                <dd><input type="text" id="scheduleType" name="scheduleType" th:value="${detailSchedule.scheduleType}"
-                           class="form-control" readonly></dd>
-                </dd>
-            </dl>
-            <dl>
-                <dt>참고사항</dt>
-                <dd><input type="text" id="notes" name="notes" th:value="${detailSchedule.notes}"
-                           class="form-control" readonly></dd>
-                </dd>
-            </dl>
-        </section>
-        <!--        <button class="btn btn-outline-success" type="submit" th:onclick="'location.href = \'' +  @{/schedule/update/(no=${detailSchedule.scheNo})} + '\''">수정하기</button>-->
+            <section style="flex: 1;">
+                <section>
+                    <dl>
+                        <dt>일정번호</dt>
+                        <dd><input type="text" id="scheNo" name="scheNo" th:value="${detailSchedule.scheNo}"
+                                   class="form-control" readonly></dd>
+                    </dl>
+                    <dl>
+                        <dt>일정명</dt>
+                        <dd>
+                        <dd><input type="text" id="scheTitle" name="scheTitle" th:value="${detailSchedule.scheTitle}"
+                                   class="form-control" readonly></dd>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>시작일</dt>
+                        <dd><input type="text" id="scheStartDate" name="scheStartDate"
+                                   th:value="${detailSchedule.scheStartDate}"
+                                   class="form-control" readonly></dd>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>종료일</dt>
+                        <dd><input type="text" id="scheEndDate" name="scheEndDate"
+                                   th:value="${detailSchedule.scheEndDate}"
+                                   class="form-control" readonly></dd>
+                        </dd>
+                    </dl>
+            </section>
+
+            <section>
+                <dl>
+                    <dt>일정 종류</dt>
+                    <dd><input type="text" id="scheduleType" name="scheduleType"
+                               th:value="${detailSchedule.scheduleType}"
+                               class="form-control" readonly></dd>
+                    </dd>
+                </dl>
+
+
+                <!--            <td colspan="2" style="height: 500px;" th:text="${ detailCal.content }"></td>-->
+
+                <dl>
+                    <dt>참고사항</dt>
+                    <dd><input th:colspan="2" style="height: 300px;" type="text" id="notes" name="notes"
+                               th:value="${detailSchedule.notes}" class="form-control" readonly></dd>
+                    </dd>
+                </dl>
+                </section>
+            </section>
+        </div>
         <a th:href="@{/schedule/delete/{scheNo}(scheNo=${detailSchedule.scheNo})}"
            th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
             <button class="btn btn-outline-danger">delete</button>
@@ -70,7 +79,9 @@
             목록으로
         </button>
     </div>
-    <br><br>
+
+
+    </div>
 
     <script>
         document.querySelectorAll('#deletebtn').forEach(button => {
