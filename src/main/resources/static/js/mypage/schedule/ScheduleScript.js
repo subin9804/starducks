@@ -1,92 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
     // CSRF 토큰과 헤더 이름을 읽어옴
     var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    console.log("CSRF Token ==> " + csrfToken);
+
     var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+    console.log("CSRF Header Name ==> " + csrfHeaderName);
 
     var calendarEl = document.getElementById('calendar');
     var modal;
-    var calendar = new FullCalendar.Calendar(calendarEl, {  // calendarEl 요소에 달력을 초기화
-        headerToolbar: {
-            start: 'dayGridMonth,timeGridWeek',
-            center: 'prev title next',
-            end: 'today'
-        },
-        locale: "ko",
-        initialDate: '2023-12-27',
-        navLinks: true,
-        selectable: true,
-        selectMirror: true,
-        select: function (arg) {
-            if (arg.start && arg.end) { // 빈 셀을 선택했을 때만 모달 생성
-                if (!modal) { // 모달이 생성되지 않았을 때만 생성
-                    createModal();
-                }
-                modal.style.display = 'block'; // 모달을 보이게 함
-            }
-        },
-        editable: false,        // 툴바 이동 금지
-        dayMaxEvents: true,
 
-        // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
-        events: function (fetchInfo, successCallback, errorCallback) {
-
-            // 사용자의 일정 정보를 가져옴
-            fetchShowSingleSchedule().then(function (data) {
-                // console.log("JSON.stringify(data) 데이터: " + JSON.stringify(data)); // 데이터 확인을 위한 console.log
-
-                var events = data.map(function (schedule) {
-                    // console.log(schedule.url)
-                    return {
-                        // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        title: schedule.title,
-                        start: schedule.start,
-                        url: schedule.url,   // 해당 일정의 상세 페이지로 이동
-                        end: schedule.end
-                    };
-                    console.log("schedule.scheTitle" + schedule.scheTitle);
-                });
-                successCallback(events);    // FullCalendar에 가져온 이벤트 데이터를 전달
-            })
-        },
-        eventClick: function (info) {
-            // console.log(info.event.url);
-            if (info.event.url) {
-                window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
-            }
-        }
-    });
-
-    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
-    // fetch를 사용하여 일정 정보를 요청하고, 받은 응답을 JSON 형태로 변환하여 반환
-    function fetchShowSingleSchedule() {
-// 사용자의 empId를 얻어오는 함수 호출
-        var empId = getEmpId();
-        return fetch('/mypage/schedule/api/show', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                [csrfHeaderName]: csrfToken
-            }
-        })
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('네트워크가 좋지 않습니다.');
-                }
-                return response.json(); // response.json() 대신 response.text()로 변경
-            })
-            .then(function (data) {
-                console.log("받아온 데이터: " + data); // 데이터 확인을 위한 console.log
-                return JSON.parse(data); // JSON 형식으로 파싱하여 반환
-            })
-            .catch(function (error) {
-                console.error("에러 발생: " + error); // 에러가 발생한 경우 콘솔에 출력
-                throw error; // 에러를 다시 던져서 처리
-            });
+    function getEmpId() {
+        var empId = sessionStorage.getItem('empId');
+        return empId;
     }
 
-// Principal 객체를 사용하여 empId를 추출하는 방법
-    function getEmpId() {
-        return fetch('/mypage/schedule/api/show', { // RESTful 엔드포인트의 URL을 사용하여 사용자 정보 가져오기
+    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
+    function fetchShowSingleSchedule(empId) {
+        return fetch('/mypage/schedule/api/show', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -99,18 +29,69 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return response.json();
             })
-            .then(function (userData) {
-                if (userData.empId) {
-                    return userData.empId;
-                } else {
-                    throw new Error('사용자 정보를 가져오지 못했습니다.');
-                }
+            .then(function (data) {
+                console.log("데이터 리스트!!!!!! 나오니?????" + data);
+                return data;
             })
             .catch(function (error) {
                 console.error("에러 발생: " + error);
                 throw error;
             });
     }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+            start: 'dayGridMonth,timeGridWeek',
+            center: 'prev title next',
+            end: 'today'
+        },
+        locale: "ko",
+        initialDate: '2023-12-27',
+        navLinks: true,
+        selectable: true,
+        selectMirror: true,
+        // 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용..
+        select: function (arg) {
+            if (arg.start && arg.end) { // 빈 셀을 선택했을 때만 모달 생성
+                if (!modal) { // 모달이 생성되지 않았을 때만 생성
+                    createModal();
+                }
+                modal.style.display = 'block'; // 모달을 보이게 함
+            }
+        },
+        editable: false,        // 툴바 이동 금지
+        dayMaxEvents: true,
+        // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
+        events: function (fetchInfo, successCallback, errorCallback) {
+            // 사용자의 ID를 얻어오는 함수 호출
+            var empId = getEmpId();
+
+            // 해당 사용자의 일정 정보를 가져옴
+            fetchShowSingleSchedule(empId).then(function (data) {
+                var events = data.map(function (schedule) {
+                    return {
+                        // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
+                        title: schedule.scheTitle,      // 일정 제목
+                        start: schedule.scheStartDate, // 시작일시
+                        end: schedule.scheEndDate,     // 종료일시
+                        url: '/mypage/schedule/detail/' + schedule.scheNo, // 상세 페이지 UR
+                    };
+                });
+                // 변환한 이벤트 데이터를 FullCalendar에 성공 콜백으로 전달합니다.
+                successCallback(events);    // FullCalendar에 가져온 이벤트 데이터를 전달
+            })
+                .catch(function (error) {
+                    console.error("에러 발생: " + error);
+                    throw error;
+                });
+        },
+        eventClick: function (info) {
+            // console.log(info.event.url);
+            if (info.event.url) {
+                window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
+            }
+        }
+    });
 
     function createModal() {
         modal = document.createElement('div');
@@ -242,12 +223,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log("responseData.scheNo ==> " + responseData.scheNo);
                     calendar.addEvent(newEvent);
 
-
                     modal.style.display = 'none';
-
                 })
                 .catch(function (error) {
-                    alert('일정 추가 중 오류 발생: ' + error.message);
+                    console.error("에러 발생: " + error);
+                    throw error;
                 });
         });
 
@@ -256,6 +236,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
+
+    fetchShowSingleSchedule();
 
     calendar.render();
 });

@@ -15,9 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -75,17 +74,12 @@ public class ScheduleController {
     @PostMapping("/add")
     public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         try {
-            Schedule schedule = scheduleDTO.toEntity();
-            schedule = scheduleService.saveSchedule(schedule); // 새로 저장된 Schedule 객체를 반환받음
+            Schedule schedule = scheduleService.saveSchedule(scheduleDTO.toEntity());
 
-            ModelMapper modelMapper = new ModelMapper();
-            ScheduleDTO responseDTO = modelMapper.map(schedule, ScheduleDTO.class); // Schedule 객체를 ScheduleDTO로 매핑
-
-            return ResponseEntity.ok(responseDTO); // ScheduleDTO로 응답
+            return ResponseEntity.ok(new ModelMapper().map(schedule, ScheduleDTO.class));
         } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "일정 저장 중 오류 발생: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "일정 저장 중 오류 발생 ==> " + e.getMessage()));
         }
     }
 
