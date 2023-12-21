@@ -55,7 +55,7 @@ public class MenuService {
                 break;
             case "logistic":
                 menus.add(new MenuDetail("inbound", "입고 관리", "/logistic/inbound/warehouse/list"));
-                menus.add(new MenuDetail("release", "출고 관리", "/"));
+                menus.add(new MenuDetail("outbound", "출고 관리", "/logistic/outbound/warehouse/list"));
                 menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
