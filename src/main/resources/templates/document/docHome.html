@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 
-</body>
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/submitList.css}" href="/static/css/document/createDoc/docDetail.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <div class="page-border receive-box"></div>
+    <div class="page-border submit-box"></div>
+    <div class="page-border temp-box"></div>
+</main>
 </html>
