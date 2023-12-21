@@ -1,8 +1,6 @@
 package org.kosta.starducks.header.repository;
 
 import org.kosta.starducks.header.entity.ChatRoom;
-import org.modelmapper.internal.bytebuddy.TypeCache;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
