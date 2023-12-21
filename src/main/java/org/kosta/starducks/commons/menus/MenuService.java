@@ -44,7 +44,7 @@ public class MenuService {
                 menus.add(new MenuDetail("submitDoc", "결재 상신함", "/document/submitDoc"));
                 menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
                 menus.add(new MenuDetail("receiveDoc", "결재 수신함", "/document/receiveDoc"));
-                menus.add(new MenuDetail("tempList", "임시저장함", "/document/submitDoc/tempList"));
+                menus.add(new MenuDetail("tempList", "임시저장함", "/document/tempList"));
                 break;
             case "hr":
                 menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
@@ -59,7 +59,7 @@ public class MenuService {
                 menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
-                menus.add(new MenuDetail("adschedule", "전사 일정 관리", "/"));
+                menus.add(new MenuDetail("schedule", "전사 일정 관리", "/general/schedule"));
                 menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
                 menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
@@ -88,23 +88,5 @@ public class MenuService {
         String URI = request.getRequestURI();
 //        System.out.println("uri: " + URI);
         return URI.substring(URI.indexOf("/") + 1);
-    }
-
-    public static void commonProcess(HttpServletRequest request, Model model, String code) {
-        String URI = request.getRequestURI();
-
-        // 메뉴
-        model.addAttribute("menuCode", code);
-
-        // 서브 메뉴 처리
-        String subMenuCode = getSubMenuCode(request);
-        model.addAttribute("subMenuCode", subMenuCode);
-        model.addAttribute("URI", URI);
-
-        List<MenuDetail> submenus = gets(code);
-        if (submenus.size() > 0) {
-            model.addAttribute("submenus", submenus);
-        }
-
     }
 }

@@ -1,10 +1,170 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{mypage/layouts/main}">
+      layout:decorate="~{layouts/main}">
+
+<title layout:fragment="title">메인</title>
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/index.css}"></link>
+    <script th:src="@{/js/mypage/index.js}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script th:src="@{/js/mypage/weatherDescKo.js}"></script>
+
+</th:block>
 
 <main layout:fragment="content">
-    <p th:text="'test. ' + ${data}" >test. test!</p>
+    <div id="firstCol">
+        <section class="widget content" id="widgetAttend">
+            <h4>근태 관리</h4>
+            <div th:replace="~{hr/attend/_profile::profile}"></div>
+
+            <!-- 출퇴근 버튼 -->
+            <div>
+                <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
+                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
+                </form>
+                <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+                </form>
+            </div>
+
+            <!-- 출퇴근 기록 -->
+            <div>
+                <span>출근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
+                <span>퇴근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
+            </div>
+
+            <hr/>
+            <div>
+                <h4>근태 이력</h4>
+                <ul class="d-flex">
+                    <li>
+                        <p th:text="${workDays}"></p>
+                        <p>근무</p>
+                    </li>
+                    <li>
+                        <p th:text="${lateDays}"></p>
+                        <p>지각</p>
+                    </li>
+                    <li>
+                        <p th:text="${absentDays}"></p>
+                        <p>결근</p>
+                    </li>
+                    <li>
+                        <p th:text="15"></p>
+                        <p>연차</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 전자결재함 -->
+        <section class="widget content" id="widgetDoc">
+            <h4>전자결재함</h4>
+            <table class="mypageTable">
+                <thead>
+                <tr>
+                    <th>기안일</th>
+                    <th>제목</th>
+                    <th>상신인</th>
+                    <th>긴급도</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:onClick="'location.href=\'' + @{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=*{docForm.formNameEn}, docId=*{docId})} + '\''"
+                            th:each="docu : ${documents}" th:object="${docu}">
+                        <td th:text="*{#temporals.format(docDate, 'yy-MM-dd')}"></td>
+                        <td th:text="*{docTitle}"></td>
+                        <td th:text="*{docWriter.empName}"></td>
+                        <td th:if="*{urgent}" th:text="긴급" class="urgent"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <div id="secondCol">
+        <!-- 일정 -->
+        <section  th:onClick="'location.href=\'' + @{/mypage/schedule/show} + '\''"
+                class="widget content" id="widgetCal">
+            <div id='calendar'></div>
+            <table class="mypageTable">
+                <thead>
+                    <tr>
+                        <th>날짜</th>
+                        <th>내용</th>
+                    </tr>
+                </thead>
+                <tbody id="tschedule">
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 날씨 -->
+        <section onClick="location.href='https://www.weather.go.kr/w/weather/forecast/short-term.do'"
+                class="widget content" id="widgetWether">
+            <h4>오늘의 날씨</h4>
+            <div id="weather">
+                <p id="city"></p>
+                <p id="description"></p>
+                <image id="weatherImg" width="150"></image>
+                <p id="temp"></p>
+            </div>
+        </section>
+    </div>
+    <div id="thirdCol">
+        <!-- 전사게시판 -->
+        <section class="widget content" id="widgetForum">
+            <h4>전사게시판</h4>
+            <table class="mypageTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:onClick="'location.href=\'' + @{/forum/post/{postId}(postId=*{postId})} + '\''"
+                        class="notice" th:each="notice : ${topNotices}" th:object="${notice}">
+                        <td th:text="*{postId}"></td>
+                        <td th:text="*{postTitle}"></td>
+                        <td th:text="*{Employee.empName}"></td>
+                    </tr>
+                    <tr th:onClick="'location.href=\'' + @{/forum/post/{postId}(postId=*{postId})} + '\''"
+                        th:each="post : ${posts}" th:object="${post}">
+                        <td th:text="*{postId}"></td>
+                        <td th:text="*{postTitle}"></td>
+                        <td th:text="*{Employee.empName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 메일수신함-->
+        <section class="widget content" id="widgetMail">
+            <h4>메일수신함</h4>
+            <table class="mypageTable">
+                <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>제목</th>
+                </tr>
+                </thead>
+                <tbody id="tmail">
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let API_KEY = /*[[${apiKey}]]*/ '';
+
+        /*]]>*/
+    </script>
 
 </main>
 </html>

@@ -38,7 +38,6 @@ public class ProductController {
     public String getAllProducts(Model m,
                                  @PageableDefault(page = 0, size = 3, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
-        MenuService.commonProcess(request, m, "general");
         Page<Product> allProducts = null;
         if (searchKeyword == null) {
             allProducts = productService.getAllProducts(pageable);
@@ -63,7 +62,6 @@ public class ProductController {
     @GetMapping("/info/{productCode}")
     public String getProductInfo(@PathVariable("productCode") Long productCode,
                                  Model m) {
-        MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
         Product product1 = product.get();
         m.addAttribute("p", product1);
@@ -74,7 +72,6 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model m) {
-        MenuService.commonProcess(request, m, "general");
         m.addAttribute("productCategories", ProductCategory.values());
         m.addAttribute("productUnit", ProductUnit.values());
 

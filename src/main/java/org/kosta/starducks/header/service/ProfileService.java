@@ -58,6 +58,10 @@ public class ProfileService {
       // 수정 가능한 필드 업데이트
       existingEmp.setEmpTel(updatedEmp.getEmpTel()); // 연락처 업데이트
       existingEmp.setEmail(updatedEmp.getEmail());   // 이메일 업데이트
+      existingEmp.setAddr(updatedEmp.getAddr()); //
+      existingEmp.setDAddr(updatedEmp.getDAddr()); //
+      existingEmp.setPostNo(updatedEmp.getPostNo()); //
+
 
       // 업데이트된 정보 저장
       empRepository.save(existingEmp);

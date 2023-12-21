@@ -69,7 +69,6 @@ public class WarehouseInboundController {
     public String getAllInbounds(Model m,
                                  @RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
-        MenuService.commonProcess(request, m, "logistic");
 
         log.info(String.valueOf(bulkInboundCheckbox));
 
@@ -94,7 +93,6 @@ public class WarehouseInboundController {
     public String getInboundInfo(@PathVariable("warehouseInboundId") Long warehouseInboundId,
                                  Model m)
     {
-        MenuService.commonProcess(request, m, "logistic");
 
         WarehouseInbound selectedInbound = warehouseInboundService.getInboundByInboundId(warehouseInboundId);
         m.addAttribute("inbound",selectedInbound);

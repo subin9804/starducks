@@ -3,7 +3,6 @@ package org.kosta.starducks.mypage.service;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.hr.entity.Employee;
-import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.dto.ConfBookDto;
 import org.kosta.starducks.mypage.entity.ConfRoom;
@@ -13,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -50,13 +48,13 @@ public class ConfRoomService {
      */
     public ConfRoom booking(ConfBookDto dto, Authentication auth) {
         // 예약자
-        Employee emp = empService.getEmp(1L);
-
+        Long empId = 1L;
         if(auth != null) {
             CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
-            emp = details.getEmployee();
-
+            empId = details.getEmployee().getEmpId();
         }
+
+        Employee emp = empService.getEmp(empId);
 
         ConfRoom room = new ModelMapper().map(dto, ConfRoom.class);
         room.setBookerId(emp.getEmpId());

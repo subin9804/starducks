@@ -21,7 +21,7 @@
       <div class="form-floating">
         <input id="password" name="password" required type="password">
         <label for="password">비밀번호</label>
-        <!-- 사번과 비밀번호가 일치하지 않으면 에러 메시지가 여기에 나타난다 -->
+        <!-- 로그인 관련 에러 메시지 출력하는 위치 -->
         <span class="error-message" id="errorMessage" th:if="${errorMessage}" th:text="${errorMessage}"></span>
       </div>
 

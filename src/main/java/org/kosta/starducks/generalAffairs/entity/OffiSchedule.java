@@ -1,6 +1,5 @@
-package org.kosta.starducks.mypage.entity;
+package org.kosta.starducks.generalAffairs.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +8,15 @@ import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
 
+/**
+ * 공식 전사 일정
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "PERSONAL_SCHEDULE")
-public class Schedule {
+@Table(name = "OFFICIAL_SCHEDULE")
+public class OffiSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sche_no")
@@ -32,8 +34,7 @@ public class Schedule {
     @Column(name = "notes")
     private String notes;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", referencedColumnName = "empId")
+    @JoinColumn(name = "emp_id", referencedColumnName = "empId") // 여기서 변경
     private Employee employee;
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,4 +69,19 @@ public class ForumPostServiceImpl implements ForumPostService {
     return forumPostRepository.findTop2ByPostNoticeTrueOrderByPostDateDesc();
   }
 
+  // List형태로 가져오기 (widget을 위한 List이므로 15개만)
+  @Override
+  public List<ForumPost> getForumList() {
+    List<ForumPost> list = forumPostRepository.findAll();
+
+    if (list.size() > 15) {
+      List<ForumPost> recentPosts = new ArrayList<>();
+
+      for (int i = 0; i < 6; i++) {
+        recentPosts.add(list.get(i));
+      }
+      list = recentPosts;
+    }
+    return list;
+  }
 }
