@@ -22,11 +22,17 @@ public class QStoreInventory extends EntityPathBase<StoreInventory> {
 
     public static final QStoreInventory storeInventory = new QStoreInventory("storeInventory");
 
+    public final org.kosta.starducks.commons.QBaseTimeEntity _super = new org.kosta.starducks.commons.QBaseTimeEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
     public final QStoreInventoryId id;
 
     public final NumberPath<Integer> inventoryCnt = createNumber("inventoryCnt", Integer.class);
 
-    public final DateTimePath<java.util.Date> LastUpdateDate = createDateTime("LastUpdateDate", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final org.kosta.starducks.generalAffairs.entity.QProduct product;
 

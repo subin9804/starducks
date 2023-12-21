@@ -6,67 +6,76 @@
 <!--title-->
 
 <th:block layout:fragment="addMore">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
-  <script th:src="@{/js/logistic/warehouse/script.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
-  <h1>창고 재고 상세</h1>
-  <div class="content">
-    <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}"
-          th:method="post" class="inventoryUpdate-form">
-      <div class="small-content">
+    <h1>창고 재고 수정</h1>
+    <div class="content">
+        <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}" th:method="post" class="inventoryUpdate-form">
+            <div class="small-content">
 
-        <table class="vertical-table">
-          <tbody>
-          <tr>
-            <th>품목 ID</th>
-            <td th:text="${inventory.getProductCode()}" name="productCode">p.productCode</td>
-          </tr>
-          <tr>
-            <th>카테고리</th>
-            <td th:text="${inventory.getProductCategory()}">카테고리</td>
-          </tr>
-          <tr>
-            <th>품목 이름</th>
-            <td th:text="${inventory.productName}">p.productCode</td>
-          </tr>
-          <tr>
-            <th>품목 가격</th>
-            <td th:text="${inventory.productPrice}">p.productCode</td>
-          </tr>
-          <tr>
-            <th>품목 단위</th>
-            <td th:text="${inventory.productUnit}">p.productCode</td>
-          </tr>
-          <tr>
-            <th>창고 재고 수량</th>
-            <!--                    <input type="number" th:value="${product.productPrice}" name="productPrice" >-->
-            <td>
-              <input type="number" th:value="${inventory.productCnt}" name="productCnt">
-            </td>
-          </tr>
+                <table class="vertical-table">
+                    <tbody>
+                    <tr>
+                        <th>품목 ID</th>
+                        <td th:text="${inventory.getProductCode()}" name="productCode">p.productCode</td>
+                        <input type="hidden" th:value="${inventory.productCode}" id="productCode">
+                    </tr>
+                    <tr>
+                        <th>카테고리</th>
+                        <td th:text="${inventory.getProductCategory()}">카테고리</td>
+                    </tr>
+                    <tr>
+                        <th>품목 이름</th>
+                        <td th:text="${inventory.productName}">p.productCode</td>
+                    </tr>
+                    <tr>
+                        <th>품목 가격</th>
+                        <td th:text="${inventory.productPrice}">p.productCode</td>
+                    </tr>
+                    <tr>
+                        <th>품목 단위</th>
+                        <td th:text="${inventory.productUnit}">p.productCode</td>
+                    </tr>
+                    <tr>
+                        <th>창고 재고 수량</th>
+                        <!--                    <input type="number" th:value="${product.productPrice}" name="productPrice" >-->
+                        <td>
+                            <input type="number" th:value="${inventory.productCnt}" name="productCnt">
+                        </td>
+                    </tr>
 
-          <tr>
-            <th>최근 입고일</th>
-            <!--                    th<td th:text="${inventory}">p.productCode</td>-->
-          </tr>
-          <tr>
-            <th>판매 여부</th>
-            <td th:text="${inventory.productSelling}">p.productCode</td>
-          </tr>
+                    <tr>
+                        <th>최근 입고일</th>
+                        <td th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
+                    </tr>
+                    <tr>
+                        <th>판매 여부</th>
+                        <td th:text="${inventory.productSelling}">p.productCode</td>
+                    </tr>
 
-          </tbody>
-        </table>
-      </div>
-      <div class="bottom-button">
-        <a th:href="@{/logistic/stock/warehouse/info/{code}(code=${inventory.productCode})}">
-          <button type="button" class="commonBtn cancel-button"> 수정 취소</button>
-        </a>
-        <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
-      </div>
-    </form>
-  </div>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="bottom-button">
+                <a th:href="@{/logistic/stock/warehouse/info/{code}(code=${inventory.productCode})}">
+                    <button type="button" class="commonBtn cancel-button" > 수정 취소</button>
+                </a>
+                    <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
+            </div>
+        </form>
+    </div>
+<!--    <script type="text/javascript">-->
+<!--        function cancelUpdate() {-->
+<!--            var code = document.getElementById("productCode").value;-->
+
+<!--            window.location.href = "/logistic/stock/warehouse/info/"+code;-->
+<!--        }-->
+<!--    </script>-->
 </main>
 
 

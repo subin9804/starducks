@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.commons.menus.MenuService;
+import org.kosta.starducks.fina.entity.Store;
 import org.kosta.starducks.fina.service.StoreService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.logistic.dto.StoreInboundDto;
 import org.kosta.starducks.logistic.dto.WarehouseInboundDto;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -36,7 +39,7 @@ public class StoreInboundController {
     private final ProductService productService;
     private final StoreService storeService;
     private final StoreInboundService storeInboundService;
-    private final HttpServletRequest request;
+    private final EmpService empService;
 
 
     //재고 목록 조회
@@ -69,7 +72,8 @@ public class StoreInboundController {
 
 
     @GetMapping("/list")
-    public String getAllInbounds(Model m)
+    public String getAllInbounds(Principal p,
+                                 Model m)
 //    ,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
 
@@ -82,7 +86,11 @@ public class StoreInboundController {
 //        }
         inbounds = storeInboundService.getAllInbounds();
 
-        m.addAttribute("inbounds", inbounds);
+        Employee emp = empService.getEmp(Long.parseLong(p.getName()));
+
+        m.addAttribute("inbounds",inbounds);
+        m.addAttribute("employee",emp);
+
 
         //m.addAttribute("checkbox",bulkInboundCheckbox);
 
@@ -112,7 +120,8 @@ public class StoreInboundController {
 
 
     @GetMapping("/add")
-    public String addOrder(Model m,
+    public String addOrder(Principal p,
+                           Model m,
                            @Qualifier("pageable1")
                            @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable1,
                            @Qualifier("pageable2")
@@ -121,7 +130,8 @@ public class StoreInboundController {
     {
 
 
-        m.addAttribute("stores",storeService.getAllStores(pageable2));
+        Store byEmpId = storeService.findByEmpId(Long.parseLong(p.getName()));
+        m.addAttribute("store",byEmpId);
         Page<Product> products = productService.getAllProducts(pageable1);
         m.addAttribute("products",products);
 

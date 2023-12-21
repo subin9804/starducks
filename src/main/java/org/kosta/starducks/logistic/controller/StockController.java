@@ -11,6 +11,7 @@ import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.ProductCategory;
 import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.service.ProductService;
+import org.kosta.starducks.logistic.dto.StockUpdateDto;
 import org.kosta.starducks.logistic.entity.StoreInbound;
 import org.kosta.starducks.logistic.entity.StoreInventory;
 import org.kosta.starducks.logistic.entity.StoreInventoryId;
@@ -38,32 +39,30 @@ public class StockController {
     private final ProductService productService;
     private final StoreInventoryService storeInventoryService;
     private final HttpServletRequest request;
-    
+
     @GetMapping("/warehouse/list")
     public String getAllInventories(Model m,
-                                    @PageableDefault(page = 0, size=5, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
-                                    @RequestParam(name="searchKeyword", required = false) String searchKeyword)
-    {
+                                    @PageableDefault(page = 0, size = 5, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable,
+                                    @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
 
         Page<Product> allInventory = null;
-        if(searchKeyword == null){
+        if (searchKeyword == null) {
             allInventory = productService.getAllProducts(pageable);
 
-        }
-        else{
-            allInventory = productService.productSearchList(searchKeyword,pageable);
+        } else {
+            allInventory = productService.productSearchList(searchKeyword, pageable);
 
         }
 
-        int nowPage = allInventory.getPageable().getPageNumber()+1;
+        int nowPage = allInventory.getPageable().getPageNumber() + 1;
         //pageable에서 넘어온 현재 페이지를 가져온다.
-        int startPage= Math.max(nowPage-4,1);
-        int endPage= Math.min(nowPage+5,allInventory.getTotalPages());
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, allInventory.getTotalPages());
 
         m.addAttribute("products", allInventory);
-        m.addAttribute("nowPage",nowPage);
-        m.addAttribute("startPage",startPage);
-        m.addAttribute("endPage",endPage);
+        m.addAttribute("nowPage", nowPage);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
         return "logistic/InventoryList";
     }
 
@@ -71,51 +70,37 @@ public class StockController {
     @GetMapping("/warehouse/info/{code}")
     public String getwInventoryInfo(
             @PathVariable("code") Long productCode,
-            Model m)
-    {
+            Model m) {
         Optional<Product> product = productService.getProduct(productCode);
-        m.addAttribute("inventory",product.get());
+        m.addAttribute("inventory", product.get());
 
         return "logistic/InventoryDetail";
     }
 
     @GetMapping("/warehouse/update/{code}")
     public String updatewStock(@PathVariable("code") Long productCode,
-                               Model m){
+                               Model m) {
         Optional<Product> product = productService.getProduct(productCode);
-        if(product.isPresent()) {
+        if (product.isPresent()) {
             Product product1 = product.get();
-            m.addAttribute("inventory",product1);
+            m.addAttribute("inventory", product1);
 
             return "logistic/InventoryUpdate";
-        }
-        else {
+        } else {
             return "redirect:/logistic/stock/warehouse/list";
         }
     }
 
 
     @PostMapping("/warehouse/update/{productCode}")
-    public String updatewStock(@ModelAttribute ProductStockUpdateDto productStockUpdateDto){
+    public String updatewStock(@ModelAttribute ProductStockUpdateDto productStockUpdateDto) {
         productService.updateProductStock(productStockUpdateDto);
         return "redirect:/logistic/stock/warehouse/list";
     }
-//
-//    @PostMapping("/update/{productCode}")
-//    public String updateProduct(@Validated @ModelAttribute ProductUpdateDto productUpdateDto,
-//                                @PathVariable("productCode") Long productCode) {
-//        //Validated만 적어주면, 유효하지 않은 값 바인딩을 안해준다.
-//
-//        productService.updateProduct(productUpdateDto);
-//
-//        return "redirect:/general/products/list";
-//    }
-
 
 
     @GetMapping("/store/list")
-    public String getAllInventories(Model m)
-    {
+    public String getAllInventories(Model m) {
         List<StoreInventory> allInventories = storeInventoryService.getAllInventories();
 
         m.addAttribute("inventories", allInventories);
@@ -126,15 +111,32 @@ public class StockController {
 
     @GetMapping("/store/info/{productCode}/{storeNo}")
     public String getsInventoryInfo(@PathVariable("storeNo") Long storeNo,
-                                   @PathVariable("productCode") Long productCode,
-                                   Model m)
-    {
-        StoreInventory inventoryByCodeAndNo = storeInventoryService.getInventoryByNoAndCode(storeNo,productCode);
-        m.addAttribute("inventory",inventoryByCodeAndNo);
+                                    @PathVariable("productCode") Long productCode,
+                                    Model m) {
+        StoreInventory inventoryByCodeAndNo = storeInventoryService.getInventoryByNoAndCode(storeNo, productCode);
+        m.addAttribute("inventory", inventoryByCodeAndNo);
 
         return "logistic/StoreInventoryDetail";
     }
 
+    @GetMapping("/store/update/{code}/{no}")
+    public String updatesStock(@PathVariable("no") Long storeNo,
+                               @PathVariable("code") Long productCode,
+                               Model m) {
+
+        StoreInventory inventoryByNoAndCode = storeInventoryService.getInventoryByNoAndCode(storeNo, productCode);
+        m.addAttribute("inventory", inventoryByNoAndCode);
+
+        return "logistic/StoreInventoryUpdate";
+
+    }
+
+
+    @PostMapping("/store/update/{productCode}/{storeNo}")
+    public String updatesStock(@ModelAttribute StockUpdateDto stockUpdateDto) {
+        storeInventoryService.updateStock(stockUpdateDto);
+        return "redirect:/logistic/stock/store/list";
+    }
 
 
     //재고 목록 조회
@@ -164,8 +166,6 @@ public class StockController {
 //        m.addAttribute("endPage",endPage);
 //        return "logistic/InventoryList";
 //    }
-
-
 
 
 }

@@ -7,6 +7,7 @@ import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.logistic.dto.WarehouseInboundDto;
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Parameter;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -63,7 +66,8 @@ public class WarehouseInboundController {
 
 
     @GetMapping("/warehouse/list")
-    public String getAllInbounds(Model m,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
+    public String getAllInbounds(Model m,
+                                 @RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
         MenuService.commonProcess(request, m, "logistic");
 
@@ -108,12 +112,15 @@ public class WarehouseInboundController {
 
 
     @GetMapping("/warehouse/add")
-    public String addOrder(Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
+    public String addOrder(Principal p,
+                           Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
 
     {
-        MenuService.commonProcess(request, m, "logistic");
-        //모든 getMappting에 넣어주기
-        m.addAttribute("employees",employeeService.getAllEmp());
+
+
+        Employee emp = employeeService.getEmp(Long.parseLong(p.getName()));
+        m.addAttribute("employee",emp);
+
         Page<Product> products = productService.getAllProducts(pageable);
         m.addAttribute("products",products);
 

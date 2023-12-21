@@ -42,7 +42,7 @@ public class WarehouseInboundProduct {
         wiProduct.setInboundQuantity(inboundQuantity);
 
         //재고 증가 로직
-        product.increaseCnt(inboundQuantity);
+        
         return wiProduct;
 
     }

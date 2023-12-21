@@ -43,7 +43,7 @@
 
                 <tr>
                     <th>최근 입고일</th>
-<!--                    th<td th:text="${inventory}">p.productCode</td>-->
+                    <td th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
                 </tr>
                 <tr>
                     <th>판매 여부</th>

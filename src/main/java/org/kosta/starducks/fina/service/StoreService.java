@@ -43,6 +43,12 @@ public class StoreService {
         return storeRepository.findById(storeNo).orElse(null);
     }
 
+    // 지점장 이름으로 거래처 찾기
+    public Store findByEmpId(Long empId){
+        return storeRepository.findByEmployee_EmpId(empId);
+    }
+
+
     /**
      * 지점 추가하기
      *
@@ -105,5 +111,4 @@ public class StoreService {
             rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");
         }
     }
-
 }

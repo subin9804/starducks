@@ -55,7 +55,7 @@ public class MenuService {
                 break;
             case "logistic":
                 menus.add(new MenuDetail("inbound", "입고 관리", "/logistic/inbound/warehouse/list"));
-                menus.add(new MenuDetail("release", "출고 관리", "/"));
+                menus.add(new MenuDetail("outbound", "출고 관리", "/logistic/outbound/warehouse/list"));
                 menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
@@ -64,9 +64,9 @@ public class MenuService {
                 menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
                 menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
                 break;
-            case "fina":
+            case "fina" :
                 menus.add(new MenuDetail("store", "지점 정보 관리", "/fina/store/list"));
-                menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/"));
+                menus.add(new MenuDetail("vendor", "거래처 정보 관리", "/fina/vendor/list"));
                 break;
             default:
                 menus.add(new MenuDetail("attendance", "근태관리", "/mypage/attendance"));

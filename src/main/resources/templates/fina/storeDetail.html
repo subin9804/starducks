@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<!--<meta charset="UTF-8">-->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
-
-<!--<th:block layout:fragment="title">title</th:block>-->
 
 <th:block layout:fragment="addMore">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
@@ -17,14 +14,6 @@
 
 <main layout:fragment="content">
     <h1>지점관리</h1>
-    <div class="content">
-
-        <hr>
-        <br><br>
-        <h5>지점 상세 조회</h5>
-        <br>
-
-        <div class="row g-3 align-items-center">
             <!-- 상세 정보를 표시하는 폼 -->
             <div id="form" style="display: flex;">
                 <div style="flex: 1;">
@@ -108,7 +97,6 @@
             </div>
             </form>
         </div>
-    </div>
     </div>
 
 
