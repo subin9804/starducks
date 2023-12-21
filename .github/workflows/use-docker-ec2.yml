@@ -53,7 +53,7 @@ jobs:
     - name: Docker build & push to repo
       if: contains(github.ref, 'master')
       run: | 
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} --password-stdin
           docker build -t ${{ secrets.DOCKER_REPO }} starducks-repo .
           docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
 
