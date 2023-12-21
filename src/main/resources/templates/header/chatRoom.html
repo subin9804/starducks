@@ -4,21 +4,31 @@
   <meta charset="UTF-8">
   <title>Chat</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/header/style.css}" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
 
-
-  <!--  웹소켓 연결할 때는 토큰 필요 -->
   <meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}"/>
   <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}"/>
+
 </head>
 <body>
+<header>
+  <div class="header-container">
+    <button class="back-button" th:onclick="'window.location.href=\'' + @{/chatRoomList} + '\''"><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i></button>
+    <h1 class="chat-room-title" th:text="${roomName}"></h1>
+  </div>
+</header>
 <div id="chat-room">
   <!-- 메시지 반복 출력 -->
-  <div th:each="message : ${messages}"
-       th:class="${message.senderId == currentUserId} ? 'chat-message-mine' : 'chat-message-other'">
-    <div th:if="${message.senderId != currentUserId}" class="chat-message-sender-name"
+  <div th:class="${message.senderId == currentUserId} ? 'chat-message-mine' : 'chat-message-other'"
+       th:each="message : ${messages}">
+    <div class="chat-message-sender-name" th:if="${message.senderId != currentUserId}"
          th:text="${message.senderName}"></div>
 
     <div class="chat-message-container"> <!-- 메시지 및 날짜 컨테이너 -->
@@ -30,8 +40,8 @@
 
 <footer class="chat-footer">
   <form id="messageForm" onsubmit="sendMessage(event);">
-    <input type="text" id="message" class="messageForm-input" placeholder="메시지 입력"/>
-    <button type="submit" class="messageForm-button">전송</button>
+    <input class="messageForm-input" id="message" placeholder="메시지 입력" type="text"/>
+    <button class="messageForm-button" type="submit">전송</button>
   </form>
 </footer>
 
@@ -108,6 +118,14 @@
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('chat-message-container');
 
+    // 이름 요소 추가 (로그인한 사람 제외한 다른 사용자의 경우)
+    if (message.senderId !== currentUser) {
+      const senderNameElement = document.createElement('div');
+      senderNameElement.classList.add('chat-message-sender-name');
+      senderNameElement.innerText = message.senderName;
+      messageElement.appendChild(senderNameElement);
+    }
+
     // 메시지 내용 요소 추가
     const textElement = document.createElement('div');
     textElement.classList.add('chat-message-content');
@@ -125,14 +143,6 @@
     messageElement.id = `message-${message.id}`;
     messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
     messageElement.appendChild(messageContainer);
-
-    // 이름 요소 추가 (다른 사용자의 경우)
-    if (message.senderId !== currentUser) {
-      const senderNameElement = document.createElement('div');
-      senderNameElement.classList.add('chat-message-sender-name');
-      senderNameElement.innerText = message.senderName;
-      messageElement.appendChild(senderNameElement);
-    }
 
     // 메시지를 채팅방에 추가
     const chatRoomElement = document.getElementById('chat-room');

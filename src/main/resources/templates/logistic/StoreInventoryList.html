@@ -5,7 +5,6 @@
 
 <!--title-->
 
-<th:block layout:fragment="title">logistic</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/store/script.js}"></script>
@@ -21,10 +20,10 @@
 <!--    </form>-->
 
         <div class="top-btn">
-            <a th:href="@{/logistic/inbound/warehouse/list1}">
+            <a th:href="@{/logistic/stock/warehouse/list}">
                 <button class="wideBtn switch-button2"> 창고 재고</button>
             </a>
-            <a th:href="@{/logistic/inbound/store/list1}">
+            <a th:href="@{/logistic/stock/store/list}">
                 <button class="wideBtn switch-button1"> 매장 재고</button>
             </a>
         </div>
@@ -46,20 +45,21 @@
             <th>카테고리</th>
             <th>지점 재고</th>
             <th>단위</th>
-            <th>거래여부</th>
+            <th>지점이름</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="p : ${products}">
-            <td th:text="${p.getProduct().productCode}">p.productCode</td>
+        <tr th:each="i : ${inventories}">
+            <td th:text="${i.getProduct().getProductCode()}">p.productCode</td>
             <td>
-                <a th:text="${p.getProduct().productCode}" th:href="@{/products/info/{id}(id=${p.getProduct().productCode})}">p.name</a>
+                <a th:text="${i.getProduct()?.productName}" th:href="@{/logistic/stock/store/info/{productCode}/{storeNo}(productCode=${i.getProduct()?.productCode},storeNo=${i.getStore()?.storeNo})}">p.name</a>
             </td>
-            <td th:text="${p.getProduct().getProductCategory()}">카테고리</td>
+            <td th:text="${i.getProduct().getProductCategory()}">카테고리</td>
 
-            <td th:text="${p.getStore().getStoreName()}">지점 이름</td>
-            <td th:text="${p.getInventoryCnt()}">지점 보유재고</td>
-            <td th:text="${p.getProduct().getProductUnit()}">단위</td>
+
+            <td th:text="${i.getInventoryCnt()}">지점 보유재고</td>
+            <td th:text="${i.getProduct().getProductUnit()}">단위</td>
+            <td th:text="${i.getStore().getStoreName()}">지점 이름</td>
 
 <!--            <td>-->
 <!--                <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>-->

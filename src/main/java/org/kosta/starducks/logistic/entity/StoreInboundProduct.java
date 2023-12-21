@@ -40,8 +40,6 @@ public class StoreInboundProduct {
         wiProduct.setInboundPrice(product.getProductPrice()*inboundQuantity);
         wiProduct.setInboundQuantity(inboundQuantity);
 
-        //재고 증가 로직
-        product.increaseCnt(inboundQuantity);
         return wiProduct;
 
     }

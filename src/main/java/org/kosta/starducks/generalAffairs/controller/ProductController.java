@@ -97,7 +97,6 @@ public class ProductController {
 
     @GetMapping("/update/{productCode}")
     public String updateProduct(@PathVariable("productCode") Long productCode, Model m) {
-        MenuService.commonProcess(request, m, "general");
         Optional<Product> product = productService.getProduct(productCode);
 
         if (product.isPresent()) {

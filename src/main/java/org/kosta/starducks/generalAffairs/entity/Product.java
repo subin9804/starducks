@@ -2,17 +2,16 @@ package org.kosta.starducks.generalAffairs.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.ToString;
+import org.kosta.starducks.commons.BaseTimeEntity;
 import org.kosta.starducks.logistic.entity.StoreInventory;
+
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Product {
+@Data
+public class Product extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

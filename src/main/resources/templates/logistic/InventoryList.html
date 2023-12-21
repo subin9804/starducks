@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -15,20 +15,20 @@
     <div class="content">
 
         <div class="top-btn">
-            <a th:href="@{/logistic/inbound/warehouse/list1}">
+            <a th:href="@{/logistic/stock/warehouse/list}">
                 <button class="wideBtn switch-button1"> 창고 재고</button>
             </a>
-            <a th:href="@{/logistic/inbound/store/list1}">
+            <a th:href="@{/logistic/stock/store/list}">
                 <button class="wideBtn switch-button2"> 매장 재고</button>
             </a>
         </div>
         <div class="one-line">
-            <form th:action="@{/logistic/inbound/warehouse/list1}" method="get">
+            <form th:action="@{/logistic/stock/warehouse/list}" method="get">
                 <input type="text" name="searchKeyword" placeholder="찾으실 품목 이름 입력하세요">
                 <button class="search" type="submit">검색</button>
             </form>
             <a th:href="@{/logistic/inbound/warehouse/add}">
-                <button class="commonBtn register-button" type="submit"> + 발주 신청</button>
+                <button class="commonBtn register-button" type="submit">발주 신청</button>
             </a>
         </div>
 
@@ -49,7 +49,8 @@
             <tr th:each="p : ${products}">
                 <td th:text="${p.productCode}">p.productCode</td>
                 <td>
-                    <a th:text="${p.productName}" th:href="@{/products/info/{id}(id=${p.productCode})}">p.name</a>
+                    <a th:text="${p.productName}" th:href="@{/logistic/stock/warehouse/info/{code}(code=${p.productCode})}">p.name</a>
+
                 </td>
                 <td th:text="${p.productCategory}">카테고리</td>
 
@@ -65,7 +66,7 @@
         <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
 
             <a th:if="${page != nowPage}"
-               th:href="@{/logistic/inbound/warehouse/list1(page = ${page - 1}, searchKeyword =${param.searchKeyword})}"
+               th:href="@{/logistic/stock/warehouse/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}"
                th:text="${page}"></a>
             <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
 
