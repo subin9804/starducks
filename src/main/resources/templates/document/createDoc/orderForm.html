@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
+    <div class="preview-layout">
+        <div class="inputs-div page-shadow">
+            <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
+            <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
+
+            <form method="post" th:object="${document}">
+                <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
+                <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
+
+                <div class="input-wrap urgent-wrap">
+                    긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
+<!--                    긴급 <input type="checkbox" th:field="*{urgent}" th:checked="${document.urgent}" id="urgent">-->
+                </div>
+
+                <div class="input-wrap">
+                <span class="doc-input-lbl">기안일</span>
+                    : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                </div>
+                <div class="input-wrap">
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
+                </div>
+
+
+                <div class="hr"><hr></div>
+
+                <div class="input-wrap">
+                1차 결재자
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                    data-bs-toggle="modal" data-bs-target="#selectApvEmp1">
+                사원찾기
+                </button>
+                 : <span id="selectedApv1"></span>
+                <div th:insert="~{document/createDoc/_selectApvEmp1::modal}"></div>
+                </div>
+
+                <div class="input-wrap">
+                2차 결재자
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectApvEmp2">
+                    사원찾기
+                </button>
+                 : <span id="selectedApv2"></span>
+                <div th:insert="~{document/createDoc/_selectApvEmp2::modal}"></div>
+                </div>
+
+
+                <div class="hr"><hr></div>
+
+
+                <div class="input-wrap">
+                참조인
+                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                        data-bs-toggle="modal" data-bs-target="#selectRefEmp">
+                    사원찾기
+                </button>
+                 : <span class="selected-values" id="selectedRefs"></span>
+                </div>
+
+                <div th:insert="~{document/createDoc/_selectRefEmp::modal}"></div>
+
+
+                <div class="hr"><hr></div>
+
+
+                <div class="input-wrap">
+                첨부파일 :
+                <input type="file" multiple>
+                </div>
+
+                <div class="hr"><hr></div>
+
+                <div class="input-wrap2">
+                제목 : <input type="text" th:field="*{docTitle}">
+<!--                <input type="text" th:field="*{docTitle}">-->
+                </div>
+
+                <div class="input-wrap2">
+                <textarea th:field="*{docContent}" placeholder="내용을 입력하세요."></textarea>
+                </div>
+
+                <div class="input-wrap2">
+                <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
+                    <button th:if="${document?.docId == null}"
+                            class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
+                    <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
+                            class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
+                <button class="register-button"  type="submit" th:text="상신">상신</button>
+                </div>
+            </form>
+<!--            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>-->
+        </div>
+
+
+    <div class="a4-box page-shadow">
+        <div id="print-div">
+            <h1 class="doc-type-name">업 무 기 안 서</h1>
+            <span id="urgentDisplay"></span>
+<!--            <div class="urgent-sticker">긴급</div>-->
+
+            <div class="top-box">
+                <table class="drafter-box">
+                    <tr>
+                        <th rowspan="3">신청</th>
+                        <th>사원</th>
+                    </tr>
+                    <tr>
+                        <td class="stamp-box">(홍길동인)</td>
+                    </tr>
+                    <tr>
+                        <td class="stamp-date">2023/12/14</td>
+                    </tr>
+                </table>
+                <table class="approver-box">
+                    <tr>
+                        <th rowspan="3">승인</th>
+                        <th>직급</th>
+                        <th>직급</th>
+                    </tr>
+                    <tr>
+                        <td class="stamp-box">(김팀장인)</td>
+                        <td class="stamp-box">(김사장인)</td>
+                    </tr>
+                    <tr>
+                        <td class="stamp-date">2023/12/14</td>
+                        <td class="stamp-date">2023/12/14</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="middle-box">
+                <table class="doc-info-box">
+                    <tr class="approver">
+                        <td class="col-th">기안자</td>
+                        <td th:text="${empName}">내용</td>
+                    </tr>
+                    <tr class="doc-info">
+                        <td class="col-th">소속</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">기안일</td>
+                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">문서번호</td>
+                        <td>내용</td>
+                    </tr>
+                    <tr class="doc-content">
+                        <td class="col-th">참조인</td>
+                        <td><span class="selected-values" id="selectedRefs2"></span></td>
+                    </tr>
+                </table>
+                <table class="doc-content-box">
+                    <tr class="approver">
+                        <td class="col-th">제목</td>
+                        <td><span id="docTitleOut"></span></td>
+                    </tr>
+                    <tr class="doc-info">
+                        <td class="col-th">내용</td>
+                        <td class="docContentOut"><span id="docContentOut"></span></td>
+                    </tr>
+                </table>
+                <table class="attached-files-box">
+                    <tr class="attached-files">
+                        <td class="col-th">첨부파일</td>
+                        <td>내용</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    </div>
+<script>
+    // html 하단에 넣어야 적용
+    document.getElementById('urgent').addEventListener('change', function() {
+        var urgentSticker = document.getElementById('urgent-sticker');
+        urgentSticker.style.display = this.checked ? 'block' : 'none';
+    });
+
+    var docTitle = document.getElementById('docTitle');
+    var docTitleOut = document.getElementById('docTitleOut');
+    docTitle.addEventListener('input', function() {
+        var docTitleIn = docTitle.value;
+        docTitleOut.innerText = docTitleIn;
+    });
+
+    var docContent = document.getElementById('docContent');
+    var docContentOut = document.getElementById('docContentOut');
+    docContent.addEventListener('input', function() {
+        var docContentIn = docContent.value;
+        docContentOut.innerText = docContentIn;
+    });
+    var urgentCheckbox = document.getElementById('urgent');
+
+    // 긴급 여부를 표시할 곳
+    var urgentDisplay = document.getElementById('urgentDisplay');
+
+    // 체크박스의 변경 이벤트 감지
+    urgentCheckbox.addEventListener('change', function() {
+        // 체크박스가 체크되어 있으면 긴급 표시
+        if (urgentCheckbox.checked) {
+            urgentDisplay.innerHTML = '<h4 class="urgent-sticker">긴급</h4>';
+        } else {
+            // 체크가 해제되면 표시 제거
+            urgentDisplay.innerHTML = '';
+        }
+    });
+</script>
+</main>
+</html>
