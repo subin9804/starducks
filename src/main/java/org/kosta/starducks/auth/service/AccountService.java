@@ -38,6 +38,7 @@ public class AccountService implements UserDetailsService {
         .orElseThrow(() -> new UsernameNotFoundException("Employee not found with empId: " + empId));
 
     if (employee.isStatus()) { // status가 true이면 퇴사한 상태
+      System.out.println("퇴사한 직원 로그인 시도: " + username);
       throw new DisabledException("This account has been disabled."); // 계정 비활성화 예외 발생
     }
 
