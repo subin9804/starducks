@@ -1,7 +1,9 @@
 package org.kosta.starducks.generalAffairs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.kosta.starducks.commons.BaseTimeEntity;
 import org.kosta.starducks.logistic.entity.StoreInventory;
 
@@ -41,8 +43,10 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean productSelling;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id",nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Vendor vendor;
 
     @Column(length = 150)

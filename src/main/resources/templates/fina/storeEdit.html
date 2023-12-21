@@ -39,7 +39,7 @@
 
                 <dl>
                     <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
-                    <dd><select id="storeManager" name="storeManager">
+                    <dd><select id="storeManager" name="storeManager" class="form-select">
                         <option th:each="storeManager : ${storeManagers}"
                                 th:value="${storeManager}"
                                 th:text="${storeManager}"></option>
@@ -73,7 +73,7 @@
             <dl>
                 <dt><label for="storeOperationalYn">운영여부</label></dt>
                 <dd><select id="storeOperationalYn" name="storeOperationalYn"
-                            th:field="*{store.storeOperationalYn}">
+                            th:field="*{store.storeOperationalYn}" class="form-select">
                     <option th:each="option : ${storeOperationalYn}"
                             th:value="${option}"
                             th:text="${option.description}"
@@ -85,12 +85,13 @@
 
     <!-- 버튼 2개를 form 바깥에 배치 -->
     <div style="display: flex; justify-content: center; align-items: center;">
-        <button class="btn btn-primary" type="submit">저장</button>
+        <button class="btn btn-primary" type="submit">저장
+        </button>
         <button class="btn btn-outline-danger" type="button"
                 th:attr="onclick='location.href=\'/fina/store/single/\' + ${store.storeNo}'">
             이전
         </button>
+        </form>
     </div>
-    </form>
 </main>
 </html>
