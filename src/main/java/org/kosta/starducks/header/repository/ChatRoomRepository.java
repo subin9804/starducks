@@ -1,7 +1,6 @@
 package org.kosta.starducks.header.repository;
 
 import org.kosta.starducks.header.entity.ChatRoom;
-import org.modelmapper.internal.bytebuddy.TypeCache;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
+  public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-  // CatRoom 조회 - RoomName 검색, 정확히 일치
-  ChatRoom findByRoomName(String roomName);
+    // CatRoom 조회 - RoomName 검색, 정확히 일치
+    ChatRoom findByRoomName(String roomName);
 
   // ChatRoom 목록조회 - 기본정렬순, RoomName 검색, 정확히 일치
   List<ChatRoom> findAllByRoomName(String roomName);

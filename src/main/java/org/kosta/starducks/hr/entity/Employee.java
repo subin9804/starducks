@@ -42,6 +42,7 @@ public class Employee {
     private boolean status;      // 퇴사여부 (false = 재직중 / true = 퇴사)
     private String pwd;     // 비밀번호
 
+
     @ToString.Exclude
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "dept_id")

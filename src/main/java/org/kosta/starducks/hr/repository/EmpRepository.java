@@ -82,4 +82,10 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
 
 
     }
+
+    /**
+     * 부서 id 순서대로 사원들 정렬해서 가져오기. 채팅 사원 목록에 사용
+     */
+    @Query("SELECT e FROM Employee e JOIN e.dept d ORDER BY d.deptId ASC")
+    List<Employee> findAllEmployeesWithDepartmentOrder();
 }

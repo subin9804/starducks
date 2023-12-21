@@ -44,15 +44,13 @@ public class ForumPostController {
 
     // 게시판 메인 페이지
     @GetMapping
-    public String listPosts(Model model,@PageableDefault(page = 0,size = 5,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        MenuService.commonProcess(request, model, "forum");
+    public String listPosts(Model model,@PageableDefault(page = 0,size = 10,sort = "postId", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
         Page<ForumPost> posts = null;
 
         List<ForumPost> topNotices = forumPostService.getTopNotice(); // 최신 공지 2개 조회
 
         model.addAttribute("topNotices", topNotices); // 공지사항 데이터 추가
-
 
 //        검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
         if(searchKeyword == null) {
