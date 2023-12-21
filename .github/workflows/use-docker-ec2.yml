@@ -54,7 +54,7 @@ jobs:
       if: contains(github.ref, 'master')
       run: | 
           sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_REPO }}/starducks-repo --platform linux/amd64 .
+          docker build --build-arg DEPENDENCY=build/dependency -t ${{ secrets.DOCKER_REPO }}/starducks-repo --platform linux/amd64 .
           docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
 
 
