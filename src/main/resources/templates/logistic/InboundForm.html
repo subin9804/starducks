@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">logistic</th:block>
+
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -23,6 +23,9 @@
                     </select>
                 </div>
                 <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
+
+
+<!--            입고등록 버튼 클릭시 재고 부족하면 못넘어가게 막아야함.-->
                 <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
                 <input type="hidden" id="warehouseInboundDtos" name="warehouseInboundDtos" value="">
         </form>

@@ -1,218 +1,226 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ko">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<th:block layout:fragment="addMore">
+
   <title>개인 정보 수정</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/header/style.css}">
+  <script th:src="@{/js/header/script.js}"></script>
 
-  <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}"/>
+</th:block>
 
-  <link href="/css/header/style.css" rel="stylesheet" type="text/css">
+<main layout:fragment="content">
 
-</head>
-<body>
-<h1 class="p-custom">개인 정보 수정</h1>
-<form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}"
-      autocomplete="off">
-  <div id="formSection" class="formSection-custom">
-    <section>
-      <!-- 사원번호 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">사원 번호</dt>
-        <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
-        <input type="hidden" th:field="*{empId}" id="empId"/>
-      </dl>
-      <!-- 사원 이름 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">사원 이름</dt>
-        <dd class="dd-custom"><input type="text" th:value="*{empName}" disabled></dd>
-      </dl>
-      <!-- 연락처 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">연락처</dt>
-        <dd class="dd-custom"><input type="text" th:field="*{empTel}"></dd>
-      </dl>
-      <!-- 이메일 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">이메일</dt>
-        <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
-      </dl>
-      <!-- 생년월일 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">생년월일</dt>
-        <dd class="dd-custom"><input type="date" th:value="*{birth}" disabled></dd>
-      </dl>
-    </section>
-    <section>
-      <!-- 부서 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">부서</dt>
-        <dd class="dd-custom">
-          <input type="text" th:value="${dept != null ? dept.deptName : '기본값'}" disabled>
-        </dd>
-      </dl>
-      <!-- 직급 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">직급</dt>
-        <dd class="dd-custom"><input type="text" th:value="*{position}" disabled></dd>
-      </dl>
-      <!-- 입사 일자 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">입사 일자</dt>
-        <dd class="dd-custom"><input type="date" th:value="*{joinDate}" disabled></dd>
-      </dl>
-      <!-- 우편번호 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">우편번호</dt>
-        <dd class="dd-custom">
-          <input type="text" class="postNo-custom" th:field="*{postNo}">
-          <button type="button" class="button-custom" onclick="findPostalCode()">우편번호 찾기</button>
-        </dd>
-      </dl>
-      <!-- 주소 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">주소</dt>
-        <dd class="dd-custom"><input type="text" th:field="*{addr}"></dd>
-      </dl>
-      <!-- 상세주소 -->
-      <dl class="dl-custom">
-        <dt class="dt-custom">상세주소</dt>
-        <dd class="dd-custom"><input type="text" th:field="*{dAddr}"></dd>
-      </dl>
-    </section>
-    <div class="btns-custom">
-      <button type="submit" class="commonBtn-custom register-button">저장</button>
-      <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
-    </div>
+  <h1 class="p-custom">개인 정보 수정</h1>
+  <div class="content">
+    <form id="form" class="form-custom" th:action="@{/profileEdit/update}" method="post" th:object="${employee}"
+          autocomplete="off">
+      <div id="formSection" class="formSection-custom">
+        <section>
+          <!-- 사원번호 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">사원 번호</dt>
+            <dd class="dd-custom"><input type="text" th:value="*{empId}" disabled></dd>
+            <input type="hidden" th:field="*{empId}" id="empId"/>
+          </dl>
+          <!-- 사원 이름 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">사원 이름</dt>
+            <dd class="dd-custom"><input type="text" th:value="*{empName}" disabled></dd>
+          </dl>
+          <!-- 연락처 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">연락처</dt>
+            <dd class="dd-custom"><input type="text" th:field="*{empTel}"></dd>
+          </dl>
+          <!-- 이메일 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">이메일</dt>
+            <dd class="dd-custom"><input type="email" th:field="*{email}"></dd>
+          </dl>
+          <!-- 생년월일 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">생년월일</dt>
+            <dd class="dd-custom"><input type="date" th:value="*{birth}" disabled></dd>
+          </dl>
+        </section>
+        <section>
+          <!-- 부서 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">부서</dt>
+            <dd class="dd-custom"><input type="text" th:value="*{dept.deptName}" disabled></dd>
+          </dl>
+          <!-- 직급 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">직급</dt>
+            <dd class="dd-custom"><input type="text" th:value="*{position}" disabled></dd>
+          </dl>
+          <!-- 입사 일자 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">입사 일자</dt>
+            <dd class="dd-custom"><input type="date" th:value="*{joinDate}" disabled></dd>
+          </dl>
+          <!-- 우편번호 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">우편번호</dt>
+            <dd class="dd-custom">
+              <input type="text" class="postNo-custom" th:field="*{postNo}">
+              <button type="button" class="button-custom" onclick="findPostalCode()">우편번호 찾기</button>
+            </dd>
+          </dl>
+          <!-- 주소 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">주소</dt>
+            <dd class="dd-custom"><input type="text" th:field="*{addr}"></dd>
+          </dl>
+          <!-- 상세주소 -->
+          <dl class="dl-custom">
+            <dt class="dt-custom">상세주소</dt>
+            <dd class="dd-custom"><input type="text" th:field="*{dAddr}"></dd>
+          </dl>
+        </section>
+        <div class="btns-custom">
+          <button type="submit" class="commonBtn-custom register-button">저장</button>
+          <a th:href="@{/profileEdit}"><p class="commonBtn-custom cancel-button">취소</p></a>
+        </div>
+      </div>
+    </form>
   </div>
-</form>
-<div>
-  <h2>비밀번호 변경</h2>
-  <dl class="dl-custom">
-    <dt class="dt-custom">기존 비밀번호</dt>
-    <dd class="dd-custom">
-      <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
-      <button type="button" onclick="checkCurrentPassword()">확인</button>
-    </dd>
-    <!-- 새 비밀번호 입력 -->
-    <dt class="dt-custom">새 비밀번호</dt>
-    <dd class="dd-custom">
-      <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
-    </dd>
-    <!-- 새 비밀번호 확인 -->
-    <dt class="dt-custom">새 비밀번호 확인</dt>
-    <dd class="dd-custom">
-      <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
-    </dd>
-  </dl>
-  <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
-</div>
+  <div>
+    <h2>비밀번호 변경</h2>
+    <dl class="dl-custom">
+      <dt class="dt-custom">기존 비밀번호</dt>
+      <dd class="dd-custom">
+        <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
+        <button type="button" onclick="checkCurrentPassword()">확인</button>
+      </dd>
+      <!-- 새 비밀번호 입력 -->
+      <dt class="dt-custom">새 비밀번호</dt>
+      <dd class="dd-custom">
+        <input type="password" id="newPassword" placeholder="새 비밀번호 입력" disabled>
+      </dd>
+      <!-- 새 비밀번호 확인 -->
+      <dt class="dt-custom">새 비밀번호 확인</dt>
+      <dd class="dd-custom">
+        <input type="password" id="newPasswordConfirm" placeholder="새 비밀번호 확인" disabled>
+      </dd>
+    </dl>
+    <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+  </div>
+  <script>
+    function checkCurrentPassword() {
+      const currentPassword = document.getElementById("currentPassword").value;
 
-<script>
-  function checkCurrentPassword() {
-    const currentPassword = document.getElementById("currentPassword").value;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+      const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-    fetch("/profileEdit/checkPassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        [csrfHeaderName]: csrfToken
-      },
-      body: JSON.stringify({ currentPassword: currentPassword })
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("서버 통신 오류");
-        }
+      fetch("/profileEdit/checkPassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          [csrfHeaderName]: csrfToken
+        },
+        body: JSON.stringify({currentPassword: currentPassword})
       })
-      .then(isMatch => {
-        if (isMatch) {
-          document.getElementById("newPassword").disabled = false;
-          document.getElementById("newPasswordConfirm").disabled = false;
-        } else {
-          alert("현재 비밀번호가 일치하지 않습니다.");
-        }
-      })
-      .catch(error => console.error('오류 발생:', error));
-  }
-
-
-  function validatePassword() {
-    const newPassword = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("newPasswordConfirm").value;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-    if (!newPassword.match(passwordRegex)) {
-      alert("비밀번호는 영문, 숫자 조합으로 8자리 이상이어야 합니다.");
-      return false;
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("서버 통신 오류");
+          }
+        })
+        .then(isMatch => {
+          if (isMatch) {
+            document.getElementById("newPassword").disabled = false;
+            document.getElementById("newPasswordConfirm").disabled = false;
+          } else {
+            alert("현재 비밀번호가 일치하지 않습니다.");
+          }
+        })
+        .catch(error => console.error('오류 발생:', error));
     }
 
-    if (newPassword !== confirmPassword) {
-      alert("새 비밀번호가 일치하지 않습니다.");
-      return false;
+
+    function validatePassword() {
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("newPasswordConfirm").value;
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+      if (!newPassword.match(passwordRegex)) {
+        alert("비밀번호는 영문, 숫자 조합으로 8자리 이상이어야 합니다.");
+        return false;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("새 비밀번호가 일치하지 않습니다.");
+        return false;
+      }
+
+      return true;
     }
 
-    return true;
-  }
+    document.getElementById("form").onsubmit = function (event) {
+      const isValid = validatePassword();
+      if (!isValid) {
+        event.preventDefault(); // 유효하지 않으면 폼 제출 방지
+      }
+    };
+  </script>
+  <script>
+    function updatePassword() {
+      const newPassword = document.getElementById("newPassword").value;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+      const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-  document.getElementById("form").onsubmit = function (event) {
-    const isValid = validatePassword();
-    if (!isValid) {
-      event.preventDefault(); // 유효하지 않으면 폼 제출 방지
-    }
-  };
-</script>
-<script>
-  function updatePassword() {
-    const newPassword = document.getElementById("newPassword").value;
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-    fetch("/profileEdit/updatePassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        [csrfHeaderName]: csrfToken
-      },
-      body: JSON.stringify({ newPassword: newPassword })
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("서버 통신 오류");
-        }
+      fetch("/profileEdit/updatePassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          [csrfHeaderName]: csrfToken
+        },
+        body: JSON.stringify({newPassword: newPassword})
       })
-      .then(data => {
-        if (data) {
-          alert("비밀번호가 변경되었습니다.");
-        } else {
-          alert("비밀번호 변경 실패");
-        }
-      })
-      .catch(error => console.error('오류 발생:', error));
-  }
-
-
-  document.getElementById("form").onsubmit = function(event) {
-    // 필요한 경우 여기에 개인 정보 수정 관련 유효성 검사 로직을 추가할 수 있습니다.
-  };
-
-
-  function checkEmpId() {
-    const empIdElement = document.getElementById('empId');
-    if (empIdElement) {
-      console.log('empId:', empIdElement.value);  // 콘솔에 empId 값 출력
-    } else {
-      console.error('empId element not found');
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("서버 통신 오류");
+          }
+        })
+        .then(data => {
+          if (data) {
+            alert("비밀번호가 변경되었습니다.");
+          } else {
+            alert("비밀번호 변경 실패");
+          }
+        })
+        .catch(error => console.error('오류 발생:', error));
     }
-  }
-  // 페이지 로드 시 empId 값을 확인
-  window.onload = checkEmpId;
-</script>
-</body>
+
+
+    document.getElementById("form").onsubmit = function (event) {
+      // 필요한 경우 여기에 개인 정보 수정 관련 유효성 검사 로직을 추가할 수 있습니다.
+    };
+
+
+    function checkEmpId() {
+      const empIdElement = document.getElementById('empId');
+      if (empIdElement) {
+        console.log('empId : 존재');
+      } else {
+        console.error('empId element not found');
+      }
+    }
+
+    // 페이지 로드 시 empId 값을 확인
+    window.onload = checkEmpId;
+  </script>
+</main>
 </html>

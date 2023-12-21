@@ -2,6 +2,7 @@ package org.kosta.starducks.generalAffairs.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.generalAffairs.dto.ProductStockUpdateDto;
 import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.repository.ProductRepository;
@@ -110,6 +111,22 @@ public class ProductService {
             return "해당 제품을 찾을 수 없습니다.";
     }
     }
+    
+    public String updateProductStock(ProductStockUpdateDto productStockUpdateDto){
+        Optional<Product> stockDto = productRepository.findById(productStockUpdateDto.getProductCode());
+
+        if(stockDto.isPresent()){
+            Product product = stockDto.get();
+            product.setProductCnt(productStockUpdateDto.getProductCnt());
+            productRepository.save(product);
+            return "수정완료";
+        }
+        else{
+            return "해당 제품 찾을 수 없습니다.";
+        }
+    }
+    
+    
     public String deleteProduct(Long productCode){
         productRepository.deleteById(productCode);
         return "삭제완료";

@@ -105,5 +105,4 @@ public class StoreService {
             rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");
         }
     }
-
 }

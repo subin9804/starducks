@@ -3,8 +3,10 @@ package org.kosta.starducks.commons;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
+import org.kosta.starducks.fina.entity.ContractStatus;
 import org.kosta.starducks.fina.entity.Store;
 import org.kosta.starducks.fina.entity.StoreOperationalYn;
+import org.kosta.starducks.fina.entity.VendorBusinessSector;
 import org.kosta.starducks.fina.repository.StoreRepository;
 import org.kosta.starducks.fina.service.StoreService;
 import org.kosta.starducks.forum.entity.ForumPost;
@@ -25,7 +27,6 @@ import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.kosta.starducks.mypage.dto.Room;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.entity.ScheduleType;
 import org.kosta.starducks.mypage.repository.ScheduleRepository;
@@ -130,24 +131,28 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         Vendor vendor1 = new Vendor();
         vendor1.setVendorName("빈로스터리");
+        vendor1.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
         vendor1.setVendorRegistNum("12458921");
         vendor1.setVendorRepreName("장총명");
         vendor1.setVendorTelephone("010-1212-3434");
         vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
         vendor1.setVendorAddress("서울시 중구 장충동");
+        vendor1.setContractStatus(ContractStatus.CONTRACT_ACTIVE);
         vendorRepository.saveAndFlush(vendor1);
 
         Vendor vendor2 = new Vendor();
         vendor2.setVendorName("대성산업");
+        vendor2.setVendorBusinessSector(VendorBusinessSector.FARMINGANDCULTIVATION);
         vendor2.setVendorRegistNum("46952029");
         vendor2.setVendorRepreName("김찬구");
         vendor2.setVendorTelephone("010-7122-8152");
         vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));
         vendor2.setVendorAddress("부산시 동래구 사직동");
+        vendor2.setContractStatus(ContractStatus.CONTRACT_STOPPED);
         vendorRepository.saveAndFlush(vendor2);
 
 
-        //초기 product 데이터
+//        //초기 product 데이터
         Product product1 = new Product();
         product1.setProductSelling(true);
         product1.setProductPrice((long) 75000);
@@ -202,12 +207,14 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         product6.setProductUnit(ProductUnit.HUNDRED_EA);
         productRepository.saveAndFlush(product6);
 
+        //초기 지점 데이터
+
         Store store = new Store();
         store.setEmployee(specificEmp);
         store.setStoreName("미금역점");
         store.setBusinessNum(1148600675L);
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse("2023-08-08",dateFormat);
+        LocalDate date = LocalDate.parse("2023-08-08", dateFormat);
         store.setStoreOpenDate(date);
         store.setAddNo("05704");
         store.setStoreAddr("경기도 성남시 분당구 ");
@@ -229,7 +236,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
             forumPostRepository.saveAndFlush(forumPost);
         }
-
 
         //문서 양식 데이터
         String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
@@ -286,13 +292,14 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         // 초기 채팅 데이터
         // 사번이 1인 사원과 11인 사원을 가져옵니다.
         Employee emp1 = repository.findById(1L).orElse(null);
+        Employee emp2 = repository.findById(2L).orElse(null);
         Employee emp11 = repository.findById(11L).orElse(null);
 
         if (emp1 != null && emp11 != null) {
             // 채팅방 생성
 
             ChatRoom chatRoom = new ChatRoom();
-            chatRoom.setRoomName("채팅방 이름");
+            chatRoom.setRoomName("더미 채팅방 이름");
             chatRoom = chatRoomRepository.save(chatRoom);
 
             // 채팅방 참여자 연결
@@ -307,6 +314,30 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 msg.setChatRoom(chatRoom);
                 msg.setMessage("메시지 내용 " + i);
                 msg.setSender(emp1); // 사번이 1인 사원이 메시지를 보냈다고 가정
+                msg.setReadStatus(false);
+                chatMessageRepository.save(msg);
+            }
+        }
+
+        // 사원 11과 사원 2가 대화하는 더미 데이터 생성
+        if (emp2 != null && emp11 != null) {
+            // 새 채팅방 생성
+            ChatRoom chatRoom2 = new ChatRoom();
+            chatRoom2.setRoomName("사원 11과 사원 2의 채팅방");
+            chatRoom2 = chatRoomRepository.save(chatRoom2);
+
+            // 채팅방 참여자 연결
+            ChatRoomEmp emp2ChatRoom = new ChatRoomEmp(chatRoom2, emp2);
+            chatRoomEmpRepository.save(emp2ChatRoom);
+            ChatRoomEmp emp11ChatRoom2 = new ChatRoomEmp(chatRoom2, emp11);
+            chatRoomEmpRepository.save(emp11ChatRoom2);
+
+            // 메시지 생성
+            for (int i = 0; i < 3; i++) {
+                ChatMessage msg = new ChatMessage();
+                msg.setChatRoom(chatRoom2);
+                msg.setMessage("메시지 내용 " + i);
+                msg.setSender(emp11); // 사번이 11인 사원이 메시지를 보냈다고 가정
                 msg.setReadStatus(false);
                 chatMessageRepository.save(msg);
             }

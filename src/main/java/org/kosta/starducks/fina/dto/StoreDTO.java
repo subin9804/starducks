@@ -3,7 +3,6 @@ package org.kosta.starducks.fina.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.kosta.starducks.fina.entity.Store;
 import org.kosta.starducks.fina.entity.StoreOperationalYn;
 import org.kosta.starducks.hr.entity.Employee;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class StoreDTO {
 
     private Long storeNo;  // 지점 번호

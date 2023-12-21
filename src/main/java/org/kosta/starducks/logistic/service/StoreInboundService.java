@@ -111,6 +111,7 @@ public class StoreInboundService {
             storeInventory.setProduct(product);
             storeInventory.setStore(store);
 
+
             //복합 키가 적용되었으므로 자동으로 Id가 생성되는 게 아니므로,id값 역시 setter로 설정해주어야 한다.
             storeInventory.setId(storeInventoryId);
 

@@ -22,11 +22,19 @@ public class QProduct extends EntityPathBase<Product> {
 
     public static final QProduct product = new QProduct("product");
 
+    public final org.kosta.starducks.commons.QBaseTimeEntity _super = new org.kosta.starducks.commons.QBaseTimeEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
     public final StringPath fileName = createString("fileName");
 
     public final StringPath filePath = createString("filePath");
 
     public final ListPath<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory> inventories = this.<org.kosta.starducks.logistic.entity.StoreInventory, org.kosta.starducks.logistic.entity.QStoreInventory>createList("inventories", org.kosta.starducks.logistic.entity.StoreInventory.class, org.kosta.starducks.logistic.entity.QStoreInventory.class, PathInits.DIRECT2);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final EnumPath<ProductCategory> productCategory = createEnum("productCategory", ProductCategory.class);
 

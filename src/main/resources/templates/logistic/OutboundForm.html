@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--title-->
+
+<th:block layout:fragment="addMore">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
+    <script th:src="@{/js/logistic/outbound/script.js}"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1>입고 등록</h1>
+    <div class="content">
+        <form id="addForm"  action="/logistic/outbound/warehouse/add" method="post">
+
+                <div>
+                    <label for="employee">담당자명 : </label>
+                    <select id="employee" name="empId">
+                        <option value="">담당자를 선택하세요</option>
+                        <option th:each="e : ${employees}" th:value="${e.getEmpId()}" th:text="${e.getEmpName()}"></option>
+                    </select>
+                </div>
+                <button type="submit" id="submitBtn" value="출고등록">출고등록</button>
+                <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
+                <input type="hidden" id="warehouseOutboundDtos" name="warehouseOutboundDtos" value="">
+        </form>
+
+        <form id="itemForm" >
+
+            <label for="product">입고상품 : </label>
+            <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
+            <select  id="product" name="productCode">
+            <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
+                <option value="">상품 선택하세요</option>
+                <option th:each="p :${products}"
+                        th:value="${p.productCode}"
+                        th:data-name="${p.productName}"
+                        th:data-category="${p.productCategory}"
+                        th:data-price="${p.productPrice}"
+                        th:data-cnt="${p.productCnt}"
+                        th:text="${p.productName}">
+                    고객명
+                </option>
+            </select>
+
+            <label for="quantity"> 입고 수량</label>
+            <input type="number" id="quantity" name="outboundQuantity">
+
+<!--            <p>가격 * 수량 <span id="result"></span></p>-->
+            <button type="button" id="addBtn">추가</button>
+
+
+        </form>
+
+<!--        <ul id="contentList">-->
+
+<!--        </ul>-->
+
+        <table id="contentTable">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>카테고리</th>
+                <th>품목명</th>
+                <th>가격</th>
+                <th>창고보유재고</th>
+                <th>출고 수량</th>
+                <th>삭제</th>
+
+            </tr>
+            </thead>
+            <tbody id="contentTableBody"></tbody>
+        </table>
+    </div>
+
+</main>
+
+
+</html>
+
+
+
+
+

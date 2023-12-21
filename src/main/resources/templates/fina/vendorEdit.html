@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--<meta charset="UTF-8">-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fina/style.css}">
+
+</th:block>
+
+<main layout:fragment="content">
+    <h2>거래처 관리</h2>
+    <hr>
+    <br><br>
+    <h5>거래처 수정</h5>
+    <br>
+
+    <div id="form" style="display: flex;">
+        <div style="flex: 1;">
+            <form class="container" action="/fina/vendor/update" method="post">
+                <input th:name="vendorId" type="hidden" th:value="${vendor.vendorId}">
+
+                <dl>
+                    <dt>거래처명</dt>
+                    <dd><input type="text" id="vendorName" name="vendorName" placeholder="거래처명" class="form-control"
+                               th:value="${vendor.vendorName}"></dd>
+                </dl>
+
+                <dl>
+                    <dt>업종</dt>
+                    <dd>
+                        <select id="businessSector" name="businessSector" class="form-select">
+                            <option th:each="sector : ${businessSectors}" th:value="${sector}"
+                                    th:text="${sector.description}"
+                                    th:selected="${vendor.vendorBusinessSector == sector}"></option>
+                        </select>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>사업자 번호</dt>
+                    <dd><input class="form-control" type="text" id="vendorRegistNum" name="vendorRegistNum"
+                               th:value="${vendor.vendorRegistNum}"></dd>
+                </dl>
+
+                <dl>
+                    <dt>대표자</dt>
+                    <dd><input type="text" id="vendorRepreName" name="vendorRepreName"
+                               th:value="${vendor.vendorRepreName}"></dd>
+                </dl>
+        </div>
+
+        <div style="flex: 1;">
+            <dl>
+                <dt>연락처</dt>
+                <dd><input type="text" id="vendorTelephone" name="vendorTelephone" placeholder="-를 포함해서 입력해주세요"
+                           th:value="${vendor.vendorTelephone}">
+                </dd>
+            </dl>
+            <dl>
+                <dt><label for="vendorStartDate">거래시작일</label></dt>
+                <dd><input type="date" id="vendorStartDate" name="vendorStartDate"
+                           th:value="${vendor.vendorStartDate}"></dd>
+            </dl>
+            <dl>
+                <dt>거래처 주소</dt>
+                <dd><input type="text" id="vendorAddress" name="vendorAddress" placeholder="상세주소를 입력해주세요"
+                           th:value="${vendor.vendorAddress}"></dd>
+            </dl>
+
+            <dl>
+                <dt>상세주소</dt>
+                <dd><input type="text" id="storeDetailAddr" name="storeDetailAddr"
+                           th:value="${vendor.vendorAddress}"
+                           class="form-control"></dd>
+            </dl>
+
+            <dl>
+                <dt>계약 여부</dt>
+                <dd>
+                    <select id="contractStatus" name="contractStatus" class="form-select">
+                        <option th:each="option : ${contractStatus}"
+                                th:value="${option.name()}"
+                                th:text="${option.getDisplayName()}" <!-- getDisplayName() 사용 -->
+                        th:selected="${vendor?.contractStatus != null and option.name() ==
+                        vendor?.contractStatus.name()}">
+                        </option>
+                    </select>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- 버튼 2개를 form 바깥에 배치 -->
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <button class="btn btn-primary" type="submit">저장
+        </button>
+        <button class="btn btn-outline-danger" type="button"
+                th:attr="onclick='location.href=\'/fina/vendor/single/\' + ${vendor.vendorId}'">
+            이전
+        </button>
+        </form>
+    </div>
+</main>
+</html>

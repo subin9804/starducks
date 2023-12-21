@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -19,7 +20,13 @@ public class QVendor extends EntityPathBase<Vendor> {
 
     public static final QVendor vendor = new QVendor("vendor");
 
+    public final EnumPath<org.kosta.starducks.fina.entity.ContractStatus> contractStatus = createEnum("contractStatus", org.kosta.starducks.fina.entity.ContractStatus.class);
+
+    public final ListPath<Product, QProduct> products = this.<Product, QProduct>createList("products", Product.class, QProduct.class, PathInits.DIRECT2);
+
     public final StringPath vendorAddress = createString("vendorAddress");
+
+    public final EnumPath<org.kosta.starducks.fina.entity.VendorBusinessSector> vendorBusinessSector = createEnum("vendorBusinessSector", org.kosta.starducks.fina.entity.VendorBusinessSector.class);
 
     public final NumberPath<Integer> vendorId = createNumber("vendorId", Integer.class);
 

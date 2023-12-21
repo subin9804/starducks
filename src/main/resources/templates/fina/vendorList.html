@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
+</th:block>
+
+<!-- 메인 콘텐츠 영역 -->
+<main layout:fragment="content">
+    <h2>거래처 관리</h2>
+    <hr>
+    <br><br>
+    <h5>거래처 목록</h5>
+    <br>
+
+    <!-- 검색창. 제목 + 내용 검색 가능 -->
+    <form class="search-form" method="get" th:action="@{/fina/vendor/list}"
+          style="display: flex; justify-content: center; align-items: center;">
+        <input name="searchKeyword" placeholder="검색어 입력" type="text">
+        <button type="submit">검색</button>
+    </form>
+
+    <button class="btn btn-primary" type="button" onclick="location.href='/fina/vendor/new'"
+            style="float: right">
+        추가하기
+    </button>
+    <br><br>
+
+    <!--    거래처 목록 테이블-->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">거래처명</th>
+            <th scope="col">업종</th>
+            <th scope="col">대표자</th>
+            <th scope="col">연락처</th>
+            <th scope="col">사업자번호</th>
+            <th scope="col">거래여부</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="vendor, vendorStat : ${vendorList}"
+            th:onclick="'location.href=\'' + @{/fina/vendor/single/{vendorId}(vendorId=${vendor.vendorId})} + '\''"
+            style="cursor:pointer">
+            <td th:text="${vendorStat.index}">No</td>
+            <td th:text="${vendor.vendorName}">거래처명</td>
+            <td th:text="${vendor.vendorBusinessSector.description}">업종</td>
+            <td th:text="${vendor.vendorRepreName}">대표자</td>
+            <td th:text="${vendor.vendorTelephone}">연락처</td>
+            <td th:text="${vendor.vendorRegistNum}">사업자번호</td>
+            <td th:text="${vendor.contractStatus == T(org.kosta.starducks.fina.entity.ContractStatus).CONTRACT_ACTIVE ? '계약 중' : '계약 중지'}">
+                계약여부
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</main>
