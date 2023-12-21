@@ -44,20 +44,20 @@
             </dl>
             <dl>
                 <dt>종료일</dt>
-                <dd>
-                    <td th:text="${detailSchedule.scheEndDate}"></td>
+                <dd><input type="text" id="scheEndDate" name="scheEndDate" th:value="${detailSchedule.scheEndDate}"
+                           class="form-control" readonly></dd>
                 </dd>
             </dl>
             <dl>
                 <dt>일정 종류</dt>
-                <dd>
-                    <td th:text="${detailSchedule.scheduleType}"></td>
+                <dd><input type="text" id="scheduleType" name="scheduleType" th:value="${detailSchedule.scheduleType}"
+                           class="form-control" readonly></dd>
                 </dd>
             </dl>
             <dl>
                 <dt>참고사항</dt>
-                <dd>
-                    <td colspan="2" style="height: 500px;" th:text="${detailSchedule.notes}"></td>
+                <dd><input type="text" id="notes" name="notes" th:value="${detailSchedule.notes}"
+                           class="form-control" readonly></dd>
                 </dd>
             </dl>
         </section>
