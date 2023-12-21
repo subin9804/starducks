@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // CSRF 토큰과 헤더 이름을 읽어옴
-    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
-    console.log("CSRF Token ==> " + csrfToken);
+    // // CSRF 토큰과 헤더 이름을 읽어옴
+    // var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    // console.log("CSRF Token ==> " + csrfToken);
 
-    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
-    console.log("CSRF Header Name ==> " + csrfHeaderName);
+    // var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+    // console.log("CSRF Header Name ==> " + csrfHeaderName);
 
     var calendarEl = document.getElementById('calendar');
     var modal;
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                [csrfHeaderName]: csrfToken
+                // [csrfHeaderName]: csrfToken
             }
         })
             .then(function (response) {
@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(function (data) {
-                console.log("데이터 리스트!!!!!! 나오니?????" + data);
                 return data;
             })
             .catch(function (error) {
@@ -178,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
         form.appendChild(notesInput);
 
         var submitButton = document.createElement('button');
-
         submitButton.textContent = '일정 등록';
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -200,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
+                    // [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
                 },
                 body: JSON.stringify(data)
             })
