@@ -115,6 +115,11 @@
       return; // 이미 렌더링된 메시지는 추가하지 않음
     }
 
+    // 메시지 요소 생성
+    const messageElement = document.createElement('div');
+    messageElement.id = `message-${message.id}`;
+    messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
+
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('chat-message-container');
 
@@ -123,7 +128,7 @@
       const senderNameElement = document.createElement('div');
       senderNameElement.classList.add('chat-message-sender-name');
       senderNameElement.innerText = message.senderName;
-      messageElement.appendChild(senderNameElement);
+      messageContainer.appendChild(senderNameElement); // messageContainer에 이름 추가
     }
 
     // 메시지 내용 요소 추가
@@ -138,10 +143,7 @@
     dateElement.innerText = message.createdDate; // 서버에서 받은 날짜를 직접 사용
     messageContainer.appendChild(dateElement);
 
-    // 메시지 요소 생성 및 추가
-    const messageElement = document.createElement('div');
-    messageElement.id = `message-${message.id}`;
-    messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
+    // messageContainer를 messageElement에 추가
     messageElement.appendChild(messageContainer);
 
     // 메시지를 채팅방에 추가
@@ -151,6 +153,7 @@
     // 스크롤 조정
     window.scrollTo(0, document.body.scrollHeight);
   }
+
 
   // 채팅방 페이지가 로드될 때 WebSocket 연결을 시작
   connect();
