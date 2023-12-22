@@ -16,7 +16,7 @@
             th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('mypage')}? 'display: none;'">
             <li th:each="submenu : ${@menu.getSubList()}" th:object="${submenu}">
                 <a th:href="*{url}" th:text="*{name}"
-                   th:classapepend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
+                   th:classappend="${submenu.code == @menu.getSubMenu()} ? 'submenu'"></a>
 
             </li>
         </ul>
