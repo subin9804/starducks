@@ -411,6 +411,10 @@ input[type="search"] {
 .chat-message-sender-name {
     margin-bottom: 5px; /* 이름과 메시지 사이의 간격 */
 }
+
+.message-and-date-container {
+    display: flex;
+}
 /* 채팅 푸터 스타일링 */
 .chat-footer {
     position: fixed;
