@@ -15,7 +15,7 @@
     <h1>품목 등록</h1>
     <div class="content">
 
-    <form action="/general/products/add" method="post" enctype="multipart/form-data">
+    <form th:action="@{/general/products/add}" method="post" enctype="multipart/form-data">
         <!-- 물품 카테고리 드롭다운 -->
         <label for="productCategory">카테고리:</label>
         <select id="productCategory" name="productCategory">
@@ -49,6 +49,7 @@
         거래 여부: <input type="checkbox" id="productSelling" name="productSelling" >
         <label for="productSelling">거래 중</label>
         <br>
+
 
         <input type="submit" value="물품 등록">
 

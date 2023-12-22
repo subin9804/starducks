@@ -86,6 +86,10 @@ window.document.addEventListener("DOMContentLoaded", function() {
                         url: "/logistic/inbound/warehouse/add",
                         contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
                         data:JSON.stringify(list),
+                        beforeSend: function(xhr) {
+                            // Set CSRF token in the request header
+                            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+                        },
                         //JSON.stringify({
                         //warehouseInboundDtos: list
                         //}) ,
