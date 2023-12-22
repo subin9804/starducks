@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <aside th:fragment="sidebar" class="sidebar">
     <a th:href="@{/}">
         <img th:src="@{/images/Starducks_Logo.png}" alt="Starducks Logo" class="sidebar-logo"/>
@@ -21,7 +23,6 @@
             </li>
         </ul>
     </div>
-
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu"
@@ -49,6 +50,7 @@
         </div>
     </div>
 
+    <th:block sec:authorize="hasAuthority('HR')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="hr" name="nav"
@@ -63,7 +65,9 @@
             </li>
         </ul>
     </div>
+    </th:block>
 
+    <th:block sec:authorize="hasAuthority('LOGISTIC')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic"
@@ -78,7 +82,8 @@
             </li>
         </ul>
     </div>
-
+    </th:block>
+    <th:block sec:authorize="hasAuthority('GENERAL')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="general" name="nav" aria-controls="flush-general"
@@ -93,7 +98,9 @@
             </li>
         </ul>
     </div>
+    </th:block>
 
+    <th:block sec:authorize="hasAuthority('FINA')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina"
@@ -107,14 +114,8 @@
             </li>
         </ul>
     </div>
+    </th:block>
 
-    <div class="accro">
-        <div class="head only">
-            <input class="" type="radio" id="map" name="nav" aria-controls="flush-map"
-                   th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('map')} ? true">
-            <label for="map"><a th:href="@{/map}">조직도</a></label>
-        </div>
-    </div>
     <div class="sidebar-footer">
         <form action="/logout" method="post">
             <!-- 이렇게 th:value 형식으로 해야 어떤 페이지에서든 토큰이 유효해지게 동적으로 된다 -->

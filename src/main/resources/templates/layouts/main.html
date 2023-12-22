@@ -42,8 +42,6 @@
 </head>
 
 <body>
-    <!--controller에서 model로 script에 간단한 설정 가능-->
-    <script th:if="${script != null}" th:utext="${script}"></script>
 
     <!--
     <div class="right">
@@ -53,10 +51,10 @@
         <th:block sec:authorize="isAnonymous()">
             로그인을 안 했을 때
         </th:block>
-        <th:block sec:authorize="hasAuthority('A')">A권한이 있을 경우</th:block>
         <th:block sec:authorize="hasAnyAuthority('A', 'B')">A나 B 둘 중 하나라도 권한이 있을 경우</th:block>
     </div>
     -->
+        A권한이 있을 경우</th:block>
 
     <!--header 가져오기-->
     <th:block th:replace="~{outlines/header::header}"></th:block>
