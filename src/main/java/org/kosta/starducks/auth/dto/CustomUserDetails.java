@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kosta.starducks.hr.entity.Employee;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -22,16 +23,34 @@ public class CustomUserDetails implements UserDetails {
     this.employee = employee;
   }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
+//  @Override
+//  public Collection<? extends GrantedAuthority> getAuthorities() {
+//
+//    Collection<GrantedAuthority> collection = new ArrayList<>();
+//
+//    collection.add((GrantedAuthority) () -> String.valueOf(employee.getPosition()));
+//    collection.add((GrantedAuthority) () -> employee.getDept().getDeptName());
+//
+//    return collection;
+//  }
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+  Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-    Collection<GrantedAuthority> collection = new ArrayList<>();
-
-    collection.add((GrantedAuthority) () -> String.valueOf(employee.getPosition()));
-    collection.add((GrantedAuthority) () -> employee.getDept().getDeptName());
-
-    return collection;
+  // 부서별 권한 추가
+  String deptName = employee.getDept().getDeptName();
+  if (deptName.equals("재무부")) {
+    authorities.add(new SimpleGrantedAuthority("FINA"));
+  } else if (deptName.equals("인사부")) {
+    authorities.add(new SimpleGrantedAuthority("HR"));
+  } else if (deptName.equals("물류유통부")) {
+    authorities.add(new SimpleGrantedAuthority("LOGISTIC"));
+  } else if (deptName.equals("총무부")) {
+    authorities.add(new SimpleGrantedAuthority("GENERAL"));
   }
+
+  return authorities;
+}
 
   @Override
   public String getPassword() {

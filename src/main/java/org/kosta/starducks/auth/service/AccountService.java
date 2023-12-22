@@ -34,7 +34,7 @@ public class AccountService implements UserDetailsService {
       throw new UsernameNotFoundException("Invalid employee ID format");
     }
 
-    Employee employee = empRepository.findById(empId)
+    Employee employee = empRepository.findEmployeeWithDepartment(empId)
         .orElseThrow(() -> new UsernameNotFoundException("Employee not found with empId: " + empId));
 
     if (employee.isStatus()) { // status가 true이면 퇴사한 상태
