@@ -41,6 +41,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Component
 @RequiredArgsConstructor
@@ -64,6 +65,8 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        //배포 서버 JVM 시간 설정
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
         // 초기 부서 데이터
         for (int i = 0; i < 33; i++) {
