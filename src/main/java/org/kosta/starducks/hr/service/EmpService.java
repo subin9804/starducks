@@ -98,7 +98,14 @@ public class EmpService {
             emp.setEmpId(id + 1);
 
 //            비밀번호 암호화해서 사원 등록~~~
-            String encodedPassword = passwordEncoder.encode(emp.getPwd());
+            String newPassword = "PASS_" + emp.getEmpId();
+
+//            자동으로 등록되는 임시 사원들은 그냥 그대로 쓰면 됨
+            if(emp.getPwd() != null) {
+                newPassword = emp.getPwd();
+            }
+
+            String encodedPassword = passwordEncoder.encode(newPassword);
             emp.setPwd(encodedPassword);
 
             System.out.println("등록한다");

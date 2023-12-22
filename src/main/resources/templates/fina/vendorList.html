@@ -56,7 +56,7 @@
             <td th:text="${vendor.vendorRepreName}">대표자</td>
             <td th:text="${vendor.vendorTelephone}">연락처</td>
             <td th:text="${vendor.vendorRegistNum}">사업자번호</td>
-            <td th:text="${vendor.contractStatus == T(org.kosta.starducks.fina.entity.ContractStatus).CONTRACT_ACTIVE ? '계약 중' : '계약 중지'}">
+            <td th:text="${vendor.contractStatus.equals(T(org.kosta.starducks.fina.entity.ContractStatus).CONTRACT_ACTIVE) ? '계약 중' : '계약 중지'}">
                 계약여부
             </td>
         </tr>

@@ -1,4 +1,6 @@
 /** 예약 생성, 수정, 삭제 */
+const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
 
 
@@ -30,6 +32,10 @@ function submit(e, action, id) {
         $.ajax({
             url: '/mypage/conf/add',
             type: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 추가
+            },
             data: JSON.stringify(jsonData),
             contentType: 'application/json',
             success: function(rep) {
@@ -62,6 +68,10 @@ function submit(e, action, id) {
             url: '/mypage/conf/edit/' + id,
             type: 'PUT',
             data: JSON.stringify(jsonData),
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 추가
+            },
             contentType: 'application/json',
             success: function(rep) {
                 console.log('성공')
@@ -108,6 +118,10 @@ function deleteBook(id) {
             // Ajax 요청
             $.ajax({
                 url: '/mypage/conf/delete/' + id,
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 추가
+                },
                 type: 'DELETE',
 
                 success: function (rep) {

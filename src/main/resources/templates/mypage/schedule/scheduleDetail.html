@@ -13,15 +13,16 @@
 
 <script th:if="${detailSchedule == null}" th:inline="javascript">
     /* JavaScript 코드로 alert 창 띄우기 */
+
     alert('일정을 찾지 못했습니다! 다시 확인해주세요!');
 </script>
 
 <main layout:fragment="content">
     <h1>일정정보조회</h1>
-    <div id="form" style="display: flex;">
+    <div id="form">
         <section>
-            <section style="flex: 1;">
-                <section>
+            <section style="display: flex;">
+                <section style="flex: 1;">
                     <dl>
                         <dt>일정번호</dt>
                         <dd><input type="text" id="scheNo" name="scheNo" th:value="${detailSchedule.scheNo}"
@@ -48,48 +49,53 @@
                                    class="form-control" readonly></dd>
                         </dd>
                     </dl>
-            </section>
+                </section>
 
-            <section>
-                <dl>
-                    <dt>일정 종류</dt>
-                    <dd><input type="text" id="scheduleType" name="scheduleType"
-                               th:value="${detailSchedule.scheduleType}"
-                               class="form-control" readonly></dd>
-                    </dd>
-                </dl>
+                <section style="flex: 1;">
+                    <dl>
+                        <dt>일정 종류</dt>
+                        <dd><input type="text" id="scheduleType" name="scheduleType"
+                                   th:value="${detailSchedule.scheduleType}"
+                                   class="form-control" readonly></dd>
+                        </dd>
+                    </dl>
 
-
-                <!--            <td colspan="2" style="height: 500px;" th:text="${ detailCal.content }"></td>-->
-
-                <dl>
-                    <dt>참고사항</dt>
-                    <dd><input th:colspan="2" style="height: 300px;" type="text" id="notes" name="notes"
-                               th:value="${detailSchedule.notes}" class="form-control" readonly></dd>
-                    </dd>
-                </dl>
+                    <dl style="display: flex; align-items: center;">
+                        <dt style="width: 10px; display: flex; align-items: center; padding-bottom: 180px">참고사항</dt>
+                        <dd style="flex: 1;"><textarea style="height: 200px; width: 50%;border-radius: 10px; border: 1px solid #6B4D27;" id="notes" name="notes"
+                                                       th:field="${detailSchedule.notes}" class="form-control"
+                                                       readonly></textarea></dd>
+                    </dl>
                 </section>
             </section>
+        </section>
+        <div class="btns" style="align-items: center">
+            <button class="commonBtn cancel-button" type="button" th:onclick="location.href='/mypage/schedule/show'">
+                목록
+            </button>
+            <button class="commonBtn delete-button" type="button" th:onclick="'confirmDelete(' + ${scheNo} + ')'">삭제
+            </button>
         </div>
-        <a th:href="@{/schedule/delete/{scheNo}(scheNo=${detailSchedule.scheNo})}"
-           th:onclick="'return confirm(\'정말 삭제하시겠습니까?\');'">
-            <button class="btn btn-outline-danger">delete</button>
-        </a>
-        <button class="btn btn-outline-secondary" id="listbtn" type="button" onclick="location.href='/schedule/show'">
-            목록으로
-        </button>
-    </div>
-
-
     </div>
 
     <script>
-        document.querySelectorAll('#deletebtn').forEach(button => {
-            button.addEventListener('click', function () {
-                var scheduleId = this.getAttribute('data-schedule-id');
-                deleteSchedule(scheduleId);
+        function confirmDelete(scheNo) {
+            Swal.fire({
+                title: '삭제 확인',
+                text: '해당 정보를 삭제하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 확인을 누르면 삭제 URL로 이동
+                    window.location.href = '/mypage/schedule/delete/' + scheNo;
+                }
             });
-        });
+        }
     </script>
 </main>
 </html>

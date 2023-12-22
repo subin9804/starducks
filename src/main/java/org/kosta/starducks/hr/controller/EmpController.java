@@ -1,7 +1,9 @@
 package org.kosta.starducks.hr.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.DeptRepository;
@@ -13,9 +15,11 @@ import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Controller
 @RequestMapping("/hr/emp")
 @RequiredArgsConstructor
@@ -72,9 +76,16 @@ public class EmpController {
      * @return
      */
     @PostMapping("/save")
-    public String save(@ModelAttribute Employee employee, Model model,
+    public String save(@Valid Employee employee, Errors errors, Model model,
                        @RequestParam("profile") MultipartFile profile,
                        @RequestParam("stamp") MultipartFile stamp) {
+
+        if (errors.hasErrors()) {
+            log.error(errors.toString());
+
+            String referer = request.getHeader("Referer");
+            return "redirect:"+ referer;
+        }
 
         Employee savedEmp = service.saveEmp(employee);
         fileService.upload(profile, "profile", employee.getEmpId());
