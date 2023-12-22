@@ -126,11 +126,13 @@
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('chat-message-container');
 
-    // 이름 요소 추가
-    const senderNameElement = document.createElement('div');
-    senderNameElement.classList.add('chat-message-sender-name');
-    senderNameElement.innerText = message.senderName;
-    messageContainer.appendChild(senderNameElement);
+    // 다른 사원의 메시지인 경우 이름을 먼저 추가
+    if (message.senderId !== currentUser) {
+      const senderNameElement = document.createElement('div');
+      senderNameElement.classList.add('chat-message-sender-name');
+      senderNameElement.innerText = message.senderName;
+      messageContainer.appendChild(senderNameElement);
+    }
 
     // 메시지 내용과 날짜를 포함하는 컨테이너
     const messageAndDateContainer = document.createElement('div');
