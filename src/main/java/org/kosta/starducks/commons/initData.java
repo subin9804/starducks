@@ -110,7 +110,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDAddr("권선구");
         specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
-        specificEmp.setDept(deptRepository.findById(2).orElse(null));
+        specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
 
@@ -237,7 +237,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         //문서 양식 데이터
         String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "empVerification"};
+        String[] formNamesEn = {"draft", "b", "orderForm", "d", "e", "f", "empVerification"};
         for (int i = 1; i < 8; i++) {
             DocForm docForm = new DocForm();
             docForm.setFormCode("A0" + i);
