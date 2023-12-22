@@ -83,7 +83,14 @@ public class EmpController {
         if (result.hasErrors()) {
             log.error("result: {}", result.getAllErrors().toString());
 
-            model.addAttribute("name", "register");
+            if(employee.getEmpId() != null) {
+                model.addAttribute("name", "edit");
+            } else {
+                // 자동으로 저장되는 사번을 미리 알려줌
+                Long id = service.getLastEmpId();
+                model.addAttribute("id", id + 1);
+                model.addAttribute("name", "register");
+            }
             return "hr/emp/empWriter";
         }
 
@@ -107,7 +114,6 @@ public class EmpController {
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
-
 
         // 파일
         String profile = fileService.getFileUrl(empId, "profile");
