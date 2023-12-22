@@ -359,6 +359,18 @@ input[type="search"] {
     align-items: flex-end;
 }
 
+/* 다른 사용자들의 메시지 스타일링 */
+.chat-message-other .chat-message-container {
+    display: flex;
+    flex-direction: column; /* 요소를 세로 방향으로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+/* 발신자 이름 스타일링 */
+.chat-message-other .chat-message-sender-name {
+    margin-bottom: 5px; /* 이름과 메시지 사이 간격 */
+}
+
 /* 메시지 내용과 날짜를 포함하는 컨테이너 */
 .chat-message-container {
     display: flex;
