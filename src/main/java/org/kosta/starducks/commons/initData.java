@@ -68,17 +68,17 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         // 초기 부서 데이터
         for (int i = 0; i < 33; i++) {
             List<Department> depts = new ArrayList<>();
-            depts.add(new Department(1, "사장실", "010-1111-1111"));
-            depts.add(new Department(2, "재무부", "010-2222-2222"));
-            depts.add(new Department(3, "총무부", "010-3333-3333"));
-            depts.add(new Department(4, "물류유통부", "010-4444-4444"));
-            depts.add(new Department(5, "인사부", "010-5555-5555"));
+            depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
+            depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
+            depts.add(new Department(3, "총무부","general", "010-3333-3333"));
+            depts.add(new Department(4, "물류유통부","logistic", "010-4444-4444"));
+            depts.add(new Department(5, "인사부","hr", "010-5555-5555"));
 
             deptRepository.saveAllAndFlush(depts);
         }
 
         // 초기 사원 데이터
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             Employee emp = new Employee();
             emp.setEmpId((long) i);
             emp.setStatus(false);

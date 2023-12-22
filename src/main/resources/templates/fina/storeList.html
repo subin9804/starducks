@@ -54,7 +54,7 @@
             <td th:text="${store.businessNum}">사업자 번호</td>
             <td th:text="${store.getEmployee().getEmpName()}">지점장</td>
             <td th:text="${store.storeAddr}">주소</td>
-            <td th:text="${store.storeOperationalYn == T(org.kosta.starducks.fina.entity.StoreOperationalYn).storeOperationalY ? '운영' : '미운영'}">운영여부</td>
+            <td th:text="${store.storeOperationalYn.equals(T(org.kosta.starducks.fina.entity.StoreOperationalYn).storeOperationalY) ? '운영' : '미운영'}">운영여부</td>
         </tr>
         </tbody>
     </table>
