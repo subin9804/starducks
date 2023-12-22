@@ -1,3 +1,6 @@
+const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
 function toggleOptions1(checkbox) {
     // 선택 상자의 상태에 따라 .options1를 표시하거나 숨깁니다.
     let options1 = $(checkbox).siblings("#options1");
