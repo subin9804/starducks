@@ -61,6 +61,26 @@ public class DocumentService {
         return new PageImpl<>(intersection, pageable, documents.size());
     }
 
+    /**
+     * 전자 결재 홈 결재 상신함 박스
+     */
+    public List<Document> homeSubmitDocuments(Long empId) {
+        //로그인한 사원이 작성한 문서 데이터
+        List<Document> documents = new ArrayList<>();
+        for (Document document : documentRepository.findByDocWriter_EmpId(empId)) {
+            if (document.getDocStatus() != DocStatus.TEMP_STORED) { //임시저장 문서 제외
+                documents.add(document);
+            }
+        }
+        // 최근 10개만 추출
+        documents.sort(Comparator.comparing(Document::getDocId).reversed());
+        List<Document> recentSubmitDocs = documents.stream()
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return recentSubmitDocs;
+    }
+
 
     /**
      * ApvEmp(결재자)의 EmpId로 document 리스트 가져오기 - 결재 수신함 페이징 처리
@@ -115,6 +135,32 @@ public class DocumentService {
     }
 
     /**
+     * 전자 결재 홈 결재 수신함 박스
+     */
+    public List<Document> homeReceiveDocuments(Long empId) {
+        //로그인한 사원이 결재자인 결재 데이터
+        List<Approval> approvals = approvalRepository.findByApvEmp_EmpId(empId);
+
+        //그 결재 데이터를 포함한 문서 데이터 (로그인 한 사원의 결재 수신함 데이터)
+        List<Document> documents = new ArrayList<>();
+        for (Approval approval : approvals) {
+            Document document = approval.getDocument();
+            //임시저장 문서 제외
+            if (document.getDocStatus() != DocStatus.TEMP_STORED) {
+                documents.add(document);
+            }
+        }
+
+        // 최근 10개만 추출
+        documents.sort(Comparator.comparing(Document::getDocId).reversed());
+        List<Document> recentReceiveDocs = documents.stream()
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return recentReceiveDocs;
+    }
+
+    /**
      * docWriter(기안자, 문서 작성자)의 EmpId로 document 리스트 가져오기 - 임시저장함 페이징 처리
      */
     public Page<Document> tempDocuments(Long empId, Pageable pageable) {
@@ -149,6 +195,27 @@ public class DocumentService {
 
         //페이징 처리하여 리턴 (데이터 많을 때 intersection.subList(start, end)하여 리턴 시 메모리 사용량 줄이기 가능)
         return new PageImpl<>(intersection, pageable, documents.size());
+    }
+
+    /**
+     * 전자 결재 홈 임시 저장함 박스
+     */
+    public List<Document> homeTempDocuments(Long empId) {
+        //로그인한 사원이 작성한 문서 데이터
+        List<Document> documents = new ArrayList<>();
+        for (Document document : documentRepository.findByDocWriter_EmpId(empId)) {
+            if (document.getDocStatus() == DocStatus.TEMP_STORED) { //임시저장 문서만
+                documents.add(document);
+            }
+        }
+
+        // 최근 10개만 추출
+        documents.sort(Comparator.comparing(Document::getDocId).reversed());
+        List<Document> recentTempDocs = documents.stream()
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return recentTempDocs;
     }
 
 //    //페이징 처리

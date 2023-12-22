@@ -1,0 +1,13 @@
+.receive-box {
+    width: 1000px;
+    height: 550px;
+    padding: 10px;
+    margin: 5px;
+}
+.submit-box,.temp-box {
+    display: inline-block;
+    width: 490px;
+    height: 550px;
+    padding: 10px;
+    margin: 5px;
+}
