@@ -5,41 +5,104 @@
 
 <!--여기는 헤드(메인에 없는 헤드 추가하기)-->
 <th:block layout:fragment="addMore">
-    <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
 </th:block>
 
 <main layout:fragment="content">
-
     <!--여기는 바디-->
     <div th:fragment="modal">
-        <div class="modal" th:style="'display: none'" th:id="modal">
-            <div class="modal-content">
-<!--                <span class="close" th:text="'×'" onclick="closeModal()"></span>-->
-                <form th:action="@{/schedule/add}" method="post" th:object="${scheduleDTO}">
-                    <label th:text="'일정명'"><input type="text" name="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/></label>
+        <div class="modal fade" tabindex="-1" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">일정 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="modal-content" th:action="@{/schedule/add}" method="post" th:id="registForm"
+                              th:object="${scheduleDTO}">
+                            <div>
+                                <span>일정명</span>
+                                <input type="text" name="scheTitle" id="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
 
-                    <label th:text="'시작 일시'"></label>
-                    <input type="datetime-local" name="scheStartDate"
-                           th:field="*{scheStartDate}"/>
+                                <span>시작 일시</span>
+                                <input type="date" name="scheStartDate" id="scheStartDate" th:field="*{scheStartDate}"/>
 
-                    <label th:text="'종료 일시'"></label>
-                    <input type="datetime-local" name="scheEndDate" th:field="*{scheEndDate}"/>
+                                <span>종료 일시</span>
+                                <input type="date" name="scheEndDate" id="scheEndDate" th:field="*{scheEndDate}"/>
 
-                    <label th:text="'일정 종류'"></label>
-                    <select name="scheduleType" th:field="*{scheduleType}">
-                        <option value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></option>
-                        <option value="OFFICIAL_SCHEDULE" th:text="'공식 일정'"></option>
-                    </select>
+                                <span>일정 종류</span>
+                                <ul name="scheduleType" th:field="*{scheduleType}">
+                                    <li value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></li>
+                                    <li value="OFFICIAL_SCHEDULE" th:text="'공식 일정'"></li>
+                                </ul>
 
-                    <label th:text="'참고 사항'"></label>
-                    <textarea name="notes" placeholder="참고 사항" th:field="*{notes}"></textarea>
-
-                    <button type="submit" th:text="'일정 추가'" onclick="closeModal()"></button>
-                </form>
+                                <span>참고 사항</span>
+                                <textarea id="text" rows="5" cols="62" name="notes" th:id="notes" th:field="*{notes}"></textarea>
+                                <button class="btn btn-primary" id="submitBtn" type="submit"
+                                        onclick="closeModal()">등록
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        // 아직 유효성 안됨 얼른 추가하자
+        /* 기간조회시 입력 오류 확인 날짜 비교 */
+        $("#submitBtn").click(function (){
+            let date = new Date();
+
+            let scheStartDate = $("#scheStartDate").val();
+            let scheEndDate = $("#scheEndDate").val();
+
+            let startArr = start.split('-');
+            let endArr = end.split('-');
+
+            let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+            let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+
+            if(startDateCompare.getTime() > endDateCompare.getTime()){
+                Swal.fire({
+                    icon: 'error',
+                    title: '입력값을 확인해 주세요',
+                    text: '시작 날짜가 종료 날짜보다 값이 큽니다.',
+                });
+            }else {
+                Swal.fire({
+                    title: '일정을 등록하시겠습니까?',
+                    text: "해당 일정은 캘린더에 표시합니다.",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '승인',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if(($("#scheStartDate").val() !== "")&& ($("#scheEndDate").val() !== "") && ($("#scheTitle").val() !== "") && ($("#notes").val() !== "")){
+                            $("#registForm").submit();
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: '입력값을 확인해 주세요',
+                                text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.',
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    </script>
 </main>
 </html>
