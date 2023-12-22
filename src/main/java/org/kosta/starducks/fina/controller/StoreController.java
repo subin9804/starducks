@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -83,7 +84,8 @@ public class StoreController {
     @GetMapping("/list")
     public String showStoreList(Model model,
                                 @PageableDefault(page = 0, size = 5, sort = "storeNo", direction = Sort.Direction.DESC) Pageable pageable,
-                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                                Principal principal) {
 
         Page<Store> storeList = null;
 
@@ -104,6 +106,13 @@ public class StoreController {
         // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
         if (totalPages == 0) {
             endPage = 1;
+        }
+
+        // Principal에서 유저 정보 받아오기
+        if (principal != null) {
+            String loggedInEmpId = principal.getName();
+            Employee employee = empRepository.findByEmpName(loggedInEmpId);
+            model.addAttribute("loggedInEmpId", employee);
         }
 
         model.addAttribute("storeList", storeList);

@@ -55,7 +55,7 @@
     top: 0;
     right: 0;
     display: inline-block;
-    border: 1px solid cadetblue;
+    /*border: 1px solid cadetblue;*/
     /*width: 210mm;*/
     /*height: 297mm;*/
     width: 794.52px;
@@ -63,7 +63,7 @@
 }
 #print-div {
     position: relative;
-    border: 1px solid yellowgreen;
+    /*border: 1px solid yellowgreen;*/
     /*margin: 10mm;*/
     margin: 38.7px;
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/index.css}"></link>
     <script th:src="@{/js/mypage/index.js}"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
 </th:block>
 
 <main layout:fragment="content">
@@ -167,5 +168,21 @@
         let id = document.getElementById("apikey")
     </script>
 
+<!--    페이지 접근 거부 됐을 때 뜨는 알림창 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // URL에서 'accessDenied' 파라미터 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('accessDenied')) {
+                Swal.fire({
+                    title: '접근 권한이 없습니다',
+                    text: '해당 부서 소속만 접근 가능합니다',
+                    icon: 'error',
+                    confirmButtonText: '확인'
+                });
+            }
+        });
+    </script>
 </main>
 </html>

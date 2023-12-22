@@ -1,5 +1,6 @@
 package org.kosta.starducks.configs;
 
+import org.kosta.starducks.auth.handler.CustomAccessDeniedHandler;
 import org.kosta.starducks.auth.handler.CustomFailHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 
 @Configuration
@@ -21,6 +23,11 @@ public class SecurityConfig {
 
     @Autowired
     private CustomFailHandler customFailHandler;
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
     @Bean //시큐리티 옵션을 커스텀할 수 있는 곳
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,7 +40,9 @@ public class SecurityConfig {
                     .requestMatchers("/hr/**").hasAuthority("HR")            // 인사부 페이지에 대한 접근 제어
                     .requestMatchers("/logistic/**").hasAuthority("LOGISTIC")// 물류유통부 페이지에 대한 접근 제어
                     .requestMatchers("/general/**").hasAuthority("GENERAL")  // 총무부 페이지에 대한 접근 제어
-                    .anyRequest().authenticated())                             // 그 외 모든 요청은 인증 필요
+                    .anyRequest().authenticated())
+            .exceptionHandling((exceptions) -> exceptions
+            .accessDeniedHandler(accessDeniedHandler()))// 그 외 모든 요청은 인증 필요
             .formLogin(form -> form
                         .loginPage("/login") //로그인 하는 페이지
                         .defaultSuccessUrl("/", true) //로그인 성공 시 메인 페이지로

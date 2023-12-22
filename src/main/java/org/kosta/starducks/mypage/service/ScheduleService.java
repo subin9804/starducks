@@ -9,6 +9,7 @@ import org.kosta.starducks.mypage.repository.ScheduleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,7 +68,11 @@ public class ScheduleService {
 
     }
 
-    public void deleteSchedule(Long scheNo) {
-        scheduleRepository.deleteById(scheNo);
+    public void deleteSchedule(Long scheNo, RedirectAttributes rttr) {
+        Schedule scheduleTarget = scheduleRepository.findById(scheNo).orElse(null);
+        if (scheduleTarget != null) {
+            scheduleRepository.delete(scheduleTarget);
+            rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");
+        }
     }
 }

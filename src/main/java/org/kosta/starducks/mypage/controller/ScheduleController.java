@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -113,13 +114,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/delete/{scheNo}")
-    public ResponseEntity<?> deleteSchedule(@PathVariable("scheNo") Long scheNo) {
-        try {
-            scheduleService.deleteSchedule(scheNo);
-            return ResponseEntity.ok().body("일정이 성공적으로 삭제되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("오류 발생: " + e.getMessage());
-        }
+    public String deleteSchedule(@PathVariable("scheNo") Long scheNo, RedirectAttributes rttr) {
+        scheduleService.deleteSchedule(scheNo, rttr);
+        return "redirect:/mypage/schedule/show";
     }
 }
