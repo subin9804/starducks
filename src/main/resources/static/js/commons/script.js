@@ -1,4 +1,7 @@
+
 window.document.addEventListener("DOMContentLoaded", function() {
+    const csrfToken = document.querySelector("meta[name='_csrf']").content;
+    const csrfHeader = document.querySelector("meta[name='_csrf_header']").content;
 
     function toggleSubMenu(menuName) {
         var submenu = document.querySelector('.' + menuName + '-submenu');
@@ -41,6 +44,15 @@ window.document.addEventListener("DOMContentLoaded", function() {
 async function errorAlert(message) {
     await Swal.fire({
         icon: "error",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
+async function successAlert(message) {
+    Swal.fire({
+        icon: "success",
         title: message,
         showConfirmButton: false,
         timer: 1500

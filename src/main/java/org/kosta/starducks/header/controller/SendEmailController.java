@@ -5,7 +5,7 @@ import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.kosta.starducks.header.dto.EmailDto;
 import org.kosta.starducks.header.dto.RSEmailDto;
-import org.kosta.starducks.header.service.sendEmailService;
+import org.kosta.starducks.header.service.SendEmailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Comparator;
-import java.util.List;
-
 @Controller
 @RequestMapping("/email")
 @AllArgsConstructor
 public class SendEmailController {
 
-    private final sendEmailService emailService;
+    private final SendEmailService emailService;
 
     @GetMapping()
     public String send(){

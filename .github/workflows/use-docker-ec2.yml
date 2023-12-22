@@ -53,9 +53,10 @@ jobs:
     - name: Docker build & push to repo
       if: contains(github.ref, 'master')
       run: | 
+          pwd
           sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_REPO }} starducks-repo .
-          docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
+          sudo docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/starducks-repo .
+          sudo docker push ${{ secrets.DOCKER_REPO }}/starducks-repo
 
 
 ## deploy to production
@@ -67,6 +68,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
           envs: GITHUB_SHA
           script: | 
               sudo docker rm -f $(docker ps -qa)

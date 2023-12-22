@@ -88,4 +88,7 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
      */
     @Query("SELECT e FROM Employee e JOIN e.dept d ORDER BY d.deptId ASC")
     List<Employee> findAllEmployeesWithDepartmentOrder();
+
+    @Query("SELECT e FROM Employee e JOIN FETCH e.dept WHERE e.empId = :empId")
+    Optional<Employee> findEmployeeWithDepartment(Long empId);
 }

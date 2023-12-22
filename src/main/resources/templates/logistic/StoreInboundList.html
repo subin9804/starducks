@@ -15,9 +15,11 @@
     <h1>입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
-            <a th:href="@{/logistic/inbound/store/add}">
-                <button class="commonBtn register-button" type="submit"> + 입고 등록</button>
-            </a>
+
+            <button class="commonBtn register-button" type="submit" onclick="handleInboundRegistration()"> 입고 등록
+            </button>
+            <input type="hidden" th:value="${employee.getPosition()}" id="role">
+
         </div>
         <div class="middle-btn">
             <a th:href="@{/logistic/inbound/warehouse/list}">
@@ -99,5 +101,35 @@
 
 
     <!--    </script>-->
+    <script th:inline="javascript">
+        function handleInboundRegistration() {
+            // 입력된 직책 값을 가져옴
+            const roleInput = document.getElementById("role");
+            const role = roleInput.value;
+
+            // 비교할 직책
+            const expectedRole = "ROLE_STOREMANAGER";
+
+            // 직책이 일치하는지 확인
+            if (role === expectedRole) {
+                // 직책이 일치하면 링크로 이동
+                window.location.href = "/logistic/inbound/store/add";
+            } else {
+                // 직책이 일치하지 않으면 알림창 표시
+
+                Swal.fire({
+                    icon: "error",
+                    title: "권한이 없습니다"
+                });
+
+
+
+
+            }
+        }
+    </script>
+
 </main>
+
+
 </html>

@@ -8,8 +8,6 @@ public class CommonException extends RuntimeException {
     protected static ResourceBundle bundleError;
     protected HttpStatus httpStatus;
 
-//    protected HttpServletResponse response;
-
 
     static {
         bundleError = ResourceBundle.getBundle("messages.errors");

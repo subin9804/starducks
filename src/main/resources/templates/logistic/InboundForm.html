@@ -13,19 +13,14 @@
 <main layout:fragment="content">
     <h1>입고 등록</h1>
     <div class="content">
-        <form id="addForm"  action="/logistic/inbound/warehouse/add" method="post">
+        <form id="addForm"  action="/logistic/inbound/warehouse/add" method="post" >
 
                 <div>
-                    <label for="employee">담당자명 : </label>
-                    <select id="employee" name="empId">
-                        <option value="">담당자를 선택하세요</option>
-                        <option th:each="e : ${employees}" th:value="${e.getEmpId()}" th:text="${e.getEmpName()}"></option>
-                    </select>
+                    담당자명 :<span th:text="${employee.empName}"></span>
+                    <input type="hidden" id="employee" name="empId" th:value="${employee.empId}">
                 </div>
                 <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
 
-
-<!--            입고등록 버튼 클릭시 재고 부족하면 못넘어가게 막아야함.-->
                 <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
                 <input type="hidden" id="warehouseInboundDtos" name="warehouseInboundDtos" value="">
         </form>
@@ -77,6 +72,9 @@
             <tbody id="contentTableBody"></tbody>
         </table>
     </div>
+
+
+
 
 </main>
 

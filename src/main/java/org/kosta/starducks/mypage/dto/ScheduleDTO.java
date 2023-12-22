@@ -30,6 +30,6 @@ public class ScheduleDTO {
      */
     public Schedule toEntity() {
         return new Schedule(scheNo, scheTitle, scheStartDate, scheEndDate,
-                scheduleType, notes, employee);
+                notes, employee);
     }
 }

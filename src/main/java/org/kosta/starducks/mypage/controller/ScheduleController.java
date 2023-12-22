@@ -60,7 +60,6 @@ public class ScheduleController {
      */
     @GetMapping("/show")
     public String showSchedule(Model model) {
-        MenuService.commonProcess(request, model, "mypage");
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         model.addAttribute("scheduleDTO", scheduleDTO);
         return "mypage/schedule/schedule";

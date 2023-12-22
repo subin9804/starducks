@@ -24,6 +24,8 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public final StringPath deptName = createString("deptName");
 
+    public final StringPath deptNameEng = createString("deptNameEng");
+
     public final StringPath deptRepTel = createString("deptRepTel");
 
     public final ListPath<Employee, QEmployee> emps = this.<Employee, QEmployee>createList("emps", Employee.class, QEmployee.class, PathInits.DIRECT2);

@@ -3,8 +3,6 @@ package org.kosta.starducks.commons.menus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import org.kosta.starducks.commons.menus.MenuDetail;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,8 +20,6 @@ public class MenuInterceptor implements HandlerInterceptor {
 //        System.out.println("reqURI." + request.getRequestURI());
         String uri = request.getRequestURI().substring(1);
 
-//        String menu = "";
-//        String subMenu = "";
 
         // 잘라내고 남은 uri
         String mess = "";
@@ -45,7 +41,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 //        String mess = uri.substring(uri.indexOf("/"));
 //        String subMenu = mess.substring(1, mess.indexOf("/"));
 
-//        System.out.printf("menu: %s, mess: %s, subMenu: %s", menu, mess, subMenu, '\n');
+        System.out.printf("menu: %s, mess: %s, subMenu: %s", menu, mess, subMenu, '\n');
         return true;
     }
 

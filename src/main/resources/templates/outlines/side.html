@@ -9,7 +9,7 @@
             <input class="" type="radio" id="myPage" name="nav" aria-controls="flush-myPage"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('mypage')} ? true">
             <label for="myPage">
-                <a th:href="@{/mypage}">마이페이지</a>
+                <a th:href="@{/mypage/attendance}">마이페이지</a>
             </label>
         </div>
         <ul id="flush-myPage"
@@ -25,9 +25,9 @@
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu"
-                   th:checked="${menuCode != null && menuCode.equals('document')} ? true">
+                   th:checked="${(@menu.getMenu() != null) && (@menu.getMenu().equals('document'))} ? true : false">
             <label for="docu">
-                <a th:href="@{/document}">전자결재</a>
+                <a th:href="@{/document/createDoc}">전자결재</a>
             </label>
         </div>
         <ul id="flush-docu"

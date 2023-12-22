@@ -85,7 +85,6 @@ public class ForumPostController {
     // 게시글 작성 페이지로 이동
     @GetMapping("/add")
     public String addPostForm(Model model) {
-        MenuService.commonProcess(request, model, "forum");
         model.addAttribute("post", new ForumPost()); //타임리프에서 참조하는 이름 현재는 post
         return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
     }
@@ -106,7 +105,6 @@ public class ForumPostController {
     // 게시글 상세 페이지
     @GetMapping("/post/{id}")
     public String getPostDetails(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostByIdAndUpdateView(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -116,7 +114,6 @@ public class ForumPostController {
     // 게시글 수정 페이지로 이동
     @GetMapping("/edit/{id}")
     public String editPostForm(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
@@ -144,7 +141,6 @@ public class ForumPostController {
     // 게시글 삭제
     @GetMapping("/delete/{id}")
     public String deletePost(@PathVariable("id") Long id, Model model) {
-        MenuService.commonProcess(request, model, "forum");
         forumPostService.deleteForumPost(id);
         return "redirect:/forum";
     }

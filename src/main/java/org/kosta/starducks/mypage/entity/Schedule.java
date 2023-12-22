@@ -29,10 +29,6 @@ public class Schedule {
     @Column(name = "sche_end_date")
     private LocalDateTime scheEndDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "sche_type")
-    private ScheduleType scheduleType;
-
     @Column(name = "notes")
     private String notes;
 

@@ -461,7 +461,7 @@ input[type="search"] {
 
 .dl-custom {
     margin: 0;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .dt-custom {
@@ -487,8 +487,10 @@ input[type="search"] {
 }
 
 .form-custom {
-    border-bottom: 1px solid #6B4D27;
-    padding: 40px 100px;
+    padding: 30px 50px;
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경, 50% 투명도 */
 }
 
 .p-custom {
@@ -515,7 +517,7 @@ input[type="search"] {
     width: 100%;
     display: inline-flex;
     flex-direction: row;
-    gap: 80px;
+    gap: 40px;
 }
 
 .formSection-custom section:first-child {
@@ -581,18 +583,16 @@ input[type="search"] {
     background-color: #ddd;
 }
 
-/* 우편번호 스타일 */
-.postNo-custom {
-    display: inline-block !important;
-    width: 150px;
+
+.postNo-container {
+    padding-top: 10px; !important;
+    display: flex !important;
+    justify-content: flex-end !important;
 }
 
-.postNo-custom + span {
-    cursor: pointer;
-    background-color: #ddd;
-    display: inline-block;
-    padding: 6px;
-    border-radius: 10px;
+/* 우편번호 스타일 */
+.postNo-custom {
+ margin-right: 10px;
 }
 
 /* 하단 버튼 스타일 */
@@ -608,5 +608,124 @@ a p.commonBtn-custom {
     line-height: 50px;
     display: inline-block;
 }
+
+.mail-custom {
+    border-radius: 10px;
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+input {
+text-align: center;
+    box-shadow: none !important;
+}
+
+
+.input-disabled-custom {
+    background-color: #f3f3f3; /* 연한 회색 배경 */
+    color: #000000; /* 회색 텍스트 */
+    border: 1px solid #d0d0d0; /* 연한 회색 테두리 */
+    text-align: center;
+}
+
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~비밀번호 변경 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.pwd-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid black;
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* 배경, 투명도 */
+}
+
+.passwordChangeContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.left-section, .right-section {
+    flex: 1; /* 왼쪽과 오른쪽 섹션은 유동적인 너비를 가짐 */
+    display: flex;
+    flex-direction: column;
+}
+
+.left-section label {
+    align-self: flex-end;
+    margin-bottom: 15px; /* 동일한 높이 유지를 위한 마진 */
+    margin-top: 10px;
+}
+
+/* 버튼을 오른쪽 섹션의 왼쪽에 정렬 */
+.right-section .confirmBtn {
+    align-self: flex-start;
+    margin-bottom: 15px; /* 동일한 높이 유지를 위한 마진 */
+    margin-top: 5px;
+}
+
+
+.center-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 입력 필드 중앙 정렬 */
+    width: 250px; /* 가운데 섹션 고정 너비 */
+}
+
+.center-section input[type="password"] {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.passwordChangeContainer label,
+.passwordChangeContainer input[type="password"],
+.passwordChangeContainer .confirmBtn {
+    margin-bottom: 10px;
+}
+
+
+.cpwd-confirmBtn {
+    width: 80px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #4A85F6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#updatePasswordButton {
+    width: 80%; /* 비밀번호 변경 확인 버튼의 너비를 18%로 설정 */
+    background-color: #4A85F6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: center;
+}
+
+#updatePasswordButton:hover {
+    background-color: #3a6fcc;
+}
+
+/* 비활성화된 입력 필드 스타일링 */
+.center-section input[type="password"]:disabled {
+    background-color: #7a7a7a; /* 밝은 회색 배경 */
+    color: #ffffff; /* 어두운 회색 텍스트 */
+}
+.center-section input[type="password"]:disabled::placeholder {
+    color: black; /* 플레이스홀더 글씨 색상을 흰색으로 설정 */
+    opacity: 0.7; /* 플레이스홀더 글씨 색상의 불투명도를 100%로 설정 */
+}
+
 
 /*개인 정보 수정 페이지 끝~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

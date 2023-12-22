@@ -66,42 +66,60 @@ window.document.addEventListener("DOMContentLoaded", function() {
     function handleSubmitClick(e) {
         e.preventDefault();
 
-        // list를 숨겨진 입력 필드에 저장
-        document.getElementById("warehouseInboundDtos").value = JSON.stringify(list);
-        console.log(JSON.stringify(list));
+        Swal.fire({title: '입고 등록 확인',
+            text: '입고 등록 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'}).then((result) =>{
+                if(result.isConfirmed){
+
+                    // list를 숨겨진 입력 필드에 저장
+                    document.getElementById("warehouseInboundDtos").value = JSON.stringify(list);
+                    console.log(JSON.stringify(list));
 
 
-        $.ajax({
-            type: "POST",
-            url: "/logistic/inbound/warehouse/add",
-            contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
-            data:JSON.stringify(list),
-                //JSON.stringify({
-                //warehouseInboundDtos: list
-            //}) ,
-               // {
-               // warehouseInboundDtos: document.getElementById("warehouseInboundDtos").value
-           // }, // 폼 데이터를 직렬화하여 전송
-            success: function(response) {
-                // 서버 응답에 대한 처리
-                console.log("Server response:", response);
+                    $.ajax({
+                        type: "POST",
+                        url: "/logistic/inbound/warehouse/add",
+                        contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
+                        data:JSON.stringify(list),
+                        //JSON.stringify({
+                        //warehouseInboundDtos: list
+                        //}) ,
+                        // {
+                        // warehouseInboundDtos: document.getElementById("warehouseInboundDtos").value
+                        // }, // 폼 데이터를 직렬화하여 전송
+                        success: function(response) {
+                            // 서버 응답에 대한 처리
+                            console.log("Server response:", response);
 
-                //입고내역 보여주는 페이지로 리디렉션
-                window.location.href = '/logistic/inbound/warehouse/list'
+                            //입고내역 보여주는 페이지로 리디렉션
+                            window.location.href = '/logistic/inbound/warehouse/list'
 
-                // 성공적으로 서버로 전송한 후에 리스트 초기화
-                list.length = 0;
-                contentList.innerHTML = "";
-                num = 1;
-            },
+                            // 성공적으로 서버로 전송한 후에 리스트 초기화
+                            list.length = 0;
+                            contentList.innerHTML = "";
+                            num = 1;
+                        },
 
 
-            error: function(xhr, status, error) {
-                console.error("Error sending data to server:", error);
-                console.log(xhr.responseText);
-            } // 추가된 부분
+                        error: function(xhr, status, error) {
+                            console.error("Error sending data to server:", error);
+                            console.log(xhr.responseText);
+                        } // 추가된 부분
 
-        });
+                    });
+
+
+
+                }
+
+        })
+
+        return false;
 
     }
 
