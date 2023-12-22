@@ -19,11 +19,34 @@ window.document.addEventListener("DOMContentLoaded", function() {
         console.log("버튼 눌림")
         console.log(productSelect.value)
 
+        if (!productSelect.value ) {
+            Swal.fire({
+                icon: "error",
+                title: "품목을 선택하세요"
+            });
+            return;
+        }
+
         let item = {
             empId: employeeSelect.value,
             productCode: productSelect.value,
             inboundQuantity: quantityInput.value
         };
+
+        console.log(item);
+
+        //입고 수량이 0이거나 0보다 작은 값일 때 리스트에 추가할 수 없게 한다.
+        if(parseInt(quantityInput.value) <= 0 || !quantityInput.value){
+
+            Swal.fire({
+                icon: "error",
+                title: "유효한 수량을 입력해 주세요"
+
+            });
+            return;
+        }
+
+
 
         if (!isProductCodeInList(item.productCode)) {
             list.push(item);
