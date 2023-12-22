@@ -1,4 +1,7 @@
 /* 캘린더 */
+div {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
 .fc-toolbar-chunk {
     display: flex;
 align-items: center;
@@ -11,16 +14,25 @@ align-items: center;
 .fc-toolbar-title {
     color: #6B4D27;
 }
+.page-border {
+    width: 1000px;
+    height: 880px;
+}
 .calendar {
     display: inline-block;
     position: absolute;
-    top: 100px;
-    /*left: 300px;*/
+    top: 140px;
+    left: 600px;
     /*height: 870px;*/
+    padding: 50px;
 }
 #calendar {
-    width: 800px;
+    width: 900px;
     height: 800px;
+}
+.fc-dayGridMonth-view {
+    /*background-color: white;*/
+    /*box-shadow: 0 5px 4px rgba(0, 0, 0, 0.25);*/
 }
 /* 캘린더 사이드 */
 .calendar-side {
@@ -32,29 +44,39 @@ align-items: center;
     height: 225px;
     border: #6B4D27 1px solid;
     border-radius: 20px;
+    margin: 20px;
+}
+.attd-btn, .complete-attd {
+    width: 200px;
+    height: 70px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin: 20px 30px;
 }
 .attd-btn {
-    width: 200px;
-    height: 70px;
     background-color: #6B4D27;
-    /*border: none;*/
-    color: #ffffff;
-    border-radius: 20px;
-    margin: auto
 }
 .complete-attd {
-    width: 200px;
-    height: 70px;
-    background-color: #d9d9d9;
-    /*border: none;*/
-    color: #ffffff;
-    border-radius: 20px;
+    background-color: #b9b9b9;
     text-align: center;
-    /*margin: auto;*/
-    /*align-items: center*/
+    padding: 20px;
+}
+.fa-circle-check {
+    color: #A3C614;
+}
+.attd-time-box {
+    padding: 0 70px;
+}
+.start-time-box, .end-time-box {
+    margin: 15px;
 }
 .attd-btn:hover {
     cursor: pointer;
+}
+.sum-month {
+    margin: 25px 0;
 }
 .attd-sum-box {
     width: 260px;
@@ -63,6 +85,8 @@ align-items: center;
     background-color: #6B4D27;
     border-radius: 20px;
     color: white;
+    text-align: center;
+    margin: 20px;
 }
 .attd-sum-num-box {
     width: 200px;
@@ -70,4 +94,11 @@ align-items: center;
     background-color: white;
     color: black;
     border-radius: 15px;
+    text-align: center;
+    margin: 10px 30px;
+    padding: 25px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.attd-sum-wrap {
+    margin: 25px 0;
 }
