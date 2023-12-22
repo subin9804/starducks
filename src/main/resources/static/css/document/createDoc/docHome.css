@@ -1,0 +1,74 @@
+.receive-box {
+    width: 1000px;
+    height: 280px;
+    padding: 10px;
+    margin: 5px;
+}
+.submit-box,.temp-box {
+    display: inline-block;
+    width: 490px;
+    height: 550px;
+    padding: 10px;
+    margin: 5px;
+}
+.receiveDoc {
+    position: relative;
+    display: inline-block;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+}
+.receive-cont {
+    position: absolute;
+    display: inline-block;
+}
+
+.docDate {
+    top: 20px;
+    left: 20px;
+}
+.urgent {
+    top: 20px;
+    right: 20px;
+    background-color: #FF5B5B;
+    color: white;
+    width: 50px;
+    height: 26px;
+    text-align: center;
+    border-radius: 15px;
+}
+.urgent {
+     top: 20px;
+     right: 20px;
+     background-color: #FF5B5B;
+     color: white;
+     width: 50px;
+     height: 26px;
+     text-align: center;
+     border-radius: 15px;
+ }
+.formName {
+    bottom: 80px;
+    left: 20px;
+}
+.docTitle {
+    bottom: 50px;
+    left: 20px;
+    background-color: gray;
+}
+.docContent {
+    bottom: 20px;
+    left: 20px;
+}
+.fa-arrow-right-from-bracket {
+    bottom: 20px;
+    right: 20px;
+}
+
+.docStatus {
+    width: 50px;
+    height: 26px;
+    text-align: center;
+    border-radius: 15px;
+}
