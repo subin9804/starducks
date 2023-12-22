@@ -66,16 +66,14 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
         // 초기 부서 데이터
-        for (int i = 0; i < 33; i++) {
-            List<Department> depts = new ArrayList<>();
-            depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
-            depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
-            depts.add(new Department(3, "총무부","general", "010-3333-3333"));
-            depts.add(new Department(4, "물류유통부","logistic", "010-4444-4444"));
-            depts.add(new Department(5, "인사부","hr", "010-5555-5555"));
+        List<Department> depts = new ArrayList<>();
+        depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
+        depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
+        depts.add(new Department(3, "총무부","general", "010-3333-3333"));
+        depts.add(new Department(4, "물류유통부","logistic", "010-4444-4444"));
+        depts.add(new Department(5, "인사부","hr", "010-5555-5555"));
 
-            deptRepository.saveAllAndFlush(depts);
-        }
+        deptRepository.saveAllAndFlush(depts);
 
         // 초기 사원 데이터
         for (int i = 1; i < 6; i++) {
@@ -112,9 +110,10 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDAddr("권선구");
         specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
-        specificEmp.setDept(deptRepository.findById(2).orElse(null));
+        specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
+        //물류 유통부로!
 
         //초기 vendor 데이터
 //        for(int i = 0; i < 5; i++) {
@@ -239,7 +238,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         //문서 양식 데이터
         String[] formNames = {"기안서", "지출결의서", "발주서", "휴가신청서", "휴가취소사유서", "매출보고서", "재직증명서"};
-        String[] formNamesEn = {"draft", "b", "c", "d", "e", "f", "empVerification"};
+        String[] formNamesEn = {"draft", "b", "orderForm", "d", "e", "f", "empVerification"};
         for (int i = 1; i < 8; i++) {
             DocForm docForm = new DocForm();
             docForm.setFormCode("A0" + i);
