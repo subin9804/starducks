@@ -111,37 +111,45 @@
 
   // 페이지에서 메시지 출력 방식
   function showMessage(message) {
+    // 이미 렌더링된 메시지는 추가하지 않음
     if (document.getElementById(`message-${message.id}`)) {
-      return; // 이미 렌더링된 메시지는 추가하지 않음
+      return;
     }
 
     // 메시지 요소 생성
     const messageElement = document.createElement('div');
     messageElement.id = `message-${message.id}`;
-    messageElement.classList.add(message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other');
+    messageElement.classList.add(
+      message.senderId === currentUser ? 'chat-message-mine' : 'chat-message-other'
+    );
 
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('chat-message-container');
 
-    // 이름 요소 추가 (로그인한 사람 제외한 다른 사용자의 경우)
-    if (message.senderId !== currentUser) {
-      const senderNameElement = document.createElement('div');
-      senderNameElement.classList.add('chat-message-sender-name');
-      senderNameElement.innerText = message.senderName;
-      messageContainer.appendChild(senderNameElement); // messageContainer에 이름 추가
-    }
+    // 이름 요소 추가
+    const senderNameElement = document.createElement('div');
+    senderNameElement.classList.add('chat-message-sender-name');
+    senderNameElement.innerText = message.senderName;
+    messageContainer.appendChild(senderNameElement);
+
+    // 메시지 내용과 날짜를 포함하는 컨테이너
+    const messageAndDateContainer = document.createElement('div');
+    messageAndDateContainer.classList.add('message-and-date-container');
 
     // 메시지 내용 요소 추가
     const textElement = document.createElement('div');
     textElement.classList.add('chat-message-content');
     textElement.innerText = message.message;
-    messageContainer.appendChild(textElement);
+    messageAndDateContainer.appendChild(textElement);
 
     // 날짜 요소 추가
     const dateElement = document.createElement('div');
     dateElement.classList.add('chat-message-date');
-    dateElement.innerText = message.createdDate; // 서버에서 받은 날짜를 직접 사용
-    messageContainer.appendChild(dateElement);
+    dateElement.innerText = message.createdDate;
+    messageAndDateContainer.appendChild(dateElement);
+
+    // messageAndDateContainer를 messageContainer에 추가
+    messageContainer.appendChild(messageAndDateContainer);
 
     // messageContainer를 messageElement에 추가
     messageElement.appendChild(messageContainer);
@@ -150,9 +158,10 @@
     const chatRoomElement = document.getElementById('chat-room');
     chatRoomElement.appendChild(messageElement);
 
-    // 스크롤 조정
+    // 스크롤을 최신 메시지로 이동
     window.scrollTo(0, document.body.scrollHeight);
   }
+
 
 
   // 채팅방 페이지가 로드될 때 WebSocket 연결을 시작
