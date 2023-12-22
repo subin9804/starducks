@@ -131,6 +131,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 //        }
 
         Vendor vendor1 = new Vendor();
+        vendor1.setVendorId(1);
         vendor1.setVendorName("빈로스터리");
         vendor1.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
         vendor1.setVendorRegistNum("12458921");
@@ -142,6 +143,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendorRepository.saveAndFlush(vendor1);
 
         Vendor vendor2 = new Vendor();
+        vendor2.setVendorId(2);
         vendor2.setVendorName("대성산업");
         vendor2.setVendorBusinessSector(VendorBusinessSector.FARMINGANDCULTIVATION);
         vendor2.setVendorRegistNum("46952029");
@@ -155,6 +157,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
 //        //초기 product 데이터
         Product product1 = new Product();
+        product1.setProductCode(1L);
         product1.setProductSelling(true);
         product1.setProductPrice((long) 75000);
         product1.setProductName("콜롬비아 부에나 비스타 게이샤");
@@ -164,6 +167,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product1);
 
         Product product2 = new Product();
+        product2.setProductCode(2L);
         product2.setProductSelling(true);
         product2.setProductPrice((long) 15000);
         product2.setProductName("브라질 세하도 싱글원두");
@@ -173,6 +177,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product2);
 
         Product product3 = new Product();
+        product3.setProductCode(3L);
         product3.setProductSelling(false);
         product3.setProductPrice((long) 29000);
         product3.setProductName("에티오피아 예가체프 코케허니 원두");
@@ -182,6 +187,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product3);
 
         Product product4 = new Product();
+        product4.setProductCode(4L);
         product4.setProductSelling(true);
         product4.setProductPrice((long) 4200);
         product4.setProductName("14온스 PET 투명컵");
@@ -191,6 +197,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product4);
 
         Product product5 = new Product();
+        product5.setProductCode(5L);
         product5.setProductSelling(true);
         product5.setProductPrice((long) 4000);
         product5.setProductName("9온스 PET 투명컵");
@@ -200,6 +207,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         productRepository.saveAndFlush(product5);
 
         Product product6 = new Product();
+        product6.setProductCode(6L);
         product6.setProductSelling(true);
         product6.setProductPrice((long) 3900);
         product6.setProductName("16온스 흰색 무지 커피컵");
@@ -211,6 +219,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         //초기 지점 데이터
 
         Store store = new Store();
+        store.setStoreNo(1L);
         store.setEmployee(specificEmp);
         store.setStoreName("미금역점");
         store.setBusinessNum(1148600675L);
