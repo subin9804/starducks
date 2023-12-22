@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // // CSRF 토큰과 헤더 이름을 읽어옴
-    // var csrfToken = document.querySelector('meta[name="_csrf"]').content;
-    // console.log("CSRF Token ==> " + csrfToken);
+    // CSRF 토큰과 헤더 이름을 읽어옴
+    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    console.log("마이페이지 일정관리 CSRF Token ==> " + csrfToken);
 
-    // var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
-    // console.log("CSRF Header Name ==> " + csrfHeaderName);
+    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+    console.log("마이페이지 일정관리 CSRF Header Name ==> " + csrfHeaderName);
 
     var calendarEl = document.getElementById('calendar');
     var modal;
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
+                    [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
                 },
                 body: JSON.stringify(data)
             })
