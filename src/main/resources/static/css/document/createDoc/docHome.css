@@ -1,15 +1,15 @@
 .receive-box {
     width: 1000px;
-    height: 280px;
-    padding: 10px;
-    margin: 5px;
+    height: 300px;
+    padding: 20px;
+    margin: 10px;
 }
 .submit-box,.temp-box {
     display: inline-block;
-    width: 490px;
-    height: 550px;
-    padding: 10px;
-    margin: 5px;
+    width: 485px;
+    height: 600px;
+    padding: 20px;
+    margin: 10px;
 }
 .receiveDoc {
     position: relative;
@@ -18,12 +18,18 @@
     border-radius: 10px;
     width: 300px;
     height: 200px;
+    margin: 5px;
 }
 .receive-cont {
     position: absolute;
     display: inline-block;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
+.docTitle-th {
+    width: 170px;
+}
 .docDate {
     top: 20px;
     left: 20px;
@@ -65,7 +71,6 @@
     bottom: 20px;
     right: 20px;
 }
-
 .docStatus {
     width: 50px;
     height: 26px;
