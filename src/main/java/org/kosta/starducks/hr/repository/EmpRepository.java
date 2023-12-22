@@ -89,6 +89,8 @@ public interface EmpRepository extends JpaRepository<Employee, Long>, QuerydslPr
     @Query("SELECT e FROM Employee e JOIN e.dept d ORDER BY d.deptId ASC")
     List<Employee> findAllEmployeesWithDepartmentOrder();
 
+
+//    사원 정보 가져올 때 부서까지 같이 가져와서 사용하는 용도. 사원 엔티티에서 부서가 LAZY여서 이걸 사용해야함
     @Query("SELECT e FROM Employee e JOIN FETCH e.dept WHERE e.empId = :empId")
     Optional<Employee> findEmployeeWithDepartment(Long empId);
 }
