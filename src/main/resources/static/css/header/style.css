@@ -379,7 +379,7 @@ input[type="search"] {
 }
 
 /* 로그인한 사용자의 메시지 컨테이너 스타일링 */
-.chat-message-mine .chat-message-container {
+.chat-message-mine .message-and-date-container {
     flex-direction: row-reverse !important; /* 날짜와 메시지 순서 반전 */
 }
 
