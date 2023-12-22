@@ -362,7 +362,7 @@ input[type="search"] {
 /* 다른 사용자들의 메시지 스타일링 */
 .chat-message-other .chat-message-container {
     display: flex;
-    flex-direction: column; /* 요소를 세로 방향으로 정렬 */
+    flex-direction: row; /* 요소를 세로 방향으로 정렬 */
     align-items: flex-start; /* 왼쪽 정렬 */
 }
 
@@ -376,6 +376,7 @@ input[type="search"] {
     display: flex;
     margin-bottom: 10px;
     width: 100%;
+    flex-direction: column;
 }
 
 /* 로그인한 사용자의 메시지 컨테이너 스타일링 */
