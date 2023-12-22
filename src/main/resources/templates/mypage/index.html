@@ -21,12 +21,13 @@
             <!-- 출퇴근 버튼 -->
             <div>
                 <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
-                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
+                    <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;출근</button>
                 </form>
                 <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
-                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+                    <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
+            <p class="complete-attd" th:if="${attendance?.endTime != null}"><i class="fa-solid fa-circle-check"></i>&nbsp;근태 기록 완료</p>
 
             <!-- 출퇴근 기록 -->
             <div>

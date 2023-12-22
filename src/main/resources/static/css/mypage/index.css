@@ -22,18 +22,29 @@ h4 {
     padding: 20px 40px;
     margin-bottom: 20px;
 }
-
-.attd-btn {
+.attd-btn, .complete-attd {
     width: 100px;
     height: 50px;
-    background-color: #6B4D27;
-    /*border: none;*/
-    color: #ffffff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+    border: none;
     border-radius: 20px;
-    margin: auto
+    margin: auto;
+    /*margin: 20px 30px;*/
+}
+.attd-btn {
+    background-color: #6B4D27;
+}
+.complete-attd {
+    background-color: #b9b9b9;
+    text-align: center;
+    padding: 20px;
 }
 .attd-btn:hover {
      cursor: pointer;
+}
+.fa-circle-check {
+    color: #A3C614;
 }
 #firstCol{grid-area: first; height: 100%;}
 #secondCol{grid-area: second; height: 100%;}
@@ -60,7 +71,7 @@ h4 {
     color: #fff;
     width: 50px;
     padding: 5px 0;
-    border-radius: 15px;
+    border-radius: 13px;
 }
 #profile-box {
     border-top: 5px solid #ddd;
