@@ -112,7 +112,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDAddr("권선구");
         specificEmp.setPosition(Position.ROLE_STOREMANAGER);
         specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
-        specificEmp.setDept(deptRepository.findById(2).orElse(null));
+        specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
 
