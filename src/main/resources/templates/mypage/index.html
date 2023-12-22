@@ -154,7 +154,7 @@
             </table>
         </section>
     </div>
-
+<p id="apikey" style="display: none">[[${apiKey}]]</p>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -162,6 +162,9 @@
         let API_KEY = /*[[${apiKey}]]*/ '';
 
         /*]]>*/
+
+
+        let id = document.getElementById("apikey")
     </script>
 
 </main>

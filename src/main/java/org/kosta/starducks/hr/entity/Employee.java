@@ -15,9 +15,10 @@ import java.time.LocalDate;
 @Table(name = "employee")
 public class Employee {
 
-    @Id @NotNull
+    @Id
     private Long empId; // 사원번호
 
+//    @NotBlank(message = "이름은 빈칸일 수 없습니다.")
     @NotBlank
     private String empName;     // 사원이름
 
