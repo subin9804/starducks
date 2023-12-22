@@ -115,6 +115,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
+        //물류 유통부로!
 
         //초기 vendor 데이터
 //        for(int i = 0; i < 5; i++) {
