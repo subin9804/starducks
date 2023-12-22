@@ -376,10 +376,11 @@ input[type="search"] {
     display: flex;
     margin-bottom: 10px;
     width: 100%;
+    flex-direction: column;
 }
 
 /* 로그인한 사용자의 메시지 컨테이너 스타일링 */
-.chat-message-mine .chat-message-container {
+.chat-message-mine .message-and-date-container {
     flex-direction: row-reverse !important; /* 날짜와 메시지 순서 반전 */
 }
 
@@ -414,6 +415,7 @@ input[type="search"] {
 
 .message-and-date-container {
     display: flex;
+    flex-direction: row;
 }
 /* 채팅 푸터 스타일링 */
 .chat-footer {

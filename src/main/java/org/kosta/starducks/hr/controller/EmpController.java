@@ -76,16 +76,16 @@ public class EmpController {
      * @return
      */
     @PostMapping("/save")
-    public String save(@Valid Employee employee, Errors errors, Model model,
+    public String save(Employee employee, Model model,
                        @RequestParam("profile") MultipartFile profile,
                        @RequestParam("stamp") MultipartFile stamp) {
 
-        if (errors.hasErrors()) {
-            log.error(errors.toString());
-
-            String referer = request.getHeader("Referer");
-            return "redirect:"+ referer;
-        }
+//        if (errors.hasErrors()) {
+//            log.error(errors.toString());
+//
+//            String referer = request.getHeader("Referer");
+//            return "redirect:"+ referer;
+//        }
 
         Employee savedEmp = service.saveEmp(employee);
         fileService.upload(profile, "profile", employee.getEmpId());
