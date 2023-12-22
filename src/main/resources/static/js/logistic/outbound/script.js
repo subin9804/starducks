@@ -94,12 +94,10 @@ window.document.addEventListener("DOMContentLoaded", function() {
             url: "/logistic/outbound/warehouse/add",
             contentType: "application/json", // JSON 데이터를 보내고 있다면 설정
             data:JSON.stringify(list),
-                //JSON.stringify({
-                //warehouseInboundDtos: list
-            //}) ,
-               // {
-               // warehouseInboundDtos: document.getElementById("warehouseInboundDtos").value
-           // }, // 폼 데이터를 직렬화하여 전송
+            beforeSend: function(xhr) {
+                // Set CSRF token in the request header
+                xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+            },
             success: function(response) {
                 // 서버 응답에 대한 처리
                 console.log("Server response:", response);
