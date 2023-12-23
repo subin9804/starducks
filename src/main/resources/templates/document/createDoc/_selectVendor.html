@@ -30,10 +30,14 @@
                         <div class="searchItem">
                             <label th:for="${'selVendorId_' + v.vendorId}" class="form-check-label">
                                 <div>
-                                    <img class="searchImg" src="">
+
+                                    <img class="searchImg" th:src="@{'/images/vendor/beans.png'}">
                                     <div class="searchInfo">
                                         <div class="searchVendorId" th:text="${v.vendorId}"></div>
                                         <div class="searchVendorName" th:text="${v.vendorName}"></div>
+                                        <div class="searchVendorBoss" th:text="${v.vendorRepreName}" style="display: none;"></div>
+                                        <div class="searchVendorTel" th:text="${v.vendorTelephone}" style="display: none;"></div>
+
                                     </div>
                                 </div>
                             </label>
