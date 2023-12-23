@@ -202,7 +202,7 @@ public class EmpService {
     }
 
     /**
-     * 로그인한 사원 제외하고 모든 사원을 부서별로 가져오기
+     * 로그인한 사원, 퇴사한 사원 제외하고 모든 사원을 부서별로 가져오기. 실시간 채팅 사원 목록에서 사용 중
      * @param loggedInUserId
      * @return
      */
@@ -214,4 +214,16 @@ public class EmpService {
             .filter(emp -> !emp.isStatus()) // 퇴사한 사원 제외 (status가 true인 사람 제외)
             .collect(Collectors.groupingBy(Employee::getDept, LinkedHashMap::new, Collectors.toList()));
     }
+
+    /**
+     * empId를 넣으면 어떤 부서 사람인지도 바로 같이 가져와진다. 부서 LAZY 대응용
+     * 로그인한 사원이 어떤 부서인지 확인하려고 제작
+     * @param empId
+     * @return
+     */
+    @Transactional
+    public Employee getEmployeeWithDepartment(Long empId) {
+        return repository.findEmployeeWithDepartment(empId).orElse(null);
+    }
+
 }

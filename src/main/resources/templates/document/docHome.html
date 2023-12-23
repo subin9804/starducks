@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 
-</body>
+<!--<th:block layout:fragment="title">title</th:block>-->
+
+<th:block layout:fragment="addMore">
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/submitList.css}" href="/static/css/document/createDoc/docDetail.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/docHome.css}" href="/static/css/document/createDoc/docDetail.css">
+    <script th:src="@{/js/document/createDoc/draft.js}" src="/static/js/document/createDoc/draft.js"></script>
+</th:block>
+
+<main layout:fragment="content">
+    <h1 class="page-title">전자결재</h1>
+    <div class="page-border receive-box">
+        <h2 class="page-title" th:onclick="|location.href='@{/document/receiveDoc}'|"><i class="fa-regular fa-file-lines"></i>&ensp;최근 수신 결재</h2>
+
+        <div th:each="receiveDoc : ${receiveDocs}" class="receiveDoc"
+            th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${receiveDoc?.getDocForm().formNameEn},docId=${receiveDoc?.docId})}'|">
+            <div class="docDate receive-cont" th:text="${#temporals.format(receiveDoc?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</div>
+            <div class="urgent receive-cont" th:if="${receiveDoc?.urgent}">긴급</div>
+            <div class="formName receive-cont" th:text="${receiveDoc?.docForm?.formName}">구분</div>
+            <div class="docTitle receive-cont" th:text="${receiveDoc?.docTitle}">문서제목</div>
+            <div class="docContent receive-cont" th:text="${receiveDoc?.docContent}">문서내용</div>
+            <i class="receive-cont fa-solid fa-arrow-right-from-bracket"></i>
+        </div>
+    </div>
+    <div class="page-border submit-box">
+        <h2 class="page-title" th:onclick="|location.href='@{/document/submitDoc}'|"><i class="fa-regular fa-file-lines"></i>&ensp;결재 상신함</h2>
+        <table class="table list-table table-hover">
+            <thead class="list-thead">
+            <tr>
+                <th class="docId-th">문서번호</th>
+                <th class="formName-th">구분</th>
+                <th class="docTitle-th">문서제목</th>
+                <th class="urgent-th">긴급여부</th>
+                <th class="docStatus-th">결재상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="submitDoc : ${submitDocs}"
+                th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${submitDoc?.getDocForm().formNameEn},docId=${submitDoc?.docId})}'|">
+                <td th:text="${submitDoc?.docId}">문서번호</td>
+                <td th:text="${submitDoc?.docForm?.formName}">구분</td>
+                <td th:text="${submitDoc?.docTitle}">문서제목</td>
+                <td><div class="urgent" th:if="${submitDoc?.urgent}">긴급</div></td>
+                <td>
+                    <th:block th:switch="${submitDoc.docStatus.toString()}">
+                        <div th:case="PENDING_DOC" class="docStatus" style="background-color:#FDF290;">대기</div>
+                        <div th:case="IN_PROGRESS" class="docStatus" style="background-color:#BCE784;">진행중</div>
+                        <div th:case="APPROVED_DOC" class="docStatus" style="background-color:#52B788;">승인</div>
+                        <div th:case="REJECTED_DOC" class="docStatus" style="background-color:#D6D6D6;">반려</div>
+                    </th:block>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="page-border temp-box">
+        <h2 class="page-title" th:onclick="|location.href='@{/document/tempList}'|"><i class="fa-regular fa-file-lines"></i>&ensp;임시 저장함</h2>
+        <table class="table list-table table-hover">
+            <thead class="list-thead">
+            <tr>
+                <th class="docId-th">문서번호</th>
+                <th class="formName-th">구분</th>
+                <th class="docTitle-th">문서제목</th>
+                <th class="docDate-th">저장일자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tempDoc : ${tempDocs}"
+                th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${tempDoc?.getDocForm().formNameEn},docId=${tempDoc?.docId})}'|">
+                <td th:text="${tempDoc?.docId}">문서번호</td>
+                <td th:text="${tempDoc?.docForm?.formName}">구분</td>
+                <td th:text="${tempDoc?.docTitle}">문서제목</td>
+                <td th:text="${#temporals.format(tempDoc?.docDate, 'yyyy.MM.dd. HH:mm')}">저장일자</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 </html>

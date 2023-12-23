@@ -15,7 +15,7 @@ import org.kosta.starducks.roles.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,16 +76,16 @@ public class EmpController {
      * @return
      */
     @PostMapping("/save")
-    public String save(Employee employee, Model model,
+    public String save(@Valid Employee employee, BindingResult result, Model model,
                        @RequestParam("profile") MultipartFile profile,
                        @RequestParam("stamp") MultipartFile stamp) {
 
-//        if (errors.hasErrors()) {
-//            log.error(errors.toString());
-//
-//            String referer = request.getHeader("Referer");
-//            return "redirect:"+ referer;
-//        }
+        if (result.hasErrors()) {
+            log.error("result: {}", result.getAllErrors().toString());
+
+            model.addAttribute("name", "register");
+            return "hr/emp/empWriter";
+        }
 
         Employee savedEmp = service.saveEmp(employee);
         fileService.upload(profile, "profile", employee.getEmpId());
