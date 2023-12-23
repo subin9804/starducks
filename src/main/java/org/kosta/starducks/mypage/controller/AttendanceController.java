@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,14 +35,8 @@ public class AttendanceController {
      * 마이페이지 근태기록 컨트롤러 함수
      */
     @GetMapping
-    public String Attendance(Model model, @AuthenticationPrincipal CustomUserDetails details) {
-        // 로그인 안했을 때 임의의 아이디
-        Long empId = 1L;
-
-        // 로그인 했을 때 유저 정보 받아오기
-        if(details != null) {
-            empId = details.getEmployee().getEmpId();
-        }
+    public String Attendance(Model model, Principal principal) {
+        Long empId = Long.parseLong(principal.getName());
         model.addAttribute("empId", empId);
 
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
@@ -71,9 +66,9 @@ public class AttendanceController {
      * 출근 기록 & 성공 페이지 리턴 함수
      */
     @PostMapping("/startSubmit")
-    public String submitStartTime() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
-        Long empId = 1L;
+    public String submitStartTime(Principal principal) {
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 empId
+
         attendanceService.saveStartTime(empId);
         return "redirect:/mypage/attendance";
     }
@@ -82,9 +77,9 @@ public class AttendanceController {
      * 퇴근 기록 & 성공 페이지 리턴 함수
      */
     @PostMapping("/endSubmit")
-    public String submitEndTime() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
-        Long empId = 1L;
+    public String submitEndTime(Principal principal) {
+        Long empId = Long.parseLong(principal.getName());
+
         attendanceService.saveEndTime(empId);
         return "redirect:/mypage/attendance";
     }
@@ -93,9 +88,9 @@ public class AttendanceController {
      * 출근 기록 & 성공 페이지 리턴 함수
      */
     @PostMapping("/startSubmitHome")
-    public String submitStartTimeHome() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
-        Long empId = 1L;
+    public String submitStartTimeHome(Principal principal) {
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 empId
+
         attendanceService.saveStartTime(empId);
         return "redirect:/";
     }
@@ -104,9 +99,9 @@ public class AttendanceController {
      * 퇴근 기록 & 성공 페이지 리턴 함수
      */
     @PostMapping("/endSubmitHome")
-    public String submitEndTimeHome() {
-        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
-        Long empId = 1L;
+    public String submitEndTimeHome(Principal principal) {
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 empId
+
         attendanceService.saveEndTime(empId);
         return "redirect:/";
     }
