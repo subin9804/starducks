@@ -15,7 +15,7 @@
     <h1 class="page-title">전자결재</h1>
     <div class="page-border receive-box">
         <h2 class="page-title" th:onclick="|location.href='@{/document/receiveDoc}'|"><i class="fa-regular fa-file-lines"></i>&ensp;최근 수신 결재</h2>
-
+        <h4 th:if="${#lists.isEmpty(receiveDocs)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
         <div th:each="receiveDoc : ${receiveDocs}" class="receiveDoc"
             th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${receiveDoc?.getDocForm().formNameEn},docId=${receiveDoc?.docId})}'|">
             <div class="docDate receive-cont" th:text="${#temporals.format(receiveDoc?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</div>
@@ -39,6 +39,7 @@
             </tr>
             </thead>
             <tbody>
+            <h4 th:if="${#lists.isEmpty(submitDocs)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
             <tr th:each="submitDoc : ${submitDocs}"
                 th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${submitDoc?.getDocForm().formNameEn},docId=${submitDoc?.docId})}'|">
                 <td th:text="${submitDoc?.docId}">문서번호</td>
@@ -69,6 +70,7 @@
             </tr>
             </thead>
             <tbody>
+            <h4 th:if="${#lists.isEmpty(tempDocs)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
             <tr th:each="tempDoc : ${tempDocs}"
                 th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${tempDoc?.getDocForm().formNameEn},docId=${tempDoc?.docId})}'|">
                 <td th:text="${tempDoc?.docId}">문서번호</td>

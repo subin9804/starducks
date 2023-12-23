@@ -2,6 +2,7 @@
     position: relative;
     width: 1280px;
     /*height: 1122px;*/
+    margin: auto;
 }
 .commonBtn {
     margin: 30px;
@@ -55,7 +56,7 @@
     top: 0;
     right: 0;
     display: inline-block;
-    /*border: 1px solid cadetblue;*/
+    border: 1px solid #c9c9c9;
     /*width: 210mm;*/
     /*height: 297mm;*/
     width: 794.52px;

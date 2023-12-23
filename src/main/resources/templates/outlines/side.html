@@ -28,7 +28,7 @@
             <input class="" type="radio" id="docu" name="nav" aria-controls="flush-docu"
                    th:checked="${(@menu.getMenu() != null) && (@menu.getMenu().equals('document'))} ? true : false">
             <label for="docu">
-                <a th:href="@{/document/createDoc}">전자결재</a>
+                <a th:href="@{/document}">전자결재</a>
             </label>
         </div>
         <ul id="flush-docu"
@@ -120,9 +120,10 @@
         <form action="/logout" method="post">
             <!-- 이렇게 th:value 형식으로 해야 어떤 페이지에서든 토큰이 유효해지게 동적으로 된다 -->
             <input type="hidden" name="_csrf" th:if="${_csrf != null}" th:value="${_csrf.token}"/>
-            <button type="submit" class="commonBtn">Logout</button>
+            <button type="submit" class="commonBtn"><i class="fa-solid fa-right-from-bracket"></i>&ensp;Logout</button>
         </form>
-        <p>©2023 STARDUCKS ERP</p>
+        <br>
+        <small>© 2023 STARDUCKS ERP</small>
     </div>
 </aside>
 </html>
