@@ -12,34 +12,34 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h2>근태관리</h2>
+    <h2 class="page-title">근태관리</h2>
     <p th:text="${employee.empId}" id="empId" class="d-none"></p>
     <div class="calendar-side">
-        <div th:replace="~{hr/attend/_profile::profile}"></div>
+        <div class="page-shadow" th:replace="~{hr/attend/_profile::profile}"></div>
 
-        <div class="attd-sum-box">
-            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
+        <div class="attd-sum-box page-shadow">
+            <h3 class="sum-month"><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box" th:text="${workDays}">18</div>
                 <div>근무</div>
             </div>
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
                 <div>지각</div>
             </div>
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
                 <div>결근</div>
             </div>
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box">12/15</div>
                 <div>연차</div>
             </div>
         </div>
     </div>
 
-    <div class="calendar">
+    <div class="calendar page-border">
         <div id='calendar'></div>
     </div>
 </main>

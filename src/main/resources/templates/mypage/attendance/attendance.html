@@ -11,59 +11,116 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </th:block>
 
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous"
+/>
+<script>
+    function confirmStart() {
+        console.log('confirmStart called')
+        Swal.fire({
+            title: '출근 확인',
+            text: '출근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                document.getElementById('confirmStart').submit();
+            }
+        })
+    }
+    function confirmEnd() {
+        console.log('confirmEnd called')
+        Swal.fire({
+            title: '퇴근 확인',
+            text: '퇴근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                document.getElementById('confirmEnd').submit();
+            }
+        })
+    }
+    $().ready(function () {
 
+        $("#alertStart").click(function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Alert가 실행되었습니다.',
+                text: '이곳은 내용이 나타나는 곳입니다.',
+            });
+        });
+    });
+</script>
 
 <main layout:fragment="content">
-    <h1>배포 자동화 테스트!</h1>
-    <h2>근태관리</h2>
+    <button class="btn btn-primary m-2" id="alertStart">Alert 실행</button>
+    <h1 class="page-title">근태관리</h1>
     <p th:text="${empId}" id="empId" class="d-none"></p>     <!-- 해당 계정의 근태 정보를 ajax로 가져오기 위함-->
     <div class="calendar-side">
-        <div class="attd-check-box">
+        <div class="attd-check-box page-shadow">
             <div>
-                <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
-                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
+                <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}"
+                     >
+                    <button class="attd-btn" type="submit" id="confirmStart" onsubmit="confirmStart()"><i class="fa-solid fa-circle-check"></i>&nbsp;출근</button>
                 </form>
-                <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
-                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+                <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}"
+                      >
+                    <button class="attd-btn" type="submit" id="endStart" onsubmit="confirmEnd()"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
 <!--            <button class="attd-btn"  th:text="근태 기록 완료">근태 기록 완료</button>-->
-            <p class="complete-attd" th:if="${attendance?.endTime != null}">근태 기록 완료</p>
+            <p class="complete-attd" th:if="${attendance?.endTime != null}"><i class="fa-solid fa-circle-check"></i>&nbsp;근태 기록 완료</p>
 
-            <div>
-                <div>
+            <div class="attd-time-box">
+                <div class="start-time-box">
                     출근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
                 </div>
-                <div>
+                <div class="start-time-box">
                     퇴근&ensp;|&ensp;<span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
                 </div>
             </div>
         </div>
 
-        <div class="attd-sum-box">
-            <h3><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
+        <div class="attd-sum-box page-shadow">
+            <h3 class="sum-month"><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box" th:text="${workDays}">18</div>
                 <div>근무</div>
             </div>
-            <div>
-                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
+            <div class="attd-sum-wrap">
+                <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
                 <div>지각</div>
             </div>
-            <div>
-                <div class="attd-sum-num-box">0</div>
+            <div class="attd-sum-wrap">
+                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
                 <div>결근</div>
             </div>
-            <div>
+            <div class="attd-sum-wrap">
                 <div class="attd-sum-num-box">12/15</div>
                 <div>연차</div>
             </div>
         </div>
     </div>
 
-    <div class="calendar">
+    <div class="calendar page-border">
         <div id='calendar'></div>
     </div>
+
 </main>
+
 </html>

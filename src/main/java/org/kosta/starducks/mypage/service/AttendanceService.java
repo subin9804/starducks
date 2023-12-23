@@ -59,11 +59,6 @@ public class AttendanceService {
         return attendanceRepository.findByWorkDateBetweenAndEmp_EmpId(firstDay, lastDay, empId);
     }
 
-
-    public List<Attendance> getAllAttendance(){
-        return attendanceRepository.findAll();
-    }
-
     /**
      * 출근 기록 저장 함수
      */
@@ -89,8 +84,6 @@ public class AttendanceService {
             attendanceRepository.save(existAttendance);
         }
     }
-
-
 
     /**
      * 출근일 반환 함수
