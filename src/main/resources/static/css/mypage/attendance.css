@@ -1,7 +1,4 @@
 /* 캘린더 */
-div {
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-}
 .fc-toolbar-chunk {
     display: flex;
 align-items: center;
@@ -47,27 +44,27 @@ align-items: center;
     margin: 20px;
 }
 .attd-btn, .complete-attd {
-    width: 200px;
+    width: 180px;
     height: 70px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     color: white;
     border: none;
     border-radius: 20px;
-    margin: 20px 30px;
+    margin: 20px 40px;
 }
 .attd-btn {
     background-color: #6B4D27;
 }
 .complete-attd {
-    background-color: #b9b9b9;
+    background-color: #d0d0d0;
     text-align: center;
-    padding: 20px;
+    padding: 23px;
 }
 .fa-circle-check {
     color: #A3C614;
 }
 .attd-time-box {
-    padding: 0 70px;
+    padding: 0 60px;
 }
 .start-time-box, .end-time-box {
     margin: 15px;

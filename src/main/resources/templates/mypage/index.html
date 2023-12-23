@@ -20,10 +20,10 @@
 
             <!-- 출퇴근 버튼 -->
             <div>
-                <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
+                <form th:action="@{/mypage/attendance/startSubmitHome}" method="post" th:if="${attendance?.startTime == null}">
                     <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;출근</button>
                 </form>
-                <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                <form th:action="@{/mypage/attendance/endSubmitHome}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
                     <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
@@ -31,8 +31,8 @@
 
             <!-- 출퇴근 기록 -->
             <div>
-                <span>출근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
-                <span>퇴근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
+                <span>출근&ensp;|</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
+                <span>퇴근&ensp;|</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
             </div>
 
             <hr/>

@@ -30,23 +30,6 @@ public class AttendanceController {
         return attendanceService.getDailyAttendance(empId);
     }
 
-//    /**
-//     * 일별 출근 정보 Json List API
-//     */
-//    @GetMapping("/daily") // json api endPoint
-//    @ResponseBody
-//    public List<Map<String, Object>> getDailyAttendance(@AuthenticationPrincipal CustomUserDetails details, Model model) {
-//        // 로그인 안했을 때 임의의 아이디
-//        Long empId = 1L;
-//
-//        // 로그인 했을 때 유저 정보 받아오기
-//        if(details != null) {
-//            empId = details.getEmployee().getEmpId();
-//        }
-//
-//        return attendanceService.getDailyAttendance(empId);
-//    }
-
     /**
      * 마이페이지 근태기록 컨트롤러 함수
      */
@@ -66,21 +49,23 @@ public class AttendanceController {
 
         List<Attendance> attendanceForMonth = attendanceService.getAttendanceForMonth(empId);
         int absentDays =  (int)attendanceForMonth.stream()
-                .filter(Objects::isNull)
+                .filter(day -> day.getStartTime() == null && !day.isVacation())
                 .count();
         int workDays = (int)attendanceForMonth.stream().count() - absentDays;
+        int lateDays = attendanceService.getLateDays(empId); //오전 9시 이후 출근 시 지각
+        int vacDays = (int)attendanceForMonth.stream()
+                .filter(day -> day.isVacation())
+                .count();
 
-//        int absentDays = attendanceService.getAbsentDays(empId);
 //        int workDays = attendanceService.getWorkDays(empId);
+//        int absentDays = attendanceService.getAbsentDays(empId);
 
-        model.addAttribute("absentDays", absentDays);
         model.addAttribute("workDays", workDays);
-//        model.addAttribute("isVacation", attendanceService.getIsVacation);
+        model.addAttribute("lateDays", lateDays);
+        model.addAttribute("absentDays", absentDays);
 
         return "mypage/attendance/attendance";
     }
-
-
 
     /**
      * 출근 기록 & 성공 페이지 리턴 함수
@@ -90,7 +75,7 @@ public class AttendanceController {
         // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
         Long empId = 1L;
         attendanceService.saveStartTime(empId);
-        return "mypage/attendance/startSuccess";
+        return "redirect:/mypage/attendance";
     }
 
     /**
@@ -101,6 +86,28 @@ public class AttendanceController {
         // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
         Long empId = 1L;
         attendanceService.saveEndTime(empId);
-        return "mypage/attendance/endSuccess";
+        return "redirect:/mypage/attendance";
+    }
+
+    /**
+     * 출근 기록 & 성공 페이지 리턴 함수
+     */
+    @PostMapping("/startSubmitHome")
+    public String submitStartTimeHome() {
+        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
+        Long empId = 1L;
+        attendanceService.saveStartTime(empId);
+        return "redirect:/";
+    }
+
+    /**
+     * 퇴근 기록 & 성공 페이지 리턴 함수
+     */
+    @PostMapping("/endSubmitHome")
+    public String submitEndTimeHome() {
+        // 사용자의 EmpId는 세션 등에서 가져오거나 매개변수 등을 통해 전달 - 테스트 empId = 1
+        Long empId = 1L;
+        attendanceService.saveEndTime(empId);
+        return "redirect:/";
     }
 }
