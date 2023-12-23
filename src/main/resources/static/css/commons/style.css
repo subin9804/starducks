@@ -101,6 +101,7 @@ label {
     padding-left: 30px;
     border-radius: 20px;
     margin: 20px 0;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 .accro .head > label a{
     color: white !important;
@@ -140,6 +141,8 @@ label {
     padding: 10px;
     color: #fff !important;
     border-radius: 15px;
+    text-shadow: none;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar-footer {
