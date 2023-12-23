@@ -6,9 +6,14 @@ import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.service.DocumentService;
+import org.kosta.starducks.generalAffairs.entity.Product;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
+import org.kosta.starducks.generalAffairs.service.ProductService;
+import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +34,8 @@ public class COrderController {
     private final DocFormRepository docFormRepository;
     private final EmpRepository empRepository;
     private final EmpService empService;
+    private final VendorService vendorService;
+    private final ProductService productService;
 
 
     /**
@@ -39,31 +46,45 @@ public class COrderController {
                                  Model model) {
         String formNameEn = "orderForm";
 
-        //라디오로 입력 받을 apvEmpId1,2
+        //라디오로 입력 받을 apvEmpId1,2 및 vendor
         Long apvEmpId1 = null, apvEmpId2 = null;
+        Integer selectedVendorId =null;
         model.addAttribute("apvEmpId1", apvEmpId1);
         model.addAttribute("apvEmpId2", apvEmpId2);
+        model.addAttribute("selVendorId", selectedVendorId);
 
-        //멀티 체크박스로 입력 받을 refEmpIdList
-        List<Long> refEmpIdList = null;
-        model.addAttribute("refEmpIdList", refEmpIdList);
 
         //사원찾기에 사용될 emps
         List<Employee> emps = empRepository.findAll();
         model.addAttribute("emps", emps);
-//
+
+
+        //거래처 찾기에 이용될 vendors
+        List<Vendor> vendors = vendorService.findAll();
+        model.addAttribute("vendors", vendors);
+
         //입력 받을 document 객체
         model.addAttribute("document", new Document());
 //
         //화면에 전달할 docForm 정보 객체 : PathVariable 정보
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
-//
-//        //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
+
+        //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
         Employee emp = empService.getEmp(Long.parseLong(p.getName()));
         model.addAttribute("emp", emp);
 
         return "document/createDoc/" + formNameEn;
+    }
+
+
+
+    @GetMapping("/{vendorId}/products")
+    public ResponseEntity<List<Product>> getProductsByVendorId(@PathVariable int vendorId){
+        List<Product> products = productService.getProductsByVendorId(vendorId);
+
+
+        return ResponseEntity.ok(products);
     }
 
 }
