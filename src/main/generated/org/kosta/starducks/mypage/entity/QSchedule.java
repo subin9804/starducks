@@ -26,6 +26,8 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath notes = createString("notes");
 
+    public final EnumPath<ScheduleType> scheduleType = createEnum("scheduleType", ScheduleType.class);
+
     public final DateTimePath<java.time.LocalDateTime> scheEndDate = createDateTime("scheEndDate", java.time.LocalDateTime.class);
 
     public final NumberPath<Long> scheNo = createNumber("scheNo", Long.class);

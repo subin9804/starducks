@@ -277,6 +277,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 scheduleData.setScheEndDate(endDates[j]);
                 scheduleData.setNotes(notes[j]);
 
+                scheduleData.setScheduleType(scheduleTypes[j]);
                 // Employee 객체 찾기
                 Employee emp = repository.findById(empIds[j]).orElse(null);
                 if (emp != null) {

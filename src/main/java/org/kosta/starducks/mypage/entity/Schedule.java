@@ -29,6 +29,10 @@ public class Schedule {
     @Column(name = "sche_end_date")
     private LocalDateTime scheEndDate;
 
+    // ScheduleType 열거형 타입 추가
+    @Enumerated(EnumType.STRING)
+    private ScheduleType scheduleType;
+
     @Column(name = "notes")
     private String notes;
 

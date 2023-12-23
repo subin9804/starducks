@@ -80,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: schedule.scheTitle,      // 일정 제목
                         start: schedule.scheStartDate, // 시작일시
                         end: schedule.scheEndDate,     // 종료일시
-                        url: '/mypage/schedule/detail/' + schedule.scheNo, // 상세 페이지 UR
+                        scheduleType: schedule.scheduleType,
+                        url: '/mypage/schedule/detail/' + schedule.scheNo,
                     };
                 });
                 // 변환한 이벤트 데이터를 FullCalendar에 성공 콜백으로 전달합니다.
@@ -226,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: scheTitle,
                         start: scheStartDate,
                         end: scheEndDate,
+                        scheduleType: scheduleType,
                         url: '/mypage/schedule/detail/' + responseData.scheNo,
                     };
                     console.log("responseData.scheNo ==> " + responseData.scheNo);

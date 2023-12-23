@@ -41,10 +41,10 @@
                                 <input type="date" name="scheEndDate" id="scheEndDate" th:field="*{scheEndDate}"/>
 
                                 <span>일정 종류</span>
-                                <ul name="scheduleType" th:field="*{scheduleType}">
-                                    <li value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></li>
-                                    <li value="OFFICIAL_SCHEDULE" th:text="'공식 일정'"></li>
-                                </ul>
+                                <select name="scheduleType" th:field="*{scheduleType}">
+                                    <option value="PERSONAL_SCHEDULE" th:text="'개인 일정'"></option>
+                                    <option value="OFFICIAL_SCHEDULE" th:text="'공식 일정'"></option>
+                                </select>
 
                                 <span>참고 사항</span>
                                 <textarea id="text" rows="5" cols="62" name="notes" th:id="notes" th:field="*{notes}"></textarea>
