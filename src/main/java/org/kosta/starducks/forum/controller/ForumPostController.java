@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -82,11 +83,19 @@ public class ForumPostController {
         return "forum/forum"; // 게시판 메인 페이지 템플릿
     }
 
-    // 게시글 작성 페이지로 이동
+    // 게시글 작성 페이지로 이동. 공지 선택 기능은 로그인한 사원이 인사부일때만 보이도록 선택
     @GetMapping("/add")
-    public String addPostForm(Model model) {
-        model.addAttribute("post", new ForumPost()); //타임리프에서 참조하는 이름 현재는 post
-        return "forum/forumAddPost"; // 게시글 추가 페이지 템플릿
+    public String addPostForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        model.addAttribute("post", new ForumPost()); // 타임리프에서 참조하는 이름
+
+        Long empId = Long.parseLong(userDetails.getUsername());
+        Employee employeeWithDept = empService.getEmployeeWithDepartment(empId);
+
+        boolean isHrDepartment = employeeWithDept != null &&
+            "인사부".equals(employeeWithDept.getDept().getDeptName());
+        model.addAttribute("isHrDepartment", isHrDepartment);
+
+        return "forum/forumAddPost";
     }
 
     // 게시글 작성 완료 및 업로드되면 게시판 페이지로 이동
@@ -113,10 +122,17 @@ public class ForumPostController {
 
     // 게시글 수정 페이지로 이동
     @GetMapping("/edit/{id}")
-    public String editPostForm(@PathVariable("id") Long id, Model model) {
+    public String editPostForm(@PathVariable("id") Long id, Model model, Principal principal) {
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
+
+        Employee employeeWithDept = empService.getEmployeeWithDepartment(Long.parseLong(principal.getName()));
+
+        boolean isHrDepartment = employeeWithDept != null &&
+            "인사부".equals(employeeWithDept.getDept().getDeptName());
+        model.addAttribute("isHrDepartment", isHrDepartment);
+
         return "forum/forumEditPost";
     }
 

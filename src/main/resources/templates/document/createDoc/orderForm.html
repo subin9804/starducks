@@ -31,7 +31,7 @@
                     : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}"></span>
                 </div>
 
 
@@ -62,10 +62,10 @@
 
 
                 <div class="input-wrap">
-                참조인
+                수신처
                 <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
                         data-bs-toggle="modal" data-bs-target="#selectRefEmp">
-                    사원찾기
+                    거래처찾기
                 </button>
                  : <span class="selected-values" id="selectedRefs"></span>
                 </div>
@@ -107,7 +107,7 @@
 
     <div class="a4-box page-shadow">
         <div id="print-div">
-            <h1 class="doc-type-name">업 무 기 안 서</h1>
+            <h1 class="doc-type-name">발    주    서</h1>
             <span id="urgentDisplay"></span>
 <!--            <div class="urgent-sticker">긴급</div>-->
 
@@ -144,42 +144,178 @@
             <div class="middle-box">
                 <table class="doc-info-box">
                     <tr class="approver">
-                        <td class="col-th">기안자</td>
-                        <td th:text="${empName}">내용</td>
+                        <td class="col-th" colspan="2">발주처</td>
+                        <td colspan="2">스타덕스</td>
+                        <td class="col-th" colspan="2">전화</td>
+                        <td colspan="2">02-854-2526</td>
+                        <td class="col-th" colspan="2">담당자</td>
+                        <td th:text="${emp.getEmpName()}" colspan="2">담당자</td>
                     </tr>
                     <tr class="doc-info">
-                        <td class="col-th">소속</td>
-                        <td>내용</td>
+                        <td class="col-th" colspan="2">수주처</td>
+                        <td colspan="2">내용</td>
+                        <td class="col-th" colspan="2">전화</td>
+                        <td colspan="2">내용</td>
+                        <td class="col-th" colspan="2">담당자</td>
+                        <td colspan="2">내용</td>
+                    </tr>
+                    <tr class="doc-content" >
+                        <td class="col-th" colspan="2">발주 신청일</td>
+                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>
                     </tr>
                     <tr class="doc-content">
-                        <td class="col-th">기안일</td>
-                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></td>
+                        <td class="col-th" colspan="2">납품 기한일</td>
+                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>
                     </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">문서번호</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">참조인</td>
-                        <td><span class="selected-values" id="selectedRefs2"></span></td>
-                    </tr>
+<!--                    <tr class="doc-content">-->
+<!--                        <td class="col-th">문서번호</td>-->
+<!--                        <td>내용</td>-->
+<!--                    </tr>-->
+<!--                    <tr class="doc-content">-->
+<!--                        <td class="col-th">참조인</td>-->
+<!--                        <td><span class="selected-values" id="selectedRefs2"></span></td>-->
+<!--                    </tr>-->
                 </table>
+
                 <table class="doc-content-box">
-                    <tr class="approver">
-                        <td class="col-th">제목</td>
-                        <td><span id="docTitleOut"></span></td>
+
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>품목명</th>
+                        <th>단위</th>
+                        <th>단가</th>
+                        <th>수량</th>
+                        <th>합계금액</th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+                    <tr>
+                        <td>No.</td>
+                        <td>품목명</td>
+                        <td>단위</td>
+                        <td>단가</td>
+                        <td>수량</td>
+                        <td>합계금액</td>
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+
+                <table class="doc-footer-box">
+
+
+                    <tbody>
+
+
                     <tr class="doc-info">
-                        <td class="col-th">내용</td>
-                        <td class="docContentOut"><span id="docContentOut"></span></td>
+                        <td>상기와 같이 발주합니다.</td>
                     </tr>
+
+                    </tbody>
+
                 </table>
-                <table class="attached-files-box">
-                    <tr class="attached-files">
-                        <td class="col-th">첨부파일</td>
-                        <td>내용</td>
-                    </tr>
-                </table>
+
+<!--                <table class="doc-content-box">-->
+<!--                    <tr class="approver">-->
+<!--                        <td class="col-th">제목</td>-->
+<!--                        <td><span id="docTitleOut"></span></td>-->
+<!--                    </tr>-->
+<!--                    <tr class="doc-info">-->
+<!--                        <td class="col-th">내용</td>-->
+<!--                        <td class="docContentOut"><span id="docContentOut"></span></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--                <table class="attached-files-box">-->
+<!--                    <tr class="attached-files">-->
+<!--                        <td class="col-th">첨부파일</td>-->
+<!--                        <td>내용</td>-->
+<!--                    </tr>-->
+<!--                </table>-->
             </div>
 
         </div>

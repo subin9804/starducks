@@ -156,7 +156,7 @@
             </table>
         </section>
     </div>
-
+<p id="apikey" style="display: none">[[${apiKey}]]</p>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -164,6 +164,9 @@
         let API_KEY = /*[[${apiKey}]]*/ '';
 
         /*]]>*/
+
+
+        let id = document.getElementById("apikey")
     </script>
 
 <!--    페이지 접근 거부 됐을 때 뜨는 알림창 -->
@@ -174,9 +177,9 @@
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('accessDenied')) {
                 Swal.fire({
-                    title: '접근 권한이 없습니다',
+                    title: '접근 불가',
                     text: '해당 부서 소속만 접근 가능합니다',
-                    icon: 'error',
+                    icon: 'warning',
                     confirmButtonText: '확인'
                 });
             }

@@ -8,11 +8,13 @@ import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,38 +28,40 @@ public class COrderController {
     private final DocumentRepository documentRepository;
     private final DocFormRepository docFormRepository;
     private final EmpRepository empRepository;
+    private final EmpService empService;
 
 
     /**
      * 문서 작성 페이지
      */
     @GetMapping("/orderForm")
-    public String createDocument(Model model) {
+    public String createDocument(Principal p,
+                                 Model model) {
         String formNameEn = "orderForm";
 
-//        //라디오로 입력 받을 apvEmpId1,2
-//        Long apvEmpId1 = null, apvEmpId2 = null;
-//        model.addAttribute("apvEmpId1", apvEmpId1);
-//        model.addAttribute("apvEmpId2", apvEmpId2);
+        //라디오로 입력 받을 apvEmpId1,2
+        Long apvEmpId1 = null, apvEmpId2 = null;
+        model.addAttribute("apvEmpId1", apvEmpId1);
+        model.addAttribute("apvEmpId2", apvEmpId2);
+
+        //멀티 체크박스로 입력 받을 refEmpIdList
+        List<Long> refEmpIdList = null;
+        model.addAttribute("refEmpIdList", refEmpIdList);
+
+        //사원찾기에 사용될 emps
+        List<Employee> emps = empRepository.findAll();
+        model.addAttribute("emps", emps);
 //
-//        //멀티 체크박스로 입력 받을 refEmpIdList
-//        List<Long> refEmpIdList = null;
-//        model.addAttribute("refEmpIdList", refEmpIdList);
+        //입력 받을 document 객체
+        model.addAttribute("document", new Document());
 //
-//        //사원찾기에 사용될 emps
-//        List<Employee> emps = empRepository.findAll();
-//        model.addAttribute("emps", emps);
-//
-//        //입력 받을 document 객체
-//        model.addAttribute("document", new Document());
-//
-//        //화면에 전달할 docForm 정보 객체 : PathVariable 정보
-//        docFormRepository.findByFormNameEn(formNameEn)
-//                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
+        //화면에 전달할 docForm 정보 객체 : PathVariable 정보
+        docFormRepository.findByFormNameEn(formNameEn)
+                .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 //
 //        //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
-//        String empName = "홍길동"; //로그인한 사원 이름
-//        model.addAttribute("empName", empName);
+        Employee emp = empService.getEmp(Long.parseLong(p.getName()));
+        model.addAttribute("emp", emp);
 
         return "document/createDoc/" + formNameEn;
     }

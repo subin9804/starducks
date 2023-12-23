@@ -36,7 +36,8 @@ public class AttendanceController {
      */
     @GetMapping
     public String Attendance(Model model, Principal principal) {
-        Long empId = Long.parseLong(principal.getName());
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 empId
+
         model.addAttribute("empId", empId);
 
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
@@ -78,7 +79,7 @@ public class AttendanceController {
      */
     @PostMapping("/endSubmit")
     public String submitEndTime(Principal principal) {
-        Long empId = Long.parseLong(principal.getName());
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 empId
 
         attendanceService.saveEndTime(empId);
         return "redirect:/mypage/attendance";
