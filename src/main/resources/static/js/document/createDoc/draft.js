@@ -53,7 +53,12 @@ function displaySelectedVendor(element) {
 
 
     const selectedVendorName = element.nextElementSibling.querySelector('.searchVendorName').innerText;
+    const selectedVendorBoss= element.nextElementSibling.querySelector('.searchVendorBoss').innerText;
+    const selectedVendorTel = element.nextElementSibling.querySelector('.searchVendorTel').innerText;
     document.getElementById('selectedVendor1').innerText = selectedVendorName;
+    document.getElementById('selectedVendor2').innerText = selectedVendorName;
+    document.getElementById('selectedVendor3').innerText = selectedVendorTel;
+    document.getElementById('selectedVendor4').innerText = selectedVendorBoss;
 
 }
 

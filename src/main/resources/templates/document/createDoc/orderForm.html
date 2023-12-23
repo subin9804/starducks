@@ -66,8 +66,7 @@
                             data-bs-toggle="modal" data-bs-target="#selectVendor1">
                         거래처찾기
                     </button>
-                    : <span id="selectedVendor1"></span>
-
+                    : <span class="selected-vendors" id="selectedVendor1"></span>
 
                 <div th:insert="~{document/createDoc/_selectVendor::modal}"></div>
                 </div>
@@ -120,20 +119,16 @@
 
                 <div class="hr"><hr></div>
                 <div class="input-wrap">
-                첨부파일 :
-                <input type="file" multiple>
+                납품 기한일 :
+                <input type="date" th:field="*{docDate}" >
                 </div>
 
                 <div class="hr"><hr></div>
 
-                <div class="input-wrap2">
-                제목 : <input type="text" th:field="*{docTitle}">
-<!--                <input type="text" th:field="*{docTitle}">-->
-                </div>
 
-                <div class="input-wrap2">
-                <textarea th:field="*{docContent}" placeholder="내용을 입력하세요."></textarea>
-                </div>
+<!--                제목 : <input type="text" th:field="*{docTitle}">-->
+<!--                <textarea th:field="*{docContent}"></textarea>-->
+
 
                 <div class="input-wrap2">
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
@@ -195,12 +190,13 @@
                         <td th:text="${emp.getEmpName()}" colspan="2">담당자</td>
                     </tr>
                     <tr class="doc-info">
-                        <td class="col-th" colspan="2">수주처</td>
-                        <td colspan="2">내용</td>
+<!--                        수신처 선택에 따라 정보 업로드 된다.-->
+                        <td class="col-th" colspan="2">수신처</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor2"></span></td>
                         <td class="col-th" colspan="2">전화</td>
-                        <td colspan="2">내용</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor3"></span></td>
                         <td class="col-th" colspan="2">담당자</td>
-                        <td colspan="2">내용</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor4"></span></td>
                     </tr>
                     <tr class="doc-content" >
                         <td class="col-th" colspan="2">발주 신청일</td>
@@ -208,7 +204,10 @@
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th" colspan="2">납품 기한일</td>
-                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>
+                        <td class="docDateOut" colspan="10"><span id="docDateOut"></span></td>
+
+
+<!--                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>-->
                     </tr>
 <!--                    <tr class="doc-content">-->
 <!--                        <td class="col-th">문서번호</td>-->
@@ -249,7 +248,10 @@
                         <td>상기와 같이 발주합니다.
                             <br>
                             <br>
-                            히히히
+                            <br>
+                            <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                            <br>
+                            <br>
                         </td>
 
                     </tr>
@@ -286,19 +288,37 @@
         urgentSticker.style.display = this.checked ? 'block' : 'none';
     });
 
-    var docTitle = document.getElementById('docTitle');
-    var docTitleOut = document.getElementById('docTitleOut');
-    docTitle.addEventListener('input', function() {
-        var docTitleIn = docTitle.value;
-        docTitleOut.innerText = docTitleIn;
-    });
+    // var docTitle = document.getElementById('docTitle');
+    // var docTitleOut = document.getElementById('docTitleOut');
+    // docTitle.addEventListener('input', function() {
+    //     var docTitleIn = docTitle.value;
+    //     docTitleOut.innerText = docTitleIn;
+    // });
+    //
+    // var docContent = document.getElementById('docContent');
+    // var docContentOut = document.getElementById('docContentOut');
+    // docContent.addEventListener('input', function() {
+    //     var docContentIn = docContent.value;
+    //     docContentOut.innerText = docContentIn;
+    // });
 
-    var docContent = document.getElementById('docContent');
-    var docContentOut = document.getElementById('docContentOut');
-    docContent.addEventListener('input', function() {
-        var docContentIn = docContent.value;
-        docContentOut.innerText = docContentIn;
-    });
+
+    const docDate = document.getElementById('docDate');
+    const docDateOut = document.getElementById('docDateOut');
+
+
+    docDate.addEventListener('input', function() {
+        const docDateIn = docDate.value;
+        docDateOut.innerText=formatDateString(docDateIn);
+    })
+    //날짜 형식 변환 함수
+    function formatDateString(dateString){
+        const date = new Date(dateString);
+        const options = {year:'numeric', month:'long', day:'numeric'}
+        return date.toLocaleDateString('ko-KR',options)
+
+    }
+
     var urgentCheckbox = document.getElementById('urgent');
 
     // 긴급 여부를 표시할 곳
