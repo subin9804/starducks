@@ -83,6 +83,8 @@ textarea {
     grid-area: sidebar; /* 그리드 영역 할당 */
     background-color:#6B4D27;
     border: 1px solid #333333;
+    position: relative;
+    min-height: 100vh;
 }
 label {
     display: block;
@@ -143,7 +145,10 @@ label {
     color: #fff;
     font-weight: bold;
     text-align: center;
-    margin: 200px auto 0;
+    margin: 100px auto 0 18px;
+    position: fixed;
+    bottom: 10px;
+
 }
 /* ------ 사이드바 E --------*/
 

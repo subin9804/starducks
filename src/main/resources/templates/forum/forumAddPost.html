@@ -20,14 +20,14 @@
     <!-- 제목 입력란 -->
     <input id="postTitle" placeholder="제목" required th:field="*{post.postTitle}" type="text">
 
-    <!-- 공지사항 체크박스 -->
-    <div class="checkbox-container">
+    <!-- 공지사항 체크박스: 인사부 직원일 경우에만 표시 -->
+    <div class="checkbox-container" th:if="${isHrDepartment}">
       <input id="postNotice" name="postNotice" th:checked="${post.postNotice}" type="checkbox">
       <label for="postNotice">공지로 등록</label>
     </div>
 
     <!-- 에디터의 메인 컨테이너. 내용이 들어감 -->
-    <div id="editor"></div>
+    <div id="editor" class="editor-style"></div>
 
     <!-- 에디터의 내용을 db로 저장하기 위한 숨겨진 input 필드 -->
     <input id="editor_content" name="postContent" type="hidden">
