@@ -137,6 +137,15 @@ td {
     width: 700px;
     margin: 20px 0;
 }
+
+.doc-footer-box {
+    position: absolute;
+    top: 890px;
+    left: 0px;
+    width: 700px;
+    margin: 20px 0;
+    text-align: center;
+}
 .attached-files-box {
     position: absolute;
     top: 860px;
