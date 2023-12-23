@@ -130,6 +130,7 @@ td {
     width: 700px;
     margin: 20px 0;
 }
+
 .doc-content-box {
     position: absolute;
     top: 450px;
@@ -138,6 +139,7 @@ td {
     margin: 20px 0;
 }
 
+/*발주서류 마지막 footer 부분*/
 .doc-footer-box {
     position: absolute;
     top: 890px;
