@@ -143,13 +143,12 @@ label {
 }
 
 .sidebar-footer {
+    position: absolute;
     color: #fff;
     font-weight: bold;
     text-align: center;
     margin: 100px auto 0 18px;
-    position: fixed;
-    bottom: 10px;
-
+    bottom: 100px;
 }
 /* ------ 사이드바 E --------*/
 
