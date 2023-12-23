@@ -62,49 +62,49 @@
     <script type="text/javascript">
         // 아직 유효성 안됨 얼른 추가하자
         /* 기간조회시 입력 오류 확인 날짜 비교 */
-        $("#submitBtn").click(function (){
-            let date = new Date();
-
-            let scheStartDate = $("#scheStartDate").val();
-            let scheEndDate = $("#scheEndDate").val();
-
-            let startArr = start.split('-');
-            let endArr = end.split('-');
-
-            let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
-            let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
-
-            if(startDateCompare.getTime() > endDateCompare.getTime()){
-                Swal.fire({
-                    icon: 'error',
-                    title: '입력값을 확인해 주세요',
-                    text: '시작 날짜가 종료 날짜보다 값이 큽니다.',
-                });
-            }else {
-                Swal.fire({
-                    title: '일정을 등록하시겠습니까?',
-                    text: "해당 일정은 캘린더에 표시합니다.",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '승인',
-                    cancelButtonText: '취소'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        if(($("#scheStartDate").val() !== "")&& ($("#scheEndDate").val() !== "") && ($("#scheTitle").val() !== "") && ($("#notes").val() !== "")){
-                            $("#registForm").submit();
-                        }else{
-                            Swal.fire({
-                                icon: 'error',
-                                title: '입력값을 확인해 주세요',
-                                text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.',
-                            });
-                        }
-                    }
-                })
-            }
-        })
+        // $("#submitBtn").click(function (){
+        //     let date = new Date();
+        //
+        //     let scheStartDate = $("#scheStartDate").val();
+        //     let scheEndDate = $("#scheEndDate").val();
+        //
+        //     let startArr = start.split('-');
+        //     let endArr = end.split('-');
+        //
+        //     let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+        //     let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+        //
+        //     if(startDateCompare.getTime() > endDateCompare.getTime()){
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: '입력값을 확인해 주세요',
+        //             text: '시작 날짜가 종료 날짜보다 값이 큽니다.',
+        //         });
+        //     }else {
+        //         Swal.fire({
+        //             title: '일정을 등록하시겠습니까?',
+        //             text: "해당 일정은 캘린더에 표시합니다.",
+        //             icon: 'question',
+        //             showCancelButton: true,
+        //             confirmButtonColor: '#3085d6',
+        //             cancelButtonColor: '#d33',
+        //             confirmButtonText: '승인',
+        //             cancelButtonText: '취소'
+        //         }).then((result) => {
+        //             if (result.isConfirmed) {
+        //                 if(($("#scheStartDate").val() !== "")&& ($("#scheEndDate").val() !== "") && ($("#scheTitle").val() !== "") && ($("#notes").val() !== "")){
+        //                     $("#registForm").submit();
+        //                 }else{
+        //                     Swal.fire({
+        //                         icon: 'error',
+        //                         title: '입력값을 확인해 주세요',
+        //                         text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.',
+        //                     });
+        //                 }
+        //             }
+        //         })
+        //     }
+        // })
     </script>
 </main>
 </html>

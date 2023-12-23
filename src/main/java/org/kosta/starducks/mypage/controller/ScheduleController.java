@@ -3,7 +3,8 @@ package org.kosta.starducks.mypage.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.commons.menus.MenuService;
+import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.service.EmpService;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.service.ScheduleService;
@@ -16,15 +17,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage/schedule")
+
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final EmpService empService;
     private final HttpServletRequest request;
 
     /**
@@ -59,9 +61,16 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/show")
-    public String showSchedule(Model model) {
-        ScheduleDTO scheduleDTO = new ScheduleDTO();
-        model.addAttribute("scheduleDTO", scheduleDTO);
+    public String showSchedule(Model model, Principal principal, ScheduleDTO scheduleDTO) {
+
+        Long empId = 1L;
+
+        // 유저 정보 받아오기
+        if (principal != null) {
+            empId = Long.valueOf(principal.getName());
+        }
+
+        model.addAttribute("empId", empId);
         return "mypage/schedule/schedule";
     }
 
@@ -72,14 +81,28 @@ public class ScheduleController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO, Principal principal) {
         try {
-            Schedule schedule = scheduleService.saveSchedule(scheduleDTO.toEntity());
+            if (principal == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
 
-            return ResponseEntity.ok(new ModelMapper().map(schedule, ScheduleDTO.class));
+            String empIdString = principal.getName();
+            Long empId = Long.valueOf(empIdString);
+
+            Employee employee = empService.getEmpById(empId);
+
+            ModelMapper modelMapper = new ModelMapper();
+            Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
+            schedule.setEmployee(employee);
+
+            Schedule savedSchedule = scheduleService.saveSchedule(schedule);
+            ScheduleDTO savedScheduleDTO = modelMapper.map(savedSchedule, ScheduleDTO.class);
+
+            return ResponseEntity.ok(savedScheduleDTO);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.singletonMap("error", "일정 저장 중 오류 발생 ==> " + e.getMessage()));
+            log.error("일정 저장 중 오류 발생 ==> " + e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

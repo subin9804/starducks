@@ -214,4 +214,16 @@ public class EmpService {
             .filter(emp -> !emp.isStatus()) // 퇴사한 사원 제외 (status가 true인 사람 제외)
             .collect(Collectors.groupingBy(Employee::getDept, LinkedHashMap::new, Collectors.toList()));
     }
+
+
+    /**
+     * 마이페이지 - 일정관리
+     * 직원 ID를 기반으로 직원 조회
+     *
+     * @param empId 직원 ID
+     * @return 직원 정보
+     */
+    public Employee getEmpById(Long empId) {
+        return repository.findById(empId).orElse(null);
+    }
 }

@@ -9,18 +9,18 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var modal;
 
-    function getEmpId() {
-        var empId = sessionStorage.getItem('empId');
-        return empId;
-    }
+    // empId가 현재 아직 DB에 들어가지 않음 다시 수정해라
+    // 서버 측 principal에서 empId 가져 오기
+    var empId = $('#empId').val();
 
     // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
-    function fetchShowSingleSchedule(empId) {
-        return fetch('/mypage/schedule/api/show', {
+    function fetchShowSingleSchedule() {
+
+        return fetch('/mypage/schedule/api/show?empId=' + empId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // [csrfHeaderName]: csrfToken
+                [csrfHeaderName]: csrfToken
             }
         })
             .then(function (response) {
@@ -36,6 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error("에러 발생: " + error);
                 throw error;
             });
+    }
+
+    // 일정을 캘린더에 추가하는 함수
+    function addEventsToCalendar(events) {
+        events.forEach(function (eventData) {
+            calendar.addEvent(eventData);
+        });
     }
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -60,16 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
+
         // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
         events: function (fetchInfo, successCallback, errorCallback) {
-            // 사용자의 ID를 얻어오는 함수 호출
-            var empId = getEmpId();
 
-            // 해당 사용자의 일정 정보를 가져옴
+            // 서버로부터 일정 정보를 가져옴
             fetchShowSingleSchedule(empId).then(function (data) {
                 var events = data.map(function (schedule) {
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
+                        id: schedule.empId,
                         title: schedule.scheTitle,      // 일정 제목
                         start: schedule.scheStartDate, // 시작일시
                         end: schedule.scheEndDate,     // 종료일시
@@ -107,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         modalContent.appendChild(closeButton);
         var form = document.createElement('form');
+
         /**
          * 일정명
          * @type {HTMLInputElement}
@@ -187,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var notes = notesInput.value;
 
             var data = {
+                empId: empId,
                 scheTitle: scheTitle,
                 scheStartDate: scheStartDate,
                 scheEndDate: scheEndDate,
@@ -213,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
                     var newEvent = {
+                        id: empId,
                         title: scheTitle,
                         start: scheStartDate,
                         end: scheEndDate,
@@ -229,13 +239,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
 
+
         form.appendChild(submitButton);
         modalContent.appendChild(form);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
 
-    fetchShowSingleSchedule();
+    fetchShowSingleSchedule(); // 초기 일정 로드
 
     calendar.render();
 });
