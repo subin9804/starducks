@@ -176,9 +176,9 @@
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('accessDenied')) {
                 Swal.fire({
-                    title: '접근 권한이 없습니다',
+                    title: '접근 불가',
                     text: '해당 부서 소속만 접근 가능합니다',
-                    icon: 'error',
+                    icon: 'warning',
                     confirmButtonText: '확인'
                 });
             }
