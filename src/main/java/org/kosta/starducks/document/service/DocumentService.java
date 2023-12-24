@@ -231,7 +231,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
-    public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -248,7 +248,6 @@ public class DocumentService {
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
-        Long empId = 1L; //로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
@@ -264,7 +263,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 수정 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우)
      */
-    public Document updateDocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document updateDocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //수정이므로 저장한 기존 Document 객체에 추가 저장
         Document existingDocument = documentRepository.findById(docId)
                 .orElseThrow(() -> new EntityNotFoundException("찾는 docId와 일치하는 문서 엔티티 없음 : " + docId));
@@ -294,7 +293,6 @@ public class DocumentService {
         existingDocument.setDocContent(document.getDocContent());
 
         //폼에서 저장한 데이터, 위에서 이미 set한 데이터 제외하고 set
-        Long empId = 1L; // 로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(existingDocument::setDocWriter);
         existingDocument.setDocStatus(DocStatus.PENDING_DOC);
@@ -309,7 +307,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 임시 저장 - 첫 임시저장 submit
      */
-    public Document tempDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document tempDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -331,7 +329,6 @@ public class DocumentService {
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
-        Long empId = 1L; //로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
@@ -348,7 +345,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 임시 저장 - submit 처음 아님 (임시저장 이력 있는 경우)
      */
-    public Document temp2DocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document temp2DocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //수정이므로 저장한 기존 Document 객체에 추가 저장
         Document existingDocument = documentRepository.findById(docId)
                 .orElseThrow(() -> new EntityNotFoundException("찾는 docId와 일치하는 문서 엔티티 없음 : " + docId));
@@ -369,7 +366,6 @@ public class DocumentService {
         existingDocument.setDocContent(document.getDocContent());
 
         //폼에서 저장한 데이터, 위에서 이미 set한 데이터 제외하고 set
-        Long empId = 1L; // 로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(existingDocument::setDocWriter);
         existingDocument.setDocDate(LocalDateTime.now());

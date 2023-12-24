@@ -17,11 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/document/receiveDoc")
@@ -38,9 +37,10 @@ public class ReceiveDocController {
      */
     @GetMapping
     public String docReceiveList(Model model,
+                                 Principal principal,
                                  @PageableDefault(page = 0, size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         Page<Document> documents = null;
 
@@ -76,7 +76,8 @@ public class ReceiveDocController {
     @GetMapping("/{formNameEn}/{docId}")
     public String documentDetail(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
-                                 Model model) {
+                                 Model model,
+                                 Principal principal) {
 
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
@@ -90,6 +91,10 @@ public class ReceiveDocController {
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
                 .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
 
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
+        approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId)
+                .ifPresent(approval -> model.addAttribute("iApproved", approval.getApvStatus().toString()));
+
         return "document/receiveDoc/docDetail";
     }
 
@@ -99,7 +104,8 @@ public class ReceiveDocController {
     @GetMapping("/{formNameEn}/{docId}/apv")
     public String createApv(@PathVariable(name = "formNameEn") String formNameEn,
                                  @PathVariable(name = "docId") Long docId,
-                                 Model model) {
+                                 Model model,
+                            Principal principal) {
 
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
@@ -107,7 +113,7 @@ public class ReceiveDocController {
         documentRepository.findByDocId(docId)
                 .ifPresent(document -> model.addAttribute("document", document));
 
-        Long empId = 1L; //로그인한 사원 정보
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
         approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId)
                 .ifPresent(approval -> model.addAttribute("approval", approval));
 
@@ -121,9 +127,10 @@ public class ReceiveDocController {
     public String summitApv(Approval approval,
                             @PathVariable(name = "formNameEn") String formNameEn,
                             @PathVariable(name = "docId") Long docId,
-                            Model model) {
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
-        Long empId = 1L; //로그인한 사원 정보
+                            Model model,
+                            Principal principal) {
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
         Approval existingApv = approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId).get();
         existingApv.setApvStatus(approval.getApvStatus());
         existingApv.setApvComment(approval.getApvComment());
