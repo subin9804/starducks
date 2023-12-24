@@ -121,6 +121,22 @@
     </div>
   </div>
   <script>
+<!--    연락처 형식 유효성 검사 -->
+    function validateContactNumber() {
+      const contactNumber = document.getElementById("empTel").value;
+      const regex = /^\d{3}-\d{4}-\d{4}$/;
+
+      if (!regex.test(contactNumber)) {
+        Swal.fire({
+          icon: 'error',
+          title: '연락처 형식이 올바르지 않습니다',
+          text: '예: 010-1234-5678'
+        });
+        return false;
+      }
+      return true;
+    }
+
     function sample6_execDaumPostcode() {
       new daum.Postcode({
         oncomplete: function (data) {
@@ -237,7 +253,16 @@
       return true;
     }
 
-    document.getElementById("form").onsubmit = function(event) {
+//     개인정보 수정 부분 로직~~~~
+document.getElementById("form").onsubmit = function(event) {
+  // 전화 번호 부분 유효성 체크
+  if (!validateContactNumber()) {
+    event.preventDefault(); // 유효하지 않으면 폼 제출 방지
+  }
+};
+
+    // 비밀번호 변경 부분 로직~~~~~~~~~~~~~~~~
+    document.getElementById("updatePasswordButton").onclick = function() {
       // 비밀번호 유효성 검사 수행
       const isValid = validatePassword();
       if (!isValid) {
