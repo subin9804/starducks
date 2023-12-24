@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<title layout:fragment="title">메인</title>
+<title layout:fragment="title"> 메인 </title>
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/index.css}"></link>
@@ -20,10 +20,10 @@
 
             <!-- 출퇴근 버튼 -->
             <div>
-                <form th:action="@{/mypage/attendance/startSubmitHome}" method="post" th:if="${attendance?.startTime == null}">
+                <form th:action="@{/mypage/attendance/startSubmitHome}" id="confirmStart" onsubmit="return confirmStart()" method="post" th:if="${attendance?.startTime == null}">
                     <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;출근</button>
                 </form>
-                <form th:action="@{/mypage/attendance/endSubmitHome}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                <form th:action="@{/mypage/attendance/endSubmitHome}" id="confirmEnd" onsubmit="return confirmEnd()" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
                     <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
@@ -165,7 +165,6 @@
 
         /*]]>*/
 
-
         let id = document.getElementById("apikey")
     </script>
 
@@ -184,6 +183,43 @@
                 });
             }
         });
+
+        function confirmStart() {
+            console.log('confirmStart called')
+            Swal.fire({
+            title: '출근 확인',
+            text: '출근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+            document.getElementById('confirmStart').submit();
+        }
+        })
+            return false;
+        }
+        function confirmEnd() {
+            console.log('confirmEnd called')
+            Swal.fire({
+            title: '퇴근 확인',
+            text: '퇴근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+            document.getElementById('confirmEnd').submit();
+        }
+        })
+            return false;
+        }
     </script>
 </main>
 </html>

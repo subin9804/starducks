@@ -19,5 +19,24 @@
         <th:block th:replace="~{hr/emp/_edit}"></th:block>
     </th:block>
 
+    <script>
+        function confirmAdd(storeNo) {
+            Swal.fire({
+                title: '등록 확인',
+                text: '해당 정보를 등록 하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    document.getElementById('addAlert').submit();
+                }
+            })
+            return false;
+        }
+    </script>
 </main>
 </html>
