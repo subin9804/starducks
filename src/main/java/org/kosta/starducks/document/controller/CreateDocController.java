@@ -16,11 +16,13 @@ import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpFileService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -34,6 +36,7 @@ public class CreateDocController {
     private final DocumentRepository documentRepository;
     private final DocFormRepository docFormRepository;
     private final EmpRepository empRepository;
+    private final EmpService empService;
 
     /**
      * 작성 문서 종류 리스트 페이지
@@ -50,7 +53,8 @@ public class CreateDocController {
      * 문서 작성 페이지
      */
     @GetMapping("/draft")
-    public String createDocument(Model model) {
+    public String createDocument(Principal p,
+                                 Model model) {
         String formNameEn = "draft";
 
         //라디오로 입력 받을 apvEmpId1,2
@@ -74,8 +78,8 @@ public class CreateDocController {
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
         //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
-        String empName = "홍길동"; //로그인한 사원 이름
-        model.addAttribute("empName", empName);
+        Employee emp = empService.getEmp(Long.parseLong(p.getName())); //로그인한 사원 이름
+        model.addAttribute("emp", emp);
 
         return "document/createDoc/" + formNameEn;
     }
@@ -131,6 +135,7 @@ public class CreateDocController {
     /**
      * 문서 작성 상신 처리 - 첫 submit이 상신 - /{formNameEn} 에서 진입
      */
+
     @PostMapping("/draft")
     public String submitDocument(@ModelAttribute(name = "document") Document document,
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
