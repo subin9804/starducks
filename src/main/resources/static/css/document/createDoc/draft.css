@@ -15,6 +15,8 @@
     height: 1122px;
     width: 460px;
     border-radius: 20px;
+
+    padding: 20px;
 }
 .hr {
     width: 400px;
@@ -25,7 +27,7 @@
     margin: 15px;
 }
 .input-wrap2 {
-    margin: 40px;
+    margin: 40px 20px;
 }
 .docForm-title {
     display: inline-block;
@@ -43,6 +45,9 @@
 #docTitle {
     display: inline-block;
 }
+#docContent {
+    margin: 0 auto;
+}
 
 /* 문서 미리보기 영역 */
 .urgent-sticker {
@@ -50,13 +55,14 @@
     border: 2px solid red;
     color: red;
     padding: 5px;
+    width: 58px;
 }
 .a4-box {
     position: absolute;
     top: 0;
     right: 0;
     display: inline-block;
-    border: 1px solid #c9c9c9;
+    border: 1px solid gray;
     /*width: 210mm;*/
     /*height: 297mm;*/
     width: 794.52px;
@@ -87,6 +93,7 @@ th, .col-th {
     text-align: center;
 }
 .col-th {
+    font-weight: 600;
     width: 80px;
     margin: 5px;
     padding: 5px;
@@ -102,8 +109,8 @@ td {
     position: absolute;
     top: 100px;
     right: 210px;
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     width: 110px;
     height: 140px;
 }
@@ -128,7 +135,7 @@ td {
     position: absolute;
     top: 250px;
     left: 0px;
-    width: 700px;
+    width: 715px;
     margin: 20px 0;
 }
 
@@ -136,7 +143,7 @@ td {
     position: absolute;
     top: 450px;
     left: 0px;
-    width: 700px;
+    width: 715px;
     margin: 20px 0;
 }
 
@@ -145,7 +152,7 @@ td {
     position: absolute;
     top: 890px;
     left: 0px;
-    width: 700px;
+    width: 715px;
     margin: 20px 0;
     text-align: center;
 }
@@ -153,7 +160,7 @@ td {
     position: absolute;
     top: 860px;
     left: 0px;
-    width: 700px;
+    width: 715px;
     margin: 20px 0;
 }
 .docContentOut {
@@ -228,8 +235,23 @@ td {
     border-radius: 10px;
     margin: 10px;
 }
+.searchInfo1 {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .searchEmpId, .searchEmpName {
-    /*text-align: left;*/
+    display: inline-block;
+}
+.searchInfo2 {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 0;
+}
+.searchDept, .searchRole {
+    display: inline-block;
 }
 #searchBar {
     font-size: 15px;

@@ -2,7 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
+<script>
+    //콘솔에서 onChange함수 없다고 뜸
+    function onChange(searchBar) {
+        const search = searchBar.value.toLowerCase().replace(" ", "");
+        console.log("search",search);
 
+        const searchItems = document.querySelectorAll('.searchItem');
+        searchItems.forEach((item) => {
+            const title = item.querySelector('.searchEmpName').textContent.replace(" ", "").toLowerCase();
+            const displayStyle = title.includes(search) ? 'block' : 'none';
+            item.style.display = displayStyle;
+            console.log("displayStyle",displayStyle);
+
+        });
+    }
+</script>
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
   <!-- modal을 포함시키는 부분 -->
@@ -20,12 +35,8 @@
             <div class="modal-body">
               <!-- 모달 내용 시작 -->
 
-
-
-
-
                   <div id="searchModalContainer">
-                      <input id="searchBar" type="text" th:placeholder="'사원명을 검색하세요.'" th:onchange="${onChange}" />
+                      <input id="searchBar" type="text" th:placeholder="'사원명을 검색하세요.'" oninput="onChange(this);">
                       <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
 
                       <div th:each="e : ${emps}" class="form-check">
@@ -34,11 +45,22 @@
                           <div class="searchItem">
                               <label th:for="${'refEmpIdList_' + e.empId}" class="form-check-label">
                                   <div>
-                                      <img class="searchImg" src="">
+                                      <img class="searchImg" th:src="${profiles?.get(e.empId)}">
                                       <div class="searchInfo">
-                                          <div class="searchEmpId" th:text="${e.empId}"></div>
-                                          <div class="searchEmpName" th:text="${e.empName}"></div>
-                                          <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                                          <div class="searchInfo1">
+                                              <div class="searchEmpId" th:text="${e.empId}"></div>
+                                              <div class="searchEmpName" th:text="${e.empName}"></div>
+                                          </div>
+                                          <div class="searchInfo2">
+                                              <div class="searchDept" th:text="${e.dept.deptName}"></div>
+                                              <th:block th:switch="${e.position.toString()}">
+                                                  <div th:case="ROLE_EMPLOYEE" class="searchRole">사원</div>
+                                                  <div th:case="ROLE_TEAMLEADER" class="searchRole">팀장</div>
+                                                  <div th:case="ROLE_DEPTLEADER" class="searchRole">부장</div>
+                                                  <div th:case="ROLE_BOSS" class="searchRole">사장</div>
+                                                  <div th:case="ROLE_STOREMANAGER" class="searchRole">점장</div>
+                                              </th:block>
+                                          </div>
                                       </div>
                                   </div>
                               </label>
@@ -59,4 +81,5 @@
 
   </div>
 </main>
+
 </html>

@@ -68,7 +68,7 @@ public class Employee {
 
     @PrePersist
     public void generateCmpEmail() {
-        this.cmpEmail = this.empId + "@starbucks.monster";
+        this.cmpEmail = this.empId + "@starducks.monster";
     }
 
 }

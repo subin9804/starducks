@@ -38,6 +38,7 @@
             </tr>
         </thead>
         <tbody>
+        <h4 th:if="${#lists.isEmpty(documents)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
             <tr th:each="document : ${documents}"
                 th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${document?.getDocForm().formNameEn},docId=${document?.docId})}'|">
                 <td th:text="${document?.docId}">문서번호</td>
