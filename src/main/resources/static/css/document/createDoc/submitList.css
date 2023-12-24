@@ -4,6 +4,12 @@
     height: 1000px;
     padding: 30px;
 }
+.emptyDoc {
+    position: absolute;
+    color: #c9c9c9;
+    top: 300px;
+    left: 500px;
+}
 
 /* 검색 */
 .search-div {
