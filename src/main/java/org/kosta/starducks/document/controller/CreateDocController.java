@@ -1,5 +1,6 @@
 package org.kosta.starducks.document.controller;
 
+import org.springframework.core.io.Resource;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,24 +10,26 @@ import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.RefEmpRepository;
 import org.kosta.starducks.document.service.DocumentService;
+import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpFileService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
 public class CreateDocController {
     private final DocumentService documentService;
+    private final EmpFileService fileService;
 
     private final DocumentRepository documentRepository;
     private final DocFormRepository docFormRepository;
@@ -96,9 +99,19 @@ public class CreateDocController {
         List<Long> refEmpIdList = documentService.getRefEmpIdsByDocId(docId);
         model.addAttribute("refEmpIdList", refEmpIdList);
 
-        //사원찾기에 사용될 emps
-        List<Employee> emps = empRepository.findAll();
+        //사원찾기에 사용될 emps - 재직 중인 사원만
+        List<Employee> employees = null;
+        List<Employee> emps = employees.stream().filter(item -> item.isStatus() == false).toList();
         model.addAttribute("emps", emps);
+
+        //사원찾기에 사용될 프로필 이미지
+        Map<Long, String> profiles = new HashMap();
+        for(Employee emp : emps) {
+            String profile = fileService.getFileUrl(emp.getEmpId(), "profile");
+            profiles.put(emp.getEmpId(), profile);
+            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡprofileㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+profile);
+        }
+        model.addAttribute("profiles", profiles);
 
         //기존에 저장했던 document 정보
         documentRepository.findById(docId)

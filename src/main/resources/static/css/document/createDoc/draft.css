@@ -15,6 +15,8 @@
     height: 1122px;
     width: 460px;
     border-radius: 20px;
+
+    padding: 20px;
 }
 .hr {
     width: 400px;
@@ -25,7 +27,7 @@
     margin: 15px;
 }
 .input-wrap2 {
-    margin: 40px;
+    margin: 40px 20px;
 }
 .docForm-title {
     display: inline-block;
@@ -42,6 +44,9 @@
 }
 #docTitle {
     display: inline-block;
+}
+#docContent {
+    margin: 0 auto;
 }
 
 /* 문서 미리보기 영역 */
@@ -230,8 +235,23 @@ td {
     border-radius: 10px;
     margin: 10px;
 }
+.searchInfo1 {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .searchEmpId, .searchEmpName {
-    /*text-align: left;*/
+    display: inline-block;
+}
+.searchInfo2 {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 0;
+}
+.searchDept, .searchRole {
+    display: inline-block;
 }
 #searchBar {
     font-size: 15px;
