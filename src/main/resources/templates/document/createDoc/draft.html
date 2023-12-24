@@ -200,36 +200,16 @@
     // html 하단에 넣어야 적용
     //실시간 미리보기
 
-    var docTitle = document.getElementById('docTitle');
     var docTitleOut = document.getElementById('docTitleOut');
-    // 페이지 로드 시에 기존 값 가져오기
-    var storedTitle = localStorage.getItem('docTitle');
-    if (storedTitle) {
-        docTitle.value = storedTitle;
-        docTitleOut.innerText = storedTitle;
-    }
-    // input 이벤트 리스너 추가
     docTitle.addEventListener('input', function() {
         var docTitleIn = docTitle.value;
         docTitleOut.innerText = docTitleIn;
-        // 변경된 값을 로컬 스토리지에 저장
-        localStorage.setItem('docTitle', docTitleIn);
     });
 
-    var docContent = document.getElementById('docContent');
     var docContentOut = document.getElementById('docContentOut');
-    // 페이지 로드 시에 기존 값 가져오기
-    var storedContent = localStorage.getItem('docContent');
-    if (storedContent) {
-        docContent.value = storedContent;
-        docContentOut.innerText = storedContent;
-    }
-    // input 이벤트 리스너 추가
     docContent.addEventListener('input', function() {
         var docContentIn = docContent.value;
         docContentOut.innerText = docContentIn;
-        // 변경된 값을 로컬 스토리지에 저장
-        localStorage.setItem('docContent', docContentIn);
     });
 
     // document.getElementById('urgent').addEventListener('change', function() {
