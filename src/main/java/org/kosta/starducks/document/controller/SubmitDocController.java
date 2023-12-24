@@ -2,12 +2,14 @@ package org.kosta.starducks.document.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.document.entity.AttachedFile;
 import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.forum.entity.ForumPost;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/document")
@@ -31,17 +35,21 @@ public class SubmitDocController {
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
 
+    @Value("${file.upload.path}")
+    private String fileUploadPath;
+
     /**
      * 결재 상신 리스트 페이지
      */
     @GetMapping("/submitDoc")
     public String docSubmitList(Model model,
+                                Principal principal,
                                 @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 //        List<Document> documents = documentRepository.findAll();
 //        model.addAttribute("documents", documents);
 
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 번호
 
         Page<Document> documents = null;
 
@@ -92,6 +100,12 @@ public class SubmitDocController {
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
                 .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
 
+        Document document = documentRepository.findById(docId)
+            .orElseThrow(() -> new NoSuchElementException("Document not found"));
+
+        model.addAttribute("document", document);
+        model.addAttribute("attachedFiles", document.getAttachedFiles());
+
         return "document/submitDoc/docDetail";
     }
 
@@ -100,9 +114,10 @@ public class SubmitDocController {
      */
     @GetMapping("/tempList")
     public String docTempList(Model model,
+                                Principal principal,
                                 @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 번호
 
         Page<Document> documents = null;
 

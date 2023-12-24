@@ -17,7 +17,7 @@
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
-            <form method="post" th:object="${document}">
+            <form method="post" th:action="@{/document/createDoc/draft}" th:object="${document}" enctype="multipart/form-data">
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
@@ -77,7 +77,7 @@
 
                 <div class="input-wrap">
                 첨부파일 :
-                <input type="file" multiple>
+                <input type="file" name="file" multiple>
                 </div>
 
                 <div class="hr"><hr></div>

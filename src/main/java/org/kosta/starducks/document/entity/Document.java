@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.kosta.starducks.hr.entity.Employee;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "DOCUMENT")
+@ToString(exclude = "attachedFiles") // AttachedFile 참조 제외
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +54,7 @@ public class Document {
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 //    private List<RefEmployee> refEmployee = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-//    private List<AttachedFile> attachedFile = new ArrayList<>();
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AttachedFile> attachedFiles = new ArrayList<>();
+//    private List<AttachedFile> attachedFiles = new ArrayList<>();
 }

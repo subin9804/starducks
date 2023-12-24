@@ -6,12 +6,20 @@ import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,6 +31,9 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
+
+    @Value("${file.upload.path}")
+    private String fileUploadPath;
 
     /**
      * docWriter(기안자, 문서 작성자)의 EmpId로 document 리스트 가져오기 - 결재 상신함 페이징 처리
@@ -231,7 +242,14 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
-    public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document saveDocumentAndApvAndRef(Document document, Principal principal, List<Long> apvEmpIdList, List<Long> refEmpIdList, MultipartFile[] files) {
+        List<AttachedFile> attachedFiles = saveFiles(files);
+
+        for (AttachedFile attachedFile : attachedFiles) {
+            document.getAttachedFiles().add(attachedFile);
+            attachedFile.setDocument(document);
+        }
+
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -248,7 +266,7 @@ public class DocumentService {
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
@@ -264,7 +282,14 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 수정 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우)
      */
-    public Document updateDocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document updateDocumentAndApvAndRef(Long docId, Principal principal, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList,MultipartFile[] files) {
+        List<AttachedFile> attachedFiles = saveFiles(files);
+
+        for (AttachedFile attachedFile : attachedFiles) {
+            document.getAttachedFiles().add(attachedFile);
+            attachedFile.setDocument(document);
+        }
+
         //수정이므로 저장한 기존 Document 객체에 추가 저장
         Document existingDocument = documentRepository.findById(docId)
                 .orElseThrow(() -> new EntityNotFoundException("찾는 docId와 일치하는 문서 엔티티 없음 : " + docId));
@@ -294,7 +319,7 @@ public class DocumentService {
         existingDocument.setDocContent(document.getDocContent());
 
         //폼에서 저장한 데이터, 위에서 이미 set한 데이터 제외하고 set
-        Long empId = 1L; // 로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); // 로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(existingDocument::setDocWriter);
         existingDocument.setDocStatus(DocStatus.PENDING_DOC);
@@ -309,7 +334,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 임시 저장 - 첫 임시저장 submit
      */
-    public Document tempDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document tempDocumentAndApvAndRef(Document document,Principal principal, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -331,7 +356,7 @@ public class DocumentService {
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
@@ -348,7 +373,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 임시 저장 - submit 처음 아님 (임시저장 이력 있는 경우)
      */
-    public Document temp2DocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
+    public Document temp2DocumentAndApvAndRef(Long docId, Principal principal, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList) {
         //수정이므로 저장한 기존 Document 객체에 추가 저장
         Document existingDocument = documentRepository.findById(docId)
                 .orElseThrow(() -> new EntityNotFoundException("찾는 docId와 일치하는 문서 엔티티 없음 : " + docId));
@@ -369,7 +394,7 @@ public class DocumentService {
         existingDocument.setDocContent(document.getDocContent());
 
         //폼에서 저장한 데이터, 위에서 이미 set한 데이터 제외하고 set
-        Long empId = 1L; // 로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); // 로그인한 사원 번호
         empRepository.findById(empId)
                 .ifPresent(existingDocument::setDocWriter);
         existingDocument.setDocDate(LocalDateTime.now());
@@ -421,5 +446,39 @@ public class DocumentService {
                 .orElse(Collections.emptyList());
 
         return refEmpIdList;
+    }
+
+    public List<AttachedFile> saveFiles(MultipartFile[] files) {
+        if (files == null || files.length == 0) {
+            return Collections.emptyList(); // 또는 적절한 예외 처리
+        }
+
+        List<AttachedFile> attachedFiles = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+              String originalFilename = null;
+              try {
+                originalFilename = file.getOriginalFilename();
+                String filePath = fileUploadPath + originalFilename;
+
+                // 파일 저장
+                Path path = Paths.get(filePath);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                // AttachedFile 엔티티 생성 및 저장
+                AttachedFile attachedFile = new AttachedFile();
+                attachedFile.setFileName(originalFilename);
+                attachedFile.setFilePath(filePath);
+
+                attachedFiles.add(attachedFile);
+              } catch (IOException e) {
+                // 예외 처리
+                throw new RuntimeException("Failed to store file " + originalFilename, e);
+              }
+            }
+        }
+
+        return attachedFiles;
     }
 }

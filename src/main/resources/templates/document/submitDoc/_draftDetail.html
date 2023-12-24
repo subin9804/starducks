@@ -78,9 +78,13 @@
           </tr>
         </table>
         <table class="attached-files-box">
-          <tr class="attached-files">
-            <td class="col-th">첨부파일</td>
-            <td>내용</td>
+          <tr>
+            <th class="col-th">첨부파일</th>
+          </tr>
+          <tr th:each="file : ${attachedFiles}" class="attached-files">
+            <td>
+              <a th:href="@{/document/downloadFile/{fileId}(fileId=${file.fileId})}" th:text="${file.fileName}">파일명</a>
+            </td>
           </tr>
         </table>
       </div>
