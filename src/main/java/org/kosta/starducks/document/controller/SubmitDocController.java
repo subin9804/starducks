@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -36,12 +37,13 @@ public class SubmitDocController {
      */
     @GetMapping("/submitDoc")
     public String docSubmitList(Model model,
+                                Principal principal,
                                 @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 //        List<Document> documents = documentRepository.findAll();
 //        model.addAttribute("documents", documents);
 
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         Page<Document> documents = null;
 
@@ -100,9 +102,10 @@ public class SubmitDocController {
      */
     @GetMapping("/tempList")
     public String docTempList(Model model,
+                                Principal principal,
                                 @PageableDefault(page = 0,size = 5, sort = "docId", direction = Sort.Direction.DESC) Pageable pageable,
                                 @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-        Long empId = 1L; //로그인한 사원 번호
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         Page<Document> documents = null;
 

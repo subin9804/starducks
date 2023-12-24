@@ -1,21 +1,13 @@
 package org.kosta.starducks.document.controller;
 
-import org.springframework.core.io.Resource;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.*;
-import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
-import org.kosta.starducks.document.repository.RefEmpRepository;
 import org.kosta.starducks.document.service.DocumentService;
-import org.kosta.starducks.hr.entity.EmpFile;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpFileService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -53,8 +44,7 @@ public class CreateDocController {
      * 문서 작성 페이지
      */
     @GetMapping("/draft")
-    public String createDocument(Principal p,
-                                 Model model) {
+    public String createDocument(Principal p, Model model) {
         String formNameEn = "draft";
 
         //라디오로 입력 받을 apvEmpId1,2
@@ -66,9 +56,20 @@ public class CreateDocController {
         List<Long> refEmpIdList = null;
         model.addAttribute("refEmpIdList", refEmpIdList);
 
-        //사원찾기에 사용될 emps
-        List<Employee> emps = empRepository.findAll();
+        //사원찾기에 사용될 emps - 재직 중인 사원만
+        List<Employee> emps = empRepository.findAll()
+                .stream()
+                .filter(item -> item.isStatus() == false)
+                .toList();
         model.addAttribute("emps", emps);
+
+        //사원찾기에 사용될 프로필 이미지
+        Map<Long, String> profiles = new HashMap();
+        for(Employee emp : emps) {
+            String profile = fileService.getFileUrl(emp.getEmpId(), "profile");
+            profiles.put(emp.getEmpId(), profile);
+        }
+        model.addAttribute("profiles", profiles);
 
         //입력 받을 document 객체
         model.addAttribute("document", new Document());
@@ -78,7 +79,7 @@ public class CreateDocController {
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
         //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
-        Employee emp = empService.getEmp(Long.parseLong(p.getName())); //로그인한 사원 이름
+        Employee emp = empService.getEmp(Long.parseLong(p.getName()));
         model.addAttribute("emp", emp);
 
         return "document/createDoc/" + formNameEn;
@@ -87,7 +88,7 @@ public class CreateDocController {
     /**
      * 문서 수정 페이지 (submit 이력 있는 경우 - 임시저장, 상신 모두 포함)
      */
-    @GetMapping("/{docId}")
+    @GetMapping("/draft/{docId}")
     public String updateDocument(@PathVariable(name = "docId") Long docId,
                                  Model model) {
         String formNameEn = "draft";
@@ -104,8 +105,10 @@ public class CreateDocController {
         model.addAttribute("refEmpIdList", refEmpIdList);
 
         //사원찾기에 사용될 emps - 재직 중인 사원만
-        List<Employee> employees = null;
-        List<Employee> emps = employees.stream().filter(item -> item.isStatus() == false).toList();
+        List<Employee> emps = empRepository.findAll()
+                .stream()
+                .filter(item -> item.isStatus() == false)
+                .toList();
         model.addAttribute("emps", emps);
 
         //사원찾기에 사용될 프로필 이미지
@@ -113,7 +116,6 @@ public class CreateDocController {
         for(Employee emp : emps) {
             String profile = fileService.getFileUrl(emp.getEmpId(), "profile");
             profiles.put(emp.getEmpId(), profile);
-            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡprofileㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+profile);
         }
         model.addAttribute("profiles", profiles);
 
@@ -125,9 +127,9 @@ public class CreateDocController {
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
-        String empName = "홍길동"; //로그인한 사원 이름
-        model.addAttribute("empName", empName);
+        //화면에 전달할 empName : 기안자(문서 작성자) : 저장된 docWriter
+        documentRepository.findById(docId)
+                .ifPresent(document -> model.addAttribute("emp", document.getDocWriter()));
 
         return "document/createDoc/" + formNameEn;
     }
@@ -139,14 +141,17 @@ public class CreateDocController {
     @PostMapping("/draft")
     public String submitDocument(@ModelAttribute(name = "document") Document document,
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
+                                 Principal principal,
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                  RedirectAttributes redirectAttributes) {
         String formNameEn = "draft";
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
-        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+        refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
+        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
@@ -161,14 +166,17 @@ public class CreateDocController {
     @PostMapping("/draft/{docId}")
     public String submitDocument2(@PathVariable(name = "docId") Long docId,
                                   Document document,
+                                  Principal principal,
                                   @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                   @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                   @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                   RedirectAttributes redirectAttributes) {
         String formNameEn = "draft";
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
-        documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIdList);
+        refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
+        documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("status", true);
         return "redirect:/document/submitDoc/" + formNameEn + "/" + docId;
@@ -179,14 +187,16 @@ public class CreateDocController {
      */
     @PostMapping("/temp")
     public String submitDocumentTemp(Document document,
+                                     Principal principal,
                                   @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
                                   @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
                                   @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                   RedirectAttributes redirectAttributes) {
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
-        Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+        Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
 
         String formCode = savedDoc.getDocForm().getFormCode();
 
@@ -205,16 +215,18 @@ public class CreateDocController {
      */
     @PostMapping("/temp2")
     public String submitDocumentTemp2(Document document,
+                                      Principal principal,
                                       @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
                                       @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
                                       @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                       RedirectAttributes redirectAttributes) {
+        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         Long docId = document.getDocId();
 
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
-        Document savedDoc = documentService.temp2DocumentAndApvAndRef(docId, document, apvEmpIdList, refEmpIdList);
+        Document savedDoc = documentService.temp2DocumentAndApvAndRef(docId, document, apvEmpIdList, refEmpIdList, empId);
 
         String formCode = savedDoc.getDocForm().getFormCode();
 
