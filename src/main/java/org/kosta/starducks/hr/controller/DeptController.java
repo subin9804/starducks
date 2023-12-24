@@ -106,7 +106,7 @@ public class DeptController {
             profiles.put(emp.getEmpId(), profile);
 
         }
-            model.addAttribute("profiles", profiles);
+        model.addAttribute("profiles", profiles);
 
         return "hr/dept/deptDetail";
     }

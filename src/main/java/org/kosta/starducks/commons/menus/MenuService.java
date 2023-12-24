@@ -41,8 +41,8 @@ public class MenuService {
                 menus.add(new MenuDetail("conf", "회의실 예약", "/mypage/conf"));
                 break;
             case "document":
-                menus.add(new MenuDetail("submitDoc", "결재 상신함", "/document/submitDoc"));
                 menus.add(new MenuDetail("createDoc", "결재문서 작성", "/document/createDoc"));
+                menus.add(new MenuDetail("submitDoc", "결재 상신함", "/document/submitDoc"));
                 menus.add(new MenuDetail("receiveDoc", "결재 수신함", "/document/receiveDoc"));
                 menus.add(new MenuDetail("tempList", "임시저장함", "/document/tempList"));
                 break;
