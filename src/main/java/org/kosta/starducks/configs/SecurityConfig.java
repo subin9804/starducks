@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-           //     .csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
+               .csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/login", "/forgotPwd").permitAll() // 로그인 페이지 및 비밀번호 찾기 페이지 접근 허용
                     .requestMatchers("/fina/**").hasAuthority("FINA")        // 재무부 페이지에 대한 접근 제어

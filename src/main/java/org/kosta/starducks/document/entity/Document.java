@@ -37,6 +37,8 @@ public class Document {
     private Vendor vendor;
 
 
+
+
     @Enumerated(EnumType.STRING)
     private DocStatus docStatus;
 
@@ -59,6 +61,11 @@ public class Document {
     private List<Approval> approvals = new ArrayList<>();
 
     private String refEmpIds;
+
+//
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
 
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 //    private List<RefEmployee> refEmployee = new ArrayList<>();

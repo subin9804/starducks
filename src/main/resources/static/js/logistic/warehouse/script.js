@@ -15,7 +15,8 @@ window.document.addEventListener("DOMContentLoaded", function() {
     submit.addEventListener("click", handleSubmitClick);
 
     function handleClick(e) {
-        e.preventDefault()
+        e.preventDefault();
+
         console.log("버튼 눌림")
         console.log(productSelect.value)
 
