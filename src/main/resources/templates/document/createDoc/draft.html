@@ -17,7 +17,7 @@
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
-            <form method="post" th:object="${document}">
+            <form th:action="@{/document/createDoc/draft}" method="post" th:object="${document}">
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
@@ -31,7 +31,7 @@
                     : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}"></span>
                 </div>
 
 
@@ -144,7 +144,7 @@
                 <table class="doc-info-box">
                     <tr class="approver">
                         <td class="col-th">기안자</td>
-                        <td th:text="${empName}">내용</td>
+                        <td th:text="${emp.getEmpName()}">내용</td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">소속</td>

@@ -48,7 +48,7 @@ public class COrderController {
 
         //라디오로 입력 받을 apvEmpId1,2 및 vendor
         Long apvEmpId1 = null, apvEmpId2 = null;
-        Integer selectedVendorId =null;
+        Integer selectedVendorId = null;
         model.addAttribute("apvEmpId1", apvEmpId1);
         model.addAttribute("apvEmpId2", apvEmpId2);
         model.addAttribute("selVendorId", selectedVendorId);
@@ -78,16 +78,15 @@ public class COrderController {
     }
 
 
-
     @GetMapping("/{vendorId}/products")
-    public ResponseEntity<List<Product>> getProductsByVendorId(@PathVariable int vendorId){
+    public ResponseEntity<List<Product>> getProductsByVendorId(@PathVariable int vendorId) {
         List<Product> products = productService.getProductsByVendorId(vendorId);
 
 
         return ResponseEntity.ok(products);
     }
 
-}
+
 //    /**
 //     * 문서 수정 페이지 (submit 이력 있는 경우 - 임시저장, 상신 모두 포함)
 //     */
@@ -126,27 +125,28 @@ public class COrderController {
 //        return "document/createDoc/" + formNameEn;
 //    }
 //
-//    /**
-//     * 문서 작성 상신 처리 - 첫 submit이 상신 - /{formNameEn} 에서 진입
-//     */
-//    @PostMapping("/draft")
-//    public String submitDocument(@ModelAttribute(name = "document") Document document,
-//                                 @RequestParam(name = "apvEmpId1") Long apvEmpId1,
-//                                 @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
-//                                 @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
-//                                 RedirectAttributes redirectAttributes) {
-//        String formNameEn = "draft";
-//
-//        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-//        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
-//        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
-//
-//        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
-//        redirectAttributes.addAttribute("status", true);
-//
-//        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
-//    }
-//
+
+    /**
+     * 문서 작성 상신 처리 - 첫 submit이 상신 - /{formNameEn} 에서 진입
+     */
+    @PostMapping("/orderForm")
+    public String submitDocument(@ModelAttribute(name = "document") Document document,
+                                 @RequestParam(name = "apvEmpId1") Long apvEmpId1,
+                                 @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
+                                 @RequestParam(name = "refEmpIdList") List<Long> refEmpIdList,
+                                 RedirectAttributes redirectAttributes) {
+        String formNameEn = "orderForm";
+
+        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
+        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
+        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+
+        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
+        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
+    }
+}
 //
 //    /**
 //     * 문서 작성 상신 처리 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우) - /{formNameEn}/{docId} 에서 진입
