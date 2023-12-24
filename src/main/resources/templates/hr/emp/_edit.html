@@ -32,21 +32,31 @@
 <!--                </dl>-->
                 <dl>
                     <dt>사원이름</dt>
-                    <dd><input type="text" th:field="*{empName}"></dd>
+                    <dd>
+                        <input type="text" th:field="*{empName}">
+                        <div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>연락처</dt>
-                    <dd><input type="text" th:field="*{empTel}"></dd>
+                    <dd>
+                        <input type="text" th:field="*{empTel}">
+                        <div class="error" th:each="err : ${#fields.errors('empTel')}" th:text="${err}"></div>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>이메일</dt>
-                    <dd><input type="text" th:field="*{email}"></dd>
+                    <dd>
+                        <input type="text" th:field="*{email}">
+                        <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>성별</dt>
                     <dd>
                         남 <input type="radio" name="a" value="man" th:field="*{gender}">
                         여 <input type="radio" name="a" value="woman" th:field="*{gender}">
+                        <div class="error" th:each="err : ${#fields.errors('gender')}" th:text="${err}"></div>
                     </dd>
                 </dl>
                 <dl>
@@ -69,6 +79,7 @@
                             </li>
                         </ul>
                         <input id="dept" type="hidden" th:field="*{dept}">
+                        <div class="error" th:each="err : ${#fields.errors('dept')}" th:text="${err}"></div>
                     </dd>
                 </dl>
 
@@ -88,6 +99,7 @@
                             </li>
                         </ul>
                         <input id="position" type="hidden" th:field="*{position}">
+                        <div class="error" th:each="err : ${#fields.errors('position')}" th:text="${err}"></div>
                     </dd>
                 </dl>
 
@@ -117,18 +129,9 @@
                 <dl>
                     <dt>주소</dt>
                     <dd>
-                        <!-- <input class="postNo" type="text" th:field="*{postNo}">-->
                         <div th:replace="~{hr/emp/_postNo::searchPost}"></div>
                     </dd>
                 </dl>
-<!--                <dl>-->
-<!--                    <dt>주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{addr}"> </dd>-->
-<!--                </dl>-->
-<!--                <dl>-->
-<!--                    <dt>상세주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{dAddr}"> </dd>-->
-<!--                </dl>-->
             </section>
         </div>
         <div class="btns">

@@ -135,7 +135,7 @@ input[type='checkbox'].selectbox {display: none;}
     background-color: #ddd;
 }
 
-input[name="postNo"], input[name="addr"] {
+input[name="postNo"]~div, input[name="addr"]~div {
     margin-bottom: 10px;
 }
 #searchPostBtn {
@@ -246,4 +246,10 @@ table tr:hover {
 /*부서 등록*/
 #add {
     margin-top: 20px;
+}
+
+/* 에러표시 */
+.error {
+    color: red;
+    font-size: 13px;
 }

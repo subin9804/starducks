@@ -104,6 +104,7 @@ public class EmpService {
             if(emp.getPwd() != null) {
                 newPassword = emp.getPwd();
             }
+            System.out.println("비밀번ㄴ호!!!!!!!!!!" + newPassword);
 
             String encodedPassword = passwordEncoder.encode(newPassword);
             emp.setPwd(encodedPassword);

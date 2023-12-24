@@ -326,8 +326,29 @@ document.getElementById("form").onsubmit = function(event) {
       }
     }
 
-    // 페이지 로드 시 empId 값을 확인
-    window.onload = checkEmpId;
+
+    window.onload = function() {
+      // 페이지 로드 시 empId 값을 확인
+      checkEmpId;
+
+      // 쿠키에서 showAlert 값을 가져와서 확인
+      function getCookie(name) {
+        var value = "; " + document.cookie;
+        console.log(value);
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+
+      var haveToChange = getCookie("haveToChange");
+
+      // showAlert 값이 true이면 alert 창을 띄우고 사용자에게 메시지를 보여줌
+      if (haveToChange === 'true') {
+
+        errorAlert("비밀번호를 변경해주세요!")
+        // haveToChange 값을 false로 설정하여 다음에 페이지를 로드할 때 alert를 표시하지 않도록 함
+        document.cookie = "showAlert=false; path=/";
+      }
+    };
   </script>
 </main>
 </html>
