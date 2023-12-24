@@ -13,12 +13,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var empId = $('#empId').val();
 
     // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
-    function fetchShowSingleSchedule() {
-        return fetch('/mypage/schedule/api/show?empId=' + empId, {
+    function fetchShowSingleSchedule(empId) {
+        return fetch('/mypage/schedule/api/show', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 [csrfHeaderName]: csrfToken
+            },
+            params: {
+                empId: empId
             }
         })
             .then(function (response) {
@@ -188,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitButton.textContent = '일정 등록';
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
+            var empId = empId.value;
             var scheTitle = scheTitleInput.value;
             var scheStartDate = scheStartDateInput.value;
             var scheEndDate = scheEndDateInput.value;

@@ -48,6 +48,7 @@ public class ScheduleController {
         }
 
         String empIdString = principal.getName();
+        log.info("Logged in employee ID: " + empIdString); // 이 부분을 추가
         Long empId = Long.valueOf(empIdString);
 
         List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
@@ -81,14 +82,16 @@ public class ScheduleController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<?> addSchedule(@RequestParam ScheduleDTO scheduleDTO, Principal principal) {
+    public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO, Principal principal) {
+
         try {
             if (principal == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
 
             String empIdString = principal.getName();
-            Long empId = Long.valueOf(empIdString);
+            Long empId = Long.parseLong(empIdString);
+            log.info("여기는 일정 추가 컨트롤러~!~!~!~!~!  scheduleDTO.getEmpId(): " + scheduleDTO.getEmpId()); // 이 부분을 추가
 
             Employee employee = empService.getEmpById(empId);
 

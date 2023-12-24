@@ -30,10 +30,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="modal-content" th:action="@{/mypage/schedule/add}" method="post" th:id="registForm"
+                        <form class="modal-content" th:id="registForm"
                               th:object="${scheduleDTO}">
                             <div>
-                                <input type="hidden" name="empId" id="empId">
+                                <input type="hidden" name="empId" id="empId" th:field="*{empId}">
                                 <span>일정명</span>
                                 <input type="text" name="scheTitle" id="scheTitle" placeholder="일정명을 입력해주세요" th:field="*{scheTitle}"/>
 
