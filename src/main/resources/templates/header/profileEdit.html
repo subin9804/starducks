@@ -329,7 +329,7 @@ document.getElementById("form").onsubmit = function(event) {
 
     window.onload = function() {
       // 페이지 로드 시 empId 값을 확인
-      checkEmpId;
+      checkEmpId();
 
       // 쿠키에서 showAlert 값을 가져와서 확인
       function getCookie(name) {
@@ -346,7 +346,7 @@ document.getElementById("form").onsubmit = function(event) {
 
         errorAlert("비밀번호를 변경해주세요!")
         // haveToChange 값을 false로 설정하여 다음에 페이지를 로드할 때 alert를 표시하지 않도록 함
-        document.cookie = "showAlert=false; path=/";
+        document.cookie = "haveToChange=false; path=/";
       }
     };
   </script>
