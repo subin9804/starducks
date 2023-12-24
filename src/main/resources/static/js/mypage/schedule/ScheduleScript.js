@@ -9,13 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var modal;
 
-    // empId가 현재 아직 DB에 들어가지 않음 다시 수정해라
     // 서버 측 principal에서 empId 가져 오기
     var empId = $('#empId').val();
 
     // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
     function fetchShowSingleSchedule() {
-
         return fetch('/mypage/schedule/api/show?empId=' + empId, {
             method: 'GET',
             headers: {
@@ -62,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!modal) { // 모달이 생성되지 않았을 때만 생성
                     createModal();
                 }
-                modal.style.display = 'block'; // 모달을 보이게 함
+                $('#myModal').modal('show');
+                // modal.style.display = 'block'; // 모달을 보이게 함
             }
         },
         editable: false,        // 툴바 이동 금지
@@ -72,11 +71,11 @@ document.addEventListener('DOMContentLoaded', function () {
         events: function (fetchInfo, successCallback, errorCallback) {
 
             // 서버로부터 일정 정보를 가져옴
-            fetchShowSingleSchedule(empId).then(function (data) {
+            fetchShowSingleSchedule().then(function (data) {
                 var events = data.map(function (schedule) {
                     return {
                         // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        id: schedule.empId,
+                        empId: schedule.empId,
                         title: schedule.scheTitle,      // 일정 제목
                         start: schedule.scheStartDate, // 시작일시
                         end: schedule.scheEndDate,     // 종료일시
@@ -105,85 +104,85 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.className = 'modal';
         modal.style.display = 'none'; // 초기에는 모달을 숨김
         // 모달 내용 생성
-        var modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
-        var closeButton = document.createElement('span');
-        closeButton.className = 'close';
-        closeButton.textContent = '×';
-        closeButton.addEventListener('click', function () {
-            modal.style.display = 'none'; // 닫기 버튼을 누르면 모달을 숨김
-        });
-        modalContent.appendChild(closeButton);
-        var form = document.createElement('form');
-
-        /**
-         * 일정명
-         * @type {HTMLInputElement}
-         */
-        var scheTitleLabel = document.createElement('label');
-        scheTitleLabel.textContent = '일정명';
-        var scheTitleInput = document.createElement('input');
-        scheTitleInput.setAttribute('type', 'text');
-        scheTitleInput.setAttribute('placeholder', '일정명을 입력해주세요');
-        form.appendChild(scheTitleLabel);
-        form.appendChild(scheTitleInput);
-        /**
-         * 시작일시
-         * @type {HTMLInputElement}
-         */
-        var scheStartDateLabel = document.createElement('label');
-        scheStartDateLabel.textContent = '시작일시';
-        var scheStartDateInput = document.createElement('input');
-        scheStartDateInput.setAttribute('type', 'datetime-local');
-        form.appendChild(scheStartDateInput);
-        /**
-         * 종료일시
-         * @type {HTMLLabelElement}
-         */
-        var scheEndDateLabel = document.createElement('label');
-        scheEndDateLabel.textContent = '종료일시'
-        var scheEndDateInput = document.createElement('input');
-        scheEndDateInput.setAttribute('type', 'datetime-local');
-        form.appendChild(scheEndDateInput);
-
-        /** 일정 종류
-         * - 개인일정, 공식일정 선택
-         * @type {HTMLLabelElement}
-         */
-        class ScheduleTypeEnum {
-            static get PERSONAL_SCHEDULE() {
-                return 'PERSONAL_SCHEDULE';
-            }
-
-            static get OFFICIAL_SCHEDULE() {
-                return 'OFFICIAL_SCHEDULE';
-            }
-        }
-
-        var scheduleTypeLabel = document.createElement('label');
-        scheduleTypeLabel.textContent = '일정 종류';
-        var scheduleTypeDropdown = document.createElement('select');
-        var myScheduleTypeOption = document.createElement('option');
-        myScheduleTypeOption.textContent = '개인 일정';
-        myScheduleTypeOption.value = ScheduleTypeEnum.PERSONAL_SCHEDULE; // Enum 값 설정
-        var generalScheduleOption = document.createElement('option');
-        generalScheduleOption.textContent = '공식 일정';
-        generalScheduleOption.value = ScheduleTypeEnum.OFFICIAL_SCHEDULE; // Enum 값 설정
-        scheduleTypeDropdown.appendChild(myScheduleTypeOption);
-        scheduleTypeDropdown.appendChild(generalScheduleOption);
-        form.appendChild(scheduleTypeLabel);
-        form.appendChild(scheduleTypeDropdown);
-
-        /**
-         * 참고사항
-         * @type {HTMLTextAreaElement}
-         */
-        var notesLabel = document.createElement('label');
-        notesLabel.textContent = '참고 사항';
-        var notesInput = document.createElement('textarea');
-        notesInput.setAttribute('placeholder', '참고 사항');
-        form.appendChild(notesLabel);
-        form.appendChild(notesInput);
+        // var modalContent = document.createElement('div');
+        // modalContent.className = 'modal-content';
+        // var closeButton = document.createElement('span');
+        // closeButton.className = 'close';
+        // closeButton.textContent = '×';
+        // closeButton.addEventListener('click', function () {
+        //     modal.style.display = 'none'; // 닫기 버튼을 누르면 모달을 숨김
+        // });
+        // modalContent.appendChild(closeButton);
+        // var form = document.createElement('form');
+        //
+        // /**
+        //  * 일정명
+        //  * @type {HTMLInputElement}
+        //  */
+        // var scheTitleLabel = document.createElement('label');
+        // scheTitleLabel.textContent = '일정명';
+        // var scheTitleInput = document.createElement('input');
+        // scheTitleInput.setAttribute('type', 'text');
+        // scheTitleInput.setAttribute('placeholder', '일정명을 입력해주세요');
+        // form.appendChild(scheTitleLabel);
+        // form.appendChild(scheTitleInput);
+        // /**
+        //  * 시작일시
+        //  * @type {HTMLInputElement}
+        //  */
+        // var scheStartDateLabel = document.createElement('label');
+        // scheStartDateLabel.textContent = '시작일시';
+        // var scheStartDateInput = document.createElement('input');
+        // scheStartDateInput.setAttribute('type', 'datetime-local');
+        // form.appendChild(scheStartDateInput);
+        // /**
+        //  * 종료일시
+        //  * @type {HTMLLabelElement}
+        //  */
+        // var scheEndDateLabel = document.createElement('label');
+        // scheEndDateLabel.textContent = '종료일시'
+        // var scheEndDateInput = document.createElement('input');
+        // scheEndDateInput.setAttribute('type', 'datetime-local');
+        // form.appendChild(scheEndDateInput);
+        //
+        // /** 일정 종류
+        //  * - 개인일정, 공식일정 선택
+        //  * @type {HTMLLabelElement}
+        //  */
+        // class ScheduleTypeEnum {
+        //     static get PERSONAL_SCHEDULE() {
+        //         return 'PERSONAL_SCHEDULE';
+        //     }
+        //
+        //     static get OFFICIAL_SCHEDULE() {
+        //         return 'OFFICIAL_SCHEDULE';
+        //     }
+        // }
+        //
+        // var scheduleTypeLabel = document.createElement('label');
+        // scheduleTypeLabel.textContent = '일정 종류';
+        // var scheduleTypeDropdown = document.createElement('select');
+        // var myScheduleTypeOption = document.createElement('option');
+        // myScheduleTypeOption.textContent = '개인 일정';
+        // myScheduleTypeOption.value = ScheduleTypeEnum.PERSONAL_SCHEDULE; // Enum 값 설정
+        // var generalScheduleOption = document.createElement('option');
+        // generalScheduleOption.textContent = '공식 일정';
+        // generalScheduleOption.value = ScheduleTypeEnum.OFFICIAL_SCHEDULE; // Enum 값 설정
+        // scheduleTypeDropdown.appendChild(myScheduleTypeOption);
+        // scheduleTypeDropdown.appendChild(generalScheduleOption);
+        // form.appendChild(scheduleTypeLabel);
+        // form.appendChild(scheduleTypeDropdown);
+        //
+        // /**
+        //  * 참고사항
+        //  * @type {HTMLTextAreaElement}
+        //  */
+        // var notesLabel = document.createElement('label');
+        // notesLabel.textContent = '참고 사항';
+        // var notesInput = document.createElement('textarea');
+        // notesInput.setAttribute('placeholder', '참고 사항');
+        // form.appendChild(notesLabel);
+        // form.appendChild(notesInput);
 
         var submitButton = document.createElement('button');
         submitButton.textContent = '일정 등록';
@@ -223,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
                     var newEvent = {
-                        id: empId,
+                        empId: empId,
                         title: scheTitle,
                         start: scheStartDate,
                         end: scheEndDate,
@@ -242,9 +241,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-        form.appendChild(submitButton);
-        modalContent.appendChild(form);
-        modal.appendChild(modalContent);
+        // form.appendChild(submitButton);
+        // modalContent.appendChild(form);
+        // modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
 

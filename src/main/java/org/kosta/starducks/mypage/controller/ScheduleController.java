@@ -81,7 +81,7 @@ public class ScheduleController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO, Principal principal) {
+    public ResponseEntity<?> addSchedule(@RequestParam ScheduleDTO scheduleDTO, Principal principal) {
         try {
             if (principal == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
