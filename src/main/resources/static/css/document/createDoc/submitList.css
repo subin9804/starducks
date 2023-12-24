@@ -1,12 +1,51 @@
-.top-button {
-
-}
 .page-border {
-    height: 800px;
+    position: relative;
+    width: 1380px;
+    height: 1000px;
+    padding: 30px;
 }
+.emptyDoc {
+    position: absolute;
+    color: #c9c9c9;
+    top: 300px;
+    left: 500px;
+}
+
+/* 검색 */
+.search-div {
+    height: 50px;
+    padding: 20px;
+}
+.search-keyword {
+    position: absolute;
+    display: inline-block;
+    width: 400px;
+    right: 180px;
+}
+.search-button, .listBtn {
+    position: absolute;
+    display: inline-block;
+    height: 35px;
+    border: 1px solid #6B4D27;
+    border-radius: 10px;
+    background-color: #6B4D27;
+    color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.search-button {
+    right: 115px;
+}
+.listBtn {
+    background-color: white;
+    color: #6B4D27 !important;
+    right: 20px;
+    padding: 5px;
+}
+
+/* 문서 리스트 테이블 */
 .list-table {
-    width: 1200px;
-    margin: 30px;
+    margin: auto;
+    margin-top: 40px;
 }
 .list-thead {
     border-bottom: 2px solid black;
@@ -38,48 +77,49 @@
 
 /* 페이지네이션 */
 .pagination {
-    display: flex;
-    justify-content: center;
-    list-style: none;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*list-style: none;*/
 }
 
 .pagination a,
 .pagination strong {
     padding: 5px 10px;
     margin: 0 2px;
-    border: 1px solid #ddd;
-    color: #333;
+    border: 1px solid rgba(107, 77, 39, 0.3);
+    border-radius: 5px;
+    color: rgba(107, 77, 39, 0.4) !important;
     text-decoration: none;
 }
 
 .pagination a:hover {
-    background-color: #f4f4f4;
-}
-
-.pagination .current-page,
-.pagination a:hover {
-    background-color: #f0f0f0;
-    border-color: #666;
+    background-color: rgba(107, 77, 39, 0.7) !important;
+    color: white !important;
 }
 
 /* Style for current page */
 .pagination .current-page {
-    background-color: #fff;
-    border-color: #666;
-    color: red;
+    background-color: white;
+    border-color: #6B4D27;
+    color: #6B4D27 !important;
     font-weight: bold;
 }
 
 /* Custom styles for first and last page links */
 .pagination a:first-child,
 .pagination a:last-child {
-    background-color: #ddd;
+    background-color: rgba(107, 77, 39, 0.4);
+    color: white !important;
 }
 
 /* Styles for disabled previous and next links */
 .pagination a[disabled],
 .disabled {
     color: grey;
+    background-color: #f4f4f4;
     pointer-events: none;
     cursor: default;
 }

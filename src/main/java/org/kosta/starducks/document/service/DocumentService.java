@@ -154,7 +154,7 @@ public class DocumentService {
         // 최근 10개만 추출
         documents.sort(Comparator.comparing(Document::getDocId).reversed());
         List<Document> recentReceiveDocs = documents.stream()
-                .limit(3)
+                .limit(4)
                 .collect(Collectors.toList());
 
         return recentReceiveDocs;

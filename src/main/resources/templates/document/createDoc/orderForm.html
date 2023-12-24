@@ -31,7 +31,7 @@
                     : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}"></span>
                 </div>
 
 
@@ -60,37 +60,75 @@
 
                 <div class="hr"><hr></div>
 
-
                 <div class="input-wrap">
-                참조인
-                <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
-                        data-bs-toggle="modal" data-bs-target="#selectRefEmp">
-                    사원찾기
-                </button>
-                 : <span class="selected-values" id="selectedRefs"></span>
+                    수신처
+                    <button type="button" class="btn" style="background-color:#43946f;border:none;color:white;box-shadow:0px 3px 4px rgba(0, 0, 0, 0.25);"
+                            data-bs-toggle="modal" data-bs-target="#selectVendor1">
+                        거래처찾기
+                    </button>
+                    : <span class="selected-vendors" id="selectedVendor1"></span>
+
+                <div th:insert="~{document/createDoc/_selectVendor::modal}"></div>
                 </div>
 
-                <div th:insert="~{document/createDoc/_selectRefEmp::modal}"></div>
+                <div class="input-wrap">
+                    <form id="orderForm" >
 
+                        <label for="product">품목 : </label>
+                        <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
+                        <select  id="product" name="productCode">
+                            <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
+                            <option value="">상품 선택하세요</option>
+
+                        </select>
+
+                        <label for="quantity"> 발주 수량</label>
+                        <input type="number" id="quantity" name="inboundQuantity">
+
+                        <!--            <p>가격 * 수량 <span id="result"></span></p>-->
+                        <button type="button" id="addBtn" onclick="addInList()">추가</button>
+
+
+                    </form>
+
+                </div>
+                <div>
+
+                </div>
+
+
+
+                <div class="hr"><hr></div>
+                <div class="input-wrap">
+                    <table id="orderTable">
+                        <thead>
+                        <tr>
+
+                            <th>품목명 </th>
+                            <th>발주 수량</th>
+                            <th>삭제</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="orderTableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="hr"><hr></div>
+                <div class="input-wrap">
+                납품 기한일 :
+                <input type="date" th:field="*{docDate}" >
+                </div>
 
                 <div class="hr"><hr></div>
 
 
-                <div class="input-wrap">
-                첨부파일 :
-                <input type="file" multiple>
-                </div>
+<!--                제목 : <input type="text" th:field="*{docTitle}">-->
+<!--                <textarea th:field="*{docContent}"></textarea>-->
 
-                <div class="hr"><hr></div>
-
-                <div class="input-wrap2">
-                제목 : <input type="text" th:field="*{docTitle}">
-<!--                <input type="text" th:field="*{docTitle}">-->
-                </div>
-
-                <div class="input-wrap2">
-                <textarea th:field="*{docContent}" placeholder="내용을 입력하세요."></textarea>
-                </div>
 
                 <div class="input-wrap2">
                 <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
@@ -107,7 +145,7 @@
 
     <div class="a4-box page-shadow">
         <div id="print-div">
-            <h1 class="doc-type-name">업 무 기 안 서</h1>
+            <h1 class="doc-type-name">발    주    서</h1>
             <span id="urgentDisplay"></span>
 <!--            <div class="urgent-sticker">긴급</div>-->
 
@@ -144,42 +182,100 @@
             <div class="middle-box">
                 <table class="doc-info-box">
                     <tr class="approver">
-                        <td class="col-th">기안자</td>
-                        <td th:text="${empName}">내용</td>
+                        <td class="col-th" colspan="2">발주처</td>
+                        <td colspan="2">스타덕스</td>
+                        <td class="col-th" colspan="2">전화</td>
+                        <td colspan="2">02-854-2526</td>
+                        <td class="col-th" colspan="2">담당자</td>
+                        <td th:text="${emp.getEmpName()}" colspan="2">담당자</td>
                     </tr>
                     <tr class="doc-info">
-                        <td class="col-th">소속</td>
-                        <td>내용</td>
+<!--                        수신처 선택에 따라 정보 업로드 된다.-->
+                        <td class="col-th" colspan="2">수신처</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor2"></span></td>
+                        <td class="col-th" colspan="2">전화</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor3"></span></td>
+                        <td class="col-th" colspan="2">담당자</td>
+                        <td colspan="2"><span class="selected-vendors" id="selectedVendor4"></span></td>
+                    </tr>
+                    <tr class="doc-content" >
+                        <td class="col-th" colspan="2">발주 신청일</td>
+                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>
                     </tr>
                     <tr class="doc-content">
-                        <td class="col-th">기안일</td>
-                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></td>
+                        <td class="col-th" colspan="2">납품 기한일</td>
+                        <td class="docDateOut" colspan="10"><span id="docDateOut"></span></td>
+
+
+<!--                        <td th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" colspan="10"></td>-->
                     </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">문서번호</td>
-                        <td>내용</td>
-                    </tr>
-                    <tr class="doc-content">
-                        <td class="col-th">참조인</td>
-                        <td><span class="selected-values" id="selectedRefs2"></span></td>
-                    </tr>
+<!--                    <tr class="doc-content">-->
+<!--                        <td class="col-th">문서번호</td>-->
+<!--                        <td>내용</td>-->
+<!--                    </tr>-->
+<!--                    <tr class="doc-content">-->
+<!--                        <td class="col-th">참조인</td>-->
+<!--                        <td><span class="selected-values" id="selectedRefs2"></span></td>-->
+<!--                    </tr>-->
                 </table>
+
                 <table class="doc-content-box">
-                    <tr class="approver">
-                        <td class="col-th">제목</td>
-                        <td><span id="docTitleOut"></span></td>
+
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>품목명</th>
+                        <th>단위</th>
+                        <th>단가</th>
+                        <th>수량</th>
+                        <th>합계금액</th>
                     </tr>
+                    </thead>
+                    <tbody id="realOrderForm">
+
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+
+                <table class="doc-footer-box">
+
+
+                    <tbody>
+
+
                     <tr class="doc-info">
-                        <td class="col-th">내용</td>
-                        <td class="docContentOut"><span id="docContentOut"></span></td>
+                        <td>상기와 같이 발주합니다.
+                            <br>
+                            <br>
+                            <br>
+                            <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                            <br>
+                            <br>
+                        </td>
+
                     </tr>
+
+                    </tbody>
+
                 </table>
-                <table class="attached-files-box">
-                    <tr class="attached-files">
-                        <td class="col-th">첨부파일</td>
-                        <td>내용</td>
-                    </tr>
-                </table>
+
+<!--                <table class="doc-content-box">-->
+<!--                    <tr class="approver">-->
+<!--                        <td class="col-th">제목</td>-->
+<!--                        <td><span id="docTitleOut"></span></td>-->
+<!--                    </tr>-->
+<!--                    <tr class="doc-info">-->
+<!--                        <td class="col-th">내용</td>-->
+<!--                        <td class="docContentOut"><span id="docContentOut"></span></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--                <table class="attached-files-box">-->
+<!--                    <tr class="attached-files">-->
+<!--                        <td class="col-th">첨부파일</td>-->
+<!--                        <td>내용</td>-->
+<!--                    </tr>-->
+<!--                </table>-->
             </div>
 
         </div>
@@ -192,19 +288,37 @@
         urgentSticker.style.display = this.checked ? 'block' : 'none';
     });
 
-    var docTitle = document.getElementById('docTitle');
-    var docTitleOut = document.getElementById('docTitleOut');
-    docTitle.addEventListener('input', function() {
-        var docTitleIn = docTitle.value;
-        docTitleOut.innerText = docTitleIn;
-    });
+    // var docTitle = document.getElementById('docTitle');
+    // var docTitleOut = document.getElementById('docTitleOut');
+    // docTitle.addEventListener('input', function() {
+    //     var docTitleIn = docTitle.value;
+    //     docTitleOut.innerText = docTitleIn;
+    // });
+    //
+    // var docContent = document.getElementById('docContent');
+    // var docContentOut = document.getElementById('docContentOut');
+    // docContent.addEventListener('input', function() {
+    //     var docContentIn = docContent.value;
+    //     docContentOut.innerText = docContentIn;
+    // });
 
-    var docContent = document.getElementById('docContent');
-    var docContentOut = document.getElementById('docContentOut');
-    docContent.addEventListener('input', function() {
-        var docContentIn = docContent.value;
-        docContentOut.innerText = docContentIn;
-    });
+
+    const docDate = document.getElementById('docDate');
+    const docDateOut = document.getElementById('docDateOut');
+
+
+    docDate.addEventListener('input', function() {
+        const docDateIn = docDate.value;
+        docDateOut.innerText=formatDateString(docDateIn);
+    })
+    //날짜 형식 변환 함수
+    function formatDateString(dateString){
+        const date = new Date(dateString);
+        const options = {year:'numeric', month:'long', day:'numeric'}
+        return date.toLocaleDateString('ko-KR',options)
+
+    }
+
     var urgentCheckbox = document.getElementById('urgent');
 
     // 긴급 여부를 표시할 곳
@@ -220,6 +334,143 @@
             urgentDisplay.innerHTML = '';
         }
     });
+
+
+
+    // 품목이 리스트에 추가되는 로직
+    const orderList=[];
+    let num =1;
+    function addInList() {
+
+
+        const productSelect = document.getElementById("product");
+        const quantityInput = document.getElementById("quantity");
+        const orderTableBody = document.getElementById("orderTableBody")
+        const realBody = document.getElementById("realOrderForm")
+        //선택한 product의 value와  발주 수량 가져오기
+        const productCode = productSelect.value;
+        const quantity = quantityInput.value;
+
+        // 유효성 검사
+        if (!productCode || quantity <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "품목을 선택하고 유효한 수량을 입력하세요."
+            });
+            return;
+
+        }
+
+        //선택한 product 속성 가져오기
+        let selectedOption = productSelect.options[productSelect.selectedIndex];
+        let itemName = selectedOption.getAttribute("data-name");
+        let itemPrice = selectedOption.getAttribute("data-price");
+        let itemUnit = selectedOption.getAttribute("data-unit");
+
+
+        //리스트에 행 추가
+        const orderItem = {
+
+            itemName: itemName,
+            productCode: productCode,
+            unit :itemUnit,
+            itemPrice :itemPrice,
+            quantity : quantity,
+            totalPrice : itemPrice * quantity
+        }
+        console.log(orderItem);
+
+        if(!isProductCodeInList(productCode)) {
+
+            orderList.push(orderItem);
+            //미리 보기 테이블에 새로운 행을 추가하고, 내용 입력하자.
+            let newRow = orderTableBody.insertRow();
+            newRow.id = `orderTableRow_${num}`;
+            //삭제시 두개의 테이블에서 한 번에 삭제하기 위한 행 id 설정
+           // newRow.insertCell(0).innerHTML = num;
+            newRow.insertCell(0).innerHTML = itemName;
+            newRow.insertCell(1).innerHTML = quantity;
+            newRow.insertCell(2).innerHTML = '<button type="button" onclick="deleteRow(this.parentNode.parentNode)">삭제</button>';
+
+            //진짜 발주서 발주 목록 테이블에 행을 추가하자
+            let realRow = realBody.insertRow();
+            realRow.id = `realTableRow_${num}`;
+
+            realRow.insertCell(0).innerHTML = num;
+            realRow.insertCell(1).innerHTML = itemName;
+            realRow.insertCell(2).innerHTML = itemUnit;
+            realRow.insertCell(3).innerHTML = itemPrice;
+            realRow.insertCell(4).innerHTML = quantity;
+            realRow.insertCell(5).innerHTML = itemPrice * quantity;
+
+            num++
+
+        }
+    }
+
+
+   function isProductCodeInList(productCode){
+       return orderList.some(existingItem => existingItem.productCode == productCode);
+   }
+
+    // 삭제 버튼 클릭 시 해당 행 삭제
+    function deleteRow(row) {
+
+        let rowNum = row.id.split('_')[1];
+
+        // 리스트에서 해당 행을 삭제
+       // var index = row.cells[0].innerHTML - 1;
+        var index = rowNum - 1;
+        orderList.splice(index, 1);
+
+
+        // 미리보기 테이블에서 해당 행 삭제
+        let orderTableRow = document.getElementById(`orderTableRow_${rowNum}`);
+        if (orderTableRow) {
+            orderTableRow.parentNode.removeChild(orderTableRow);
+        }
+
+        // 발주서 상에서도 해당 행 삭제
+        let realTableRow = document.getElementById(`realTableRow_${rowNum}`);
+        if (realTableRow) {
+            realTableRow.parentNode.removeChild(realTableRow);
+        }
+
+        // 숫자 업데이트
+
+        num--;
+        updateRowNumbers();
+
+    }
+
+    function updateRowNumbers() {
+
+        const orderTableBody = document.getElementById("orderTableBody");
+        const rows = orderTableBody.getElementsByTagName("tr");
+        const realBody = document.getElementById("realOrderForm");
+        const rows2 =realBody.getElementsByTagName("tr");
+
+
+
+        for (let i = 0; i < rows.length; i++) {
+            const newNum = i + 1;
+            //rows[i].cells[0].innerHTML = newNum;
+            //리스트 테이블의 순서를 재 정렬함
+            rows[i].id = `orderTableRow_${newNum}`;
+            rows[i].cells[2].innerHTML = `<button type="button" onclick="deleteRow(this.parentNode.parentNode)">삭제</button>`;
+
+            //발주서 테이블의 순서를 재 정렬함.
+            rows2[i].cells[0].innerHTML =newNum;
+            rows2[i].id = `realTableRow_${newNum}`;
+
+
+        }
+
+    }
+
+
+
+
 </script>
 </main>
 </html>
