@@ -38,8 +38,8 @@
             <td class="stamp-box">(김사장인)</td>
           </tr>
           <tr>
-            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd')}">2023/12/14</td>
-            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd')}">2023/12/14</td>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/14</td>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/14</td>
           </tr>
         </table>
       </div>
@@ -48,15 +48,15 @@
         <table class="doc-info-box">
           <tr class="approver">
             <td class="col-th">기안자</td>
-            <td th:text="${document?.docTitle}">내용</td>
+            <td th:text="${document?.docWriter?.empName}">내용</td>
           </tr>
           <tr class="doc-info">
             <td class="col-th">소속</td>
-            <td>내용</td>
+            <td th:text="${document?.docWriter?.dept?.deptName}">내용</td>
           </tr>
           <tr class="doc-content">
             <td class="col-th">기안일</td>
-            <td th:text="${#temporals.format(document?.docDate, 'yyyy. MM. dd')}"></td>
+            <td th:text="${#temporals.format(document?.docDate, 'yyyy년 MM월 dd일')}"></td>
           </tr>
           <tr class="doc-content">
             <td class="col-th">문서번호</td>

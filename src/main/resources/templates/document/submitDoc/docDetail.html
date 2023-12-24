@@ -55,14 +55,19 @@
 
       <div class="buttons">
         <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
-        <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
-          <button th:if="${document.docStatus == PENDING}" class="edit-button" type="button"
+          <button th:if="${document.docStatus == PENDING_DOC}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|">
+              목록으로</button>
+          <button th:if="${document.docStatus == TEMP_STORED}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/tempList}'|">
+              목록으로</button>
+
+          <button th:if="${document.docStatus == PENDING_DOC}" class="edit-button" type="button"
                   th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
-                  th:text="수정">수정</button>
-          <button th:if="${document.docStatus != PENDING}" class="edit-button" type="button" th:text="수정">수정</button>
+                  >수정</button>
+          <button th:if="${document.docStatus != PENDING_DOC}" class="edit-button" type="button"
+                  th:disabled="disabled">수정</button>
       </div>
 
-<!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->
+      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>
     </div>
   </div>
 </main>
