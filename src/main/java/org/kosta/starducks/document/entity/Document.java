@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +31,11 @@ public class Document {
     private LocalDateTime apvDeadline;
 
     //발주서 납품기한일
-    private LocalDateTime orderDeadline;
+    private LocalDate orderDeadline;
     //수신처
     @ManyToOne
     @JoinColumn(name ="vendor_id")
     private Vendor vendor;
-
-
 
 
     @Enumerated(EnumType.STRING)

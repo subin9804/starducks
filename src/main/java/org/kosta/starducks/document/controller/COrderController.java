@@ -20,6 +20,7 @@ import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -149,13 +151,16 @@ public class COrderController {
                                  @RequestParam(name = "selVendorId") int selVendorId,
                                  @RequestParam(name = "orderList") String orderList1,
                                  RedirectAttributes redirectAttributes) throws JsonProcessingException
-//
     {
         String formNameEn = "orderForm";
+        Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
 
         //품목 저장 메서드
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode orderListNode = objectMapper.readTree(orderList1);
+        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
+        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
+        Document savedDoc = documentService.saveDocumentAndApvAndVen(document, apvEmpIdList, selVendorId, empId);
 
         //JsonNode에서 각 항목 추출
         for(JsonNode orderItemNode :orderListNode){
@@ -163,38 +168,28 @@ public class COrderController {
             int quantity = orderItemNode.get("quantity").asInt();
 
             OrderItem orderItem = new OrderItem(productCode, quantity);
-            document.getOrderItems().add(orderItem);
+            savedDoc.getOrderItems().add(orderItem);
         }
+        
 
 
-        Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
-
-
-
-
-        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-       List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
-       Document savedDoc = documentService.saveDocumentAndApvAndVen(document, apvEmpIdList, selVendorId, empId);
-
-        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
 
 
-//        String string = savedDoc.getDocDate().toString();
-        //못가져오고 있음
 
-//
-//        "납품기한일: " +savedDoc.getOrderDeadline().toString() +
-
-        String s = "수신처 이름은?" +savedDoc.getVendor().getVendorName();
-//                +"기안일은?"+ string ;
-
-        return s;
-        //리턴되는 페이지 경로..!!!!
-        //return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
     }
 
 
+//        String string = savedDoc.getDocDate().toString();
+//      //자동으로 매핑이 안되어서 service에서 저장함.
+//        //납품기한일
+//        String string1 = savedDoc.getOrderDeadline().toString();
+//
+//        String s = "수신처 이름은?" +savedDoc.getVendor().getVendorName() +"기안일" +string +string1 ;
+//
+//        return s;
+    //리턴되는 페이지 경로..!!!!
 
 
 

@@ -94,6 +94,7 @@ public class SubmitDocController {
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
                 .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
 
+
         return "document/submitDoc/docDetail";
     }
 

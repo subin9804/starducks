@@ -283,7 +283,7 @@ public class DocumentService {
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
-        //document.setDocDate(LocalDateTime.now());
+        document.setDocDate(LocalDateTime.now());
         document.setDocStatus(DocStatus.PENDING_DOC);
         document.setApprovals(approvalList);
         Vendor byId = vendorService.findById(selVendorId);

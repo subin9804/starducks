@@ -28,10 +28,10 @@
 
                 <div class="input-wrap">
                     <span class="doc-input-lbl">기안일</span>
-                    : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" th:field="*{docDate}" th:name="docDate"></span>
+                    : <span  th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"  th:field="*{docDate}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}" th:field="*{docWriter}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}" ></span>
                 </div>
 
 
@@ -72,7 +72,6 @@
                 </div>
 
                 <div class="input-wrap">
-                    <form id="orderForm" >
 
                         <label for="product">품목 : </label>
                         <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
@@ -88,8 +87,6 @@
                         <!--            <p>가격 * 수량 <span id="result"></span></p>-->
                         <button type="button" id="addBtn" onclick="addInList()">추가</button>
 
-
-                    </form>
 
                 </div>
                 <div>
@@ -120,7 +117,7 @@
                 <div class="hr"><hr></div>
                 <div class="input-wrap">
                     납품 기한일 :
-                    <input type="date" th:field="*{docDate}" th:name="orderDeadline">
+                    <input type="date" th:field="*{orderDeadline}">
                 </div>
 
                 <div class="hr"><hr></div>
@@ -186,7 +183,7 @@
                             <td colspan="2">스타덕스</td>
                             <td class="col-th" colspan="2">전화</td>
                             <td colspan="2">02-854-2526</td>
-                            <td class="col-th" colspan="2">담당자</td>
+                            <td class="col-th" colspan="2">대표자</td>
                             <td th:text="${emp.getEmpName()}" colspan="2">담당자</td>
                         </tr>
                         <tr class="doc-info">
@@ -303,7 +300,7 @@
         // });
 
 
-        const docDate = document.getElementById('docDate');
+        const docDate = document.getElementById('orderDeadline');
         const docDateOut = document.getElementById('docDateOut');
 
 

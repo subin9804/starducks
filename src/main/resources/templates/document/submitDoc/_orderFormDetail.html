@@ -24,7 +24,7 @@
             <td class="stamp-box">(홍길동인)</td>
           </tr>
           <tr>
-            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/15</td>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">신청일</td>
           </tr>
         </table>
         <table class="approver-box">
@@ -45,44 +45,159 @@
       </div>
 
       <div class="middle-box">
-        <table class="doc-info-box">
-          <tr class="approver">
-            <td class="col-th">발주자</td>
-            <td th:text="${document?.docTitle}">내용</td>
-          </tr>
-          <tr class="doc-info">
-            <td class="col-th">소속</td>
-            <td>내용</td>
-          </tr>
-          <tr class="doc-content">
-            <td class="col-th">기안일</td>
-            <td th:text="${#temporals.format(document?.docDate, 'yyyy. MM. dd')}"></td>
-          </tr>
-          <tr class="doc-content">
-            <td class="col-th">문서번호</td>
-            <td th:text="${document?.docId}">내용</td>
-          </tr>
-          <tr class="doc-content">
-            <td class="col-th">참조인</td>
-            <td><span class="selected-values" id="selectedRefs2"></span></td>
-          </tr>
-        </table>
+      <table class="doc-info-box">
+        <tr class="approver">
+          <td class="col-th" colspan="2">발주처</td>
+          <td colspan="2">스타덕스</td>
+          <td class="col-th" colspan="2">전화</td>
+          <td colspan="2">02-854-2526</td>
+          <td class="col-th" colspan="2">담당자</td>
+          <td th:text="${document?.docWriter.empName}" colspan="2">담당자</td>
+        </tr>
+        <tr class="doc-info">
+          <!--                        수신처 선택에 따라 정보 업로드 된다.-->
+          <td class="col-th" colspan="2">수신처</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorName}"></td>
+          <td class="col-th" colspan="2">전화</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorTelephone}"></td>
+          <td class="col-th" colspan="2">대표자</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorRepreName}" ></td>
+        </tr>
+        <tr class="doc-content" >
+          <td class="col-th" colspan="2">발주 신청일</td>
+          <td th:text="${#temporals.format(document.docDate, 'yyyy년 MM월 dd일')}" colspan="10"></td>
+
+        </tr>
+        <tr class="doc-content">
+          <td class="col-th" colspan="2">납품 기한일</td>
+          <td th:text="${#temporals.format(document.orderDeadline, 'yyyy년 MM월 dd일')}" colspan="10"></td>
+        </tr>
+
+      </table>
+
+
         <table class="doc-content-box">
-          <tr class="approver">
-            <td class="col-th">제목</td>
-            <td th:text="${document?.docTitle}"></td>
+
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>품목명</th>
+            <th>단위</th>
+            <th>단가</th>
+            <th>수량</th>
+            <th>합계금액</th>
           </tr>
-          <tr class="doc-info">
-            <td class="col-th">내용</td>
-            <td class="docContentOut" th:text="${document?.docContent}"></td>
+          </thead>
+          <tbody id="realOrderForm">
+          <tr>
+            <td>1</td>
+            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
+          <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+
+          </tbody>
+          <tfoot>
+          </tfoot>
         </table>
-        <table class="attached-files-box">
-          <tr class="attached-files">
-            <td class="col-th">첨부파일</td>
-            <td>내용</td>
-          </tr>
-        </table>
+
+
+
+      <table class="doc-footer-box">
+
+
+        <tbody>
+
+
+        <tr class="doc-info">
+          <td>상기와 같이 발주합니다.
+            <br>
+            <br>
+            <br>
+            <span th:text="${#temporals.format(document.docDate, 'yyyy년 MM월 dd일')}"></span>
+            <br>
+            <br>
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
       </div>
 
     </div>
