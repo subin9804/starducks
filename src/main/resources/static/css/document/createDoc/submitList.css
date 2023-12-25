@@ -20,7 +20,7 @@
     position: absolute;
     display: inline-block;
     width: 400px;
-    right: 180px;
+    right: 190px;
 }
 .search-button, .listBtn {
     position: absolute;
@@ -33,7 +33,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 .search-button {
-    right: 115px;
+    right: 125px;
 }
 .listBtn {
     background-color: white;

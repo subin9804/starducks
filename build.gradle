@@ -68,6 +68,9 @@ dependencies {
     // 실시간 채팅 웹 소켓용 추가
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework:spring-messaging'
+
+    //json
+    implementation 'org.json:json:20210307'
 }
 
 tasks.named('bootBuildImage') {

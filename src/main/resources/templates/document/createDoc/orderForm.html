@@ -17,7 +17,7 @@
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
             <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
 
-            <form method="post" th:object="${document}">
+            <form id="order" th:action="@{/document/createDoc/orderForm}" method="post" th:object="${document}" >
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
 
@@ -28,10 +28,10 @@
 
                 <div class="input-wrap">
                 <span class="doc-input-lbl">기안일</span>
-                    : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                    : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" th:field="*{docDate}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${emp.getEmpName()}" th:field="*{docWriter}"></span>
                 </div>
 
 
@@ -136,7 +136,7 @@
                             class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
                     <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
                             class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
-                <button class="register-button"  type="submit" th:text="상신">상신</button>
+                <button class="register-button"  type="submit" th:text="상신" onclick="submitForm()">상신</button>
                 </div>
             </form>
 <!--            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>-->
@@ -370,13 +370,8 @@
 
         //리스트에 행 추가
         const orderItem = {
-
-            itemName: itemName,
-            productCode: productCode,
-            unit :itemUnit,
-            itemPrice :itemPrice,
-            quantity : quantity,
-            totalPrice : itemPrice * quantity
+            productCode: parseInt(productCode),
+            quantity : quantity
         }
         console.log(orderItem);
 
@@ -384,6 +379,8 @@
 
             orderList.push(orderItem);
             //미리 보기 테이블에 새로운 행을 추가하고, 내용 입력하자.
+
+            //숨겨진 입력 필드를 업데이트 하자 (post로 데이터 보내기 위해서)
             let newRow = orderTableBody.insertRow();
             newRow.id = `orderTableRow_${num}`;
             //삭제시 두개의 테이블에서 한 번에 삭제하기 위한 행 id 설정
@@ -466,6 +463,22 @@
 
         }
 
+    }
+
+    function submitForm(){
+        //orderList를 Json 문자열로 변환
+        const orderListData = JSON.stringify(orderList);
+
+        //orderList를 Form 데이터에 추가
+        const form = document.getElementById('order');
+        const orderListInput = document.createElement('input');
+        orderListInput.type = 'hidden';
+        orderListInput.name = 'orderList';
+        orderListInput.value = orderListData;
+        form.appendChild(orderListInput);
+        console.log(orderListData);
+
+        form.submit();
     }
 
 

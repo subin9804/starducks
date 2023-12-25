@@ -33,7 +33,7 @@
     <meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}" />
 
     <!--    title 사용 x...-->
-    <title><th:block layout:fragment="title"></th:block></title>
+    <th:block layout:fragment="title"></th:block>
 
     <!--    head 추가사항-->
     <th:block layout:fragment="addMore"></th:block>

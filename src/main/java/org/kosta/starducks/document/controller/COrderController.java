@@ -1,8 +1,15 @@
 package org.kosta.starducks.document.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.jdt.internal.compiler.problem.AbortType;
+import org.json.JSONObject;
+import org.json.simple.JSONArray;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.entity.Document;
+import org.kosta.starducks.document.entity.OrderItem;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.service.DocumentService;
@@ -20,8 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.stream.Collectors;
 import java.util.List;
 
 @Controller
@@ -48,16 +56,20 @@ public class COrderController {
 
         //라디오로 입력 받을 apvEmpId1,2 및 vendor
         Long apvEmpId1 = null, apvEmpId2 = null;
-        Integer selectedVendorId = null;
+        Integer selVendorId = null;
         model.addAttribute("apvEmpId1", apvEmpId1);
         model.addAttribute("apvEmpId2", apvEmpId2);
-        model.addAttribute("selVendorId", selectedVendorId);
+        model.addAttribute("selVendorId", selVendorId);
+
+        //여러 개의 품목과 그에 매칭되는 인풋값 입력받을 model 추가
+        //이중 리스트를 보내고 싶오..!
+
+
 
 
         //사원찾기에 사용될 emps
         List<Employee> emps = empRepository.findAll();
         model.addAttribute("emps", emps);
-
 
         //거래처 찾기에 이용될 vendors
         List<Vendor> vendors = vendorService.findAll();
@@ -130,24 +142,56 @@ public class COrderController {
      * 문서 작성 상신 처리 - 첫 submit이 상신 - /{formNameEn} 에서 진입
      */
     @PostMapping("/orderForm")
-    public String submitDocument(@ModelAttribute(name = "document") Document document,
+    public String submitDocument(Principal p,
+                                 @ModelAttribute(name = "document") Document document,
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
-                                 @RequestParam(name = "refEmpIdList") List<Long> refEmpIdList,
-                                 Principal principal,
-                                 RedirectAttributes redirectAttributes) {
-        Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
+                                 @RequestParam(name = "selVendorId") int selVendorId,
+                                 @RequestParam(name = "orderList") String orderList) throws JsonProcessingException
+//
+//                                 RedirectAttributes redirectAttributes)
+    {
         String formNameEn = "orderForm";
 
+
+
+
+        //품목 저장 메서드
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode orderListNode = objectMapper.readTree(orderList);
+
+        //JsonNode에서 각 항목 추출
+        for(JsonNode orderItemNode :orderListNode){
+            int productCode = orderItemNode.get("productCode").asInt();
+            int quantity = orderItemNode.get("quantity").asInt();
+
+            OrderItem orderItem = new OrderItem(productCode, quantity);
+            document.getOrderItems().add(orderItem);
+        }
+
+
+        Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
+
+
+        String s = "Vendor Id는" + selVendorId + "첫번째 품목 수량:";
+
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
-        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
+       List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
 
-        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
-        redirectAttributes.addAttribute("status", true);
+//        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+//
+//        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
+//        redirectAttributes.addAttribute("status", true);
 
-        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
+        return s;
+        //리턴되는 페이지 경로..!!!!
+        //return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
     }
+
+
+
+
+
 }
 //
 //    /**
