@@ -179,8 +179,8 @@ public class COrderController {
 
 
 
-//        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
-        return  s;
+        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
+//        return  s;
     }
 
 
