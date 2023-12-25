@@ -31,6 +31,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -166,18 +167,20 @@ public class COrderController {
         for(JsonNode orderItemNode :orderListNode){
             int productCode = orderItemNode.get("productCode").asInt();
             int quantity = orderItemNode.get("quantity").asInt();
+            Product product = productService.getProduct((long) productCode).get();
 
-            OrderItem orderItem = new OrderItem(productCode, quantity);
+            OrderItem orderItem = new OrderItem(product, quantity);
             savedDoc.getOrderItems().add(orderItem);
         }
-        
 
+        String s = savedDoc.getOrderItems().get(0).getProduct().getProductName();
 
         redirectAttributes.addAttribute("status", true);
 
 
 
-        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
+//        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
+        return  s;
     }
 
 

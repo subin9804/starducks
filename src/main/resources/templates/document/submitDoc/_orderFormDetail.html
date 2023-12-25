@@ -91,11 +91,18 @@
           <tbody id="realOrderForm">
           <tr>
             <td>1</td>
-            <td ></td>
+<!--            <td th:if="${not #lists.isEmpty(document.orderItems)}" th:text="${document.orderItems[0].product.productName}"></td>-->
+            <td th:if="${#lists.isEmpty(document.orderItems)}">작동?</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
+
+<!--            <td th:text="${document.getOrderItems().get(0).getProduct().getProductName()}"></td>-->
+<!--            <td th:text="${document.orderItems().get(0).product.productUnit}"></td>-->
+<!--            <td th:text="${document.orderItems.get(0).product.productPrice}"></td>-->
+<!--            <td th:text="${document.orderItems.get(0).quantity}"></td>-->
+<!--            <td th:text="${document.orderItems.get(0).quantity * document.orderItems.get(0).product.productPrice}"></td>-->
           </tr>
           <tr>
             <td>2</td>
