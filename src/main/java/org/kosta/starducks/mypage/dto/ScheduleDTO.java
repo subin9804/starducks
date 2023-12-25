@@ -20,6 +20,10 @@ public class ScheduleDTO {
     private LocalDateTime scheEndDate;
     private ScheduleType scheduleType;
     private String notes;
-    private Long empId;
+    private Long employeeId; // Employee 엔티티 대신 직원의 ID만을 저장
 
+    /** Employee 객체에서 empId를 가져오는 메서드 */
+//    public Long getEmpId() {
+//        return employee != null ? employee.getEmpId() : null;
+//    }
 }

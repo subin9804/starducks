@@ -1,0 +1,77 @@
+#addForm{
+    display: inline-block;
+    width: 100px;
+    padding:  20px 0 10px;
+    margin: 0;
+    font-weight: bold;
+}
+
+/** 모달 */
+#closeModalBtn {
+    width: auto;
+    right: 50px;
+    padding: 30px 50px 0;
+}
+
+.addModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+
+#addForm {
+    display: inline-block;
+    width: 100px;
+    padding:  20px 0 10px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.modal-content select{
+    display: inline-block;
+}
+
+.modal-content h3 {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding: 30px 40px 20px;
+}
+
+.modal-content button {
+    margin: 0 auto;
+}
+
+/* 모달이 열렸을 때 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+
+/** 캘린더 */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.fc-toolbar-chunk {
+    display : flex;
+    align-items: center;
+}
+
+#calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 80%;
+}

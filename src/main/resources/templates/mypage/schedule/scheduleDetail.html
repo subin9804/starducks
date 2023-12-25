@@ -5,7 +5,7 @@
 
 <!--여기는 헤드(메인에 없는 헤드 추가하기)-->
 <th:block layout:fragment="addMore">
-    <link rel="stylesheet" href="/css/mypage/Schedule.css" th:href="@{/css/mypage/Schedule.css}"/>
+    <link rel="stylesheet" href="/css/mypage/schedule.css" th:href="@{schedule.css}"/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <script th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
@@ -13,12 +13,11 @@
 
 <script th:if="${detailSchedule == null}" th:inline="javascript">
     /* JavaScript 코드로 alert 창 띄우기 */
-
     alert('일정을 찾지 못했습니다! 다시 확인해주세요!');
 </script>
 
 <main layout:fragment="content">
-    <h1>일정정보조회</h1>
+    <h1>일정 정보 조회</h1>
     <div id="form">
         <section>
             <section style="display: flex;">

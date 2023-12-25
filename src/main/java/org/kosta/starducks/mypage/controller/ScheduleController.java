@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.List;
@@ -30,68 +31,58 @@ public class ScheduleController {
     private final HttpServletRequest request;
 
     /**
-     * 로그인을 한 사원의 일정 조회
-     * <p>
-     * 정보를 던져주는 용도의 GetMapping
-     *
-     * @param
+     * 로그인한 사용자의 일정 정보를 가져오는 데 사용
+     * @param principal
      * @return
      */
     @GetMapping("/api/show")
     @ResponseBody
     public ResponseEntity<List<Schedule>> showSingleSchedule(Principal principal) {
-
         // 유저 정보 받아오기
         if (principal == null) {
             // 로그인되지 않은 경우 예외 처리 또는 다른 처리 방식을 선택할 수 있습니다.
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String empIdString = principal.getName();
-        log.info("Logged in employee ID: " + empIdString); // 이 부분을 추가
-        Long empId = Long.valueOf(empIdString);
+        Long empId = Long.parseLong(principal.getName());
+        log.info("누가 로그인했니!!!!!!!!! ==> " + empId);
 
         List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
+
         return ResponseEntity.ok(scheduleList);
     }
 
     /**
-     * 화면 조회를 위한 GetMapping
-     *
+     * 사용자의 일정 화면을 표시
      * @param model
+     * @param principal
      * @return
      */
     @GetMapping("/show")
-    public String showSchedule(Model model, Principal principal, ScheduleDTO scheduleDTO) {
+    public String showSchedule(Model model, Principal principal) {
 
-        Long empId = 1L;
-
-        // 유저 정보 받아오기
-        if (principal != null) {
-            empId = Long.valueOf(principal.getName());
-        }
+        Long empId = Long.parseLong(principal.getName());
 
         model.addAttribute("empId", empId);
         return "mypage/schedule/schedule";
     }
 
     /**
-     * 일정 등록하기
-     *
+     * 새로운 일정을 등록하는 데 사용
+     * JSON 형식의 데이터를 요청으로 받아 새 일정을 생성하고, 생성된 일정을 반환
      * @param scheduleDTO
+     * @param principal
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<?> addSchedule(@RequestBody ScheduleDTO scheduleDTO, Principal principal) {
-
+    public RedirectView addSchedule(@ModelAttribute ScheduleDTO scheduleDTO, Principal principal, RedirectAttributes ra) {
         try {
             if (principal == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+                return new RedirectView("/login");
             }
 
-            String empIdString = principal.getName();
-            Long empId = Long.parseLong(empIdString);
-            log.info("여기는 일정 추가 컨트롤러~!~!~!~!~!  scheduleDTO.getEmpId(): " + scheduleDTO.getEmpId()); // 이 부분을 추가
+            Long empId = Long.parseLong(principal.getName());
 
             Employee employee = empService.getEmpById(empId);
 
@@ -102,16 +93,21 @@ public class ScheduleController {
             Schedule savedSchedule = scheduleService.saveSchedule(schedule);
             ScheduleDTO savedScheduleDTO = modelMapper.map(savedSchedule, ScheduleDTO.class);
 
-            return ResponseEntity.ok(savedScheduleDTO);
+            // 리다이렉트 시에 데이터를 넘기고 싶다면 RedirectAttributes를 사용
+            ra.addFlashAttribute("message", "일정이 성공적으로 추가되었습니다.");
+
+            // 리다이렉트할 경로를 반환
+            return new RedirectView("/mypage/schedule/show");
         } catch (Exception e) {
             log.error("일정 저장 중 오류 발생 ==> " + e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            // 에러가 발생한 경우 에러 페이지로 리다이렉트 또는 다른 처리를 수행
+            return new RedirectView("/error");
         }
     }
 
     /**
-     * 새로 등록된 일정 상세 조회
-     *
+     * 새로 등록된 일정 또는 기존에 등록된 일정의 상세 정보를 조회
+     * {scheNo} 경로 변수를 통해 특정 일정을 식별하고, 해당 일정의 상세 정보를 반환
      * @param model
      * @param scheNo
      * @return
@@ -125,8 +121,7 @@ public class ScheduleController {
     }
 
     /**
-     * 기존에 등록되어 있던 일정 상세조회(DB 데이터 상세조회)
-     *
+     * 상세한 정보를 조회하는 데 사용
      * @param model
      * @param scheNo
      * @return
@@ -139,6 +134,13 @@ public class ScheduleController {
         return "mypage/schedule/scheduleDetail";
     }
 
+    /**
+     * 특정 일정을 삭제하는 데 사용
+     * {scheNo} 경로 변수를 통해 삭제할 일정을 식별하고, 삭제 후 일정 목록 화면으로 리다이렉트
+     * @param scheNo
+     * @param rttr
+     * @return
+     */
     @GetMapping("/delete/{scheNo}")
     public String deleteSchedule(@PathVariable("scheNo") Long scheNo, RedirectAttributes rttr) {
         scheduleService.deleteSchedule(scheNo, rttr);
