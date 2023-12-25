@@ -20,6 +20,7 @@
             <form th:action="@{/document/createDoc/draft}" method="post" th:object="${document}">
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
+                <input type="hidden" name="docId" th:value="${document?.docId}">
 
                 <div class="input-wrap urgent-wrap">
                     긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
@@ -101,13 +102,13 @@
                     <button th:if="${document?.docId == null}"
                             class="edit-button" type="button" onclick="return submit2(this.form);">
                         임시저장</button>
-                    <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
+                    <button th:if="${document?.docId != null && document?.docStatus?.toString() == 'TEMP_STORED'}"
                             class="edit-button" type="button" onclick="return submit3(this.form);">
                         재임시저장</button>
 
-                    <button th:if="${document?.docId == null || document.docStatus.toString() == 'TEMP_STORED'}" class="register-button" type="submit">
+                    <button th:if="${document?.docId == null || document?.docStatus?.toString() == 'TEMP_STORED'}" class="register-button" type="submit">
                         상신</button>
-                    <button th:if="${document.docStatus.toString() == 'PENDING_DOC'}"
+                    <button th:if="${document?.docStatus?.toString() == 'PENDING_DOC'}"
                             class="edit-button" type="button" onclick="return submit4(this.form);">
                         상신 수정</button>
                 </div>
@@ -156,11 +157,11 @@
                 <table class="doc-info-box">
                     <tr class="approver">
                         <td class="col-th">기안자</td>
-                        <td th:text="${emp.empName}">내용</td>
+                        <td th:text="${emp?.empName}">내용</td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">소속</td>
-                        <td th:text="${emp.dept.deptName}">내용</td>
+                        <td th:text="${emp?.dept.deptName}">내용</td>
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th">기안일</td>
@@ -238,7 +239,6 @@
             }
         });
     });
-
 </script>
 </main>
 </html>

@@ -36,7 +36,7 @@ function submit2(form) {
     return true;
 }
 function submit3(form) {
-    form.action = '/document/createDoc/temp2';
+    form.action = '/document/createDoc/tempUpdate';
     form.submit();
     return true;
 }
