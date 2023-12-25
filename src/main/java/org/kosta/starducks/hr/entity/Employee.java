@@ -56,7 +56,7 @@ public class Employee {
 
     private String pwd;     // 비밀번호
 
-
+    @NotNull
     @ToString.Exclude
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "dept_id")

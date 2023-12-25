@@ -81,9 +81,19 @@ public class EmpController {
                        @RequestParam("stamp") MultipartFile stamp) {
 
         if (result.hasErrors()) {
-            log.error("result: {}", result.getAllErrors().toString());
-
-            model.addAttribute("name", "register");
+//            log.error("result: {}", result.getAllErrors().toString());
+            if(employee.getEmpId() != null) {
+                model.addAttribute("name", "edit");
+                model.addAttribute("positions", Position.values());
+                model.addAttribute("depts", deptRepository.findAll());
+            } else {
+                // 자동으로 저장되는 사번을 미리 알려줌
+                Long id = service.getLastEmpId();
+                model.addAttribute("id", id + 1);
+                model.addAttribute("positions", Position.values());
+                model.addAttribute("depts", deptRepository.findAll());
+                model.addAttribute("name", "register");
+            }
             return "hr/emp/empWriter";
         }
 
@@ -107,7 +117,6 @@ public class EmpController {
     public String empDetail(@PathVariable("empId") Long empId, Model model) {
         Employee employee = service.getEmp(empId);
         model.addAttribute("employee", employee);
-
 
         // 파일
         String profile = fileService.getFileUrl(empId, "profile");

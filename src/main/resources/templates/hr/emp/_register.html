@@ -3,7 +3,7 @@
 
 <th:block th:fragment="register">
     <h1 th:text="사원등록"></h1>
-    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}"  enctype="multipart/form-data" autocomplete="off">
+    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
         <div class="photos">
             <div class="photo">
                 <img class="img" id="profileImg" src="#" alt="Profile Image">
@@ -26,7 +26,7 @@
                 </dl>
 <!--                <dl>-->
 <!--                    <dt>초기비밀번호</dt>-->
-                    <dd><input type="hidden" th:field="*{pwd}" name="pwd" id="pwd"></dd>
+<!--                    <dd><input type="hidden" th:field="*{pwd}" name="pwd" id="pwd"></dd>-->
 <!--                </dl>-->
                 <dl>
                     <dt>사원이름</dt>
@@ -129,21 +129,9 @@
                 <dl>
                     <dt>주소</dt>
                     <dd>
-<!--                        <input class="postNo" type="text" th:field="*{postNo}">-->
                         <div th:replace="~{hr/emp/_postNo::searchPost}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('postNo')}" th:text="${err}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('addr')}" th:text="${err}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('dAddr')}" th:text="${err}"></div>
                     </dd>
                 </dl>
-<!--                <dl>-->
-<!--                    <dt>주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{addr}"> </dd>-->
-<!--                </dl>-->
-<!--                <dl>-->
-<!--                    <dt>상세주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{dAddr}"> </dd>-->
-<!--                </dl>-->
             </section>
         </div>
         <div class="btns">
