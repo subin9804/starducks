@@ -17,7 +17,7 @@
     <script th:each="jsFile : ${addScript}" th:src="@{/commons/{file}.js(file=${file})}"></script>
     <th:block layout:fragment="addScript"></th:block>
 
-    <title><th:block layout:fragment="title"></th:block></title>
+    <th:block layout:fragment="title"></th:block>
 </head>
 <body>
 

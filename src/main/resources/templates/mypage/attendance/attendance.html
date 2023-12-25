@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--<th:block layout:fragment="title">메인 </th:block>-->
+<title layout:fragment="title">근태관리</title>
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
@@ -50,18 +50,7 @@
     </script>
 </th:block>
 
-<!--<script  src="http://code.jquery.com/jquery-latest.min.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>-->
-<!--<link-->
-<!--        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"-->
-<!--        rel="stylesheet"-->
-<!--        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"-->
-<!--        crossorigin="anonymous"-->
-<!--/>-->
-
-
 <main layout:fragment="content">
-    <button class="btn btn-primary m-2" id="alertStart">Alert 실행</button>
     <h1 class="page-title">근태관리</h1>
     <p th:text="${empId}" id="empId" class="d-none"></p>     <!-- 해당 계정의 근태 정보를 ajax로 가져오기 위함-->
     <div class="calendar-side">
@@ -74,7 +63,6 @@
                     <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
-<!--            <button class="attd-btn"  th:text="근태 기록 완료">근태 기록 완료</button>-->
             <p class="complete-attd" th:if="${attendance?.endTime != null}"><i class="fa-solid fa-circle-check"></i>&nbsp;근태 기록 완료</p>
 
             <div class="attd-time-box">
