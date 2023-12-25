@@ -147,18 +147,15 @@ public class COrderController {
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                  @RequestParam(name = "selVendorId") int selVendorId,
-                                 @RequestParam(name = "orderList") String orderList) throws JsonProcessingException
+                                 @RequestParam(name = "orderList") String orderList1,
+                                 RedirectAttributes redirectAttributes) throws JsonProcessingException
 //
-//                                 RedirectAttributes redirectAttributes)
     {
         String formNameEn = "orderForm";
 
-
-
-
         //품목 저장 메서드
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode orderListNode = objectMapper.readTree(orderList);
+        JsonNode orderListNode = objectMapper.readTree(orderList1);
 
         //JsonNode에서 각 항목 추출
         for(JsonNode orderItemNode :orderListNode){
@@ -173,15 +170,24 @@ public class COrderController {
         Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
 
 
-        String s = "Vendor Id는" + selVendorId + "첫번째 품목 수량:";
+
 
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
+       Document savedDoc = documentService.saveDocumentAndApvAndVen(document, apvEmpIdList, selVendorId, empId);
 
-//        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
+        redirectAttributes.addAttribute("status", true);
+
+
+//        String string = savedDoc.getDocDate().toString();
+        //못가져오고 있음
+
 //
-//        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
-//        redirectAttributes.addAttribute("status", true);
+//        "납품기한일: " +savedDoc.getOrderDeadline().toString() +
+
+        String s = "수신처 이름은?" +savedDoc.getVendor().getVendorName();
+//                +"기안일은?"+ string ;
 
         return s;
         //리턴되는 페이지 경로..!!!!

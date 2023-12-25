@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
+import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,7 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
+    private final VendorService vendorService;
 
     /**
      * docWriter(기안자, 문서 작성자)의 EmpId로 document 리스트 가져오기 - 결재 상신함 페이징 처리
@@ -254,6 +257,37 @@ public class DocumentService {
         document.setDocStatus(DocStatus.PENDING_DOC);
         document.setApprovals(approvalList);
         document.setRefEmpIds(refEmpIdList.toString());
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
+        Document savedDoc = documentRepository.save(document);
+
+        return savedDoc;
+    }
+
+
+    public Document saveDocumentAndApvAndVen(Document document, List<Long> apvEmpIdList, int selVendorId, Long empId) {
+        //Document에 저장할 Approval을 저장
+        List<Approval> approvalList = new ArrayList<>();
+        int i = 1;
+        for (Long apvEmpId : apvEmpIdList) {
+            Approval approval = new Approval();
+            approval.setApvStep(i++);
+            approval.setApvStatus(ApvStatus.PENDING);
+            empRepository.findById(apvEmpId)
+                    .ifPresent(approval::setApvEmp);
+            approval.setDocument(document); //안해줘도 연결되나...?
+
+            approvalList.add(approval);
+            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
+        }
+
+        //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
+        empRepository.findById(empId)
+                .ifPresent(document::setDocWriter);
+        //document.setDocDate(LocalDateTime.now());
+        document.setDocStatus(DocStatus.PENDING_DOC);
+        document.setApprovals(approvalList);
+        Vendor byId = vendorService.findById(selVendorId);
+        document.setVendor(byId);
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);
 
