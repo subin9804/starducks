@@ -244,7 +244,7 @@ public class DocumentService {
             approval.setDocument(document); //안해줘도 연결되나...?
 
             approvalList.add(approval);
-            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
+//            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
@@ -312,20 +312,23 @@ public class DocumentService {
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
         for (Long apvEmpId : apvEmpIdList) {
-            if (apvEmpId != null) { // 결재자 선택하지 않고 임시저장 한 경우
+//            if (apvEmpId != null) { // 결재자 선택하지 않고 임시저장 한 경우
                 Approval approval = new Approval();
                 approval.setApvStep(i++);
                 approval.setApvStatus(ApvStatus.PENDING);
                 empRepository.findById(apvEmpId)
-                        .ifPresent(approval::setApvEmp);
+                        .ifPresentOrElse(
+                                employee -> approval.setApvEmp(employee),
+                                () -> approval.setApvEmp(null) // 결재자 선택하지 않고 임시저장 한 경우
+                        );
                 approval.setDocument(document); //안해줘도 연결되나...?
 
                 approvalList.add(approval);
-            } else {
-                Approval approval = null;
-
-                approvalList.add(approval);
-            }
+//            } else {
+//                Approval approval = null;
+//
+//                approvalList.add(approval);
+//            }
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
@@ -343,7 +346,7 @@ public class DocumentService {
     }
 
     /**
-     * document와 자식 객체인 Approval, RefEmployee 객체 임시 저장 - submit 처음 아님 (임시저장 이력 있는 경우)
+     * document와 자식 객체인 Approval, RefEmployee 객체 재임시 저장 - submit 처음 아님 (임시저장 이력 있는 경우)
      */
     public Document temp2DocumentAndApvAndRef(Long docId, Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //수정이므로 저장한 기존 Document 객체에 추가 저장
@@ -355,7 +358,7 @@ public class DocumentService {
         int apvStep = 1;
         for (Long apvEmpId : apvEmpIdList) {
             //기존 docId & apvStep으로 저장됐던 Approval의 ApvEmp 다시 set
-            empRepository.findById(apvEmpId)
+            empRepository.findById(apvEmpId) //!!!!!!!
                     .ifPresent(existingApvList.get(apvStep - 1)::setApvEmp);
             apvStep++;
         }

@@ -38,6 +38,7 @@
                   <div id="searchModalContainer">
                       <input id="searchBar" type="text" th:placeholder="'사원명을 검색하세요.'" oninput="onChange(this);">
                       <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
+                      <div th:text="${refEmpIdList}"></div>
 
                       <div th:each="e : ${emps}" class="form-check">
                           <input type="checkbox" name="refEmpIdList" th:checked="${refEmpIdList}" th:value="${e.empId}"

@@ -20,6 +20,7 @@
             <form th:action="@{/document/createDoc/draft}" method="post" th:object="${document}">
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
+                <input type="hidden" name="docId" th:value="${document?.docId}">
 
                 <div class="input-wrap urgent-wrap">
                     긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
@@ -95,15 +96,21 @@
                     <button th:if="${document?.docId == null}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|">
                         목록으로</button>
                     <button th:if="${document?.docId != null}" class="cancel-button" type="button"
-                        th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|">
+                        th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|">
                         수정 취소</button>
 
                     <button th:if="${document?.docId == null}"
-                            class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
-                    <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
-                            class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
+                            class="edit-button" type="button" onclick="return submit2(this.form);">
+                        임시저장</button>
+                    <button th:if="${document?.docId != null && document?.docStatus?.toString() == 'TEMP_STORED'}"
+                            class="edit-button" type="button" onclick="return submit3(this.form);">
+                        재임시저장</button>
 
-                    <button class="register-button"  type="submit" th:text="상신">상신</button>
+                    <button th:if="${document?.docId == null || document?.docStatus?.toString() == 'TEMP_STORED'}" class="register-button" type="submit">
+                        상신</button>
+                    <button th:if="${document?.docStatus?.toString() == 'PENDING_DOC'}"
+                            class="edit-button" type="button" onclick="return submit4(this.form);">
+                        상신 수정</button>
                 </div>
             </form>
 <!--            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>-->
@@ -150,11 +157,11 @@
                 <table class="doc-info-box">
                     <tr class="approver">
                         <td class="col-th">기안자</td>
-                        <td th:text="${emp.getEmpName()}">내용</td>
+                        <td th:text="${emp?.empName}">내용</td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">소속</td>
-                        <td th:text="${emp.Dept.deptName}">내용</td>
+                        <td th:text="${emp?.dept.deptName}">내용</td>
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th">기안일</td>
@@ -172,11 +179,11 @@
                 <table class="doc-content-box">
                     <tr class="approver">
                         <td class="col-th">제목</td>
-                        <td><span id="docTitleOut" th:text="${document?.docTitle}"></span></td>
+                        <td><span id="docTitleOut"></span></td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">내용</td>
-                        <td class="docContentOut" th:text="${document?.docContent}"><span id="docContentOut"></span></td>
+                        <td class="docContentOut"><span id="docContentOut"></span></td>
                     </tr>
                 </table>
                 <table class="attached-files-box">
@@ -192,38 +199,45 @@
     </div>
 <script>
     // html 하단에 넣어야 적용
-    document.getElementById('urgent').addEventListener('change', function() {
-        var urgentSticker = document.getElementById('urgent-sticker');
-        urgentSticker.style.display = this.checked ? 'block' : 'none';
-    });
+    //실시간 미리보기
 
-    var docTitle = document.getElementById('docTitle');
     var docTitleOut = document.getElementById('docTitleOut');
     docTitle.addEventListener('input', function() {
         var docTitleIn = docTitle.value;
         docTitleOut.innerText = docTitleIn;
     });
 
-    var docContent = document.getElementById('docContent');
     var docContentOut = document.getElementById('docContentOut');
     docContent.addEventListener('input', function() {
         var docContentIn = docContent.value;
         docContentOut.innerText = docContentIn;
     });
-    var urgentCheckbox = document.getElementById('urgent');
 
-    // 긴급 여부를 표시할 곳
-    var urgentDisplay = document.getElementById('urgentDisplay');
+    // document.getElementById('urgent').addEventListener('change', function() {
+    //     var urgentSticker = document.getElementById('urgent-sticker');
+    //     urgentSticker.style.display = this.checked ? 'block' : 'none';
+    // });
+    document.addEventListener('DOMContentLoaded', function() {
+        var urgentCheckbox = document.getElementById('urgent');
+        var urgentDisplay = document.getElementById('urgentDisplay');
 
-    // 체크박스의 변경 이벤트 감지
-    urgentCheckbox.addEventListener('change', function() {
-        // 체크박스가 체크되어 있으면 긴급 표시
+        // 페이지 로드 시 체크박스의 상태에 따라 표시 설정
         if (urgentCheckbox.checked) {
             urgentDisplay.innerHTML = '<h4 class="urgent-sticker">긴급</h4>';
         } else {
-            // 체크가 해제되면 표시 제거
             urgentDisplay.innerHTML = '';
         }
+
+        // 체크박스의 변경 이벤트 감지
+        urgentCheckbox.addEventListener('change', function() {
+            // 체크박스가 체크되어 있으면 긴급 표시
+            if (urgentCheckbox.checked) {
+                urgentDisplay.innerHTML = '<h4 class="urgent-sticker">긴급</h4>';
+            } else {
+                // 체크가 해제되면 표시 제거
+                urgentDisplay.innerHTML = '';
+            }
+        });
     });
 </script>
 </main>
