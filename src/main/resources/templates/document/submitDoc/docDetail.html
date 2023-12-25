@@ -16,8 +16,9 @@
   <div class="page-border">
 <!--    <div class="document" th:include="${'document/submitDoc/' + formNameEn + '::document'}"></div>-->
       <div th:if="${formNameEn == 'draft'}" class="document" th:include="~{document/submitDoc/_draftDetail::document}"></div>
+      <div th:if="${formNameEn == 'orderForm'}" class="document" th:include="~{document/submitDoc/_orderFormDetail::document}"></div>
 
-    <div class="approval-state">
+      <div class="approval-state">
       <div class="avp1-wrap">
         <div class="avp1-title">
             <span>1차 결재상태 : </span>
