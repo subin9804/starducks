@@ -2,6 +2,7 @@ package org.kosta.starducks.document.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
@@ -231,6 +232,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
+    @NeedNotify
     public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
@@ -256,7 +258,6 @@ public class DocumentService {
         document.setRefEmpIds(refEmpIdList.toString());
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);
-
         return savedDoc;
     }
 

@@ -1,6 +1,7 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.notify.NotifyService;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.fina.entity.ContractStatus;
@@ -62,7 +63,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
 
-
+    private final NotifyService notifyService;
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         //배포 서버 JVM 시간 설정
