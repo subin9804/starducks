@@ -176,13 +176,8 @@ public class COrderController {
         String s = "Vendor Id는" + selVendorId + "첫번째 품목 수량:";
 
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-       //List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
+       List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
 
-
-
-//
-//        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-//        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
 //        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
 //
 //        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
