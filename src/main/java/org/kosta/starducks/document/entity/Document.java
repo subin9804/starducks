@@ -51,7 +51,6 @@ public class Document {
     @JoinColumn(name = "form_code", nullable = false)
     private DocForm docForm;
 
-    //사용하는 중인지?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_writer_id", nullable = false)
     private Employee docWriter;
@@ -61,7 +60,6 @@ public class Document {
 
     private String refEmpIds;
 
-//
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 

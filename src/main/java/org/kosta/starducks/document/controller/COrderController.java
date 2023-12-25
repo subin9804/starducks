@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jdt.internal.compiler.problem.AbortType;
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
@@ -12,6 +13,7 @@ import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.entity.OrderItem;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.document.repository.OrderItemRepository;
 import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
@@ -38,6 +40,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
+@Slf4j
 public class COrderController {
     private final DocumentService documentService;
 
@@ -47,7 +50,7 @@ public class COrderController {
     private final EmpService empService;
     private final VendorService vendorService;
     private final ProductService productService;
-
+    private final OrderItemRepository oiRepository;
 
     /**
      * 문서 작성 페이지
@@ -170,17 +173,18 @@ public class COrderController {
             Product product = productService.getProduct((long) productCode).get();
 
             OrderItem orderItem = new OrderItem(product, quantity);
+            orderItem.setDocument(document);
+            oiRepository.save(orderItem);
             savedDoc.getOrderItems().add(orderItem);
         }
 
-        String s = savedDoc.getOrderItems().get(0).getProduct().getProductName();
-
+//        String s = savedDoc.getOrderItems().get(0).getProduct().getProductName();
+//        System.out.println(s);
         redirectAttributes.addAttribute("status", true);
 
 
 
         return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
-//        return  s;
     }
 
 

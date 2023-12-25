@@ -88,96 +88,25 @@
             <th>합계금액</th>
           </tr>
           </thead>
-          <tbody id="realOrderForm">
-          <tr>
-            <td>1</td>
-<!--            <td th:if="${not #lists.isEmpty(document.orderItems)}" th:text="${document.orderItems[0].product.productName}"></td>-->
-            <td th:if="${#lists.isEmpty(document.orderItems)}">작동?</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
 
-<!--            <td th:text="${document.getOrderItems().get(0).getProduct().getProductName()}"></td>-->
-<!--            <td th:text="${document.orderItems().get(0).product.productUnit}"></td>-->
-<!--            <td th:text="${document.orderItems.get(0).product.productPrice}"></td>-->
-<!--            <td th:text="${document.orderItems.get(0).quantity}"></td>-->
-<!--            <td th:text="${document.orderItems.get(0).quantity * document.orderItems.get(0).product.productPrice}"></td>-->
+          <tbody id="realOrderForm">
+
+          <tr th:each=" o,start :${document.orderItems}">
+            <td th:text="${start.count}">1</td>
+            <td th:text="${o.product.productName}"></td>
+            <td th:text="${o.product.productUnit}"></td>
+            <td th:text="${o.product.productPrice}"></td>
+            <td th:text="${o.quantity}"></td>
+            <td th:text="${o.product.productPrice * o.quantity}"></td>
           </tr>
-          <tr>
-            <td>2</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+
+
+
+
+
 
           </tbody>
+
           <tfoot>
           </tfoot>
         </table>
