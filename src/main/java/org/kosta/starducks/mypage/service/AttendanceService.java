@@ -47,6 +47,7 @@ public class AttendanceService {
      */
     public Attendance getAttendanceForToday(Long empId) {
         LocalDate today = LocalDate.now();
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgetAttendanceForToday empIdㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+empId);
         return attendanceRepository.findByWorkDateAndEmp_EmpId(today, empId).orElse(null);
     }
 
