@@ -51,8 +51,8 @@ public class IndexController {
     // 6개의 위젯 구현
     @GetMapping("/")
     public String index(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        Long empId = userDetails != null ? userDetails.getEmployee().getEmpId() : 1L;
-
+        Long empId = Long.parseLong(userDetails.getUsername());
+//        Long empId = userDetails != null ? userDetails.getEmployee().getEmpId() : 1L;
         // 1. 근태관리
         Employee emp = empService.getEmp(empId);
         model.addAttribute("employee", emp);

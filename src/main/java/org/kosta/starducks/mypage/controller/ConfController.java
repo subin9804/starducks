@@ -32,7 +32,8 @@ public class ConfController {
     @GetMapping
     public String index(Model model, Principal principal) {
 
-        Long empId = 1L;
+//        Long empId = 1L;
+        Long empId = Long.parseLong(principal.getName());
 
         // 유저 정보 받아오기
         if(principal != null) {

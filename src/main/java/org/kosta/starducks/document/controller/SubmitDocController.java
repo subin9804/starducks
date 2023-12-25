@@ -89,7 +89,7 @@ public class SubmitDocController {
                 .ifPresent(document -> model.addAttribute("document", document));
 
         approvalRepository.findByApvStepAndDocument_DocId(1, docId)
-                .ifPresent(apv1 -> model.addAttribute("apv1", apv1));
+                .ifPresent(apv1 -> model.addAttribute("apv1", apv1));//!!!!!!!!!
 
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
                 .ifPresent(apv2 -> model.addAttribute("apv2", apv2));

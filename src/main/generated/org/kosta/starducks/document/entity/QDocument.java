@@ -44,9 +44,15 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final org.kosta.starducks.hr.entity.QEmployee docWriter;
 
+    public final DateTimePath<java.time.LocalDateTime> orderDeadline = createDateTime("orderDeadline", java.time.LocalDateTime.class);
+
+    public final ListPath<OrderItem, QOrderItem> orderItems = this.<OrderItem, QOrderItem>createList("orderItems", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
+
     public final StringPath refEmpIds = createString("refEmpIds");
 
     public final BooleanPath urgent = createBoolean("urgent");
+
+    public final org.kosta.starducks.generalAffairs.entity.QVendor vendor;
 
     public QDocument(String variable) {
         this(Document.class, forVariable(variable), INITS);
@@ -68,6 +74,7 @@ public class QDocument extends EntityPathBase<Document> {
         super(type, metadata, inits);
         this.docForm = inits.isInitialized("docForm") ? new QDocForm(forProperty("docForm")) : null;
         this.docWriter = inits.isInitialized("docWriter") ? new org.kosta.starducks.hr.entity.QEmployee(forProperty("docWriter"), inits.get("docWriter")) : null;
+        this.vendor = inits.isInitialized("vendor") ? new org.kosta.starducks.generalAffairs.entity.QVendor(forProperty("vendor")) : null;
     }
 
 }

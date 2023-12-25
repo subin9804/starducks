@@ -98,6 +98,7 @@ public class CreateDocController {
         int i = 1;
         for (Long apvEmpId : apvEmpIdList) {
             model.addAttribute("apvEmpId" + i, apvEmpId);
+            i++;
         }
 
         //기존에 선택했던 refEmpIdList 멀티 체크박스 정보
@@ -151,6 +152,7 @@ public class CreateDocController {
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
         Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
@@ -163,9 +165,9 @@ public class CreateDocController {
     /**
      * 문서 작성 상신 처리 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우) - /{formNameEn}/{docId} 에서 진입
      */
-    @PostMapping("/draft/{docId}")
-    public String submitDocument2(@PathVariable(name = "docId") Long docId,
-                                  Document document,
+    @PostMapping("/update")
+    public String updateDocument(@RequestParam(name = "docId") Long docId,
+                                  @ModelAttribute(name = "document") Document document,
                                   Principal principal,
                                   @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                   @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
@@ -176,6 +178,7 @@ public class CreateDocController {
 
         List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡupdate refEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
         documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("status", true);
@@ -186,23 +189,18 @@ public class CreateDocController {
      * 문서 작성 임시 저장 처리 - 첫 submit이 임시저장 - /{formNameEn} 에서 진입
      */
     @PostMapping("/temp")
-    public String submitDocumentTemp(Document document,
+    public String submitDocumentTemp(@ModelAttribute(name = "document") Document document,
                                      Principal principal,
                                   @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
                                   @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
                                   @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                   RedirectAttributes redirectAttributes) {
+        String formNameEn = "draft";
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
         Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
-
-        String formCode = savedDoc.getDocForm().getFormCode();
-
-        String formNameEn = docFormRepository.findByFormCode(formCode)
-                .map(DocForm::getFormNameEn)
-                .orElse(null);
 
         Long docId = savedDoc.getDocId();
 
@@ -213,8 +211,9 @@ public class CreateDocController {
     /**
      * 문서 작성 임시 저장 처리 - 임시저장 submit 처음 아님 - /{formNameEn}/{docId} 에서 진입
      */
-    @PostMapping("/temp2")
-    public String submitDocumentTemp2(Document document,
+    @PostMapping("/tempUpdate")
+    public String updateDocumentTemp(@RequestParam(name = "docId") Long docId,
+                                      @ModelAttribute(name = "document") Document document,
                                       Principal principal,
                                       @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
                                       @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
@@ -222,17 +221,11 @@ public class CreateDocController {
                                       RedirectAttributes redirectAttributes) {
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
-        Long docId = document.getDocId();
-
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
         Document savedDoc = documentService.temp2DocumentAndApvAndRef(docId, document, apvEmpIdList, refEmpIdList, empId);
 
-        String formCode = savedDoc.getDocForm().getFormCode();
-
-        String formNameEn = docFormRepository.findByFormCode(formCode)
-                .map(DocForm::getFormNameEn)
-                .orElse(null);
+        String formNameEn = savedDoc.getDocForm().getFormNameEn();
 
         redirectAttributes.addAttribute("tmpStatus2", true);
         return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
