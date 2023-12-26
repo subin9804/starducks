@@ -88,7 +88,7 @@
         <div class="head">
             <input class="" type="radio" id="general" name="nav" aria-controls="flush-general"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('general')} ? true">
-            <label for="general"><a th:href="@{/general/products/list}">총무부</a></label>
+            <label for="general"><a th:href="@{/general/products/list}"><i class="fa-regular fa-calendar-check"></i> 총무부</a></label>
         </div>
         <ul id="flush-general"
             th:style="${@menu.getMenu() == null || !@menu.getMenu().equals('general')}? 'display: none;'">
