@@ -47,6 +47,15 @@ function submit4(form) {
     return true;
 }
 
+//발주서 임시저장 처리
+function submit22(form) {
+
+    form.action = '/document/createDoc/orderFrom/temp';
+    form.submit();
+    return true;
+}
+
+
 //문서 미리보기 실시간
 function displaySelectedApv1(element) {
     var selectedEmpName = element.nextElementSibling.querySelector('.searchEmpName').innerText;

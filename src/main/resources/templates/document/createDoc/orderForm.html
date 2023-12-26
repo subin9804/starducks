@@ -130,7 +130,7 @@
                 <div class="input-wrap2">
                     <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
                     <button th:if="${document?.docId == null}"
-                            class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
+                            class="edit-button" type="button" onclick="return submit22(this.form);">임시저장</button>
                     <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
                             class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
                     <button class="register-button"  type="submit" th:text="상신" onclick="submitForm()">상신</button>
