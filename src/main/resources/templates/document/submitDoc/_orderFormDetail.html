@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<!-- 메인 콘텐츠 영역 -->
+<main layout:fragment="content">
+  <!-- _draftDetail.html -->
+  <div class="document" th:fragment="document">
+  <div class="a4-box page-shadow">
+    <div id="print-div">
+      <h1 class="doc-type-name">발    주    서</h1>
+      <h4 th:if="${document?.urgent}" class="urgent-sticker">긴급</h4>
+      <span id="urgentDisplay"></span>
+      <!--            <div class="urgent-sticker">긴급</div>-->
+
+      <div class="top-box">
+        <table class="drafter-box">
+          <tr>
+            <th rowspan="3">신청</th>
+            <th>사원</th>
+          </tr>
+          <tr>
+            <td class="stamp-box">(홍길동인)</td>
+          </tr>
+          <tr>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">신청일</td>
+          </tr>
+        </table>
+        <table class="approver-box">
+          <tr>
+            <th rowspan="3">승인</th>
+            <th>직급</th>
+            <th>직급</th>
+          </tr>
+          <tr>
+            <td class="stamp-box">(김팀장인)</td>
+            <td class="stamp-box">(김사장인)</td>
+          </tr>
+          <tr>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd')}">2023/12/14</td>
+            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy.MM.dd')}">2023/12/14</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="middle-box">
+      <table class="doc-info-box">
+        <tr class="approver">
+          <td class="col-th" colspan="2">발주처</td>
+          <td colspan="2">스타덕스</td>
+          <td class="col-th" colspan="2">전화</td>
+          <td colspan="2">02-854-2526</td>
+          <td class="col-th" colspan="2">담당자</td>
+          <td th:text="${document?.docWriter.empName}" colspan="2">담당자</td>
+        </tr>
+        <tr class="doc-info">
+          <!--                        수신처 선택에 따라 정보 업로드 된다.-->
+          <td class="col-th" colspan="2">수신처</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorName}"></td>
+          <td class="col-th" colspan="2">전화</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorTelephone}"></td>
+          <td class="col-th" colspan="2">대표자</td>
+          <td colspan="2" th:text="${document?.getVendor().vendorRepreName}" ></td>
+        </tr>
+        <tr class="doc-content" >
+          <td class="col-th" colspan="2">발주 신청일</td>
+          <td th:text="${#temporals.format(document.docDate, 'yyyy년 MM월 dd일')}" colspan="10"></td>
+
+        </tr>
+        <tr class="doc-content">
+          <td class="col-th" colspan="2">납품 기한일</td>
+          <td th:text="${#temporals.format(document.orderDeadline, 'yyyy년 MM월 dd일')}" colspan="10"></td>
+        </tr>
+
+      </table>
+
+
+        <table class="doc-content-box">
+
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>품목명</th>
+            <th>단위</th>
+            <th>단가</th>
+            <th>수량</th>
+            <th>합계금액</th>
+          </tr>
+          </thead>
+
+          <tbody id="realOrderForm">
+
+          <tr th:each=" o,start :${document.orderItems}">
+            <td th:text="${start.count}">1</td>
+            <td th:text="${o.product.productName}"></td>
+            <td th:text="${o.product.productUnit}"></td>
+            <td th:text="${o.product.productPrice}"></td>
+            <td th:text="${o.quantity}"></td>
+            <td th:text="${o.product.productPrice * o.quantity}"></td>
+          </tr>
+
+
+
+
+
+
+          </tbody>
+
+          <tfoot>
+          </tfoot>
+        </table>
+
+
+
+      <table class="doc-footer-box">
+
+
+        <tbody>
+
+
+        <tr class="doc-info">
+          <td>상기와 같이 발주합니다.
+            <br>
+            <br>
+            <br>
+            <span th:text="${#temporals.format(document.docDate, 'yyyy년 MM월 dd일')}"></span>
+            <br>
+            <br>
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  </div>
+  </div>
+</main>
+</html>

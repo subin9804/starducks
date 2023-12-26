@@ -23,16 +23,6 @@ public class CustomUserDetails implements UserDetails {
     this.employee = employee;
   }
 
-//  @Override
-//  public Collection<? extends GrantedAuthority> getAuthorities() {
-//
-//    Collection<GrantedAuthority> collection = new ArrayList<>();
-//
-//    collection.add((GrantedAuthority) () -> String.valueOf(employee.getPosition()));
-//    collection.add((GrantedAuthority) () -> employee.getDept().getDeptName());
-//
-//    return collection;
-//  }
 @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {
   Collection<GrantedAuthority> authorities = new ArrayList<>();

@@ -47,6 +47,7 @@ public class AttendanceService {
      */
     public Attendance getAttendanceForToday(Long empId) {
         LocalDate today = LocalDate.now();
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgetAttendanceForToday empIdㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+empId);
         return attendanceRepository.findByWorkDateAndEmp_EmpId(today, empId).orElse(null);
     }
 
@@ -57,11 +58,6 @@ public class AttendanceService {
         LocalDate firstDay = YearMonth.now().atDay(1);
         LocalDate lastDay = YearMonth.now().atEndOfMonth();
         return attendanceRepository.findByWorkDateBetweenAndEmp_EmpId(firstDay, lastDay, empId);
-    }
-
-
-    public List<Attendance> getAllAttendance(){
-        return attendanceRepository.findAll();
     }
 
     /**
@@ -89,8 +85,6 @@ public class AttendanceService {
             attendanceRepository.save(existAttendance);
         }
     }
-
-
 
     /**
      * 출근일 반환 함수

@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<title layout:fragment="title">메인</title>
+<title layout:fragment="title"> 메인 </title>
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/index.css}"></link>
@@ -20,18 +20,19 @@
 
             <!-- 출퇴근 버튼 -->
             <div>
-                <form th:action="@{/mypage/attendance/startSubmit}" method="post" th:if="${attendance?.startTime == null}">
-                    <button class="attd-btn" type="submit" th:text="출근">출근</button>
+                <form th:action="@{/mypage/attendance/startSubmitHome}" id="confirmStart" onsubmit="return confirmStart()" method="post" th:if="${attendance?.startTime == null}">
+                    <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;출근</button>
                 </form>
-                <form th:action="@{/mypage/attendance/endSubmit}" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
-                    <button class="attd-btn" type="submit" th:text="퇴근">퇴근</button>
+                <form th:action="@{/mypage/attendance/endSubmitHome}" id="confirmEnd" onsubmit="return confirmEnd()" method="post" th:if="${attendance?.startTime != null && attendance?.endTime == null}">
+                    <button class="attd-btn" type="submit"><i class="fa-solid fa-circle-check"></i>&nbsp;퇴근</button>
                 </form>
             </div>
+            <p class="complete-attd" th:if="${attendance?.endTime != null}"><i class="fa-solid fa-circle-check"></i>&nbsp;근태 기록 완료</p>
 
             <!-- 출퇴근 기록 -->
             <div>
-                <span>출근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
-                <span>퇴근&ensp;|&ensp;</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
+                <span>출근&ensp;|</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.startTime, 'HH:mm')}"></span>
+                <span>퇴근&ensp;|</span><span type="text" th:if="${attendance != null}" th:text="${#temporals.format(attendance?.endTime, 'HH:mm')}"></span>
             </div>
 
             <hr/>
@@ -155,7 +156,7 @@
             </table>
         </section>
     </div>
-
+<p id="apikey" style="display: none">[[${apiKey}]]</p>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -163,7 +164,62 @@
         let API_KEY = /*[[${apiKey}]]*/ '';
 
         /*]]>*/
+
+        let id = document.getElementById("apikey")
     </script>
 
+<!--    페이지 접근 거부 됐을 때 뜨는 알림창 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // URL에서 'accessDenied' 파라미터 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('accessDenied')) {
+                Swal.fire({
+                    title: '접근 불가',
+                    text: '해당 부서 소속만 접근 가능합니다',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
+            }
+        });
+
+        function confirmStart() {
+            console.log('confirmStart called')
+            Swal.fire({
+            title: '출근 확인',
+            text: '출근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+            document.getElementById('confirmStart').submit();
+        }
+        })
+            return false;
+        }
+        function confirmEnd() {
+            console.log('confirmEnd called')
+            Swal.fire({
+            title: '퇴근 확인',
+            text: '퇴근 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+            document.getElementById('confirmEnd').submit();
+        }
+        })
+            return false;
+        }
+    </script>
 </main>
 </html>

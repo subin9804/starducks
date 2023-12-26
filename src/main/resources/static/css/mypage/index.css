@@ -21,19 +21,33 @@ h4 {
     width: 450px;
     padding: 20px 40px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
-
+.attd-btn, .complete-attd {
+    height: 50px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin: auto;
+    /*margin: 20px 30px;*/
+}
 .attd-btn {
     width: 100px;
-    height: 50px;
     background-color: #6B4D27;
-    /*border: none;*/
-    color: #ffffff;
-    border-radius: 20px;
-    margin: auto
+}
+.complete-attd {
+    width: 150px;
+    background-color: #c9c9c9;
+    text-align: center;
+    padding: 15px;
 }
 .attd-btn:hover {
-     cursor: pointer;
+    cursor: pointer;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+}
+.fa-circle-check {
+    color: #A3C614;
 }
 #firstCol{grid-area: first; height: 100%;}
 #secondCol{grid-area: second; height: 100%;}
@@ -60,7 +74,8 @@ h4 {
     color: #fff;
     width: 50px;
     padding: 5px 0;
-    border-radius: 15px;
+    border-radius: 13px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 #profile-box {
     border-top: 5px solid #ddd;

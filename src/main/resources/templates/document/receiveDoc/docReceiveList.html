@@ -12,20 +12,20 @@
 
 <main layout:fragment="content">
     <h1 class="page-title">결재 수신함</h1>
-
-    <!-- 전체 글 보기 링크 -->
-    <div class="forum-header">
-        <div class="view-all-posts">
-            <a class="listBtn" href="/document/receiveDoc" th:href="@{/document/receiveDoc}">전체 글 보기</a>
-        </div>
-        <!-- 검색창. 제목 + 내용 검색 가능 -->
-        <form class="search-form" method="get" th:action="@{/document/receiveDoc}">
-            <input name="searchKeyword" placeholder="검색어 입력" type="text">
-            <button type="submit">검색</button>
-        </form>
-    </div>
-
     <div class="page-border">
+
+        <!-- 전체 글 보기 링크 -->
+        <div class="search-div">
+            <div class="view-all-posts">
+                <a class="listBtn" href="/document/submitDoc" th:href="@{/document/receiveDoc}">전체 글 보기</a>
+            </div>
+            <!-- 검색창. 제목 + 내용 검색 가능 -->
+            <form class="search-form" method="get" th:action="@{/document/receiveDoc}">
+                <input class="search-keyword" name="searchKeyword" placeholder="검색어 입력" type="text">
+                <button class="search-button" type="submit">검색</button>
+            </form>
+        </div>
+
     <table class="table list-table table-hover">
         <thead class="list-thead">
             <tr>
@@ -39,6 +39,7 @@
             </tr>
         </thead>
         <tbody>
+        <h4 th:if="${#lists.isEmpty(documents)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
             <tr th:each="document : ${documents}"
                 th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${document?.getDocForm().formNameEn},docId=${document?.docId})}'|">
                 <td th:text="${document?.docId}">문서번호</td>

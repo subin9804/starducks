@@ -133,15 +133,8 @@ public class ProductService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public List<Product> getProductsByVendorId(int vendorId) {
+        List<Product> productsByVendorVendorId = productRepository.findProductsByVendor_VendorId(vendorId);
+        return productsByVendorVendorId;
+    }
 }

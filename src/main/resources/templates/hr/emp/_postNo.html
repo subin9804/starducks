@@ -3,9 +3,16 @@
 
 <div th:fragment="searchPost">
     <input type="button" onclick="sample6_execDaumPostcode()" id="searchPostBtn" value="우편번호 찾기"><br>
+
     <input type="text" id="sample6_postcode" th:field="*{postNo}" placeholder="우편번호">
+    <div class="error" th:each="err : ${#fields.errors('postNo')}" th:text="${err}"></div>
+
     <input type="text" id="sample6_address" th:field="*{addr}" placeholder="주소">
+    <div class="error" th:each="err : ${#fields.errors('addr')}" th:text="${err}"></div>
+
     <input type="text" id="sample6_detailAddress" th:field="*{dAddr}" placeholder="상세주소">
+    <div class="error" th:each="err : ${#fields.errors('dAddr')}" th:text="${err}"></div>
+
     <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 
 

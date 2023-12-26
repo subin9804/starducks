@@ -104,6 +104,7 @@ public class EmpService {
             if(emp.getPwd() != null) {
                 newPassword = emp.getPwd();
             }
+            System.out.println("비밀번ㄴ호!!!!!!!!!!" + newPassword);
 
             String encodedPassword = passwordEncoder.encode(newPassword);
             emp.setPwd(encodedPassword);
@@ -202,7 +203,7 @@ public class EmpService {
     }
 
     /**
-     * 로그인한 사원 제외하고 모든 사원을 부서별로 가져오기
+     * 로그인한 사원, 퇴사한 사원 제외하고 모든 사원을 부서별로 가져오기. 실시간 채팅 사원 목록에서 사용 중
      * @param loggedInUserId
      * @return
      */
@@ -215,7 +216,6 @@ public class EmpService {
             .collect(Collectors.groupingBy(Employee::getDept, LinkedHashMap::new, Collectors.toList()));
     }
 
-
     /**
      * 마이페이지 - 일정관리
      * 직원 ID를 기반으로 직원 조회
@@ -226,4 +226,16 @@ public class EmpService {
     public Employee getEmpById(Long empId) {
         return repository.findById(empId).orElse(null);
     }
+
+    /**
+     * empId를 넣으면 어떤 부서 사람인지도 바로 같이 가져와진다. 부서 LAZY 대응용
+     * 로그인한 사원이 어떤 부서인지 확인하려고 제작
+     * @param empId
+     * @return
+     */
+    @Transactional
+    public Employee getEmployeeWithDepartment(Long empId) {
+        return repository.findEmployeeWithDepartment(empId).orElse(null);
+    }
+
 }

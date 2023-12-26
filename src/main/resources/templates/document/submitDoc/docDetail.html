@@ -16,8 +16,9 @@
   <div class="page-border">
 <!--    <div class="document" th:include="${'document/submitDoc/' + formNameEn + '::document'}"></div>-->
       <div th:if="${formNameEn == 'draft'}" class="document" th:include="~{document/submitDoc/_draftDetail::document}"></div>
+      <div th:if="${formNameEn == 'orderForm'}" class="document" th:include="~{document/submitDoc/_orderFormDetail::document}"></div>
 
-    <div class="approval-state">
+      <div class="approval-state">
       <div class="avp1-wrap">
         <div class="avp1-title">
             <span>1차 결재상태 : </span>
@@ -52,13 +53,18 @@
       </div>
     </div>
 
-      <div class="buttons">
+      <div class="btn-wrap">
         <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
-        <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|" th:text="목록으로">목록으로</button>
-          <button th:if="${document.docStatus == PENDING}" class="edit-button" type="button"
-                  th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
-                  th:text="수정">수정</button>
-          <button th:if="${document.docStatus != PENDING}" class="edit-button" type="button" th:text="수정">수정</button>
+          <button th:if="${document.docStatus.toString() == 'PENDING_DOC'}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/submitDoc}'|">
+              목록으로</button>
+          <button th:if="${document.docStatus.toString() == 'TEMP_STORED'}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/tempList}'|">
+              목록으로</button>
+
+          <button th:if="${document.docStatus.toString() == 'PENDING_DOC'}" class="edit-button" type="button"
+                  th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|">
+              수정</button>
+          <button th:if="${document.docStatus.toString() != 'PENDING_DOC'}" class="edit-button disable-btn" type="button">
+              수정</button>
       </div>
 
 <!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->

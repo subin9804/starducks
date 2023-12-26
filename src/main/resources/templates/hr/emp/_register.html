@@ -3,7 +3,7 @@
 
 <th:block th:fragment="register">
     <h1 th:text="사원등록"></h1>
-    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}"  enctype="multipart/form-data" autocomplete="off">
+    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
         <div class="photos">
             <div class="photo">
                 <img class="img" id="profileImg" src="#" alt="Profile Image">
@@ -26,24 +26,30 @@
                 </dl>
 <!--                <dl>-->
 <!--                    <dt>초기비밀번호</dt>-->
-<!--                    <dd><input type="text" th:field="*{pwd}" name="pwd" id="pwd"></dd>-->
+<!--                    <dd><input type="hidden" th:field="*{pwd}" name="pwd" id="pwd"></dd>-->
 <!--                </dl>-->
                 <dl>
                     <dt>사원이름</dt>
-                    <dd><input type="text" th:field="*{empName}"></dd>
-                    <div class="error" th:each="err : ${#fields.errors('empName')}" th:text="${err}"></div>
+                    <dd>
+                        <input type="text" th:field="*{empName}">
+                        <div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+                    </dd>
 
                 </dl>
                 <dl>
                     <dt>연락처</dt>
-                    <dd><input type="text" th:field="*{empTel}"></dd>
-                    <div class="error" th:each="err : ${#fields.errors('empTel')}" th:text="${err}"></div>
+                    <dd>
+                        <input type="text" th:field="*{empTel}">
+                        <div class="error" th:each="err : ${#fields.errors('empTel')}" th:text="${err}"></div>
+                    </dd>
 
                 </dl>
                 <dl>
                     <dt>이메일</dt>
-                    <dd><input type="text" th:field="*{email}"></dd>
-                    <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+                    <dd>
+                        <input type="text" th:field="*{email}">
+                        <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+                    </dd>
 
                 </dl>
                 <dl>
@@ -52,7 +58,6 @@
                         남 <input type="radio" name="a" value="man" th:field="*{gender}">
                         여 <input type="radio" name="a" value="woman" th:field="*{gender}">
                         <div class="error" th:each="err : ${#fields.errors('gender')}" th:text="${err}"></div>
-
                     </dd>
                 </dl>
                 <dl>
@@ -76,7 +81,6 @@
                         </ul>
                         <input id="dept" type="hidden" th:field="*{dept}">
                         <div class="error" th:each="err : ${#fields.errors('dept')}" th:text="${err}"></div>
-
                     </dd>
                 </dl>
 
@@ -97,14 +101,15 @@
                         </ul>
                         <input id="position" type="hidden" th:field="*{position}">
                         <div class="error" th:each="err : ${#fields.errors('position')}" th:text="${err}"></div>
-
                     </dd>
                 </dl>
 
                 <dl>
                     <dt>입사일자</dt>
-                    <dd><input type="date" th:field="*{joinDate}"></dd>
-                    <div class="error" th:each="err : ${#fields.errors('joinDate')}" th:text="${err}"></div>
+                    <dd>
+                        <input type="date" th:field="*{joinDate}">
+                        <div class="error" th:each="err : ${#fields.errors('joinDate')}" th:text="${err}"></div>
+                    </dd>
 
                 </dl>
 
@@ -114,7 +119,6 @@
                         퇴사 <input type="radio" name="a" value="true" th:field="*{status}">
                         재직 <input type="radio" name="a" value="false" th:field="*{status}">
                         <div class="error" th:each="err : ${#fields.errors('status')}" th:text="${err}"></div>
-
                     </dd>
                 </dl>
 
@@ -125,21 +129,9 @@
                 <dl>
                     <dt>주소</dt>
                     <dd>
-<!--                        <input class="postNo" type="text" th:field="*{postNo}">-->
                         <div th:replace="~{hr/emp/_postNo::searchPost}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('postNo')}" th:text="${err}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('addr')}" th:text="${err}"></div>
-                        <div class="error" th:each="err : ${#fields.errors('dAddr')}" th:text="${err}"></div>
                     </dd>
                 </dl>
-<!--                <dl>-->
-<!--                    <dt>주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{addr}"> </dd>-->
-<!--                </dl>-->
-<!--                <dl>-->
-<!--                    <dt>상세주소</dt>-->
-<!--                    <dd><input type="text" th:field="*{dAddr}"> </dd>-->
-<!--                </dl>-->
             </section>
         </div>
         <div class="btns">

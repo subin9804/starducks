@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--<th:block layout:fragment="title">title</th:block>-->
+<title layout:fragment="title">기안서 작성</title>
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
@@ -14,12 +14,13 @@
     <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
     <div class="preview-layout">
         <div class="inputs-div page-shadow">
-            <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>
-            <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>
+<!--            <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>-->
+<!--            <h2 th:if="${param.tmpStatus}" th:text="'임시저장 되었습니다.'"></h2>-->
 
-            <form method="post" th:object="${document}">
+            <form th:action="@{/document/createDoc/draft}" method="post" th:object="${document}">
                 <h5 class="input-wrap docForm-title" th:text="|${docForm?.formCode} ${docForm?.formName}|">A01 기안서</h5>
                 <input type="hidden" name="docForm.formCode" th:value="${docForm?.formCode}">
+                <input type="hidden" name="docId" th:value="${document?.docId}">
 
                 <div class="input-wrap urgent-wrap">
                     긴급 <input type="checkbox" th:field="*{urgent}" id="urgent">
@@ -28,12 +29,12 @@
 
                 <div class="input-wrap">
                 <span class="doc-input-lbl">기안일</span>
-                    : <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                    : <span th:if="${document?.docDate == null}" th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                    <span th:if="${document?.docDate != null}" th:text="${#temporals.format(document?.docDate, 'yyyy년 MM월 dd일')}"></span>
                 </div>
                 <div class="input-wrap">
-                    <span class="doc-input-lbl">기안자</span> : <span th:text="${empName}"></span>
+                    <span class="doc-input-lbl">기안자</span> : <span th:text="${docWriter.getEmpName()}"></span>
                 </div>
-
 
                 <div class="hr"><hr></div>
 
@@ -68,9 +69,8 @@
                     사원찾기
                 </button>
                  : <span class="selected-values" id="selectedRefs"></span>
-                </div>
-
                 <div th:insert="~{document/createDoc/_selectRefEmp::modal}"></div>
+                </div>
 
 
                 <div class="hr"><hr></div>
@@ -93,12 +93,30 @@
                 </div>
 
                 <div class="input-wrap2">
-                <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
+                    <button th:if="${document?.docId == null}" class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|">
+                        목록으로</button>
+                    <button th:if="${document?.docId != null}" class="cancel-button" type="button"
+                        th:onclick="|location.href='@{/document/submitDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|">
+                        수정 취소</button>
+
                     <button th:if="${document?.docId == null}"
-                            class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
-                    <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
-                            class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
-                <button class="register-button"  type="submit" th:text="상신">상신</button>
+                            class="edit-button" type="button" onclick="return submit2(this.form);">
+                        임시저장</button>
+                    <button th:if="${document?.docStatus?.toString() == 'TEMP_STORED'}"
+                            class="edit-button" type="button" onclick="return submit3(this.form);">
+                        재임시저장</button>
+                    <button th:if="${document?.docStatus?.toString() == 'PENDING_DOC'}"
+                            class="edit-button disable-btn" type="button" th:disabled="disabled">
+                        임시저장</button>
+
+                    <button th:if="${document?.docId == null}" class="register-button" type="submit">
+                        상신</button>
+                    <button th:if="${document?.docStatus?.toString() == 'TEMP_STORED'}"
+                            class="register-button" type="submit" onclick="return submit4(this.form);">
+                        상신</button>
+                    <button th:if="${document?.docStatus?.toString() == 'PENDING_DOC'}"
+                            class="edit-button" type="button" onclick="return submit4(this.form);">
+                        상신 수정</button>
                 </div>
             </form>
 <!--            <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>-->
@@ -109,7 +127,6 @@
         <div id="print-div">
             <h1 class="doc-type-name">업 무 기 안 서</h1>
             <span id="urgentDisplay"></span>
-<!--            <div class="urgent-sticker">긴급</div>-->
 
             <div class="top-box">
                 <table class="drafter-box">
@@ -118,10 +135,13 @@
                         <th>사원</th>
                     </tr>
                     <tr>
-                        <td class="stamp-box">(홍길동인)</td>
+                        <td class="stamp-box"><img class="stamp-box" th:src="@{${docWriterStamp}}" alt=""></td>
                     </tr>
                     <tr>
-                        <td class="stamp-date">2023/12/14</td>
+                        <td class="stamp-date">
+                            <th:block th:if="${document?.docDate == null}" th:text="${#dates.format(#dates.createToday(), 'yyyy/MM/dd')}"></th:block>
+                            <th:block th:if="${document?.docDate != null}" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}"></th:block>
+                        </td>
                     </tr>
                 </table>
                 <table class="approver-box">
@@ -131,12 +151,12 @@
                         <th>직급</th>
                     </tr>
                     <tr>
-                        <td class="stamp-box">(김팀장인)</td>
-                        <td class="stamp-box">(김사장인)</td>
+                        <td class="stamp-box"></td>
+                        <td class="stamp-box"></td>
                     </tr>
                     <tr>
-                        <td class="stamp-date">2023/12/14</td>
-                        <td class="stamp-date">2023/12/14</td>
+                        <td class="stamp-date"></td>
+                        <td class="stamp-date"></td>
                     </tr>
                 </table>
             </div>
@@ -145,11 +165,11 @@
                 <table class="doc-info-box">
                     <tr class="approver">
                         <td class="col-th">기안자</td>
-                        <td th:text="${empName}">내용</td>
+                        <td th:text="${docWriter?.empName}">내용</td>
                     </tr>
                     <tr class="doc-info">
                         <td class="col-th">소속</td>
-                        <td>내용</td>
+                        <td th:text="${docWriter?.dept?.deptName}">내용</td>
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th">기안일</td>
@@ -157,7 +177,10 @@
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th">문서번호</td>
-                        <td>내용</td>
+                        <td>
+                            <th:block th:if="${document?.docId == null}" th:text="${expectedDocId}"></th:block>
+                            <th:block th:if="${document?.docId != null}" th:text="${document?.docId}"></th:block>
+                        </td>
                     </tr>
                     <tr class="doc-content">
                         <td class="col-th">참조인</td>
@@ -177,7 +200,7 @@
                 <table class="attached-files-box">
                     <tr class="attached-files">
                         <td class="col-th">첨부파일</td>
-                        <td>내용</td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -187,29 +210,23 @@
     </div>
 <script>
     // html 하단에 넣어야 적용
-    document.getElementById('urgent').addEventListener('change', function() {
-        var urgentSticker = document.getElementById('urgent-sticker');
-        urgentSticker.style.display = this.checked ? 'block' : 'none';
-    });
+    //실시간 미리보기
 
-    var docTitle = document.getElementById('docTitle');
     var docTitleOut = document.getElementById('docTitleOut');
     docTitle.addEventListener('input', function() {
         var docTitleIn = docTitle.value;
         docTitleOut.innerText = docTitleIn;
     });
 
-    var docContent = document.getElementById('docContent');
     var docContentOut = document.getElementById('docContentOut');
     docContent.addEventListener('input', function() {
         var docContentIn = docContent.value;
         docContentOut.innerText = docContentIn;
     });
-    var urgentCheckbox = document.getElementById('urgent');
 
+    var urgentCheckbox = document.getElementById('urgent');
     // 긴급 여부를 표시할 곳
     var urgentDisplay = document.getElementById('urgentDisplay');
-
     // 체크박스의 변경 이벤트 감지
     urgentCheckbox.addEventListener('change', function() {
         // 체크박스가 체크되어 있으면 긴급 표시

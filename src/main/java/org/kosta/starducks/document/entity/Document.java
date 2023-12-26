@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "DOCUMENT")
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long docId;
@@ -26,6 +29,14 @@ public class Document {
     private LocalDateTime docDate;
     private LocalDateTime docUpdateDate;
     private LocalDateTime apvDeadline;
+
+    //발주서 납품기한일
+    private LocalDate orderDeadline;
+    //수신처
+    @ManyToOne
+    @JoinColumn(name ="vendor_id")
+    private Vendor vendor;
+
 
     @Enumerated(EnumType.STRING)
     private DocStatus docStatus;
@@ -48,6 +59,10 @@ public class Document {
     private List<Approval> approvals = new ArrayList<>();
 
     private String refEmpIds;
+
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
 
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 //    private List<RefEmployee> refEmployee = new ArrayList<>();

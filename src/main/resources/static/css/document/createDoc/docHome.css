@@ -1,0 +1,104 @@
+.receive-box {
+    width: 1320px;
+    height: 300px;
+    padding: 20px;
+    margin: 10px;
+}
+.submit-box,.temp-box {
+    display: inline-block;
+    width: 645px;
+    height: 600px;
+    padding: 20px;
+    margin: 10px;
+}
+.receiveDoc {
+    position: relative;
+    display: inline-block;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    margin: 5px;
+}
+.receive-cont {
+    position: absolute;
+    display: inline-block;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.docTitle-th {
+    width: 250px;
+}
+.docDate {
+    top: 20px;
+    left: 20px;
+}
+.urgent {
+    top: 20px;
+    right: 20px;
+    background-color: #FF5B5B;
+    color: white;
+    width: 50px;
+    height: 26px;
+    text-align: center;
+    border-radius: 15px;
+}
+.urgent {
+     top: 20px;
+     right: 30px;
+     background-color: #FF5B5B;
+     color: white;
+     width: 50px;
+     height: 24px;
+     text-align: center;
+     border-radius: 15px;
+ }
+.docStatus {
+    top: 20px;
+    right: 10px;
+    margin: 0 5px;
+    width: 50px;
+    height: 24px;
+    border-radius: 15px;
+    text-align: center;
+}
+.docTitle {
+    bottom: 80px;
+    left: 20px;
+    background-color: gray;
+}
+.formName {
+    bottom: 50px;
+    left: 20px;
+}
+.docWriterInfo {
+    bottom: 20px;
+    left: 20px;
+}
+/*.docWriter {*/
+/*    bottom: 20px;*/
+/*    left: 20px;*/
+/*}*/
+/*.docWriterInfo, .docWriterPosi {*/
+/*    display: inline-block;*/
+/*}*/
+.fa-arrow-right-from-bracket {
+    bottom: 20px;
+    right: 20px;
+}
+.docStatus {
+    width: 50px;
+    height: 26px;
+    text-align: center;
+    border-radius: 15px;
+}
+.page-border {
+    position: relative;
+}
+.emptyDoc {
+    position: absolute;
+    color: #c9c9c9;
+    top: 150px;
+    left: 200px;
+}

@@ -15,9 +15,10 @@ import java.time.LocalDate;
 @Table(name = "employee")
 public class Employee {
 
-    @Id @NotNull
+    @Id
     private Long empId; // 사원번호
 
+//    @NotBlank(message = "이름은 빈칸일 수 없습니다.")
     @NotBlank
     private String empName;     // 사원이름
 
@@ -55,7 +56,7 @@ public class Employee {
 
     private String pwd;     // 비밀번호
 
-
+    @NotNull
     @ToString.Exclude
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "dept_id")
@@ -67,7 +68,7 @@ public class Employee {
 
     @PrePersist
     public void generateCmpEmail() {
-        this.cmpEmail = this.empId + "@starbucks.monster";
+        this.cmpEmail = this.empId + "@starducks.monster";
     }
 
 }

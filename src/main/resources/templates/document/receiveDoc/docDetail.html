@@ -53,14 +53,17 @@
       </div>
     </div>
 
-      <div class="buttons">
+      <div class="btn-wrap">
         <button class="commonBtn" onclick="startPrint('print-div');">인쇄</button>
         <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/receiveDoc}'|" th:text="목록으로">목록으로</button>
-<!--          th:if="${iApproved}" : iApproved는 컨트롤러에서 내가 해당되는 결재단계가 결재됐는지 불리언으로 만들어서 넘긴 값-->
+<!--          myApproval: 컨트롤러에서 로그인 한 사원에 해당되는 결재단계가 결재됐는지 불리언으로 만들어서 넘긴 값-->
+<!--          readyApv: 컨트롤러에서 내가 결재 1단계면 true,은 혹은 결재 2단계라면 내 전 결재단계가 완료(승인)일 때 true로 넘긴 값-->
           <button class="edit-button" type="button"
+                  th:if="${myApproval == 'PENDING' && readyApv == true}"
                   th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}/apv(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
                   th:text="결재">결재</button>
-<!--          <button class="edit-button" type="button" th:text="결재" disabled>결재</button>-->
+          <button th:if="${myApproval == 'PENDING' && readyApv == false}" class="edit-button disable-btn" type="button">결재 대기</button>
+          <button th:if="${myApproval != 'PENDING'}" class="edit-button disable-btn" type="button">결재 완료</button>
       </div>
 
 <!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->

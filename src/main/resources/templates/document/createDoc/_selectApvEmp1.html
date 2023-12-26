@@ -8,7 +8,8 @@
   <!-- modal을 포함시키는 부분 -->
     <!-- _selectApvEmp1.html -->
 
-    <div th:fragment="modal"  th:object="${employee}" th:with="employeeObject=${employee}">
+    <div th:fragment="modal">
+<!--        <div th:fragment="modal"  th:object="${employee}" th:with="employeeObject=${employee}">-->
       <!-- 모달의 구조와 내용을 여기에 정의 -->
       <div class="modal fade" id="selectApvEmp1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -30,11 +31,22 @@
                       <div class="searchItem">
                           <label th:for="${'apvEmpId1_' + e.empId}" class="form-check-label">
                               <div>
-                                  <img class="searchImg" src="">
+                                  <img class="searchImg" th:src="${profiles?.get(e.empId)}">
                                   <div class="searchInfo">
-                                      <div class="searchEmpId" th:text="${e.empId}"></div>
-                                      <div class="searchEmpName" th:text="${e.empName}"></div>
-                                      <!--                                <div class="searchDept" th:text="${e.empName}"></div>-->
+                                      <div class="searchInfo1">
+                                          <div class="searchEmpId" th:text="${e.empId}"></div>
+                                          <div class="searchEmpName" th:text="${e.empName}"></div>
+                                      </div>
+                                      <div class="searchInfo2">
+                                          <div class="searchDept" th:text="${e.dept.deptName}"></div>
+                                          <th:block th:switch="${e.position.toString()}">
+                                              <div th:case="ROLE_EMPLOYEE" class="searchRole">사원</div>
+                                              <div th:case="ROLE_TEAMLEADER" class="searchRole">팀장</div>
+                                              <div th:case="ROLE_DEPTLEADER" class="searchRole">부장</div>
+                                              <div th:case="ROLE_BOSS" class="searchRole">사장</div>
+                                              <div th:case="ROLE_STOREMANAGER" class="searchRole">점장</div>
+                                          </th:block>
+                                      </div>
                                   </div>
                               </div>
                           </label>
