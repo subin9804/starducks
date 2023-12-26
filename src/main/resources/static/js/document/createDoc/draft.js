@@ -31,6 +31,7 @@ myModal.addEventListener('shown.bs.modal', () => {
 //임시저장 submit 처리
 //
 function submit2(form) {
+
     form.action = '/document/createDoc/temp';
     form.submit();
     return true;
@@ -45,6 +46,15 @@ function submit4(form) {
     form.submit();
     return true;
 }
+
+//발주서 임시저장 처리
+function submit22(form) {
+
+    form.action = '/document/createDoc/orderFrom/temp';
+    form.submit();
+    return true;
+}
+
 
 //문서 미리보기 실시간
 function displaySelectedApv1(element) {
