@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.kosta.starducks.commons.notify.Notify;
 import org.kosta.starducks.commons.notify.NotifyInfo;
+import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

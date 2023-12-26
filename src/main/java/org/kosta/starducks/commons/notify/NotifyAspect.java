@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.kosta.starducks.hr.entity.Employee;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
@@ -30,12 +31,16 @@ public class NotifyAspect {
         System.out.println("After Returning Advice: " + (result != null));
         System.out.println("this is join point" + joinPoint);
         NotifyInfo notifyProxy = (NotifyInfo) result;
-        notifyService.send(
-                notifyProxy.getReceivers().get(0),
-                notifyProxy.getNotificationType(),
-                NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
-                "/api/v1/notify" + (notifyProxy.getGoUrl())
-        );
-        log.info("result = {}", notifyProxy.getReceivers().get(0));
+
+        for(Employee emp : notifyProxy.getReceivers()) {
+            notifyService.send(
+                    emp,
+                    notifyProxy.getNotificationType(),
+                    NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
+                    notifyProxy.getGoUrl()
+            );
+
+        log.info("result = {}", emp.getEmpName());
+        }
     }
 }
