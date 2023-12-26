@@ -99,7 +99,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             repository.saveAndFlush(emp);
         }
 
-        // 점검용 이현기 사원
+        // 점검용 사원
         Employee specificEmp = new Employee();
         specificEmp.setEmpId(11L); // empId를 11로 설정
         specificEmp.setStatus(false);
