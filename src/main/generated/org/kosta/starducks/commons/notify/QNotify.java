@@ -22,11 +22,21 @@ public class QNotify extends EntityPathBase<Notify> {
 
     public static final QNotify notify = new QNotify("notify");
 
+    public final org.kosta.starducks.commons.QBaseTimeEntity _super = new org.kosta.starducks.commons.QBaseTimeEntity(this);
+
     public final StringPath content = createString("content");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isRead = createBoolean("isRead");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    public final EnumPath<Notify.NotificationType> notificationType = createEnum("notificationType", Notify.NotificationType.class);
 
     public final org.kosta.starducks.hr.entity.QEmployee receiver;
 

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let schedules;
     fetchSchedule().then (() => {
 
-        console.log(schedules)
+        // console.log(schedules)
         let events = [];
 
 
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             $('#tschedule').append(tr)
         }
-        console.log(events)
+        // console.log(events)
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // },
                 success: function (data) {
                     schedules = data;
-                    console.log(data)
+                    // console.log(data)
                     resolve(data)
                 },
                 error: function (err) {
@@ -138,13 +138,23 @@ document.addEventListener('DOMContentLoaded', function() {
         'display': 'flex'
     });
 
+
     // 날씨 위젯
-    navigator.geolocation.getCurrentPosition(success, errorCallback);
+    // navigator.geolocation.getCurrentPosition(success, errorCallback);
+    let position = {
+        latitude: 37.3388756,
+        longitude: 127.1093775
+    }
+
 
     function success(position) {
-        console.log(position)
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+
+        // console.log(position)
+        // const latitude = position.coords.latitude;
+        // const longitude = position.coords.longitude;
+
+        const latitude = position.latitude;
+        const longitude = position.longitude;
 
         getWeather(latitude, longitude);
     }
@@ -154,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const getWeather = async(lat, lng) => {
+
         try {
             // API_KEY는 index.html에서 th:inline="javascript"로 받아옴!
             $.ajax({
@@ -164,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const description = res.weather[0].main;
 
                     // const weatherKo = weatherDescKo[weatherId];
-                    console.log(res)
+                    // console.log(res)
 
                     // 날씨 아이콘 가져오기
                     const weatherIcon = res.weather[0].icon;
@@ -219,6 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#temp").text(wether.temp + " ºC");
 
     }
+
+    success(position)
+
 
 });
 

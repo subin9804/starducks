@@ -2,9 +2,11 @@ package org.kosta.starducks.document.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.document.repository.OrderItemRepository;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.repository.EmpRepository;
@@ -26,6 +28,7 @@ public class DocumentService {
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
     private final VendorService vendorService;
+    private final OrderItemRepository oiRepository;
 
     /**
      * docWriter(기안자, 문서 작성자)의 EmpId로 document 리스트 가져오기 - 결재 상신함 페이징 처리
@@ -234,6 +237,7 @@ public class DocumentService {
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
+    @NeedNotify
     public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
@@ -259,12 +263,11 @@ public class DocumentService {
         document.setRefEmpIds(refEmpIdList.toString());
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);
-
         return savedDoc;
     }
 
 
-    public Document saveDocumentAndApvAndVen(Document document, List<Long> apvEmpIdList, int selVendorId, Long empId) {
+    public Document saveDocumentAndApvAndVen(Document document, List<Long> apvEmpIdList, int selVendorId, Long empId, List<OrderItem> orderItems) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -290,6 +293,15 @@ public class DocumentService {
         document.setVendor(byId);
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);
+
+        // OrderItem 저장
+        for (OrderItem item : orderItems) {
+            item.setDocument(savedDoc);
+            oiRepository.save(item);
+        }
+
+
+
 
         return savedDoc;
     }
