@@ -400,7 +400,7 @@ public class DocumentService {
     }
 
     /**
-     * docId로 RefEmpId 리스트 가져오기
+     * docId로 RefEmpId 리스트 가져오기 (String -> List Parsing)
      */
     public List<Long> getRefEmpIdsByDocId(Long docId) {
         // 문서 ID를 기반으로 문서를 가져옴
@@ -420,5 +420,51 @@ public class DocumentService {
                 .orElse(Collections.emptyList());
 
         return refEmpIdList;
+    }
+
+    /**
+     * refEmpIdList을 화면에 전달할 refEmpNames String으로 변환
+     */
+    public String getRefEmpNamesByDocId(Long docId) {
+        List<Long> refEmpIdList = getRefEmpIdsByDocId(docId);
+        List<String> refEmpNames = new ArrayList<>();
+        for (Long refEmpId : refEmpIdList) {
+            empRepository.findById(refEmpId)
+                    .ifPresent(refEmp -> {
+                        String refEmpName = refEmp.getEmpName();
+                        refEmpNames.add(refEmpName);
+                    });
+        }
+        return refEmpNames.toString().replace("[", "").replace("]", "");
+    }
+
+    /**
+     * document 생성 시 만들어진 apvStatus, apvComment, apvDate가 빈 approval 객체에 값 저장
+     */
+    public Approval saveApproval(Approval approval, Long docId, Long empId) {
+        Approval existingApv = approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId).get();
+        existingApv.setApvStatus(approval.getApvStatus());
+        existingApv.setApvComment(approval.getApvComment());
+        existingApv.setApvDate(LocalDateTime.now());
+
+        return approvalRepository.save(existingApv);
+    }
+
+    /**
+     * ApvState에 따라 DocState 변경
+     */
+    public void updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
+        List<String> requiredStep2 = Arrays.asList("draft", "reqForVac"); //결재 두 단계인 양식명
+        documentRepository.findById(docId).ifPresent(document -> {
+            if (approval.getApvStatus() == ApvStatus.APPROVED && requiredStep2.contains(document.getDocForm().getFormNameEn())) {
+                document.setDocStatus(existingApv.getApvStep() == 1 ? DocStatus.IN_PROGRESS : DocStatus.APPROVED_DOC);
+            } else if (approval.getApvStatus() == ApvStatus.APPROVED) {
+                //결재 한 단계인 경우는 1단계 승인 시 문서 최종 승인 상태로 변경
+                document.setDocStatus(DocStatus.APPROVED_DOC);
+            } else {
+                document.setDocStatus(DocStatus.REJECTED_DOC);
+            }
+            documentRepository.save(document);
+        });
     }
 }

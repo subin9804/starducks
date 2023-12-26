@@ -8,6 +8,8 @@ import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.forum.entity.ForumPost;
+import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpFileService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,10 +30,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubmitDocController {
     private final DocumentService documentService;
+    private final EmpFileService fileService;
 
     private final DocFormRepository docFormRepository;
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
+    private final EmpRepository empRepository;
 
     /**
      * 결재 상신 리스트 페이지
@@ -85,14 +90,43 @@ public class SubmitDocController {
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        documentRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        documentRepository.findById(docId)
+                .ifPresent(document -> {
+                    //기존에 저장했던 document 정보
+                    model.addAttribute("document", document);
 
+                    //화면에 전달할 docWriter : 기안자(문서 작성자) : 저장된 docWriter
+                    model.addAttribute("docWriter", document.getDocWriter());
+
+                    //화면에 전달할 docWriterStamp
+                    String stamp = fileService.getFileUrl(document.getDocWriter().getEmpId(), "stamp");
+                    model.addAttribute("docWriterStamp", stamp);
+                });
+
+        //결재 도장 칸에 전달할 결재 데이터 apv1, 2, 결재 도장 데이터 apv1, 2 Stamp
         approvalRepository.findByApvStepAndDocument_DocId(1, docId)
-                .ifPresent(apv1 -> model.addAttribute("apv1", apv1));//!!!!!!!!!
+                .ifPresent(apv1 -> {
+                    //결재 데이터 apv1
+                    model.addAttribute("apv1", apv1);
+
+                    //결재 도장 데이터 apv1Stamp
+                    String apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv1Stamp", apv1Stamp);
+                });
 
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
-                .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
+                .ifPresent(apv2 -> {
+                    //결재 데이터 apv2
+                    model.addAttribute("apv2", apv2);
+
+                    //결재 도장 데이터 apv2Stamp
+                    String apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv2Stamp", apv2Stamp);
+                });
+
+        //화면에 전달할 refEmpNames
+        String refEmpNames = documentService.getRefEmpNamesByDocId(docId);
+        model.addAttribute("refEmpNames", refEmpNames);
 
         return "document/submitDoc/docDetail";
     }

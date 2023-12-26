@@ -20,9 +20,26 @@
             th:onclick="|location.href='@{/document/receiveDoc/{formNameEn}/{docId}(formNameEn=${receiveDoc?.getDocForm().formNameEn},docId=${receiveDoc?.docId})}'|">
             <div class="docDate receive-cont" th:text="${#temporals.format(receiveDoc?.docDate, 'yyyy.MM.dd. HH:mm')}">기안일</div>
             <div class="urgent receive-cont" th:if="${receiveDoc?.urgent}">긴급</div>
-            <div class="formName receive-cont" th:text="${receiveDoc?.docForm?.formName}">구분</div>
+            <th:block th:switch="${receiveDoc?.docStatus?.toString()}">
+                <div th:case="PENDING_DOC" class="docStatus receive-cont" style="background-color:#FDF290;">대기</div>
+                <div th:case="IN_PROGRESS" class="docStatus receive-cont" style="background-color:#BCE784;">진행중</div>
+                <div th:case="APPROVED_DOC" class="docStatus receive-cont" style="background-color:#52B788;">승인</div>
+                <div th:case="REJECTED_DOC" class="docStatus receive-cont" style="background-color:#D6D6D6;">반려</div>
+            </th:block>
             <div class="docTitle receive-cont" th:text="${receiveDoc?.docTitle}">문서제목</div>
-            <div class="docContent receive-cont" th:text="${receiveDoc?.docContent}">문서내용</div>
+            <div class="formName receive-cont" th:text="${receiveDoc?.docForm?.formName}">구분</div>
+            <div class="docWriter">
+                <div class="docWriterInfo receive-cont"
+                     th:text="|${receiveDoc?.docWriter?.dept?.deptName} ${receiveDoc?.docWriter?.empName}|">
+                    기안자 정보</div>
+<!--                <th:block th:switch="${receiveDoc?.docWriter?.position.toString()}">-->
+<!--                    <div th:case="ROLE_EMPLOYEE" class="docWriterPosi receive-cont">사원</div>-->
+<!--                    <div th:case="ROLE_TEAMLEADER" class="docWriterPosi receive-cont">팀장</div>-->
+<!--                    <div th:case="ROLE_DEPTLEADER" class="docWriterPosi receive-cont">부장</div>-->
+<!--                    <div th:case="ROLE_BOSS" class="docWriterPosi receive-cont">사장</div>-->
+<!--                    <div th:case="ROLE_STOREMANAGER" class="docWriterPosi receive-cont">점장</div>-->
+<!--                </th:block>-->
+            </div>
             <i class="receive-cont fa-solid fa-arrow-right-from-bracket"></i>
         </div>
     </div>
