@@ -42,7 +42,7 @@ public class AttendanceController {
 
         Attendance attendanceForToday = attendanceService.getAttendanceForToday(empId);
         model.addAttribute("attendance", attendanceForToday);
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡattendanceForTodayㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+attendanceForToday);
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡattendanceForTodayㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+attendanceForToday);
 
         List<Attendance> attendanceForMonth = attendanceService.getAttendanceForMonth(empId);
         int absentDays =  (int)attendanceForMonth.stream()

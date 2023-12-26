@@ -9,6 +9,8 @@ import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.DocumentService;
+import org.kosta.starducks.hr.repository.EmpRepository;
+import org.kosta.starducks.hr.service.EmpFileService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +32,9 @@ public class ReceiveDocController {
     private final DocFormRepository docFormRepository;
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
+    private final EmpRepository empRepository;
 
+    private final EmpFileService fileService;
     private final DocumentService documentService;
 
     /**
@@ -82,18 +87,57 @@ public class ReceiveDocController {
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        documentRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        documentRepository.findById(docId)
+                .ifPresent(document -> {
+                    //기존에 저장했던 document 정보
+                    model.addAttribute("document", document);
 
+                    //화면에 전달할 docWriter : 기안자(문서 작성자) : 저장된 docWriter
+                    model.addAttribute("docWriter", document.getDocWriter());
+
+                    //화면에 전달할 docWriterStamp
+                    String stamp = fileService.getFileUrl(document.getDocWriter().getEmpId(), "stamp");
+                    model.addAttribute("docWriterStamp", stamp);
+                });
+
+        //결재 도장 칸에 전달할 결재 데이터 apv1, 2, 결재 도장 데이터 apv1, 2 Stamp
         approvalRepository.findByApvStepAndDocument_DocId(1, docId)
-                .ifPresent(apv1 -> model.addAttribute("apv1", apv1));
+                .ifPresent(apv1 -> {
+                    //결재 데이터 apv1
+                    model.addAttribute("apv1", apv1);
+
+                    //결재 도장 데이터 apv1Stamp
+                    String apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv1Stamp", apv1Stamp);
+                });
 
         approvalRepository.findByApvStepAndDocument_DocId(2, docId)
-                .ifPresent(apv2 -> model.addAttribute("apv2", apv2));
+                .ifPresent(apv2 -> {
+                    //결재 데이터 apv2
+                    model.addAttribute("apv2", apv2);
+
+                    //결재 도장 데이터 apv2Stamp
+                    String apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv2Stamp", apv2Stamp);
+                });
+
+        //화면에 전달할 refEmpNames
+        String refEmpNames = documentService.getRefEmpNamesByDocId(docId);
+        model.addAttribute("refEmpNames", refEmpNames);
 
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
         approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId)
-                .ifPresent(approval -> model.addAttribute("iApproved", approval.getApvStatus().toString()));
+                .ifPresent(approval -> {
+                    //myApproval: 현재 문서의 내 결재 상태
+                    model.addAttribute("myApproval", approval.getApvStatus().toString());
+
+                    //readyApv: 내가 결재 1단계면 true, 혹은 결재 2단계라면 내 전 결재단계가 완료(승인)일 때 true
+                    model.addAttribute("readyApv",
+                            approval.getApvStep() == 1
+                                    || (approval.getApvStep() == 2
+                                    && approvalRepository.findByApvStepAndDocument_DocId(1, docId).get()
+                                    .getApvStatus() == ApvStatus.APPROVED));
+                });
 
         return "document/receiveDoc/docDetail";
     }
@@ -110,8 +154,43 @@ public class ReceiveDocController {
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        documentRepository.findByDocId(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
+        documentRepository.findById(docId)
+                .ifPresent(document -> {
+                    //기존에 저장했던 document 정보
+                    model.addAttribute("document", document);
+
+                    //화면에 전달할 docWriter : 기안자(문서 작성자) : 저장된 docWriter
+                    model.addAttribute("docWriter", document.getDocWriter());
+
+                    //화면에 전달할 docWriterStamp
+                    String stamp = fileService.getFileUrl(document.getDocWriter().getEmpId(), "stamp");
+                    model.addAttribute("docWriterStamp", stamp);
+                });
+
+        //결재 도장 칸에 전달할 결재 데이터 apv1, 2, 결재 도장 데이터 apv1, 2 Stamp
+        approvalRepository.findByApvStepAndDocument_DocId(1, docId)
+                .ifPresent(apv1 -> {
+                    //결재 데이터 apv1
+                    model.addAttribute("apv1", apv1);
+
+                    //결재 도장 데이터 apv1Stamp
+                    String apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv1Stamp", apv1Stamp);
+                });
+
+        approvalRepository.findByApvStepAndDocument_DocId(2, docId)
+                .ifPresent(apv2 -> {
+                    //결재 데이터 apv2
+                    model.addAttribute("apv2", apv2);
+
+                    //결재 도장 데이터 apv2Stamp
+                    String apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv2Stamp", apv2Stamp);
+                });
+
+        //화면에 전달할 refEmpNames
+        String refEmpNames = documentService.getRefEmpNamesByDocId(docId);
+        model.addAttribute("refEmpNames", refEmpNames);
 
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
         approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId)
@@ -131,26 +210,12 @@ public class ReceiveDocController {
                             Principal principal) {
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
-        Approval existingApv = approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId).get();
-        existingApv.setApvStatus(approval.getApvStatus());
-        existingApv.setApvComment(approval.getApvComment());
-        existingApv.setApvDate(LocalDateTime.now());
 
-        approvalRepository.save(existingApv);
+        //document 생성 시 만들어진 apvState, apvComment, apvDate가 빈 approval 객체에 값 저장
+        Approval existingApv = documentService.saveApproval(approval, docId, empId);
 
-
-        List<String> requiredStep2 = Arrays.asList("draft", "reqForVac"); //결재 두 단계인 양식명
-        documentRepository.findById(docId).ifPresent(document -> {
-            if (approval.getApvStatus() == ApvStatus.APPROVED && requiredStep2.contains(document.getDocForm().getFormNameEn())) {
-                document.setDocStatus(existingApv.getApvStep() == 1 ? DocStatus.IN_PROGRESS : DocStatus.APPROVED_DOC);
-            } else if (approval.getApvStatus() == ApvStatus.APPROVED) {
-                //결재 한 단계인 경우는 1단계 승인 시 문서 최종 승인 상태로 변경
-                document.setDocStatus(DocStatus.APPROVED_DOC);
-            } else {
-                document.setDocStatus(DocStatus.REJECTED_DOC);
-            }
-            documentRepository.save(document);
-        });
+        //ApvState에 따라 DocState 변경
+        documentService.updateDocStatusByApv(approval, existingApv, docId);
 
         return "redirect:/document/receiveDoc/" + formNameEn + "/" + docId;
     }

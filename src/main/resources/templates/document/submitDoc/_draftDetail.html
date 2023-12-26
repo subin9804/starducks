@@ -11,17 +11,19 @@
     <div id="print-div">
       <h1 class="doc-type-name">업 무 기 안 서</h1>
       <h4 th:if="${document?.urgent}" class="urgent-sticker">긴급</h4>
-      <span id="urgentDisplay"></span>
+      <h2 th:if="${apv1?.apvStatus?.toString() == 'REJECTED' || apv2?.apvStatus?.toString() == 'REJECTED'}"
+          class="rejected-sticker">반려</h2>
+      <span id="rejectedDisplay"></span>
       <!--            <div class="urgent-sticker">긴급</div>-->
 
       <div class="top-box">
         <table class="drafter-box">
           <tr>
             <th rowspan="3">신청</th>
-            <th>사원</th>
+            <th class="stamp-th">사원</th>
           </tr>
           <tr>
-            <td class="stamp-box">(홍길동인)</td>
+            <td class="stamp-box"><img class="stamp-box" th:src="@{${docWriterStamp}}" alt=""></td>
           </tr>
           <tr>
             <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/15</td>
@@ -34,12 +36,28 @@
             <th>직급</th>
           </tr>
           <tr>
-            <td class="stamp-box">(김팀장인)</td>
-            <td class="stamp-box">(김사장인)</td>
+            <td class="stamp-box">
+              <span class="stamp-box" th:if="${apv1?.apvStatus?.toString() == 'PENDING'}"
+                    th:text="|&ensp;${apv1?.apvEmp?.empName} 결재 예정|"></span>
+              <img class="stamp-box" th:if="${apv1?.apvStatus?.toString() == 'APPROVED'}"
+                    th:src="@{${apv1Stamp}}" alt="">
+            </td>
+            <td class="stamp-box">
+              <span class="stamp-box" th:if="${apv2?.apvStatus?.toString() == 'PENDING'}"
+                    th:text="|&ensp;${apv2?.apvEmp?.empName} 결재 예정|"></span>
+              <img class="stamp-box" th:if="${apv2?.apvStatus?.toString() == 'APPROVED'}"
+                    th:src="@{${apv2Stamp}}" alt="">
+            </td>
           </tr>
           <tr>
-            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/14</td>
-            <td class="stamp-date" th:text="${#temporals.format(document?.docDate, 'yyyy/MM/dd')}">2023/12/14</td>
+            <td class="stamp-date">
+              <th:block th:if="${apv1?.apvStatus?.toString() == 'APPROVED'}"
+                th:text="${#temporals.format(apv1?.apvDate, 'yyyy/MM/dd')}"></th:block>
+            </td>
+            <td class="stamp-date">
+              <th:block th:if="${apv2?.apvStatus?.toString() == 'APPROVED'}"
+                th:text="${#temporals.format(apv2?.apvDate, 'yyyy/MM/dd')}"></th:block>
+            </td>
           </tr>
         </table>
       </div>
@@ -48,11 +66,11 @@
         <table class="doc-info-box">
           <tr class="approver">
             <td class="col-th">기안자</td>
-            <td th:text="${document?.docWriter?.empName}">내용</td>
+            <td th:text="${docWriter?.empName}">내용</td>
           </tr>
           <tr class="doc-info">
             <td class="col-th">소속</td>
-            <td th:text="${document?.docWriter?.dept?.deptName}">내용</td>
+            <td th:text="${docWriter?.dept?.deptName}">내용</td>
           </tr>
           <tr class="doc-content">
             <td class="col-th">기안일</td>
@@ -64,7 +82,7 @@
           </tr>
           <tr class="doc-content">
             <td class="col-th">참조인</td>
-            <td><span class="selected-values" id="selectedRefs2"></span></td>
+            <td><span th:text="${refEmpNames}"></span></td>
           </tr>
         </table>
         <table class="doc-content-box">
@@ -80,15 +98,12 @@
         <table class="attached-files-box">
           <tr class="attached-files">
             <td class="col-th">첨부파일</td>
-            <td>내용</td>
+            <td></td>
           </tr>
         </table>
       </div>
 
     </div>
-  </div>
-  </div>
-
   </div>
   </div>
 </main>

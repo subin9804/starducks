@@ -31,6 +31,16 @@
 .input-wrap2 {
     margin: 40px 20px;
 }
+.disable-btn {
+    color: #c9c9c9;
+}
+.disable-btn:hover {
+    background-color: #43946f;
+    cursor: default;
+}
+.disable-btn:active {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
 .docForm-title {
     display: inline-block;
     background-color: #6B4D27;
@@ -57,7 +67,18 @@
     border: 2px solid red;
     color: red;
     padding: 5px;
-    width: 58px;
+    width: 62px;
+    height: 47px;
+}
+.rejected-sticker {
+    position: absolute;
+    display: inline-block;
+    border: 3px solid red;
+    color: red;
+    padding: 8px;
+    width: 80px;
+    height: 60px;
+    right: 150px;
 }
 .a4-box {
     position: absolute;
@@ -126,6 +147,8 @@ td {
 .stamp-box {
     width: 86px;
     height: 86px;
+    margin: 0;
+    padding: 0;
 }
 .stamp-date {
     margin: 0;

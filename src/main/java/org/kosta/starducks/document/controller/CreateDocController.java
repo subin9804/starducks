@@ -2,6 +2,7 @@ package org.kosta.starducks.document.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.*;
+import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.service.DocumentService;
@@ -26,6 +27,7 @@ public class CreateDocController {
 
     private final DocumentRepository documentRepository;
     private final DocFormRepository docFormRepository;
+    private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
     private final EmpService empService;
 
@@ -74,13 +76,20 @@ public class CreateDocController {
         //입력 받을 document 객체
         model.addAttribute("document", new Document());
 
+        //화면에 전달할 expectedDocId
+        model.addAttribute("expectedDocId", documentRepository.findAll().size() + 1);
+
         //화면에 전달할 docForm 정보 객체 : PathVariable 정보
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        //화면에 전달할 empName : 로그인 한 사원 : 기안자(문서 작성자)
-        Employee emp = empService.getEmp(Long.parseLong(p.getName()));
-        model.addAttribute("emp", emp);
+        //화면에 전달할 docWriter : 로그인 한 사원 : 기안자(문서 작성자)
+        Employee docWriter = empService.getEmp(Long.parseLong(p.getName()));
+        model.addAttribute("docWriter", docWriter);
+
+        //화면에 전달할 docWriterStamp
+        String stamp = fileService.getFileUrl(docWriter.getEmpId(), "stamp");
+        model.addAttribute("docWriterStamp", stamp);
 
         return "document/createDoc/" + formNameEn;
     }
@@ -120,17 +129,43 @@ public class CreateDocController {
         }
         model.addAttribute("profiles", profiles);
 
-        //기존에 저장했던 document 정보
-        documentRepository.findById(docId)
-                .ifPresent(document -> model.addAttribute("document", document));
-
         //화면에 전달할 docForm 정보 객체 : PathVariable 정보
         docFormRepository.findByFormNameEn(formNameEn)
                 .ifPresent(docForm -> model.addAttribute("docForm", docForm));
 
-        //화면에 전달할 empName : 기안자(문서 작성자) : 저장된 docWriter
         documentRepository.findById(docId)
-                .ifPresent(document -> model.addAttribute("emp", document.getDocWriter()));
+                .ifPresent(document -> {
+                    //기존에 저장했던 document 정보
+                    model.addAttribute("document", document);
+
+                    //화면에 전달할 docWriter : 기안자(문서 작성자) : 저장된 docWriter
+                    model.addAttribute("docWriter", document.getDocWriter());
+
+                    //화면에 전달할 docWriterStamp
+                    String stamp = fileService.getFileUrl(document.getDocWriter().getEmpId(), "stamp");
+                    model.addAttribute("docWriterStamp", stamp);
+                });
+
+        //결재 도장 칸에 전달할 결재 데이터 apv1, 2, 결재 도장 데이터 apv1, 2 Stamp
+        approvalRepository.findByApvStepAndDocument_DocId(1, docId)
+                .ifPresent(apv1 -> {
+                    //결재 데이터 apv1
+                    model.addAttribute("apv1", apv1);
+
+                    //결재 도장 데이터 apv1Stamp
+                    String apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv1Stamp", apv1Stamp);
+                });
+
+        approvalRepository.findByApvStepAndDocument_DocId(2, docId)
+                .ifPresent(apv2 -> {
+                    //결재 데이터 apv2
+                    model.addAttribute("apv2", apv2);
+
+                    //결재 도장 데이터 apv2Stamp
+                    String apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    model.addAttribute("apv2Stamp", apv2Stamp);
+                });
 
         return "document/createDoc/" + formNameEn;
     }
@@ -152,7 +187,7 @@ public class CreateDocController {
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
         Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
@@ -178,7 +213,7 @@ public class CreateDocController {
 
         List<Long> apvEmpIds = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡupdate refEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡupdate refEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
         documentService.updateDocumentAndApvAndRef(docId, document, apvEmpIds, refEmpIdList, empId);
 
         redirectAttributes.addAttribute("status", true);
