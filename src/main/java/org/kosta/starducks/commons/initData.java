@@ -99,7 +99,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             repository.saveAndFlush(emp);
         }
 
-        // 점검용 사원
+        // 점검용 이현기 사원
         Employee specificEmp = new Employee();
         specificEmp.setEmpId(11L); // empId를 11로 설정
         specificEmp.setStatus(false);
@@ -116,7 +116,25 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
-        //물류 유통부로!
+
+
+//        마스터 계정
+//        Employee MasterEmp = new Employee();
+//        specificEmp.setEmpId(1004L); // empId를 11로 설정
+//        specificEmp.setStatus(false);
+//        specificEmp.setBirth(LocalDate.parse("2023-08-09"));
+//        specificEmp.setEmpTel("010-1004-1004");
+//        specificEmp.setGender("woman");
+//        specificEmp.setEmail("lhg0529@gmail.com");
+//        specificEmp.setAddr("성남시");
+//        specificEmp.setEmpName("나보스");
+//        specificEmp.setPostNo("00025");
+//        specificEmp.setDAddr("분당구");
+//        specificEmp.setPosition(Position.ROLE_BOSS);
+//        specificEmp.setJoinDate(LocalDate.parse("2022-12-20"));
+//        specificEmp.setDept(deptRepository.findById(1).orElse(null));
+//        specificEmp.setPwd(passwordEncoder.encode("1004")); // 비밀번호를 "1q"로 설정
+//        repository.saveAndFlush(MasterEmp);
 
         //초기 vendor 데이터
 //        for(int i = 0; i < 5; i++) {
