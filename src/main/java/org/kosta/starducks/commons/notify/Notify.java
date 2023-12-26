@@ -36,4 +36,5 @@ public class Notify extends BaseTimeEntity {
     public enum NotificationType {
         DOCUMENT, CHAT, POST, SCHEDULE
     }
+
 }

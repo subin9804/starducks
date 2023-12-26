@@ -78,7 +78,8 @@ public class Document implements NotifyInfo {
 
     @Override
     public String getGoUrl() {
-        return "/document/receiveDoc" + docForm.getFormNameEn() + "/" + docId;
+
+        return "/document/receiveDoc/" + docForm.getFormNameEn() + "/" + docId;
     }
 
     @Override

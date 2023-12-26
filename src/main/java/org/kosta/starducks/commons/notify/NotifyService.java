@@ -73,6 +73,9 @@ public class NotifyService {
         String receiverId = receiver.getEmpId().toString();
         String eventId = receiverId + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByEmpId(receiverId);
+
+        System.out.println("=====send 호출됨:::::::::::::" + emitters.size());
+
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
@@ -100,6 +103,8 @@ public class NotifyService {
      * @param data  전송할 데이터 객체
      */
     private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {
+        System.out.println("subscribe !!!!!!!aasdfasdfasdfad됨:" + emitterId);
+
         try {
             emitter.send(SseEmitter.event()
                     .id(eventId)

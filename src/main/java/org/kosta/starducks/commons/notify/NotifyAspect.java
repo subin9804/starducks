@@ -29,13 +29,13 @@ public class NotifyAspect {
         System.out.println("aspect 호출!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("After Returning Advice: " + (result != null));
         System.out.println("this is join point" + joinPoint);
-//        NotifyInfo notifyProxy = (NotifyInfo) result;
-//        notifyService.send(
-//                notifyProxy.getReceiver(),
-//                notifyProxy.getNotificationType(),
-//                NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
-//                "/api/v1/notify/" + (notifyProxy.getGoUrlId())
-//        );
-//        log.info("result = {}", result);
+        NotifyInfo notifyProxy = (NotifyInfo) result;
+        notifyService.send(
+                notifyProxy.getReceivers().get(0),
+                notifyProxy.getNotificationType(),
+                NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
+                "/api/v1/notify" + (notifyProxy.getGoUrl())
+        );
+        log.info("result = {}", notifyProxy.getReceivers().get(0));
     }
 }

@@ -40,47 +40,48 @@ window.document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+})
 
-
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-
-    /** 알림 기능 */
-    const apiUrl = '/api/v1/notify';
-    const authToken = '있으면 넣을 것'
-    // let lastEventId = 1;
+/** 알림 기능 */
+const apiUrl = '/api/v1/notify/subscribe';
+const authToken = '있으면 넣을 것'
+// let lastEventId = 1;
 
 // SSE 엔드포인트 URL로 새 EventSource 생성
-    const eventSource = new EventSource(apiUrl, {
-        headers: {
-            [csrfHeader]: csrfToken, // CSRF 토큰을 헤더에 추가
-            'Last-Event-ID': lastEventId
-        }
-    });
+const eventSource = new EventSource(apiUrl);
 
-// 다양한 SSE 이벤트에 대한 이벤트 리스너 추가
-    eventSource.onmessage = (event) => {
-        console.log('연결이 열렸습니다.', event);
-    }
+eventSource.onopen = () => {
+    // 연결 시 할 일
+    console.log("연결됨!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-    eventSource.onmessage = (event) => {
-        // 수신된 SSE 메시지 처리
-        const eventData = JSON.parse(event.data);
-        console.log('받은 SSE 메시지: ', eventData);
+};
 
-        // SSE 메시지를 처리하는 논리를 여기에 구현하세요
-    };
+console.log('Initial readyState:', eventSource.readyState);
 
-    eventSource.onerror = (event) => {
-        // 오류 처리
-        console.error('오류가 발생했습니다: ', event);
+// SSE 이벤트에 대한 이벤트 리스너
+eventSource.onmessage = (event) => {
+    console.log("헤이")
+    // 수신된 SSE 메시지 처리
+    const eventData = JSON.parse(event.data);
+    console.log('받은 SSE 메시지: ', JSON.stringify(eventData));
+
+    // SSE 메시지를 처리하는 논리를 여기에 구현하세요
+};
+
+eventSource.onerror = (event) => {
+    // 오류 처리
+    console.error('오류가 발생했습니다: ', event);
+    eventSource.close();
+};
+
+// 페이지를 나갈 때 연결 닫기
+window.onbeforeunload = function () {
+    if (eventSource) {
+
         eventSource.close();
-    };
+    }
+};
 
-// 필요한 경우 연결 닫기
-// eventSource.close();
-})
 
 async function errorAlert(message) {
     await Swal.fire({
