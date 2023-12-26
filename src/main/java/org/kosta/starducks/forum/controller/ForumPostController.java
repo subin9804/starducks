@@ -83,7 +83,7 @@ public class ForumPostController {
         return "forum/forum"; // 게시판 메인 페이지 템플릿
     }
 
-    // 게시글 작성 페이지로 이동. 공지 선택 기능은 로그인한 사원이 인사부일때만 보이도록 선택
+    // 게시글 작성 페이지. 공지 선택 기능은 로그인한 사원이 인사부일때만 보이도록 선택
     @GetMapping("/add")
     public String addPostForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         model.addAttribute("post", new ForumPost()); // 타임리프에서 참조하는 이름
@@ -91,6 +91,12 @@ public class ForumPostController {
         Long empId = Long.parseLong(userDetails.getUsername());
         Employee employeeWithDept = empService.getEmployeeWithDepartment(empId);
 
+//        보스 계정이면 공지 등록 버튼이 보이도록 하기 위해서 보스 권한을 갖고 있는 계정인지 확인하기
+        boolean isBoss = userDetails.getAuthorities().stream()
+            .anyMatch(grantedAuthority -> "ROLE_BOSS".equals(grantedAuthority.getAuthority()));
+        model.addAttribute("isBoss", isBoss);
+
+//        인사부 직원인 게 확인되면 공지 버튼이 보인다
         boolean isHrDepartment = employeeWithDept != null &&
             "인사부".equals(employeeWithDept.getDept().getDeptName());
         model.addAttribute("isHrDepartment", isHrDepartment);
@@ -120,15 +126,21 @@ public class ForumPostController {
         return "forum/forumPostDetail";
     }
 
-    // 게시글 수정 페이지로 이동
+    // 게시글 수정 페이지
     @GetMapping("/edit/{id}")
-    public String editPostForm(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String editPostForm(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         ForumPost post = forumPostService.getPostById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + id));
         model.addAttribute("post", post);
 
-        Employee employeeWithDept = empService.getEmployeeWithDepartment(Long.parseLong(principal.getName()));
+        Employee employeeWithDept = empService.getEmployeeWithDepartment(Long.parseLong(userDetails.getUsername()));
 
+        //        보스 계정이면 공지 등록 버튼이 보이도록 하기 위해서 보스 권한을 갖고 있는 계정인지 확인하기
+        boolean isBoss = userDetails.getAuthorities().stream()
+            .anyMatch(grantedAuthority -> "ROLE_BOSS".equals(grantedAuthority.getAuthority()));
+        model.addAttribute("isBoss", isBoss);
+
+//        인사부 직원인 게 확인되면 공지 버튼이 보인다
         boolean isHrDepartment = employeeWithDept != null &&
             "인사부".equals(employeeWithDept.getDept().getDeptName());
         model.addAttribute("isHrDepartment", isHrDepartment);

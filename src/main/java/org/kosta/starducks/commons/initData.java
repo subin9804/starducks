@@ -1,6 +1,7 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.notify.NotifyService;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.fina.entity.ContractStatus;
@@ -62,7 +63,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
 
-
+    private final NotifyService notifyService;
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         //배포 서버 JVM 시간 설정
@@ -116,7 +117,25 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         specificEmp.setDept(deptRepository.findById(4).orElse(null));
         specificEmp.setPwd(passwordEncoder.encode("1q")); // 비밀번호를 "1q"로 설정
         repository.saveAndFlush(specificEmp);
-        //물류 유통부로!
+
+
+//        마스터 계정
+        Employee masterEmp = new Employee();
+        masterEmp.setEmpId(1004L); // empId를 11로 설정
+        masterEmp.setStatus(false);
+        masterEmp.setBirth(LocalDate.parse("2023-08-09"));
+        masterEmp.setEmpTel("010-1004-1004");
+        masterEmp.setGender("woman");
+        masterEmp.setEmail("lhg0529@gmail.com");
+        masterEmp.setAddr("성남시");
+        masterEmp.setEmpName("나보스");
+        masterEmp.setPostNo("00025");
+        masterEmp.setDAddr("분당구");
+        masterEmp.setPosition(Position.ROLE_BOSS);
+        masterEmp.setJoinDate(LocalDate.parse("2022-12-20"));
+        masterEmp.setDept(deptRepository.findById(1).orElse(null));
+        masterEmp.setPwd(passwordEncoder.encode("1004"));
+        repository.saveAndFlush(masterEmp);
 
         //초기 vendor 데이터
 //        for(int i = 0; i < 5; i++) {
@@ -289,6 +308,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 scheduleData.setScheEndDate(endDates[j]);
                 scheduleData.setNotes(notes[j]);
 
+                scheduleData.setScheduleType(scheduleTypes[j]);
                 // Employee 객체 찾기
                 Employee emp = repository.findById(empIds[j]).orElse(null);
                 if (emp != null) {

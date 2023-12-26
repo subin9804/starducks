@@ -20,7 +20,7 @@
     </th:block>
 
     <script>
-        function confirmAdd(storeNo) {
+        function confirmAdd() {
             Swal.fire({
                 title: '등록 확인',
                 text: '해당 정보를 등록 하시겠습니까?',
@@ -32,7 +32,7 @@
                 cancelButtonText: '취소'
             }).then((result) => {
                 if(result.isConfirmed) {
-                    document.getElementById('addAlert').submit();
+                    document.getElementById('form').submit();
                 }
             })
             return false;

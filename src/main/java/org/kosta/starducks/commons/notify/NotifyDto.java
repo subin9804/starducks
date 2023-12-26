@@ -1,0 +1,26 @@
+package org.kosta.starducks.commons.notify;
+
+import lombok.*;
+
+// NotifyService의 send()에서 SSE를 클라이언트에게 전송할 때 이벤트의 데이터로 전송할 DTO
+public class NotifyDto {
+
+    @Getter @Setter @Builder
+    @AllArgsConstructor @NoArgsConstructor
+    public static class Response {
+        String id;
+        String name;
+        String content;
+        String type;
+        String createdAt;
+
+        public static Response createResponse(Notify notify) {
+            return Response.builder()
+                    .content(notify.getContent())
+                    .id(notify.getId().toString())
+                    .name(notify.getReceiver().getEmpName())
+                    .createdAt(notify.getCreatedAt().toString())
+                    .build();
+        }
+    }
+}

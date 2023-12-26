@@ -2,18 +2,18 @@ package org.kosta.starducks.mypage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "PERSONAL_SCHEDULE")
+@Table(name = "MYPAGE_SCHEDULE")
+@ToString(exclude = "employee")
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,10 @@ public class Schedule {
 
     @Column(name = "sche_end_date")
     private LocalDateTime scheEndDate;
+
+    // ScheduleType 열거형 타입 추가
+    @Enumerated(EnumType.STRING)
+    private ScheduleType scheduleType;
 
     @Column(name = "notes")
     private String notes;

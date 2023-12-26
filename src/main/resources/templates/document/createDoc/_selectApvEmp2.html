@@ -25,7 +25,7 @@
                     <i id="magnifierIcon" class="fa-solid fa-magnifying-glass"></i>
 
                     <div th:each="e : ${emps}" class="form-check">
-                        <input type="radio" name="apvEmpId2" th:checked="${e.empId==apvEmpId2}" th:value="${e.empId}"
+                        <input type="radio" name="apvEmpId2" th:checked="${e.empId == apvEmpId2}" th:value="${e.empId}"
                                th:id="${'apvEmpId2_' + e.empId}" onclick="displaySelectedApv2(this)" class="form-check-input">
                         <div class="searchItem">
                             <label th:for="${'apvEmpId2_' + e.empId}" class="form-check-label">

@@ -43,12 +43,13 @@ public class SecurityConfig {
         http
                //.csrf(AbstractHttpConfigurer::disable) // ajax 사용하려면 토큰 필요. 우선은 disable 해둠.  Cross-Site Request Forgery (CSRF) 보호 기능을 비활성화
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/login", "/forgotPwd").permitAll() // 로그인 페이지 및 비밀번호 찾기 페이지 접근 허용
-                    .requestMatchers("/fina/**").hasAuthority("FINA")        // 재무부 페이지에 대한 접근 제어
-                    .requestMatchers("/hr/**").hasAuthority("HR")            // 인사부 페이지에 대한 접근 제어
-                    .requestMatchers("/logistic/**").hasAuthority("LOGISTIC")// 물류유통부 페이지에 대한 접근 제어
-                    .requestMatchers("/general/**").hasAuthority("GENERAL")  // 총무부 페이지에 대한 접근 제어
-                    .anyRequest().authenticated())
+                    .requestMatchers("/login", "/forgotPwd").permitAll() // 모든 사용자에게 로그인 및 비밀번호 찾기 페이지 접근 허용
+                    .requestMatchers("/fina/**").hasAnyAuthority("FINA", "ROLE_BOSS") // 재무부 페이지에 대한 접근 제어 및 보스 권한 추가
+                    .requestMatchers("/hr/**").hasAnyAuthority("HR", "ROLE_BOSS") // 인사부 페이지에 대한 접근 제어 및 보스 권한 추가
+                    .requestMatchers("/logistic/**").hasAnyAuthority("LOGISTIC", "ROLE_BOSS") // 물류유통부 페이지에 대한 접근 제어 및 보스 권한 추가
+                    .requestMatchers("/general/**").hasAnyAuthority("GENERAL", "ROLE_BOSS") // 총무부 페이지에 대한 접근 제어 및 보스 권한 추가
+                    .requestMatchers("/**").authenticated() // 나머지 모든 경로는 로그인한 사용자에게 접근 허용
+                    .anyRequest().authenticated()) // 그 외 모든 요청은 로그인한 사용자만 접근 가능
             .exceptionHandling((exceptions) -> exceptions
             .accessDeniedHandler(accessDeniedHandler()))// 그 외 모든 요청은 인증 필요
             .formLogin(form -> form
