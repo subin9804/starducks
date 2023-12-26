@@ -378,47 +378,68 @@ a p.fcommonBtn {
 /*페이지네이션 스타일 ~~~~~~~~~~~~~~~~~~*/
 .pagination {
     display: flex;
-    justify-content: center;
+    justify-content: center !important;
     list-style: none;
+    align-items: center !important;
 }
+
 
 .pagination a,
 .pagination strong {
     padding: 5px 10px;
     margin: 0 2px;
-    border: 1px solid #ddd;
-    color: #333;
+    border: 1px solid rgb(190, 158, 124);
+    border-radius: 5px;
+    color: rgb(190, 158, 124);
     text-decoration: none;
+    opacity: 1.0 !important;
+    background-color: white;
 }
+
+
+
 
 .pagination a:hover {
-    background-color: #f4f4f4;
+    background-color: rgba(91, 65, 32) !important;
+    color: white !important;
 }
 
-.pagination .current-page,
-.pagination a:hover {
-    background-color: #f0f0f0;
-    border-color: #666;
-}
 
-/* Style for current page */
+/* 현재 페이지 스타일링 */
 .pagination .current-page {
-    background-color: #fff;
-    border-color: #666;
-    color: red;
+    border: 3px solid rgb(150, 108, 55);
+    color: rgb(150, 108, 55);
+    background-color: #ffffff;
     font-weight: bold;
 }
 
-/* Custom styles for first and last page links */
+/* << >> 맨처음과 끝으로 가는 버튼 스타일 */
 .pagination a:first-child,
 .pagination a:last-child {
-    background-color: #ddd;
+    background-color: rgb(150, 108, 55) !important;
+    color: white !important;
 }
 
+/* < > 버튼 스타일링  */
+.next-page {
+    background-color: rgb(190, 158, 124) !important;
+    color: white !important;
+}
+
+.page-number {
+    color : rgb(190, 158, 124) !important;
+}
+
+/* << >> 맨처음과 끝으로 가는 버튼 스타일:hover  */
+.pagination a:first-child:hover,
+.pagination a:last-child:hover {
+    background-color: rgb(98, 70, 36) !important;
+    color: white;
+}
 /* Styles for disabled previous and next links */
 .pagination a[disabled],
 .disabled {
-    color: grey;
+    color: #000000;
     pointer-events: none;
     cursor: default;
 }

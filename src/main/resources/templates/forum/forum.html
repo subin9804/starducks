@@ -77,17 +77,17 @@
 
     <!-- 이전 페이지로 이동 -->
     <a th:classappend="${nowPage == 1} ? 'disabled' : ''"
-       th:href="@{/forum(page=${nowPage - 2})}"> < </a>
+       class="next-page" th:href="@{/forum(page=${nowPage - 2})}"> < </a>
 
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-      <a th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
+      <a class="page-number" th:href="@{/forum(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
          th:text="${page}"></a>
       <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
     </th:block>
 
     <!-- 다음 페이지 이동 -->
     <a th:classappend="${nowPage == totalPages} ? 'disabled' : ''"
-       th:href="@{/forum(page=${nowPage})}"> > </a>
+       class="next-page" th:href="@{/forum(page=${nowPage})}"> > </a>
 
     <!-- 마지막 페이지로 이동 -->
     <a th:href="@{/forum(page=${totalPages - 1})}"> >> </a>
