@@ -16,6 +16,7 @@ public class NotifyController {
 
     public SseEmitter subscribe(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "")String lastEventId) {
+        System.out.println("---------SseEmitter subscribe 일단 호출되긴 함---------------------");
         return notifyService.subscribe(userDetails.getUsername(), lastEventId);
     }
 

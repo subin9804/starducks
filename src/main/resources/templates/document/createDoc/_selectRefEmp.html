@@ -41,7 +41,8 @@
                       <div th:text="${refEmpIdList}"></div>
 
                       <div th:each="e : ${emps}" class="form-check">
-                          <input type="checkbox" name="refEmpIdList" th:checked="${refEmpIdList}" th:value="${e.empId}"
+                          <input type="checkbox" name="refEmpIdList"
+                                 th:checked="${refEmpIdList != null and #lists.contains(refEmpIdList, e.empId)}" th:value="${e.empId}"
                                  th:id="${'refEmpIdList_' + e.empId}" onclick="displaySelectedRefs(this)" class="form-check-input">
                           <div class="searchItem">
                               <label th:for="${'refEmpIdList_' + e.empId}" class="form-check-label">

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let schedules;
     fetchSchedule().then (() => {
 
-        console.log(schedules)
+        // console.log(schedules)
         let events = [];
 
 
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             $('#tschedule').append(tr)
         }
-        console.log(events)
+        // console.log(events)
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // },
                 success: function (data) {
                     schedules = data;
-                    console.log(data)
+                    // console.log(data)
                     resolve(data)
                 },
                 error: function (err) {
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function success(position) {
 
-        console.log(position)
+        // console.log(position)
         // const latitude = position.coords.latitude;
         // const longitude = position.coords.longitude;
 
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const description = res.weather[0].main;
 
                     // const weatherKo = weatherDescKo[weatherId];
-                    console.log(res)
+                    // console.log(res)
 
                     // 날씨 아이콘 가져오기
                     const weatherIcon = res.weather[0].icon;

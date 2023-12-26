@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.kosta.starducks.commons.notify.Notify;
+import org.kosta.starducks.commons.notify.NotifyInfo;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
 
@@ -17,7 +19,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "DOCUMENT")
-public class Document {
+public class Document implements NotifyInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +67,27 @@ public class Document {
 //
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    // 알림 받을 사람들
+    @Override
+    public List<Employee> getReceivers() {
+        List<Employee> receivers = new ArrayList<>();
+        for(Approval app : approvals) {
+            receivers.add(app.getApvEmp());
+        }
+
+        return receivers;
+    }
+
+    @Override
+    public String getGoUrl() {
+        return "/document/receiveDoc" + docForm.getFormNameEn() + "/" + docId;
+    }
+
+    @Override
+    public Notify.NotificationType getNotificationType() {
+        return Notify.NotificationType.DOCUMENT;
+    }
 
 
 //    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
