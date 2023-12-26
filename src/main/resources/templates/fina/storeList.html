@@ -14,6 +14,7 @@
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
     <h3>지점 목록</h3>
+    <br><br><br><br>
 
     <!-- 검색창. 제목 + 내용 검색 가능 -->
     <form class="search-form" method="get" th:action="@{/fina/store/list}" style="display: flex; justify-content: center; align-items: center;">
@@ -22,12 +23,11 @@
         <button type="submit">검색</button>
     </form>
 
-
-    <button class="btn btn-primary" type="button" onclick="location.href='/fina/store/new'"
+    <button class="commonBtn register-button" type="button" onclick="location.href='/fina/store/new'"
             style="float: right">
         추가하기
     </button>
-    <br><br>
+    <br><br><br>
 
     <!--    지점 목록 테이블-->
     <table class="table table-hover">
