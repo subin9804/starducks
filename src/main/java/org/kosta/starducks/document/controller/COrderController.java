@@ -221,31 +221,31 @@ public class COrderController {
 //        return "redirect:/document/submitDoc/" + formNameEn + "/" + docId;
 //    }
 //
-//    /**
-//     * 문서 작성 임시 저장 처리 - 첫 submit이 임시저장 - /{formNameEn} 에서 진입
-//     */
-//    @PostMapping("/temp")
-//    public String submitDocumentTemp(Document document,
-//                                  @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
-//                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
-//                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
-//                                  RedirectAttributes redirectAttributes) {
-//
-//        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
-//        refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
-//        Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
-//
-//        String formCode = savedDoc.getDocForm().getFormCode();
-//
-//        String formNameEn = docFormRepository.findByFormCode(formCode)
-//                .map(DocForm::getFormNameEn)
-//                .orElse(null);
-//
-//        Long docId = savedDoc.getDocId();
-//
-//        redirectAttributes.addAttribute("tmpStatus", true);
-//        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
-//    }
+    /**
+     * 문서 작성 임시 저장 처리 - /{formNameEn} 에서 진입
+     */
+    @PostMapping("/temp")
+    public String submitDocumentTemp(Document document,
+                                  @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
+                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
+                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
+                                  RedirectAttributes redirectAttributes) {
+
+        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
+        refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
+        Document savedDoc = documentService.tempDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
+
+        String formCode = savedDoc.getDocForm().getFormCode();
+
+        String formNameEn = docFormRepository.findByFormCode(formCode)
+                .map(DocForm::getFormNameEn)
+                .orElse(null);
+
+        Long docId = savedDoc.getDocId();
+
+        redirectAttributes.addAttribute("tmpStatus", true);
+        return "redirect:/document/createDoc/" + formNameEn + "/" + docId;
+    }
 //
 //    /**
 //     * 문서 작성 임시 저장 처리 - 임시저장 submit 처음 아님 - /{formNameEn}/{docId} 에서 진입

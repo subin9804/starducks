@@ -31,6 +31,7 @@ myModal.addEventListener('shown.bs.modal', () => {
 //임시저장 submit 처리
 //
 function submit2(form) {
+
     form.action = '/document/createDoc/temp';
     form.submit();
     return true;
