@@ -10,17 +10,53 @@ document.addEventListener('DOMContentLoaded', function () {
     var empId = $('#empId').val();
     console.log("empId ==> " + empId);
 
-    // 모달을 열 때 호출되는 함수
+// 모달을 열 때 호출되는 함수
     function showModal() {
         modal.style.display = 'block';
+
+        // 모달 창에 CSS를 적용
+        modal.style.cssText = `
+        display: block;
+    `;
+
+        setTimeout(function () {
+            $('#bookingForm').css({
+                'display': 'block',
+                'transform': 'translateY(50px)',
+                'opacity': '1'
+            });
+        }, 10);
+
+        $('body').css('overflow', 'hidden');
     }
 
-    // 모달을 닫을 때 호출되는 함수
+// 모달의 "x" 모양을 나타내는 요소를 가져옵니다.
+    var closeModalBtn = document.getElementById('closeModalBtn');
+
+// "x" 모양 요소에 클릭 이벤트 리스너를 추가합니다.
+    closeModalBtn.addEventListener('click', function () {
+        hideModal(); // 모달을 닫는 함수 호출
+    });
+
+
+// 모달을 닫을 때 호출되는 함수
     function hideModal() {
         modal.style.display = 'none';
+
+        // 모달 창에서 CSS를 제거
+        modal.style.cssText = '';
+
+        $('#bookingForm').css({
+            'display': 'none',
+            'transform': '',
+            'opacity': ''
+        });
+
+        $('body').css('overflow', '');
     }
 
-    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
+
+// 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
     function fetchShowSingleSchedule(empId) {
         return axios.get('/mypage/schedule/api/show', {
             params: {empId: empId}
@@ -43,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // fetchAndAddEventsToCalendar() 함수 내에서 호출 직전
+// fetchAndAddEventsToCalendar() 함수 내에서 호출 직전
     function fetchAndAddEventsToCalendar() {
         console.log("fetchAndAddEventsToCalendar 함수 호출 직전:", new Date());
         fetchShowSingleSchedule(empId)
@@ -58,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // 모달 내의 제출 버튼 이벤트 리스너
+// 모달 내의 제출 버튼 이벤트 리스너
     function handleSubmitButtonClick(event) {
         event.preventDefault();
 
@@ -116,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // 캘린더 객체 생성
+// 캘린더 객체 생성
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
@@ -158,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("addEventsToCalendar 함수 호출됨", events); // 확인을 위한 로그 출력
     }
 
-    // 서버로부터 일정 정보를 가져오는 함수 정의
+// 서버로부터 일정 정보를 가져오는 함수 정의
     calendar.setOption('eventSources', [
         {
             url: '/mypage/schedule/api/show',
@@ -173,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ]);
 
-    // 초기 일정 로드
+// 초기 일정 로드
     fetchShowSingleSchedule(empId)
         .then(function (data) {
             console.log("일정 데이터를 불러옴:", new Date());
@@ -187,4 +223,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     calendar.render();
-});
+})
+;

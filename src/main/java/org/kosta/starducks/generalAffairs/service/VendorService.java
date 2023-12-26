@@ -9,6 +9,8 @@ import org.kosta.starducks.fina.entity.VendorBusinessSector;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.repository.VendorRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,13 +73,13 @@ public class VendorService {
     public List<Vendor> findAll() {
         return vendorRepository.findAll();
     }
-//    public Page<Vendor> getAllVendors(Pageable pageable) {
-//        return vendorRepository.findAll(pageable);
-//    }
-//
-//    public Page<Vendor> vendorSearchList(String searchKeyword, Pageable pageable) {
-//        return vendorRepository.findByVendorNameContaining(searchKeyword, pageable);
-//    }
+    public Page<Vendor> getAllVendors(Pageable pageable) {
+        return vendorRepository.findAll(pageable);
+    }
+
+    public Page<Vendor> vendorSearchList(String searchKeyword, Pageable pageable) {
+        return vendorRepository.findByVendorNameContaining(searchKeyword, pageable);
+    }
 
     /**
      * 거래처 수정
