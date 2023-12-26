@@ -6,6 +6,8 @@ import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.generalAffairs.entity.Vendor;
+import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
+    private final VendorService vendorService;
 
     /**
      * docWriter(기안자, 문서 작성자)의 EmpId로 document 리스트 가져오기 - 결재 상신함 페이징 처리
@@ -261,6 +264,37 @@ public class DocumentService {
         return savedDoc;
     }
 
+
+    public Document saveDocumentAndApvAndVen(Document document, List<Long> apvEmpIdList, int selVendorId, Long empId) {
+        //Document에 저장할 Approval을 저장
+        List<Approval> approvalList = new ArrayList<>();
+        int i = 1;
+        for (Long apvEmpId : apvEmpIdList) {
+            Approval approval = new Approval();
+            approval.setApvStep(i++);
+            approval.setApvStatus(ApvStatus.PENDING);
+            empRepository.findById(apvEmpId)
+                    .ifPresent(approval::setApvEmp);
+            approval.setDocument(document); //안해줘도 연결되나...?
+
+            approvalList.add(approval);
+            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
+        }
+
+        //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
+        empRepository.findById(empId)
+                .ifPresent(document::setDocWriter);
+        document.setDocDate(LocalDateTime.now());
+        document.setDocStatus(DocStatus.PENDING_DOC);
+        document.setApprovals(approvalList);
+        Vendor byId = vendorService.findById(selVendorId);
+        document.setVendor(byId);
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
+        Document savedDoc = documentRepository.save(document);
+
+        return savedDoc;
+    }
+
     /**
      * document와 자식 객체인 Approval, RefEmployee 객체 수정 - submit 처음 아님 (임시저장 이력 있는 경우, 수정하는 경우)
      */
@@ -401,7 +435,7 @@ public class DocumentService {
     }
 
     /**
-     * docId로 RefEmpId 리스트 가져오기
+     * docId로 RefEmpId 리스트 가져오기 (String -> List Parsing)
      */
     public List<Long> getRefEmpIdsByDocId(Long docId) {
         // 문서 ID를 기반으로 문서를 가져옴
@@ -421,5 +455,51 @@ public class DocumentService {
                 .orElse(Collections.emptyList());
 
         return refEmpIdList;
+    }
+
+    /**
+     * refEmpIdList을 화면에 전달할 refEmpNames String으로 변환
+     */
+    public String getRefEmpNamesByDocId(Long docId) {
+        List<Long> refEmpIdList = getRefEmpIdsByDocId(docId);
+        List<String> refEmpNames = new ArrayList<>();
+        for (Long refEmpId : refEmpIdList) {
+            empRepository.findById(refEmpId)
+                    .ifPresent(refEmp -> {
+                        String refEmpName = refEmp.getEmpName();
+                        refEmpNames.add(refEmpName);
+                    });
+        }
+        return refEmpNames.toString().replace("[", "").replace("]", "");
+    }
+
+    /**
+     * document 생성 시 만들어진 apvStatus, apvComment, apvDate가 빈 approval 객체에 값 저장
+     */
+    public Approval saveApproval(Approval approval, Long docId, Long empId) {
+        Approval existingApv = approvalRepository.findByDocument_DocIdAndApvEmp_EmpId(docId, empId).get();
+        existingApv.setApvStatus(approval.getApvStatus());
+        existingApv.setApvComment(approval.getApvComment());
+        existingApv.setApvDate(LocalDateTime.now());
+
+        return approvalRepository.save(existingApv);
+    }
+
+    /**
+     * ApvState에 따라 DocState 변경
+     */
+    public void updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
+        List<String> requiredStep2 = Arrays.asList("draft", "reqForVac"); //결재 두 단계인 양식명
+        documentRepository.findById(docId).ifPresent(document -> {
+            if (approval.getApvStatus() == ApvStatus.APPROVED && requiredStep2.contains(document.getDocForm().getFormNameEn())) {
+                document.setDocStatus(existingApv.getApvStep() == 1 ? DocStatus.IN_PROGRESS : DocStatus.APPROVED_DOC);
+            } else if (approval.getApvStatus() == ApvStatus.APPROVED) {
+                //결재 한 단계인 경우는 1단계 승인 시 문서 최종 승인 상태로 변경
+                document.setDocStatus(DocStatus.APPROVED_DOC);
+            } else {
+                document.setDocStatus(DocStatus.REJECTED_DOC);
+            }
+            documentRepository.save(document);
+        });
     }
 }

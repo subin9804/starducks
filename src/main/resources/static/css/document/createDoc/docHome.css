@@ -46,27 +46,43 @@
 }
 .urgent {
      top: 20px;
-     right: 20px;
+     right: 30px;
      background-color: #FF5B5B;
      color: white;
      width: 50px;
-     height: 26px;
+     height: 24px;
      text-align: center;
      border-radius: 15px;
  }
-.formName {
-    bottom: 80px;
-    left: 20px;
+.docStatus {
+    top: 20px;
+    right: 10px;
+    margin: 0 5px;
+    width: 50px;
+    height: 24px;
+    border-radius: 15px;
+    text-align: center;
 }
 .docTitle {
-    bottom: 50px;
+    bottom: 80px;
     left: 20px;
     background-color: gray;
 }
-.docContent {
+.formName {
+    bottom: 50px;
+    left: 20px;
+}
+.docWriterInfo {
     bottom: 20px;
     left: 20px;
 }
+/*.docWriter {*/
+/*    bottom: 20px;*/
+/*    left: 20px;*/
+/*}*/
+/*.docWriterInfo, .docWriterPosi {*/
+/*    display: inline-block;*/
+/*}*/
 .fa-arrow-right-from-bracket {
     bottom: 20px;
     right: 20px;

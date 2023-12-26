@@ -112,7 +112,7 @@
         <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
         <input type="password" id="newPassword" placeholder="영문,숫자 조합 8자 이상" disabled>
         <input type="password" id="newPasswordConfirm" placeholder="영문,숫자 조합 8자 이상" disabled>
-        <button type="button" id="updatePasswordButton" onclick="updatePassword()">비밀번호 변경 확인</button>
+        <button type="button" id="updatePasswordButton" >비밀번호 변경 확인</button>
       </div>
       <div class="right-section">
         <button type="button" class="cpwd-confirmBtn" onclick="checkCurrentPassword()">확인</button>
@@ -268,6 +268,8 @@ document.getElementById("form").onsubmit = function(event) {
       if (!isValid) {
         event.preventDefault(); // 유효하지 않으면 폼 제출 방지
       }
+
+      updatePassword();
     };
 
     function updatePassword() {
@@ -331,7 +333,7 @@ document.getElementById("form").onsubmit = function(event) {
       // 페이지 로드 시 empId 값을 확인
       checkEmpId();
 
-      // 쿠키에서 showAlert 값을 가져와서 확인
+      // 쿠키에서 haveToChange 값을 가져와서 확인
       function getCookie(name) {
         var value = "; " + document.cookie;
         console.log(value);
@@ -341,10 +343,10 @@ document.getElementById("form").onsubmit = function(event) {
 
       var haveToChange = getCookie("haveToChange");
 
-      // showAlert 값이 true이면 alert 창을 띄우고 사용자에게 메시지를 보여줌
+      // haveToChange 값이 true이면 alert 창을 띄우고 사용자에게 메시지를 보여줌
       if (haveToChange === 'true') {
 
-        errorAlert("비밀번호를 변경해주세요!")
+        warning("비밀번호를 변경해주세요!")
         // haveToChange 값을 false로 설정하여 다음에 페이지를 로드할 때 alert를 표시하지 않도록 함
         document.cookie = "haveToChange=false; path=/";
       }

@@ -10,6 +10,7 @@ import org.kosta.starducks.commons.notify.NotifyInfo;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,11 @@ public class Document implements NotifyInfo {
     private LocalDateTime apvDeadline;
 
     //발주서 납품기한일
-    private LocalDateTime orderDeadline;
+    private LocalDate orderDeadline;
     //수신처
     @ManyToOne
     @JoinColumn(name ="vendor_id")
     private Vendor vendor;
-
-
 
 
     @Enumerated(EnumType.STRING)
@@ -54,7 +53,6 @@ public class Document implements NotifyInfo {
     @JoinColumn(name = "form_code", nullable = false)
     private DocForm docForm;
 
-    //사용하는 중인지?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_writer_id", nullable = false)
     private Employee docWriter;
@@ -64,7 +62,6 @@ public class Document implements NotifyInfo {
 
     private String refEmpIds;
 
-//
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 

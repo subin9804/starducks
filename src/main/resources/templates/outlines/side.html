@@ -11,7 +11,7 @@
             <input class="" type="radio" id="myPage" name="nav" aria-controls="flush-myPage"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('mypage')} ? true">
             <label for="myPage">
-                <a th:href="@{/mypage/attendance}"><i class="fa-solid fa-table-cells-large"></i>&ensp;마이페이지</a>
+                <a th:href="@{/mypage/attendance}"><i class="fa-solid fa-list-check"></i>&ensp;마이페이지</a>
             </label>
         </div>
         <ul id="flush-myPage"
@@ -45,7 +45,7 @@
             <input class="" type="radio" id="forum" name="nav"
                    th:checked="${@menu.getMenu() != null && @menu.getMenu().equals('forum')} ? true">
             <label for="forum">
-                <a th:href="@{/forum}"><i class="fa-regular fa-newspaper"></i>&ensp;전사 게시판</a>
+                <a th:href="@{/forum}"><i class="fa-solid fa-clipboard-list"></i>&ensp;전사 게시판</a>
             </label>
         </div>
     </div>

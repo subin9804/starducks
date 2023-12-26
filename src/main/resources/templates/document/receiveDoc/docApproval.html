@@ -43,5 +43,20 @@
         </form>
     </div>
   </div>
+    <script>
+        var statusSelect = document.getElementById('apvStatus');
+        // 긴급 여부를 표시할 곳
+        var rejectedDisplay = document.getElementById('rejectedDisplay');
+        // Select의 변경 이벤트 감지
+        statusSelect.addEventListener('change', function() {
+            // Select 값이 'REJECTED'이면 긴급 표시
+            if (statusSelect.value.toString() === 'REJECTED') {
+                rejectedDisplay.innerHTML = '<h2 class="rejected-sticker">반려</h2>';
+            } else {
+                // 다른 값이면 표시 제거
+                rejectedDisplay.innerHTML = '';
+            }
+        });
+    </script>
 </main>
 </html>

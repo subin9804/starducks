@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jdt.internal.compiler.problem.AbortType;
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
@@ -12,6 +13,7 @@ import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.entity.OrderItem;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.document.repository.OrderItemRepository;
 import org.kosta.starducks.document.service.DocumentService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
@@ -20,6 +22,7 @@ import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +30,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.List;
 
 @Controller
 @RequestMapping("/document/createDoc")
 @RequiredArgsConstructor
+@Slf4j
 public class COrderController {
     private final DocumentService documentService;
 
@@ -44,7 +50,7 @@ public class COrderController {
     private final EmpService empService;
     private final VendorService vendorService;
     private final ProductService productService;
-
+    private final OrderItemRepository oiRepository;
 
     /**
      * 문서 작성 페이지
@@ -147,48 +153,50 @@ public class COrderController {
                                  @RequestParam(name = "apvEmpId1") Long apvEmpId1,
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                  @RequestParam(name = "selVendorId") int selVendorId,
-                                 @RequestParam(name = "orderList") String orderList) throws JsonProcessingException
-//
-//                                 RedirectAttributes redirectAttributes)
+                                 @RequestParam(name = "orderList") String orderList1,
+                                 RedirectAttributes redirectAttributes) throws JsonProcessingException
     {
         String formNameEn = "orderForm";
-
-
-
+        Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
 
         //품목 저장 메서드
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode orderListNode = objectMapper.readTree(orderList);
+        JsonNode orderListNode = objectMapper.readTree(orderList1);
+        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
+        List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
+        Document savedDoc = documentService.saveDocumentAndApvAndVen(document, apvEmpIdList, selVendorId, empId);
 
         //JsonNode에서 각 항목 추출
         for(JsonNode orderItemNode :orderListNode){
             int productCode = orderItemNode.get("productCode").asInt();
             int quantity = orderItemNode.get("quantity").asInt();
+            Product product = productService.getProduct((long) productCode).get();
 
-            OrderItem orderItem = new OrderItem(productCode, quantity);
-            document.getOrderItems().add(orderItem);
+            OrderItem orderItem = new OrderItem(product, quantity);
+            orderItem.setDocument(document);
+            oiRepository.save(orderItem);
+            savedDoc.getOrderItems().add(orderItem);
         }
 
+//        String s = savedDoc.getOrderItems().get(0).getProduct().getProductName();
+//        System.out.println(s);
+        redirectAttributes.addAttribute("status", true);
 
-        Long empId = Long.parseLong(p.getName()); //로그인 한 사원 번호
 
 
-        String s = "Vendor Id는" + selVendorId + "첫번째 품목 수량:";
-
-        //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
-       List<Long> apvEmpIdList = Arrays.asList(apvEmpId1,apvEmpId2);
-
-//        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList);
-//
-//        redirectAttributes.addAttribute("docId", savedDoc.getDocId());
-//        redirectAttributes.addAttribute("status", true);
-
-        return s;
-        //리턴되는 페이지 경로..!!!!
-        //return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/submitDoc/" + formNameEn + "/"+ savedDoc.getDocId();
     }
 
 
+//        String string = savedDoc.getDocDate().toString();
+//      //자동으로 매핑이 안되어서 service에서 저장함.
+//        //납품기한일
+//        String string1 = savedDoc.getOrderDeadline().toString();
+//
+//        String s = "수신처 이름은?" +savedDoc.getVendor().getVendorName() +"기안일" +string +string1 ;
+//
+//        return s;
+    //리턴되는 페이지 경로..!!!!
 
 
 

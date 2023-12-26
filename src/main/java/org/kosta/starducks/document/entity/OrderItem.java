@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.kosta.starducks.generalAffairs.entity.Product;
 
 @Data
 @Entity
@@ -18,7 +19,10 @@ public class OrderItem {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long orderItemId;
 
-    private Long productCode;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="product_code")
+    private Product product;
 
     private int quantity;
 
@@ -27,8 +31,8 @@ public class OrderItem {
 
 
     // 생성자
-    public OrderItem(long productCode, int quantity) {
-        this.productCode = productCode;
+    public OrderItem(Product product, int quantity) {
+        this.product = product;
         this.quantity = quantity;
     }
 

@@ -61,11 +61,10 @@
               목록으로</button>
 
           <button th:if="${document.docStatus.toString() == 'PENDING_DOC'}" class="edit-button" type="button"
-                  th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
-                  >수정</button>
-          <button th:if="${document.docStatus.toString() != 'PENDING_DOC'}" class="edit-button disabled" type="button"
-                  th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|"
-          >수정</button>
+                  th:onclick="|location.href='@{/document/createDoc/{formNameEn}/{docId}(formNameEn=${docForm?.formNameEn},docId=${document?.docId})}'|">
+              수정</button>
+          <button th:if="${document.docStatus.toString() != 'PENDING_DOC'}" class="edit-button disable-btn" type="button">
+              수정</button>
       </div>
 
 <!--      <a th:href="@{|/document/createDoc/${docForm?.formNameEn}/${document?.docId}|}">수저엉</a>-->

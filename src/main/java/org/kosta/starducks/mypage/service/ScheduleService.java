@@ -2,7 +2,6 @@ package org.kosta.starducks.mypage.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.mypage.dto.ScheduleDTO;
 import org.kosta.starducks.mypage.entity.Schedule;
 import org.kosta.starducks.mypage.repository.ScheduleRepository;
@@ -22,7 +21,6 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class ScheduleService {
-    private final EmpRepository empRepository;
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
 

@@ -91,6 +91,15 @@ async function errorAlert(message) {
     })
 }
 
+async function warning(message) {
+    await Swal.fire({
+        icon: "info",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
 async function successAlert(message) {
     Swal.fire({
         icon: "success",

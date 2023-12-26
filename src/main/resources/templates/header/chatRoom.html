@@ -24,16 +24,20 @@
     <h1 class="chat-room-title" th:text="${roomName}"></h1>
   </div>
 </header>
+
 <div id="chat-room">
   <!-- 메시지 반복 출력 -->
-  <div th:class="${message.senderId == currentUserId} ? 'chat-message-mine' : 'chat-message-other'"
-       th:each="message : ${messages}">
-    <div class="chat-message-sender-name" th:if="${message.senderId != currentUserId}"
-         th:text="${message.senderName}"></div>
+  <div th:each="message : ${messages}"
+       th:classappend="${message.senderId == currentUserId} ? 'chat-message-mine' : 'chat-message-other'">
+
+    <!-- 다른 사용자의 이름 표시 -->
+    <div th:if="${message.senderId != currentUserId}" class="chat-message-sender-name" th:text="${message.senderName}"></div>
 
     <div class="chat-message-container"> <!-- 메시지 및 날짜 컨테이너 -->
-      <div class="chat-message-content" th:text="${message.message}"></div>
-      <div class="chat-message-date" th:text="${message.createdDate}"></div>
+      <div class="message-and-date-container">
+        <div class="chat-message-content" th:text="${message.message}"></div>
+        <div class="chat-message-date" th:text="${message.createdDate}"></div>
+      </div>
     </div>
   </div>
 </div>
