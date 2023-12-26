@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
+import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -312,23 +313,18 @@ public class DocumentService {
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
         for (Long apvEmpId : apvEmpIdList) {
-//            if (apvEmpId != null) { // 결재자 선택하지 않고 임시저장 한 경우
-                Approval approval = new Approval();
-                approval.setApvStep(i++);
-                approval.setApvStatus(ApvStatus.PENDING);
+            Approval approval = new Approval();
+            approval.setApvStep(i++);
+            approval.setApvStatus(ApvStatus.PENDING);
+            if (apvEmpId != null) {
                 empRepository.findById(apvEmpId)
-                        .ifPresentOrElse(
-                                employee -> approval.setApvEmp(employee),
-                                () -> approval.setApvEmp(null) // 결재자 선택하지 않고 임시저장 한 경우
-                        );
-                approval.setDocument(document); //안해줘도 연결되나...?
+                        .ifPresent(employee -> approval.setApvEmp(employee));
+            } else {
+//                approval.setApvEmp(null); //empId가 없이 저장돼서 에러
+            }
+            approval.setDocument(document); //안해줘도 연결되나...?
 
-                approvalList.add(approval);
-//            } else {
-//                Approval approval = null;
-//
-//                approvalList.add(approval);
-//            }
+            approvalList.add(approval);
         }
 
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
@@ -393,7 +389,10 @@ public class DocumentService {
 
         // Approval 엔터티에서 apvEmpId 리스트 추출
         List<Long> apvEmpIds = approvals.stream()
-                .map(approval -> approval.getApvEmp().getEmpId())
+                .map(approval -> {
+                    Employee apvEmp = approval.getApvEmp();
+                    return (apvEmp != null) ? apvEmp.getEmpId() : null;
+                })
                 .collect(Collectors.toList());
 
         return apvEmpIds;
