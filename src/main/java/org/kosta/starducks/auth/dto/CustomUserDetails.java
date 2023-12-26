@@ -3,6 +3,7 @@ package org.kosta.starducks.auth.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.roles.Position;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +39,12 @@ public Collection<? extends GrantedAuthority> getAuthorities() {
   } else if (deptName.equals("총무부")) {
     authorities.add(new SimpleGrantedAuthority("GENERAL"));
   }
+
+  // Position.ROLE_BOSS를 가진 경우 마스터 권한 추가
+  if (employee.getPosition() == Position.ROLE_BOSS) {
+    authorities.add(new SimpleGrantedAuthority("ROLE_BOSS"));
+  }
+
 
   return authorities;
 }

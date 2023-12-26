@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <th:block sec:authorize="hasAuthority('HR')">
+    <th:block sec:authorize="hasAuthority('HR') or hasAuthority('ROLE_BOSS')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="hr" name="nav"
@@ -67,7 +67,7 @@
     </div>
     </th:block>
 
-    <th:block sec:authorize="hasAuthority('LOGISTIC')">
+    <th:block sec:authorize="hasAuthority('LOGISTIC') or hasAuthority('ROLE_BOSS')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="logistic" name="nav" aria-controls="flush-logistic"
@@ -83,7 +83,7 @@
         </ul>
     </div>
     </th:block>
-    <th:block sec:authorize="hasAuthority('GENERAL')">
+    <th:block sec:authorize="hasAuthority('GENERAL') or hasAuthority('ROLE_BOSS')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="general" name="nav" aria-controls="flush-general"
@@ -100,7 +100,7 @@
     </div>
     </th:block>
 
-    <th:block sec:authorize="hasAuthority('FINA')">
+    <th:block sec:authorize="hasAuthority('FINA') or hasAuthority('ROLE_BOSS')">
     <div class="accro">
         <div class="head">
             <input class="" type="radio" id="fina" name="nav" aria-controls="flush-fina"
