@@ -24,10 +24,10 @@
         </div>
         <div class="one-line">
             <form th:action="@{/logistic/stock/warehouse/list}" method="get">
-                <input type="text" name="searchKeyword" placeholder="찾으실 품목 이름 입력하세요">
+                <input type="text" name="searchKeyword" placeholder="찾으실 품목 이름을 입력하세요">
                 <button class="search" type="submit">검색</button>
             </form>
-            <a th:href="@{/logistic/inbound/warehouse/add}">
+            <a th:href="@{/document/createDoc}">
                 <button class="commonBtn register-button" type="submit">발주 신청</button>
             </a>
         </div>
