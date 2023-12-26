@@ -426,6 +426,7 @@ a p.fcommonBtn {
     color: white !important;
 }
 
+/* 페이지 번호 부분 스타일링 */
 .page-number {
     color : rgb(190, 158, 124) !important;
 }
