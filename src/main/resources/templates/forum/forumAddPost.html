@@ -21,7 +21,7 @@
     <input id="postTitle" placeholder="제목" required th:field="*{post.postTitle}" type="text">
 
     <!-- 공지사항 체크박스: 인사부 직원일 경우에만 표시 -->
-    <div class="checkbox-container" th:if="${isHrDepartment}">
+    <div class="checkbox-container" th:if="${isHrDepartment || isBoss}">
       <input id="postNotice" name="postNotice" th:checked="${post.postNotice}" type="checkbox">
       <label for="postNotice">공지로 등록</label>
     </div>

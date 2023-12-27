@@ -278,7 +278,7 @@ input[type="search"] {
 }
 
 .chat-room-employees {
-    max-width: 380px; /* 최대 너비 설정 */
+    max-width: 250px; /* 최대 너비 설정 */
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

@@ -54,15 +54,27 @@ public class StockController {
 
         }
 
+
+        // 페이지 조건 생성
+
         int nowPage = allInventory.getPageable().getPageNumber() + 1;
         //pageable에서 넘어온 현재 페이지를 가져온다.
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, allInventory.getTotalPages());
 
+        int totalPages = allInventory.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
+
         m.addAttribute("products", allInventory);
         m.addAttribute("nowPage", nowPage);
         m.addAttribute("startPage", startPage);
         m.addAttribute("endPage", endPage);
+        m.addAttribute("totalPages", totalPages);
         return "logistic/InventoryList";
     }
 
@@ -100,10 +112,48 @@ public class StockController {
 
 
     @GetMapping("/store/list")
-    public String getAllInventories(Model m) {
+    public String getAllStoreInventories(Model m,
+                                    @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                    @RequestParam(name = "searchKeyword", required = false) String searchKeyword) {
+
+
+
+        Page<StoreInventory> allStoreInventories = null;
+        if (searchKeyword == null) {
+            allStoreInventories = storeInventoryService.getAllStoreInventories(pageable);
+
+        } else {
+            allStoreInventories = storeInventoryService.storeInventorySearchList(searchKeyword, pageable);
+
+        }
+
+
+        // 페이지 조건 생성
+
+        int nowPage = allStoreInventories.getPageable().getPageNumber() + 1;
+        //pageable에서 넘어온 현재 페이지를 가져온다.
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, allStoreInventories.getTotalPages());
+
+        int totalPages = allStoreInventories.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
+
+
+
         List<StoreInventory> allInventories = storeInventoryService.getAllInventories();
 
-        m.addAttribute("inventories", allInventories);
+        m.addAttribute("inventories", allStoreInventories);
+        m.addAttribute("nowPage", nowPage);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
+        m.addAttribute("totalPages", totalPages);
+
+
         return "logistic/StoreInventoryList";
 
     }

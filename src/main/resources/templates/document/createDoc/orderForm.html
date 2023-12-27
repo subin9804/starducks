@@ -130,7 +130,7 @@
                 <div class="input-wrap2">
                     <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|" th:text="목록으로">목록으로</button>
                     <button th:if="${document?.docId == null}"
-                            class="edit-button" type="button" onclick="return submit2(this.form);" th:text="임시저장">임시저장</button>
+                            class="edit-button" type="button" onclick="return submit22(this.form);">임시저장</button>
                     <button th:if="${document?.docId != null && document?.docStatus.toString() == 'TEMP_STORED'}"
                             class="edit-button" type="button" onclick="return submit3(this.form);" th:text="재임시저장">재임시저장</button>
                     <button class="register-button"  type="submit" th:text="상신" onclick="submitForm()">상신</button>
@@ -257,22 +257,6 @@
 
                     </table>
 
-                    <!--                <table class="doc-content-box">-->
-                    <!--                    <tr class="approver">-->
-                    <!--                        <td class="col-th">제목</td>-->
-                    <!--                        <td><span id="docTitleOut"></span></td>-->
-                    <!--                    </tr>-->
-                    <!--                    <tr class="doc-info">-->
-                    <!--                        <td class="col-th">내용</td>-->
-                    <!--                        <td class="docContentOut"><span id="docContentOut"></span></td>-->
-                    <!--                    </tr>-->
-                    <!--                </table>-->
-                    <!--                <table class="attached-files-box">-->
-                    <!--                    <tr class="attached-files">-->
-                    <!--                        <td class="col-th">첨부파일</td>-->
-                    <!--                        <td>내용</td>-->
-                    <!--                    </tr>-->
-                    <!--                </table>-->
                 </div>
 
             </div>
