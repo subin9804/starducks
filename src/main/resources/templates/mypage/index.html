@@ -62,6 +62,7 @@
         <!-- 전자결재함 -->
         <section class="widget content" id="widgetDoc">
             <h4>전자결재함</h4>
+            <h4 th:if="${#lists.isEmpty(documents)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
             <table class="mypageTable">
                 <thead>
                 <tr>

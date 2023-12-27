@@ -35,18 +35,8 @@
     left: 20px;
 }
 .urgent {
-    top: 20px;
-    right: 20px;
-    background-color: #FF5B5B;
-    color: white;
-    width: 50px;
-    height: 26px;
-    text-align: center;
-    border-radius: 15px;
-}
-.urgent {
      top: 20px;
-     right: 30px;
+     right: 67px;
      background-color: #FF5B5B;
      color: white;
      width: 50px;
