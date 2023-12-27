@@ -400,8 +400,10 @@ public class DocumentService {
         int apvStep = 1;
         for (Long apvEmpId : apvEmpIdList) {
             //기존 docId & apvStep으로 저장됐던 Approval의 ApvEmp 다시 set
-            empRepository.findById(apvEmpId) //!!!!!!!
-                    .ifPresent(existingApvList.get(apvStep - 1)::setApvEmp);
+            if (apvEmpId != null) {
+                empRepository.findById(apvEmpId) //!!!!!!!
+                        .ifPresent(existingApvList.get(apvStep - 1)::setApvEmp);
+            }
             apvStep++;
         }
 
