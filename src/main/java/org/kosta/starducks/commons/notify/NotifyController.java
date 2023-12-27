@@ -18,7 +18,7 @@ public class NotifyController {
     @GetMapping(value = "/subscribe", produces = "text/event-stream")
     public SseEmitter subscribe(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "")String lastEventId) throws IOException {
-        System.out.println("---------SseEmitter subscribe 일단 호출되긴 함---------------------");
+//        System.out.println("---------SseEmitter subscribe 일단 호출되긴 함---------------------");
         SseEmitter emitter = notifyService.subscribe(userDetails.getUsername(), lastEventId);
 
         return emitter;

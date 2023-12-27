@@ -64,7 +64,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
         eventSource.onopen = () => {
             // 연결 시 할 일
-            console.log("연결됨!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            // console.log("연결됨!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         };
 
         console.log('Initial readyState:', eventSource.readyState);
@@ -72,7 +72,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         // SSE 이벤트에 대한 이벤트 리스너
         eventSource.onmessage = (event) => {
             const eventData = event.data;
-            console.log('받은 SSE 메시지: ', eventData);
+            // console.log('받은 SSE 메시지: ', eventData);
 
             // 받은 데이터를 사용하여 푸시 알림창을 생성
             handleEventUpdate(eventData);

@@ -78,6 +78,7 @@
                         <td th:text="*{docTitle}"></td>
                         <td th:text="*{docWriter.empName}"></td>
                         <td th:if="*{urgent}" th:text="긴급" class="urgent"></td>
+                        <td th:unless="*{urgent}" class="normal"></td>
                     </tr>
                 </tbody>
             </table>
