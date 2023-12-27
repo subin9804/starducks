@@ -5,7 +5,7 @@
     align-items: flex-start;
     border: 1px solid #6B4D27;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255,0.75);
+    background-color: rgba(255, 255, 255, 0.75);
     min-height: 800px;
     flex-grow: 1; /* This line is added */
 }
@@ -17,24 +17,25 @@
     border: 1px solid #6B4D27;
     border-radius: 10px;
     margin: auto;
-    position :relative;
+    position: relative;
 
     /*transform: translateY(-10%);*/
 
 }
 
 
-.vertical-table{
+.vertical-table {
     width: 80%;
     margin: 70px auto;
 
     /*smallcontent의 전체를 채운다.*/
 }
 
-.vertical-table tr{
+.vertical-table tr {
     border-bottom: 1px solid black;
 
 }
+
 .vertical-table th,
 .vertical-table td {
     text-align: center;
@@ -45,7 +46,7 @@
 
 
 /*form 태그 모양 조절*/
-.form{
+.form {
     width: 100%;
     height: 100%;
 }
@@ -104,17 +105,21 @@
 }
 
 /*표 상에서 hover했을 때, */
-.list-table tbody tr:hover td a{
+.list-table tbody tr:hover td a {
     color: #fff !important;
 }
 
 
+/*입고 내역 상세의 번호, 등록인, 입고일자 부분 */
+.ipgodetail {
+    margin-top: 20px;
+    margin-left: 150px;
+    text-align: center;
+}
 
-
-
-
-
-
+.ipgodetail input {
+    text-align: center;
+}
 
 /*디테일 페이지의 표에 대한 스타일 적용*/
 .detail-table {
@@ -130,6 +135,7 @@
 
 
 }
+
 .detail-table tfoot tr:first-child td {
     border-top: 3px solid black;
 }
@@ -145,11 +151,11 @@
     border-top: 1px solid #6B4D27
 
 }
+
 .detail-table tfoot {
     font-weight: bold;
 
 }
-
 
 
 /*타임리프와 JS연동된 form 부분에 있는 표에 대한 스타일 적용*/
@@ -170,9 +176,9 @@
 }
 
 
-.right-top-btn{
+.right-top-btn {
 
-    width:100%;
+    width: 100%;
     margin-top: 40px;
     margin-bottom: 10px;
     display: flex;
@@ -180,8 +186,9 @@
 
 
 }
+
 /*왼쪽으로 정렬*/
-.left-align{
+.left-align {
     width: 100%;
     margin-top: 40px;
     display: flex;
@@ -192,6 +199,7 @@
     line-height: 27px;
 
 }
+
 .left-align input[type="checkbox"] {
     width: 24px; /* 체크박스의 크기를 조절 */
     height: 24px;
@@ -226,6 +234,7 @@ form input[type="text"] {
     background-color: #6B4D27;
     color: white;
 }
+
 form input[type="text"]::placeholder {
     color: white;
     text-indent: 13px;
@@ -246,9 +255,9 @@ form input[type="text"]::placeholder {
 
 /** ----- 버튼 S------ */
 /*버튼 위치설정*/
-.right-top-btn{
+.right-top-btn {
 
-    width:100%;
+    width: 100%;
     margin-top: 40px;
     margin-bottom: 10px;
     display: flex;
@@ -258,12 +267,13 @@ form input[type="text"]::placeholder {
 }
 
 /*스위치 버튼의 위치*/
-.bottom-button{
+.bottom-button {
     width: 100%;
     text-align: center;
     margin-bottom: 40px;
 }
-.bottom-button button{
+
+.bottom-button button {
     margin: 0 30px;
 }
 
@@ -276,7 +286,6 @@ form input[type="text"]::placeholder {
 .top-btn button {
     margin: 0 10px;
 }
-
 
 
 .middle-btn {
@@ -306,6 +315,7 @@ form input[type="text"]::placeholder {
     color: #ffffff;
     background-color: #AF9A63;
 }
+
 .switch-button1:hover {
     background-color: #6B4D27; /* hover 시 배경색을 starducks 대표 색상으로 변화시킨다. */
 }
@@ -375,16 +385,18 @@ a p.commonBtn {
     width: 60px;
     height: 30px;
     color: #fdf5f5;
-    box-shadow: 0px 0px 0px ;
+    box-shadow: 0px 0px 0px;
     background-color: #FF5B5B;
 }
 
 .register-button:hover {
     background-color: #6a4af6;
 }
+
 .cancel-button:hover {
     background-color: #555;
 }
+
 .edit-button:hover {
     background-color: #316c52;
 }
