@@ -90,8 +90,8 @@ public class NotifyService {
      * @param data  전송할 데이터 객체
      */
     private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {
-//        System.out.println("subscribe !!!!!!!aasdfasdfasdfad됨:" + emitterId);
-//        System.out.println("dataaaaaaaaaaaaaaaa" + data.toString() + " 이거는 " + data);
+        System.out.println("subscribe !!!!!!!aasdfasdfasdfad됨:" + emitterId);
+        System.out.println("dataaaaaaaaaaaaaaaa" + data.toString() + " 이거는 " + data);
         try {
             emitter.send(SseEmitter.event()
                     .id(eventId)
