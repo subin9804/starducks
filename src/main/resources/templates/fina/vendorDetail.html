@@ -17,7 +17,7 @@
     <h3>거래처 관리</h3>
     <br>
 
-    <div class="content">
+    <div id="form">
         <!-- 상세 정보를 표시하는 폼 -->
         <div style="display: flex;">
             <div style="flex: 1;">
@@ -25,7 +25,8 @@
 
                     <dl>
                         <dt>거래처명</dt>
-                        <dd><input type="text" id="vendorName" name="vendorName" th:value="${vendor.vendorName}"
+                        <dd><input style="width: 280px;" type="text" id="vendorName" name="vendorName"
+                                   th:value="${vendor.vendorName}"
                                    class="form-control"
                                    readonly></dd>
                     </dl>
@@ -33,27 +34,29 @@
 
                     <dl>
                         <dt>업종</dt>
-                        <dd style="text-align: left"><p th:if="${vendor.vendorBusinessSector != null}"
+                        <dd style="text-align: left"><p style="width: 280px;"
+                                                        th:if="${vendor.vendorBusinessSector != null}"
                                                         th:text="${vendor.vendorBusinessSector.description}"></p>
                         </dd>
                     </dl>
 
                     <dl>
                         <dt>사업자 번호</dt>
-                        <dd><input class="form-control" type="text" id="vendorRegistNum" name="vendorRegistNum"
+                        <dd><input style="width: 280px;" class="form-control" type="text" id="vendorRegistNum"
+                                   name="vendorRegistNum"
                                    th:value="${vendor.vendorRegistNum}" readonly></dd>
                     </dl>
 
                     <dl>
                         <dt>대표자</dt>
-                        <dd><input type="text" id="vendorRepreName" name="vendorRepreName"
+                        <dd><input style="width: 280px;" type="text" id="vendorRepreName" name="vendorRepreName"
                                    th:value="${vendor.vendorRepreName}"
                                    class="form-control" readonly></dd>
                     </dl>
 
                     <dl>
                         <dt>연락처</dt>
-                        <dd><input type="text" id="vendorTelephone" name="vendorTelephone"
+                        <dd><input style="width: 280px;" type="text" id="vendorTelephone" name="vendorTelephone"
                                    th:value="${vendor.vendorTelephone}"
                                    class="form-control" readonly></dd>
                     </dl>
@@ -62,21 +65,22 @@
             <div style="flex: 1;">
                 <dl>
                     <dt>거래시작일</dt>
-                    <dd><input type="text" id="vendorStartDate" name="vendorStartDate"
+                    <dd><input style="width: 280px;" type="text" id="vendorStartDate" name="vendorStartDate"
                                th:value="${vendor.vendorStartDate}" class="form-control"
                                readonly></dd>
                 </dl>
 
                 <dl>
                     <dt>거래처 주소</dt>
-                    <dd><input type="text" id="vendorAddress" name="vendorAddress" th:value="${vendor.vendorAddress}"
+                    <dd><input style="width: 280px;" type="text" id="vendorAddress" name="vendorAddress"
+                               th:value="${vendor.vendorAddress}"
                                class="form-control"
                                readonly></dd>
                 </dl>
 
                 <dl>
                     <dt><label for="storeDetailAddr">상세주소</label></dt>
-                    <dd><input type="text" id="storeDetailAddr" name="storeDetailAddr"
+                    <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"
                                th:value="${vendor.vendorAddress}"
                                class="form-control" readonly></dd>
                 </dl>
@@ -85,10 +89,10 @@
                 <dl>
                     <dt>계약 상태</dt>
                     <dd style="text-align: left">
-                        <p th:if="${vendor.contractStatus != null}"
+                        <p style="width: 280px;" th:if="${vendor.contractStatus != null}"
                            th:text="${vendor.contractStatus.displayName}"></p>
                     </dd>
-
+                </dl>
             </div>
         </div>
 
@@ -102,11 +106,9 @@
                 목록
             </button>
         </div>
-        <br>
         </form>
     </div>
-    </div>
-    </div>
+
 
     <script>
         function confirmUpdate(vendorId) {

@@ -41,6 +41,8 @@ public class StoreController {
     public String newStoreForm(Model model) {
         List<String> storeAdd = storeService.getStoreManagersNames();
         model.addAttribute("storeManager", storeAdd);
+//        우편번호
+        model.addAttribute("store", new Store());
         return "fina/storeAdd";
     }
 
