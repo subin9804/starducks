@@ -141,15 +141,22 @@ public class StoreController {
 
         List<String> allStoreManagers = storeService.getAllStoreManagers();
         model.addAttribute("storeManagers", allStoreManagers);
-//        3. 뷰 페이지 설정
+//
+
         return "fina/storeEdit";
     }
 
 
     @PostMapping("/update")
-    public String updateStore(@ModelAttribute Store store, @RequestParam("storeManager") String storeManager) {
+    public String updateStore(@ModelAttribute Store store,
+                              @RequestParam("storeManager") String storeManager) {
+
+        // Employee 객체 설정
         Employee storeEmpName = empRepository.findByEmpName(storeManager);
         store.setEmployee(storeEmpName);
+
+        storeService.updateStore(store);
+
 //        log.info("storeEmpName.getEmpName() ==> " + storeEmpName.getEmpName());
         storeService.updateStore(store);
         return "redirect:/fina/store/single/" + store.getStoreNo();
