@@ -98,7 +98,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 .gender("man").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("02866").addr("서울 강서구 강서로 375-7")
                 .dAddr("푸르지오 2차 305동 201호").empTel("010-6789-1384").build());
         emps.add(Employee.builder().empId(5L).empName("최사원").birth(LocalDate.parse("1996-12-02"))
-                .joinDate(LocalDate.parse("2022-12-25")).email("sawon@monster.com").dept(depts.get(5))
+                .joinDate(LocalDate.parse("2022-12-25")).email("sawon@monster.com").dept(depts.get(4))
                 .gender("man").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("07316").addr("부산 강서구 가락대로 197-1")
                 .dAddr("오리빌라 102호").empTel("010-2347-0663").build());
 
