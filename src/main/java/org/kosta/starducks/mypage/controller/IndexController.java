@@ -137,7 +137,7 @@ public class IndexController {
         Pageable pageable = PageRequest.of(0, 10);
         Page<RSEmailDto> mails = null;
         try {
-            mails = emailService.fetchSentEmails(pageable);
+            mails = emailService.fetchInboxEmails(pageable);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
