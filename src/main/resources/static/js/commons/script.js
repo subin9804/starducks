@@ -42,19 +42,21 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
     // 푸시알림 허용 요청
     const apiUrl = '/api/v1/notify/subscribe';
+    //
+    // if (Notification.permission === 'granted') {
+    //     setupNotifications(apiUrl)
+    // } else if (Notification.permission === 'denied') {
+    //     return;
+    // } else {
+    //     // 알림 권한 요청
+    //     Notification.requestPermission().then(function(permission) {
+    //         if (permission === 'granted') {
+    //             setupNotifications(apiUrl)
+    //         }
+    //     });
+    // };
 
-    if (Notification.permission === 'granted') {
-        setupNotifications(apiUrl)
-    } else if (Notification.permission === 'denied') {
-        return;
-    } else {
-        // 알림 권한 요청
-        Notification.requestPermission().then(function(permission) {
-            if (permission === 'granted') {
-                setupNotifications(apiUrl)
-            }
-        });
-    };
+    setupNotifications(apiUrl)
 
     function setupNotifications(apiUrl) {
         // SSE 엔드포인트 URL로 새 EventSource 생성
