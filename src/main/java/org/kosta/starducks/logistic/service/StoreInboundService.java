@@ -14,6 +14,8 @@ import org.kosta.starducks.logistic.entity.*;
 import org.kosta.starducks.logistic.repository.StoreInboundRepository;
 import org.kosta.starducks.logistic.repository.StoreInventoryRepository;
 import org.kosta.starducks.logistic.repository.WarehouseInboundRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +34,8 @@ public class StoreInboundService {
     private final StoreRepository storeRepository;
 
     //모든 입고 사항 가져오기
-    public List<StoreInbound> getAllInbounds(){
-        return stRepository.findAll();
+    public Page<StoreInbound> getAllInbounds(Pageable pageable){
+        return stRepository.findAll(pageable);
     }
 
 //    public List<StoreInbound> findRecentHighTotalPriceInbounds() {

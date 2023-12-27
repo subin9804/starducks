@@ -72,6 +72,37 @@
 
         </table>
 
+        <div class="pagination">
+
+            <!--            첫 번째 페이지로 이동-->
+            <a th:href="@{/logistic/inbound/store/list(page =0)}"> << </a>
+
+            <!--            이전 페이지로 이동-->
+
+            <a th:classappend="${nowPage ==1} ? 'disabled': ''"
+               th:href="@{/logistic/inbound/store/list(page =${ nowPage - 2})}"> < </a>
+
+
+            <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
+
+                <a th:if="${page != nowPage}"
+                   th:href="@{/logistic/inbound/store/list(page = ${page - 1})}"
+                   th:text="${page}"></a>
+                <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
+
+                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}" ></strong>
+
+            </th:block>
+
+            <!--            다음 페이지 이동-->
+            <a th:classappend="${nowPage == totalPages} ? 'disabled' : ''"
+               th:href="@{/logistic/inbound/store/list(page =${nowPage})}"> > </a>
+
+            <!--            마지막 페이지 이동-->
+
+            <a th:href="@{/logistic/inbound/store/list(page =${totalPages -1})}"> >> </a>
+        </div>
+
 
     </div>
     <!--    <script th:inline="javascript">-->

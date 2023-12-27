@@ -73,29 +73,46 @@ public class StoreInboundController {
 
     @GetMapping("/list")
     public String getAllInbounds(Principal p,
+                                 @PageableDefault(page = 0,size = 5) Pageable pageable,
                                  Model m)
 //    ,@RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
     {
 
-        List<StoreInbound> inbounds;
+        Page<StoreInbound> inbounds;
 
 //        if (bulkInboundCheckbox != null && bulkInboundCheckbox) {
 //            inbounds = warehouseInboundService.findRecentHighTotalPriceInbounds();
 //        } else {
 //            inbounds = warehouseInboundService.getAllInbounds();
 //        }
-        inbounds = storeInboundService.getAllInbounds();
-
+        inbounds = storeInboundService.getAllInbounds(pageable);
         Employee emp = empService.getEmp(Long.parseLong(p.getName()));
+
+
+        // 페이지 조건 생성
+
+        int nowPage = inbounds.getPageable().getPageNumber() + 1;
+        //pageable에서 넘어온 현재 페이지를 가져온다.
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, inbounds.getTotalPages());
+
+        int totalPages = inbounds.getTotalPages();
+
+        // 검색된 게 아무것도 없을 때 페이지 번호가 1이 보이게 설정
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
+
 
         m.addAttribute("inbounds",inbounds);
         m.addAttribute("employee",emp);
-
+        m.addAttribute("nowPage", nowPage);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
+        m.addAttribute("totalPages", totalPages);
 
         //m.addAttribute("checkbox",bulkInboundCheckbox);
-
-
-
         return "logistic/StoreInboundList";
     }
 
