@@ -44,7 +44,7 @@ public class QDocument extends EntityPathBase<Document> {
 
     public final org.kosta.starducks.hr.entity.QEmployee docWriter;
 
-    public final DateTimePath<java.time.LocalDateTime> orderDeadline = createDateTime("orderDeadline", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> orderDeadline = createDate("orderDeadline", java.time.LocalDate.class);
 
     public final ListPath<OrderItem, QOrderItem> orderItems = this.<OrderItem, QOrderItem>createList("orderItems", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
 

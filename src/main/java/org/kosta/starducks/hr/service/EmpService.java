@@ -217,6 +217,17 @@ public class EmpService {
     }
 
     /**
+     * 마이페이지 - 일정관리
+     * 직원 ID를 기반으로 직원 조회
+     *
+     * @param empId 직원 ID
+     * @return 직원 정보
+     */
+    public Employee getEmpById(Long empId) {
+        return repository.findById(empId).orElse(null);
+    }
+
+    /**
      * empId를 넣으면 어떤 부서 사람인지도 바로 같이 가져와진다. 부서 LAZY 대응용
      * 로그인한 사원이 어떤 부서인지 확인하려고 제작
      * @param empId

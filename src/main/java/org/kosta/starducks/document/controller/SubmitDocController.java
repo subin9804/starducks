@@ -128,6 +128,8 @@ public class SubmitDocController {
         String refEmpNames = documentService.getRefEmpNamesByDocId(docId);
         model.addAttribute("refEmpNames", refEmpNames);
 
+
+
         return "document/submitDoc/docDetail";
     }
 

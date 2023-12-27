@@ -392,3 +392,54 @@ a p.commonBtn {
 .delete-button:hover {
     background-color: #d91717;
 }
+
+
+/*페이지네이션 스타일 ~~~~~~~~~~~~~~~~~~*/
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination a,
+.pagination strong {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid rgba(107, 77, 39, 0.3);
+    border-radius: 5px;
+    color: rgba(107, 77, 39, 0.4) !important;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: rgba(107, 77, 39, 0.7) !important;
+    color: white !important;
+}
+
+
+/* Style for current page */
+.pagination .current-page {
+    background-color: white;
+    border-color: #6B4D27;
+    color: #6B4D27 !important;
+    font-weight: bold;
+}
+
+/* Custom styles for first and last page links */
+.pagination a:first-child,
+.pagination a:last-child {
+    background-color: rgba(107, 77, 39, 0.4);
+    color: white !important;
+}
+
+/* Styles for disabled previous and next links */
+.pagination a[disabled],
+.disabled {
+    color: grey;
+    background-color: #f4f4f4;
+    pointer-events: none;
+    cursor: default;
+}
+
+/*페이지네이션 스타일 끝~~~~~~~~~~~~*/

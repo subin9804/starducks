@@ -18,6 +18,7 @@ public interface StoreInventoryRepository extends JpaRepository<StoreInventory, 
     List<StoreInventory> findByProduct_ProductCode(Long productCode);
 
 
+
     StoreInventory findByStore_StoreNoAndProduct_ProductCode(Long storeNo, Long productCode);
 
 

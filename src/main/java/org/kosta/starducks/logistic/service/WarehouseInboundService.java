@@ -10,6 +10,8 @@ import org.kosta.starducks.logistic.dto.WarehouseInboundDto;
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
 import org.kosta.starducks.logistic.entity.WarehouseInboundProduct;
 import org.kosta.starducks.logistic.repository.WarehouseInboundRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,14 @@ public class WarehouseInboundService {
     private final ProductRepository productRepository;
 
     //모든 입고 사항 가져오기
+
+    public Page<WarehouseInbound> getAllWarehouseInbounds(Pageable pageable){
+       return wiRepository.findAll(pageable);
+
+    }
+    public Page<WarehouseInbound> findRecentHighTotalAmountAndPrice(Pageable pageable){
+        return wiRepository.findRecentHighTotalAmountAndPrice(pageable);
+    }
     public List<WarehouseInbound> getAllInbounds(){
         return wiRepository.findAll();
     }

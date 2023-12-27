@@ -1,36 +1,150 @@
 document.addEventListener('DOMContentLoaded', function () {
     // CSRF 토큰과 헤더 이름을 읽어옴
-    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
-    console.log("마이페이지 일정관리 CSRF Token ==> " + csrfToken);
-
-    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
-    console.log("마이페이지 일정관리 CSRF Header Name ==> " + csrfHeaderName);
+    const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
 
     var calendarEl = document.getElementById('calendar');
-    var modal;
+    var modal = document.getElementById('addModal'); // HTML 모달 창
 
-    function getEmpId() {
-        var empId = sessionStorage.getItem('empId');
-        return empId;
+    // 서버 측 principal에서 empId 가져 오기
+    var empId = $('#empId').val();
+    console.log("empId ==> " + empId);
+
+// 모달을 열 때 호출되는 함수
+    function showModal() {
+        modal.style.display = 'block';
+
+        // 모달 창에 CSS를 적용
+        modal.style.cssText = `
+        display: block;
+    `;
+
+        setTimeout(function () {
+            $('#bookingForm').css({
+                'display': 'block',
+                'transform': 'translateY(50px)',
+                'opacity': '1'
+            });
+        }, 10);
+
+        $('body').css('overflow', 'hidden');
     }
 
-    // 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
+// 모달의 "x" 모양을 나타내는 요소를 가져옵니다.
+    var closeModalBtn = document.getElementById('closeModalBtn');
+
+// "x" 모양 요소에 클릭 이벤트 리스너를 추가합니다.
+    closeModalBtn.addEventListener('click', function () {
+        hideModal(); // 모달을 닫는 함수 호출
+    });
+
+
+// 모달을 닫을 때 호출되는 함수
+    function hideModal() {
+        modal.style.display = 'none';
+
+        // 모달 창에서 CSS를 제거
+        modal.style.cssText = '';
+
+        $('#bookingForm').css({
+            'display': 'none',
+            'transform': '',
+            'opacity': ''
+        });
+
+        $('body').css('overflow', '');
+    }
+
+
+// 서버로부터 특정 사용자의 일정 정보를 가져오는 함수
     function fetchShowSingleSchedule(empId) {
-        return fetch('/mypage/schedule/api/show', {
-            method: 'GET',
+        return axios.get('/mypage/schedule/api/show', {
+            params: {empId: empId}
+        })
+            .then(function (response) {
+                var contentType = response.headers['content-type'];
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    // JSON 형식의 응답
+                    console.log('서버 응답은 JSON 형식입니다.');
+                    console.log('서버 응답 데이터:', response.data); // 전체 서버 응답 데이터 출력
+                    return response.data; // JSON 데이터 반환
+                } else {
+                    console.log('서버 응답은 JSON 형식이 아닙니다.');
+                    throw new Error('서버 응답이 JSON 형식이 아닙니다.');
+                }
+            })
+            .catch(function (error) {
+                console.error('에러 발생:', error);
+                throw error;
+            });
+    }
+
+// fetchAndAddEventsToCalendar() 함수 내에서 호출 직전
+    function fetchAndAddEventsToCalendar() {
+        console.log("fetchAndAddEventsToCalendar 함수 호출 직전:", new Date());
+        fetchShowSingleSchedule(empId)
+            .then(function (data) {
+                // 로드한 일정 데이터를 캘린더에 추가
+                addEventsToCalendar(data);
+                console.log("fetchAndAddEventsToCalendar에 있는 data:");
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.error("에러 발생: " + error);
+            });
+    }
+
+// 모달 내의 제출 버튼 이벤트 리스너
+    function handleSubmitButtonClick(event) {
+        event.preventDefault();
+
+        var scheNo = document.getElementById('scheNo').value;
+        var scheTitle = document.getElementById('scheTitle').value;
+        var scheStartDate = document.getElementsByName('scheStartDate')[0].value;
+        var scheEndDate = document.getElementsByName('scheEndDate')[0].value;
+        var scheduleType = document.getElementsByName('scheduleType')[0].value;
+        var notes = document.getElementsByName('notes')[0].value;
+
+        // 서버로 보낼 데이터 객체 생성
+        var data = {
+            empId: empId,
+            scheTitle: scheTitle,
+            scheStartDate: scheStartDate,
+            scheEndDate: scheEndDate,
+            scheduleType: scheduleType,
+            notes: notes
+        };
+
+        // 서버로 데이터를 전송하는 Axios 요청
+        axios.post('/mypage/schedule/add', data, {
             headers: {
-                'Content-Type': 'application/json',
-                // [csrfHeaderName]: csrfToken
+                'Content-Type': 'application/json', // JSON 데이터를 보낼 때 Content-Type을 application/json으로 설정
+                [csrfHeaderName]: csrfToken
             }
         })
             .then(function (response) {
-                if (!response.ok) {
+                if (!response.data.ok) {
                     throw new Error('네트워크가 좋지 않습니다.');
                 }
-                return response.json();
+                return response.data;
             })
-            .then(function (data) {
-                return data;
+            .then(function (responseData) {
+                alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
+
+                // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
+                var newEvent = {
+                    empId: empId, // 이 부분을 수정
+                    title: scheTitle,
+                    start: scheStartDate,
+                    end: scheEndDate,
+                    scheduleType: scheduleType,
+                    url: '/mypage/schedule/detail/' + responseData.scheNo,
+                };
+                console.log("responseData.scheNo ==> " + responseData.scheNo);
+                calendar.addEvent(newEvent);
+
+                // 모달을 닫음
+                hideModal();
             })
             .catch(function (error) {
                 console.error("에러 발생: " + error);
@@ -38,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+// 캘린더 객체 생성
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             start: 'dayGridMonth,timeGridWeek',
@@ -49,193 +164,64 @@ document.addEventListener('DOMContentLoaded', function () {
         navLinks: true,
         selectable: true,
         selectMirror: true,
-        // 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용..
+        // 이벤트명 : function(){} : 각 날짜에 대한 이벤트를 통해 처리할 내용
         select: function (arg) {
             if (arg.start && arg.end) { // 빈 셀을 선택했을 때만 모달 생성
-                if (!modal) { // 모달이 생성되지 않았을 때만 생성
-                    createModal();
-                }
-                modal.style.display = 'block'; // 모달을 보이게 함
+                showModal(); // 모달을 표시
             }
         },
         editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
-        // DB에서 일정 정보를 가져와서 캘린더에서 표시할 수 있는 형태로 변환하는 역할
-        events: function (fetchInfo, successCallback, errorCallback) {
-            // 사용자의 ID를 얻어오는 함수 호출
-            var empId = getEmpId();
-
-            // 해당 사용자의 일정 정보를 가져옴
-            fetchShowSingleSchedule(empId).then(function (data) {
-                var events = data.map(function (schedule) {
-                    return {
-                        // 반환된 일정 정보를 FullCalendar에서 사용 가능한 형식으로 매핑
-                        title: schedule.scheTitle,      // 일정 제목
-                        start: schedule.scheStartDate, // 시작일시
-                        end: schedule.scheEndDate,     // 종료일시
-                        url: '/mypage/schedule/detail/' + schedule.scheNo, // 상세 페이지 UR
-                    };
-                });
-                // 변환한 이벤트 데이터를 FullCalendar에 성공 콜백으로 전달합니다.
-                successCallback(events);    // FullCalendar에 가져온 이벤트 데이터를 전달
-            })
-                .catch(function (error) {
-                    console.error("에러 발생: " + error);
-                    throw error;
-                });
-        },
-        eventClick: function (info) {
-            // console.log(info.event.url);
-            if (info.event.url) {
-                window.location.href = info.event.url; // 클릭한 일정의 URL로 이동
-            }
-        }
     });
 
-    function createModal() {
-        modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.style.display = 'none'; // 초기에는 모달을 숨김
-        // 모달 내용 생성
-        var modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
-        var closeButton = document.createElement('span');
-        closeButton.className = 'close';
-        closeButton.textContent = '×';
-        closeButton.addEventListener('click', function () {
-            modal.style.display = 'none'; // 닫기 버튼을 누르면 모달을 숨김
-        });
-        modalContent.appendChild(closeButton);
-        var form = document.createElement('form');
-        /**
-         * 일정명
-         * @type {HTMLInputElement}
-         */
-        var scheTitleLabel = document.createElement('label');
-        scheTitleLabel.textContent = '일정명';
-        var scheTitleInput = document.createElement('input');
-        scheTitleInput.setAttribute('type', 'text');
-        scheTitleInput.setAttribute('placeholder', '일정명을 입력해주세요');
-        form.appendChild(scheTitleLabel);
-        form.appendChild(scheTitleInput);
-        /**
-         * 시작일시
-         * @type {HTMLInputElement}
-         */
-        var scheStartDateLabel = document.createElement('label');
-        scheStartDateLabel.textContent = '시작일시';
-        var scheStartDateInput = document.createElement('input');
-        scheStartDateInput.setAttribute('type', 'datetime-local');
-        form.appendChild(scheStartDateInput);
-        /**
-         * 종료일시
-         * @type {HTMLLabelElement}
-         */
-        var scheEndDateLabel = document.createElement('label');
-        scheEndDateLabel.textContent = '종료일시'
-        var scheEndDateInput = document.createElement('input');
-        scheEndDateInput.setAttribute('type', 'datetime-local');
-        form.appendChild(scheEndDateInput);
-
-        /** 일정 종류
-         * - 개인일정, 공식일정 선택
-         * @type {HTMLLabelElement}
-         */
-        class ScheduleTypeEnum {
-            static get PERSONAL_SCHEDULE() {
-                return 'PERSONAL_SCHEDULE';
-            }
-
-            static get OFFICIAL_SCHEDULE() {
-                return 'OFFICIAL_SCHEDULE';
-            }
+// 일정을 캘린더에 추가하는 함수
+    function addEventsToCalendar(events) {
+        if (events && Array.isArray(events)) { // events가 정의되었고 배열인지 확인
+            events.forEach(function (eventData) {
+                console.log("eventData:", eventData); // 이벤트 데이터 전체를 로그에 출력
+                var newEvent = {
+                    empId: eventData.empId,
+                    title: eventData.scheTitle,
+                    start: eventData.scheStartDate,
+                    end: eventData.scheEndDate,
+                    scheduleType: eventData.scheduleType,
+                    notes: eventData.notes, // 이벤트 데이터에 notes 속성 추가
+                    url: '/mypage/schedule/detail/' + eventData.scheNo,
+                };
+                calendar.addEvent(newEvent);
+            });
         }
-
-        var scheduleTypeLabel = document.createElement('label');
-        scheduleTypeLabel.textContent = '일정 종류';
-        var scheduleTypeDropdown = document.createElement('select');
-        var myScheduleTypeOption = document.createElement('option');
-        myScheduleTypeOption.textContent = '개인 일정';
-        myScheduleTypeOption.value = ScheduleTypeEnum.PERSONAL_SCHEDULE; // Enum 값 설정
-        var generalScheduleOption = document.createElement('option');
-        generalScheduleOption.textContent = '공식 일정';
-        generalScheduleOption.value = ScheduleTypeEnum.OFFICIAL_SCHEDULE; // Enum 값 설정
-        scheduleTypeDropdown.appendChild(myScheduleTypeOption);
-        scheduleTypeDropdown.appendChild(generalScheduleOption);
-        form.appendChild(scheduleTypeLabel);
-        form.appendChild(scheduleTypeDropdown);
-
-        /**
-         * 참고사항
-         * @type {HTMLTextAreaElement}
-         */
-        var notesLabel = document.createElement('label');
-        notesLabel.textContent = '참고 사항';
-        var notesInput = document.createElement('textarea');
-        notesInput.setAttribute('placeholder', '참고 사항');
-        form.appendChild(notesLabel);
-        form.appendChild(notesInput);
-
-        var submitButton = document.createElement('button');
-        submitButton.textContent = '일정 등록';
-        submitButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            var scheTitle = scheTitleInput.value;
-            var scheStartDate = scheStartDateInput.value;
-            var scheEndDate = scheEndDateInput.value;
-            var scheduleType = scheduleTypeDropdown.value;
-            var notes = notesInput.value;
-
-            var data = {
-                scheTitle: scheTitle,
-                scheStartDate: scheStartDate,
-                scheEndDate: scheEndDate,
-                scheduleType: scheduleType,
-                notes: notes
-            };
-
-            fetch('/mypage/schedule/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    [csrfHeaderName]: csrfToken // 여기에서 CSRF 토큰을 헤더에 추가
-                },
-                body: JSON.stringify(data)
-            })
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('네트워크가 좋지 않습니다.');
-                    }
-                    return response.json();
-                })
-                .then(function (responseData) {
-                    alert("일정이 성공적으로 추가되었습니다."); // 성공 또는 오류 메시지
-
-                    // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
-                    var newEvent = {
-                        title: scheTitle,
-                        start: scheStartDate,
-                        end: scheEndDate,
-                        url: '/mypage/schedule/detail/' + responseData.scheNo,
-                    };
-                    console.log("responseData.scheNo ==> " + responseData.scheNo);
-                    calendar.addEvent(newEvent);
-
-                    modal.style.display = 'none';
-                })
-                .catch(function (error) {
-                    console.error("에러 발생: " + error);
-                    throw error;
-                });
-        });
-
-        form.appendChild(submitButton);
-        modalContent.appendChild(form);
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
+        console.log("addEventsToCalendar 함수 호출됨", events); // 확인을 위한 로그 출력
     }
 
-    fetchShowSingleSchedule();
+// 서버로부터 일정 정보를 가져오는 함수 정의
+    calendar.setOption('eventSources', [
+        {
+            url: '/mypage/schedule/api/show',
+            method: 'GET',
+            extraParams: {
+                empId: empId
+            },
+            failure: function (error) {
+                console.error("에러 발생: " + error);
+            },
+            color: 'blue', // 이벤트 색상 등 설정 가능
+        }
+    ]);
+
+// 초기 일정 로드
+    fetchShowSingleSchedule(empId)
+        .then(function (data) {
+            console.log("일정 데이터를 불러옴:", new Date());
+            // 로드한 일정 데이터를 캘린더에 추가
+            addEventsToCalendar(data)
+            console.log("fetchAndAddEventsToCalendar에 있는 data:");
+            console.log(data);
+        })
+        .catch(function (error) {
+            console.error("에러 발생: " + error);
+        });
 
     calendar.render();
-});
+})
+;

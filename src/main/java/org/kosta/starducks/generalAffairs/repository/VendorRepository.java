@@ -16,6 +16,5 @@ public interface VendorRepository extends JpaRepository<Vendor,Integer> {
 
     Vendor findVendorByVendorName(String vendorName);
 
-
     Page<Vendor> findByVendorNameContaining(String searchKeyword, Pageable pageable);
 }

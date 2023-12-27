@@ -8,6 +8,7 @@ import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -95,30 +96,30 @@ public class VendorController {
                                  @PageableDefault(page = 0, size = 5, sort = "vendorId", direction = Sort.Direction.DESC) Pageable pageable,
                                  @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
-//        Page<Vendor> vendors = null;
-//
-//        // 검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
-//        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-//            vendors = vendorService.vendorSearchList(searchKeyword, pageable);
-//        } else {
-//            vendors = vendorService.getAllVendors(pageable);
-//        }
-//
-////        페이지 블럭 처리
-//        int nowPage = vendors.getPageable().getPageNumber() + 1;
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage = Math.min(nowPage + 5, vendors.getTotalPages());
-//        int totalPages = vendors.getTotalPages();
-//
-//        if (totalPages == 0) {
-//            endPage = 1;
-//        }
-//
-//        model.addAttribute("vendors", vendors);
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//        model.addAttribute("totalPages", totalPages);
+        Page<Vendor> vendors = null;
+
+        // 검색 키워드가 없으면 전체글을 페이저블 처리해서 보여주고, 키워드가 있으면 키워드에 맞게 글을 필터링하고, 리스트를 페이저블 처리해준다
+        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+            vendors = vendorService.vendorSearchList(searchKeyword, pageable);
+        } else {
+            vendors = vendorService.getAllVendors(pageable);
+        }
+
+//        페이지 블럭 처리
+        int nowPage = vendors.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, vendors.getTotalPages());
+        int totalPages = vendors.getTotalPages();
+
+        if (totalPages == 0) {
+            endPage = 1;
+        }
+
+        model.addAttribute("vendors", vendors);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPages", totalPages);
 
         List<Vendor> vendorList = vendorService.findAll();
         model.addAttribute("vendorList", vendorList);

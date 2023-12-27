@@ -236,10 +236,10 @@ public class CreateDocController {
     @PostMapping("/temp")
     public String submitDocumentTemp(@ModelAttribute(name = "document") Document document,
                                      Principal principal,
-                                  @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
-                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
-                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
-                                  RedirectAttributes redirectAttributes) {
+                                    @RequestParam(name = "apvEmpId1", required = false) Long apvEmpId1, //임시 저장은 값 없어도 됨
+                                    @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2,
+                                    @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
+                                    RedirectAttributes redirectAttributes) {
         String formNameEn = "draft";
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 

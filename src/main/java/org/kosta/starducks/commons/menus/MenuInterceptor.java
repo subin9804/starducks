@@ -41,7 +41,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 //        String mess = uri.substring(uri.indexOf("/"));
 //        String subMenu = mess.substring(1, mess.indexOf("/"));
 
-        System.out.printf("menu: %s, mess: %s, subMenu: %s", menu, mess, subMenu, '\n');
+        System.out.printf("menu: %s, mess: %s, subMenu: %s \n", menu, mess, subMenu);
         return true;
     }
 

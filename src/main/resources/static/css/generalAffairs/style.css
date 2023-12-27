@@ -67,6 +67,16 @@ tbody tr:hover {
     background-color: #dddddd;
 }
 
+.one-line {
+    width: 100%;
+    margin-top: 70px;
+
+    display: flex;
+    justify-content: space-between; /* 자식 요소들을 양쪽 끝에 정렬 */
+    align-items: center; /* 세로 방향 가운데 정렬 */
+}
+
+
 /* 사이드바에 대한 스타일 */
 /*.sidebar {*/
 /*    width: 200px; !* 사이드바의 고정된 너비 *!*/
