@@ -120,7 +120,7 @@
 }
 /* 페이지 번호 부분 스타일링 */
 .page-number {
-    color : rgb(190, 158, 124) !important;
+    color : rgb(98, 70, 36, 0.6) !important;
 }
 
 /* << >> 맨처음과 끝으로 가는 버튼 스타일:hover  */
