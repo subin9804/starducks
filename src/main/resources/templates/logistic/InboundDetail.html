@@ -14,12 +14,12 @@
     <h1>입고 내역 상세</h1>
     <div class="content">
 
-        <div>
-            입고 ID : <input type="text" th:value="${inbound.warehouseInboundId}" readonly>
+        <div class="ipgodetail">
+            입고 번호<input type="text" th:value="${inbound.warehouseInboundId}" readonly>
             <br>
-            입고 등록인 : <input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>
+            입고 등록인<input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>
             <br>
-            입고 일자 : <input type="text" th:value="${inbound.getWarehouseInboundDate()}" readonly>
+            입고 일자<input type="text" th:value="${#temporals.format(inbound.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}" readonly>
             <br>
         </div>
 
