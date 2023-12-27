@@ -62,6 +62,7 @@
         <!-- 전자결재함 -->
         <section class="widget content" id="widgetDoc">
             <h4>전자결재함</h4>
+
             <table class="mypageTable">
                 <thead>
                 <tr>
@@ -78,8 +79,10 @@
                         <td th:text="*{docTitle}"></td>
                         <td th:text="*{docWriter.empName}"></td>
                         <td th:if="*{urgent}" th:text="긴급" class="urgent"></td>
+                        <td th:unless="*{urgent}" class="normal"></td>
                     </tr>
                 </tbody>
+                <h4 th:if="${total <= 0}" class="emptyDoc">결재 문서가 없습니다.</h4>
             </table>
         </section>
     </div>

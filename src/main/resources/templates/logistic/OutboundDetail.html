@@ -14,12 +14,12 @@
     <h1>출고 내역 상세</h1>
     <div class="content">
 
-        <div>
-            출고 ID : <input type="text" th:value="${outbound.warehouseoutboundId}" readonly>
+        <div class="ipgodetail">
+            출고 번호<input type="text" th:value="${outbound.warehouseoutboundId}" readonly>
             <br>
-            출고 등록인 : <input type="text" th:value="${outbound.getEmployee().getEmpName()}" readonly>
+            출고 등록인<input type="text" th:value="${outbound.getEmployee().getEmpName()}" readonly>
             <br>
-            출고 일자 : <input type="text" th:value="${outbound.getWarehouseOutboundDate()}" readonly>
+            출고 일자<input type="text" th:value="${#temporals.format(outbound.getWarehouseOutboundDate(), 'yyyy.MM.dd a hh:mm')}" readonly>
             <br>
         </div>
 

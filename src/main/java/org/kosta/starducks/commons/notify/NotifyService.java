@@ -73,12 +73,33 @@ public class NotifyService {
         String receiverId = receiver.getEmpId().toString();
         String eventId = receiverId + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByEmpId(receiverId);
+
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
                     sendNotification(emitter, eventId, key, NotifyDto.Response.createResponse(notification));
                 }
             );
+    }
+
+    /**
+     * SseEmitter를 통해 이벤트를 전송하는 메서드
+     * @param emitter   이벤트 전송 대상
+     * @param eventId   이벤트 전송 대상
+     * @param emitterId 식별하기위한 고유ID
+     * @param data  전송할 데이터 객체
+     */
+    private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {
+//        System.out.println("subscribe !!!!!!!aasdfasdfasdfad됨:" + emitterId);
+//        System.out.println("dataaaaaaaaaaaaaaaa" + data.toString() + " 이거는 " + data);
+        try {
+            emitter.send(SseEmitter.event()
+                    .id(eventId)
+                    .name("message")
+                    .data(data));
+        } catch (IOException e) {
+            emitterRepository.deleteById(emitterId);
+        }
     }
 
     /**
@@ -92,23 +113,7 @@ public class NotifyService {
     }
 
 
-    /**
-     * SseEmitter를 통해 이벤트를 전송하는 메서드
-     * @param emitter   이벤트 전송 대상
-     * @param eventId   이벤트 전송 대상
-     * @param emitterId 식별하기위한 고유ID
-     * @param data  전송할 데이터 객체
-     */
-    private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {
-        try {
-            emitter.send(SseEmitter.event()
-                    .id(eventId)
-                    .name("sse")
-                    .data(data));
-        } catch (IOException e) {
-            emitterRepository.deleteById(emitterId);
-        }
-    }
+
 
     /**
      * 사원아이디 + 현재 시간으로 각 이벤트의 아이디 지정

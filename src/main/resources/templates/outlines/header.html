@@ -23,12 +23,25 @@
 
 
     <!--            알림          -->
-    <a href="#"><i class="fa-solid fa-bell"></i></a>
+    <a id="notify"><i class="fa-solid fa-bell"></i></a>
+
+
 
     <!--        프로필. 누르면 개인 정보 수정 페이지로 -->
     <a th:href="@{/profileEdit}">
       <i class="fa-solid fa-circle-user"></i>
     </a>
   </div>
+
+
+  <!-- 드롭다운 리스트 -->
+  <ul id="notify-drop" style="display: none;">
+    <li th:each="notify : ${notifies}">
+      <a th:href="${notify.url}">
+        <p th:text="${notify.content}"></p>
+        <p class="s-font" th:text="${notify.createdAt}"></p>
+      </a>
+    </li>
+  </ul>
 </header>
 </html>

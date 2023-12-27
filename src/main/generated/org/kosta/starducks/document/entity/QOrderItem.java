@@ -26,11 +26,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
 
     public final NumberPath<Long> orderItemId = createNumber("orderItemId", Long.class);
 
-<<<<<<< HEAD
-    public final NumberPath<Long> productCode = createNumber("productCode", Long.class);
-=======
     public final org.kosta.starducks.generalAffairs.entity.QProduct product;
->>>>>>> 60dd3da53207b3283a17e739a4fbd13713b1f2b1
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
@@ -53,10 +49,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
     public QOrderItem(Class<? extends OrderItem> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.document = inits.isInitialized("document") ? new QDocument(forProperty("document"), inits.get("document")) : null;
-<<<<<<< HEAD
-=======
         this.product = inits.isInitialized("product") ? new org.kosta.starducks.generalAffairs.entity.QProduct(forProperty("product"), inits.get("product")) : null;
->>>>>>> 60dd3da53207b3283a17e739a4fbd13713b1f2b1
     }
 
 }

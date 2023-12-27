@@ -2,6 +2,8 @@ package org.kosta.starducks.forum.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
@@ -13,7 +15,8 @@ import java.util.List;
 /**
  * 게시판 작성글
  */
-@Entity
+@Entity @Builder
+@AllArgsConstructor
 public class ForumPost {
 
   @Id
