@@ -44,3 +44,7 @@ textarea {
     border-radius: 15px;
     text-align: center;
 }
+
+.btn-wrap {
+    white-space: nowrap;
+}
