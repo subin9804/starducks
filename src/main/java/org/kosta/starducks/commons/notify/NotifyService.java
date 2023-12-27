@@ -85,17 +85,6 @@ public class NotifyService {
     }
 
     /**
-     * 마지막 이벤트Id를 기반으로 구독자가 받지 목한 데이터가 있는지 확인
-     * lastEventId가 비어있지 않다 -> 손실된 이벤트가 있다(true)
-     * @param lastEventId
-     * @return
-     */
-    private boolean hasLostData(String lastEventId) {
-        return !lastEventId.isEmpty();
-    }
-
-
-    /**
      * SseEmitter를 통해 이벤트를 전송하는 메서드
      * @param emitter   이벤트 전송 대상
      * @param eventId   이벤트 전송 대상
@@ -114,6 +103,19 @@ public class NotifyService {
             emitterRepository.deleteById(emitterId);
         }
     }
+
+    /**
+     * 마지막 이벤트Id를 기반으로 구독자가 받지 목한 데이터가 있는지 확인
+     * lastEventId가 비어있지 않다 -> 손실된 이벤트가 있다(true)
+     * @param lastEventId
+     * @return
+     */
+    private boolean hasLostData(String lastEventId) {
+        return !lastEventId.isEmpty();
+    }
+
+
+
 
     /**
      * 사원아이디 + 현재 시간으로 각 이벤트의 아이디 지정

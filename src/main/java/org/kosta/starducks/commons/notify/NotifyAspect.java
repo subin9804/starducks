@@ -34,7 +34,7 @@ public class NotifyAspect {
                 notifyProxy.getReceivers().get(0),
                 notifyProxy.getNotificationType(),
                 NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
-                "/api/v1/notify" + (notifyProxy.getGoUrl())
+                "/api/v1/notify" + (notifyProxy.getGoUrl()) + "\n\n"
         );
         log.info("result = {}", notifyProxy.getReceivers().get(0));
     }

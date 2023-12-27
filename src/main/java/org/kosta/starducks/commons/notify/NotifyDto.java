@@ -19,6 +19,7 @@ public class NotifyDto {
                     .content(notify.getContent())
                     .id(notify.getId().toString())
                     .name(notify.getReceiver().getEmpName())
+                    .type(String.valueOf(notify.getNotificationType()))
                     .createdAt(notify.getCreatedAt().toString())
                     .build();
         }
