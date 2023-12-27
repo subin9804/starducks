@@ -14,15 +14,12 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h2>지점 관리</h2>
-    <hr>
-    <br><br>
-    <h5>지점 수정</h5>
-    <br>
+    <h3>지점 관리</h3>
 
     <div id="form" style="display: flex;">
         <div style="flex: 1;">
-            <form class="container" action="/fina/store/update" method="post">
+            <form id="addAlert" class="container" th:action="@{/fina/store/update}" method="post"
+                  onsubmit="return confirmAdd()">
                 <input th:name="storeNo" type="hidden" th:value="${store.storeNo}">
 
                 <dl>
@@ -85,13 +82,33 @@
 
     <!-- 버튼 2개를 form 바깥에 배치 -->
     <div style="display: flex; justify-content: center; align-items: center;">
-        <button class="btn btn-primary" type="submit">저장
+        <button class="btn btn-primary" id="submitBtn" type="submit">저장
         </button>
         <button class="btn btn-outline-danger" type="button"
                 th:attr="onclick='location.href=\'/fina/store/single/\' + ${store.storeNo}'">
             이전
         </button>
         </form>
+
+        <script>
+            function confirmAdd(storeNo) {
+                Swal.fire({
+                    title: '수정 확인',
+                    text: '해당 정보를 수정 하시겠습니까?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('addAlert').submit();
+                    }
+                })
+                return false;
+            }
+        </script>
     </div>
 </main>
 </html>

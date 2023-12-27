@@ -2,8 +2,6 @@
 const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-
-
 // 예약 생성 및 수정
 function submit(e, action, id) {
     e.preventDefault();
@@ -23,7 +21,6 @@ function submit(e, action, id) {
     }
 
     // console.log(jsonData)
-
 
     // 예약 생성
     if(action == 'post') {
@@ -58,7 +55,6 @@ function submit(e, action, id) {
                     timer: 1500
                 })
             }
-
         })
 
     // 예약 수정

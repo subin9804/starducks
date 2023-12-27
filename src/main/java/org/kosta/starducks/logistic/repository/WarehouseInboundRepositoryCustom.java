@@ -1,6 +1,8 @@
 package org.kosta.starducks.logistic.repository;
 
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -9,4 +11,5 @@ public interface WarehouseInboundRepositoryCustom {
 
     List<WarehouseInbound> findRecentHighTotalPriceInbounds();
 
+    Page<WarehouseInbound> findRecentHighTotalAmountAndPrice(Pageable pageable);
 }

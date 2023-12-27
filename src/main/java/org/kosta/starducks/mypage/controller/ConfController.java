@@ -60,7 +60,6 @@ public class ConfController {
         return ResponseEntity.ok().body(rooms);
     }
 
-
     /**
      * 회의실 정보 전달
      * @return
