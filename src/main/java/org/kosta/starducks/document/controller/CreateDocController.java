@@ -153,7 +153,12 @@ public class CreateDocController {
                     model.addAttribute("apv1", apv1);
 
                     //결재 도장 데이터 apv1Stamp
-                    String apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    String apv1Stamp;
+                    if (apv1.getApvEmp() != null) {
+                        apv1Stamp = fileService.getFileUrl(apv1.getApvEmp().getEmpId(), "stamp");
+                    } else {
+                        apv1Stamp = null; //임시저장은 값이 없을 수 있음
+                    }
                     model.addAttribute("apv1Stamp", apv1Stamp);
                 });
 
@@ -163,7 +168,12 @@ public class CreateDocController {
                     model.addAttribute("apv2", apv2);
 
                     //결재 도장 데이터 apv2Stamp
-                    String apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    String apv2Stamp;
+                    if (apv2.getApvEmp() != null) {
+                        apv2Stamp = fileService.getFileUrl(apv2.getApvEmp().getEmpId(), "stamp");
+                    } else {
+                        apv2Stamp = null; //임시저장은 값이 없을 수 있음
+                    }
                     model.addAttribute("apv2Stamp", apv2Stamp);
                 });
 

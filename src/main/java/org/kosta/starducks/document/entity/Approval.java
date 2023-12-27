@@ -27,7 +27,7 @@ public class Approval {
     private ApvStatus apvStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", nullable = false)
+    @JoinColumn(name = "emp_id", nullable = true)
     private Employee apvEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)
