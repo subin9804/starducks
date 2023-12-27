@@ -39,68 +39,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-<<<<<<< HEAD
-/** 알림 기능 */
-const apiUrl = '/api/v1/notify/sse';
-const authToken = '있으면 넣을 것'
-// let lastEventId = 1;
 
-// SSE 엔드포인트 URL로 새 EventSource 생성
-const eventSource = new EventSource(apiUrl);
-
-eventSource.onopen = () => {
-    // 연결 시 할 일
-    console.log("연결됨!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log('Initial readyState1:', eventSource.readyState);
-
-};
-
-console.log('Initial readyState2:', eventSource.readyState);
-
-// SSE 이벤트에 대한 이벤트 리스너
-eventSource.onmessage = (event) => {
-    console.log('Initial readyState3:', eventSource.readyState);
-    console.log("헤이")
-    const eventData = JSON.parse(event.data);
-    console.log('Received SSE message:', eventData);
-
-
-
-    // 필요한 로직에 따라 Notification을 트리거
-    // if (Notification.permission === 'granted') {
-    //     new Notification('새로운 메시지 도착', {
-    //         body: eventData.message,
-    //     });
-    // }
-
-    // 페이지 로딩 시 알림 권한 요청
-    // if (Notification.permission !== 'granted') {
-    //     Notification.requestPermission();
-    // }
-    // 수신된 SSE 메시지 처리
-    // const eventData = JSON.parse(event.data);
-    // console.log('받은 SSE 메시지: ', eventData.content);
-
-    // SSE 메시지를 처리하는 논리를 여기에 구현하세요
-};
-
-
-
-eventSource.onerror = (event) => {
-    // 오류 처리
-    console.error('오류가 발생했습니다: ', event);
-    eventSource.close();
-};
-
-// // 페이지를 나갈 때 연결 닫기
-// window.onbeforeunload = function () {
-//     if (eventSource) {
-//
-//         eventSource.close();
-//     }
-// };
-
-=======
     // 푸시알림 허용 요청
     const apiUrl = '/api/v1/notify/subscribe';
 
@@ -130,8 +69,6 @@ eventSource.onerror = (event) => {
 
         // SSE 이벤트에 대한 이벤트 리스너
         eventSource.onmessage = (event) => {
-            console.log("헤이");
-
             const eventData = event.data;
             console.log('받은 SSE 메시지: ', eventData);
 
@@ -168,9 +105,43 @@ eventSource.onerror = (event) => {
             setTimeout(() => {
                 notification.close();
             }, 5000);
+
+            // 알림 리스트에 등록
+            $("#notify").addClass("notify");
+            let newLi = $("<li>").click(function () {
+                window.location.href = notificationData.url;
+            }).hover(
+                function () {
+                    // 마우스가 올라갔을 때의 스타일
+                    $(this).css("background-color", "#D6DEC6FF");
+                },
+                function () {
+                    // 마우스가 나갔을 때의 스타일
+                    $(this).css("background-color", "#E3EAC8FF");
+                }
+            );
+            let content = $("<p>").text(notificationData.content);
+            let time = $("<p>").text(notificationData.createdAt).addClass("s-font");
+
+            $("#notify-drop").prepend(newLi.append(content).append(time));
         }
     }
->>>>>>> 78e8e743156b97a3eac9a87815335def3dba3f68
+
+
+
+    /** 헤더 알림창 */
+    // 드롭다운 버튼 클릭 시 리스트 토글
+    $("#notify").click(function(event) {
+        event.stopPropagation(); // 클릭 이벤트 전파 방지
+        $("#notify-drop").toggle(); // toggle() 메서드를 사용하여 토글
+    });
+
+    // 문서 클릭 시 리스트 숨김
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('#notify').length && !$(event.target).closest('#notify-drop').length) {
+            $("#notify-drop").css("display", "none");
+        }
+    });
 })
 
 

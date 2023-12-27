@@ -167,6 +167,50 @@ header a {
     padding-left: 20px;
     line-height: 60px;
 }
+#notify {
+    position: relative;
+}
+.notify::before {
+    content: "•";
+    width: 15px;
+    height: 15px;
+    color: red;
+    font-size: 1.5em;
+    position: absolute;
+    top: -30px;
+    right: -7px;
+}
+
+
+#notify-drop {
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 10;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 60px;
+}
+#notify-drop a {
+    font-size: 15px;
+    padding-left: 0;
+    line-height: 15px;
+}
+#notify-drop li{
+    padding: 20px;
+}
+#notify-drop li:not(#notify-drop li:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+#notify-drop li:hover {
+    background-color: #eee;
+}
+#notify-drop li p {
+    margin: 0 0 10px;
+}
+.s-font {
+    font-size: 13px;
+    color: #989898;
+}
 /* ------ 헤더 E --------*/
 
 

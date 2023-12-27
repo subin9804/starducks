@@ -27,16 +27,25 @@ public class NotifyAspect {
     @Async  // 비동기 메서드
     @AfterReturning(pointcut = "annotationPointcut()", returning = "result") //대상 메소드가 예외를 던지지 않고 정상적으로 반환되었을 때 실행
     public void checkValue(JoinPoint joinPoint, Object result) {
-        System.out.println("aspect 호출!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println("After Returning Advice: " + (result != null));
-        System.out.println("this is join point" + joinPoint);
+//        System.out.println("aspect 호출!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println("After Returning Advice: " + (result != null));
+//        System.out.println("this is join point" + joinPoint);
         NotifyInfo notifyProxy = (NotifyInfo) result;
+
+        String message = NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage();
+        if(notifyProxy.getNotificationType() == Notify.NotificationType.CHAT) {
+            message = NotifyMessage.CHAT_NEW_REQUEST.getMessage();
+        } else if (notifyProxy.getNotificationType() == Notify.NotificationType.POST) {
+            message = NotifyMessage.POST_NEW_REQUEST.getMessage();
+        } else if (notifyProxy.getNotificationType() == Notify.NotificationType.CHAT) {
+            message = NotifyMessage.SCHEDULE_NEW_REQUEST.getMessage();
+        }
 
         for(Employee emp : notifyProxy.getReceivers()) {
             notifyService.send(
                     emp,
                     notifyProxy.getNotificationType(),
-                    NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage(),
+                    message,
                     notifyProxy.getGoUrl()
             );
 
