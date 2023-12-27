@@ -26,7 +26,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
@@ -97,8 +96,10 @@ public class IndexController {
         );
         Pageable forumPageable = PageRequest.of(0, 12, forumSort);
         Page<Document> documents = documentService.receiveDocuments(empId, forumPageable);
+        Long total = documents.getTotalElements();
 
         model.addAttribute("documents", documents);
+        model.addAttribute("total", total);
 
         // 6. 날씨 위젯
         model.addAttribute("apiKey", apiKey);

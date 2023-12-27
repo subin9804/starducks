@@ -62,7 +62,7 @@
         <!-- 전자결재함 -->
         <section class="widget content" id="widgetDoc">
             <h4>전자결재함</h4>
-            <h4 th:if="${#lists.isEmpty(documents)}" class="emptyDoc">문서 목록이 비어있습니다.</h4>
+
             <table class="mypageTable">
                 <thead>
                 <tr>
@@ -82,6 +82,7 @@
                         <td th:unless="*{urgent}" class="normal"></td>
                     </tr>
                 </tbody>
+                <h4 th:if="${total <= 0}" class="emptyDoc">결재 문서가 없습니다.</h4>
             </table>
         </section>
     </div>
