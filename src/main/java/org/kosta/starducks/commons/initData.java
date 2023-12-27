@@ -71,7 +71,6 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         // 초기 부서 데이터
         List<Department> depts = new ArrayList<>();
-        depts.add(new Department(0, "해당없음","", ""));
         depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
         depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
         depts.add(new Department(3, "총무부","general", "010-3333-3333"));
@@ -83,19 +82,19 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         // 초기 사원 데이터
         List<Employee> emps = new ArrayList<>();
         emps.add(Employee.builder().empId(1L).empName("최필립").birth(LocalDate.parse("1985-11-05"))
-                .joinDate(LocalDate.parse("2017-12-25")).email("lib@monster.com").dept(depts.get(1))
+                .joinDate(LocalDate.parse("2017-12-25")).email("lib@monster.com").dept(depts.get(0))
                 .gender("man").position(Position.ROLE_DEPTLEADER).pwd(passwordEncoder.encode("1")).status(false).postNo("08374").addr("서울 구로구 오리로 1063-2")
                 .dAddr("길동빌딩 302호").empTel("010-2344-2345").build());
         emps.add(Employee.builder().empId(2L).empName("배수지").birth(LocalDate.parse("1991-01-25"))
-                .joinDate(LocalDate.parse("2013-12-25")).email("suzi@monster.com").dept(depts.get(2))
+                .joinDate(LocalDate.parse("2013-12-25")).email("suzi@monster.com").dept(depts.get(1))
                 .gender("woman").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("056936").addr("경기 남양주시 오남읍 양지로대대울1길 4")
                 .dAddr("오리오피스텔 1102호").empTel("010-2644-3457").build());
         emps.add(Employee.builder().empId(3L).empName("이두나").birth(LocalDate.parse("1995-05-30"))
-                .joinDate(LocalDate.parse("2015-12-25")).email("duna@monster.com").dept(depts.get(3))
+                .joinDate(LocalDate.parse("2015-12-25")).email("duna@monster.com").dept(depts.get(2))
                 .gender("woman").position(Position.ROLE_TEAMLEADER).pwd(passwordEncoder.encode("1")).status(false).postNo("08853").addr("서울 서초구 과천대로 786")
                 .dAddr("두나팰리스 A동 1023호").empTel("010-1246-2241").build());
         emps.add(Employee.builder().empId(4L).empName("김길동").birth(LocalDate.parse("1999-04-19"))
-                .joinDate(LocalDate.parse("2021-12-25")).email("kimgil@monster.com").dept(depts.get(4))
+                .joinDate(LocalDate.parse("2021-12-25")).email("kimgil@monster.com").dept(depts.get(3))
                 .gender("man").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("02866").addr("서울 강서구 강서로 375-7")
                 .dAddr("푸르지오 2차 305동 201호").empTel("010-6789-1384").build());
         emps.add(Employee.builder().empId(5L).empName("최사원").birth(LocalDate.parse("1996-12-02"))
