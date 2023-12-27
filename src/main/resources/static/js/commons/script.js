@@ -94,19 +94,19 @@ window.document.addEventListener("DOMContentLoaded", function() {
         function handleEventUpdate(eventData) {
             const notificationData = JSON.parse(eventData);
 
-            const notification = new Notification("새로운 알림", {
-                body: notificationData.content
-            });
-
-            // 클릭 시 지정된 URL로 이동
-            notification.onclick = function () {
-                window.open(notificationData.url, "_self");
-            };
-
-            // 2초 후에 알림창 닫기
-            setTimeout(() => {
-                notification.close();
-            }, 5000);
+            // const notification = new Notification("새로운 알림", {
+            //     body: notificationData.content
+            // });
+            //
+            // // 클릭 시 지정된 URL로 이동
+            // notification.onclick = function () {
+            //     window.open(notificationData.url, "_self");
+            // };
+            //
+            // // 2초 후에 알림창 닫기
+            // setTimeout(() => {
+            //     notification.close();
+            // }, 5000);
 
             // 알림 리스트에 등록
             $("#notify").addClass("notify");
