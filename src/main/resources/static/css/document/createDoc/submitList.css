@@ -89,7 +89,7 @@
 .pagination strong {
     padding: 5px 10px;
     margin: 0 2px;
-    border: 1px solid rgb(98, 70, 36, 0.8);
+    border: 1px solid rgb(107, 77, 39, 0.8);
     border-radius: 5px;
     color: rgb(98, 70, 36, 0.8) !important;
     text-decoration: none;
@@ -97,20 +97,20 @@
     background-color: white;
 }
 .pagination a:hover {
-    background-color: rgb(98, 70, 36, 0.6) !important;
+    background-color: rgb(107, 77, 39, 0.6) !important;
     color: white !important;
 }
 /* 현재 페이지 스타일링 */
 .pagination .current-page {
-    border: 2px solid rgb(98, 70, 36);
-    color: rgb(98, 70, 36) !important;
+    border: 2px solid rgb(107, 77, 39);
+    color: rgb(107, 77, 39) !important;
     background-color: #ffffff;
     font-weight: bold;
 }
 /* << >> 맨처음과 끝으로 가는 버튼 스타일 */
 .pagination a:first-child,
 .pagination a:last-child {
-    background-color: rgb(98, 70, 36) !important;
+    background-color: rgb(107, 77, 39) !important;
     color: white !important;
 }
 /* < > 버튼 스타일링  */
@@ -120,20 +120,20 @@
 }
 /* 페이지 번호 부분 스타일링 */
 .page-number {
-    color : rgb(98, 70, 36, 0.6) !important;
+    color : rgb(107, 77, 39, 0.6) !important;
 }
 
 /* << >> 맨처음과 끝으로 가는 버튼 스타일:hover  */
 .pagination a:first-child:hover,
 .pagination a:last-child:hover {
-    background-color: rgb(98, 70, 36, 0.6) !important;
+    background-color: rgb(107, 77, 39, 0.6) !important;
     color: white;
 }
 /* Styles for disabled previous and next links */
 .pagination a[disabled],
 .disabled {
-    color: rgb(98, 70, 36, 0.6) !important;
-    background-color: rgb(98, 70, 36, 0.1) !important;
+    color: rgb(107, 77, 39, 0.6) !important;
+    background-color: rgb(107, 77, 39, 0.1) !important;
     pointer-events: none;
     cursor: default;
 }
