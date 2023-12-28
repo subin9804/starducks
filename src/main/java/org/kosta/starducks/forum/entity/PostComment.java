@@ -25,7 +25,7 @@ public class PostComment {
   @Lob
   private String commentContent; //댓글 내용
 
-//  @CreationTimestamp
+  @CreationTimestamp
   private LocalDateTime commentDate; //댓글 작성일
 
   @ManyToOne
