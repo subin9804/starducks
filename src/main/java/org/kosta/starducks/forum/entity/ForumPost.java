@@ -28,10 +28,10 @@ public class ForumPost {
   @Lob
   private String postContent; //게시글 내용
 
-//  @CreationTimestamp
+  @CreationTimestamp
   private LocalDateTime postDate; //게시글 최초 작성 시간
 
-//  @UpdateTimestamp
+  @UpdateTimestamp
   private LocalDateTime updateDate; //게시글 수정 시간
 
   private int postView; //조회수
