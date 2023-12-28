@@ -253,3 +253,7 @@ table tr:hover {
     color: red;
     font-size: 13px;
 }
+
+#form label {
+    display: inline-block;
+}

@@ -55,8 +55,8 @@
                 <dl>
                     <dt>성별</dt>
                     <dd>
-                        남 <input type="radio" name="a" value="man" th:field="*{gender}">
-                        여 <input type="radio" name="a" value="woman" th:field="*{gender}">
+                        <label for="man">남</label> <input type="radio" id="man" name="a" value="man" th:field="*{gender}">
+                        <label for="woman">여</label>  <input type="radio" id="woman" name="a" value="woman" th:field="*{gender}">
                         <div class="error" th:each="err : ${#fields.errors('gender')}" th:text="${err}"></div>
                     </dd>
                 </dl>
@@ -116,8 +116,8 @@
                 <dl>
                     <dt>퇴사여부</dt>
                     <dd>
-                        퇴사 <input type="radio" name="a" value="true" th:field="*{status}">
-                        재직 <input type="radio" name="a" value="false" th:field="*{status}">
+                        <label for="stopped">퇴사</label> <input id="stopped" type="radio" name="a" value="true" th:field="*{status}">
+                        <label for="running">재직</label> <input id="running" type="radio" name="a" value="false" th:field="*{status}">
                         <div class="error" th:each="err : ${#fields.errors('status')}" th:text="${err}"></div>
                     </dd>
                 </dl>
