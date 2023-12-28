@@ -42,6 +42,9 @@ public class VendorController {
     public String newVendorForm(Model model) {
         log.info("여기는 컨트롤러");
         VendorAndProductDTO vendorAndProductDTO = new VendorAndProductDTO();
+
+        model.addAttribute("vendor", new VendorAndProductDTO());
+
         model.addAttribute("vendorAndProductDTO", vendorAndProductDTO);
         model.addAttribute("businessSectors", VendorBusinessSector.values());
         return "fina/vendorAdd";
@@ -138,12 +141,21 @@ public class VendorController {
             vendor.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
         }
 //        3. 모델에 데이터 등록하기
+
         model.addAttribute("vendor", vendor);
         model.addAttribute("businessSectors", VendorBusinessSector.values());   // 업종
         model.addAttribute("contractStatus", ContractStatus.values());  // 계약 상태
 //        4. 뷰 페이지 설정하기
         return "fina/vendorEdit";
     }
+
+
+    /**
+     * DTO를 엔티티로 변환
+     */
+//    private Vendor VendorEntity(VendorAndProductDTO vendorAndProductDTO) {
+//        return modelMapper.map(vendorAndProductDTO, Vendor.class);
+//    }
 
     @PostMapping("/update")
     public String updateVendor(VendorAndProductDTO vendorAndProductDTO) {   // 매개변수로 DTO 받아오기

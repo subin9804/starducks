@@ -24,9 +24,13 @@ public class QVendor extends EntityPathBase<Vendor> {
 
     public final ListPath<Product, QProduct> products = this.<Product, QProduct>createList("products", Product.class, QProduct.class, PathInits.DIRECT2);
 
+    public final StringPath vendorAddNo = createString("vendorAddNo");
+
     public final StringPath vendorAddress = createString("vendorAddress");
 
     public final EnumPath<org.kosta.starducks.fina.entity.VendorBusinessSector> vendorBusinessSector = createEnum("vendorBusinessSector", org.kosta.starducks.fina.entity.VendorBusinessSector.class);
+
+    public final StringPath vendorDetailAdd = createString("vendorDetailAdd");
 
     public final NumberPath<Integer> vendorId = createNumber("vendorId", Integer.class);
 

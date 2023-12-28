@@ -4,11 +4,11 @@
 <div th:fragment="searchAddr">
     <input style="float: left" type="button" onclick="sample6_execDaumPostcode()" id="searchPostBtn" value="우편번호 찾기"><br>
 
-    <input style="width: 280px;" type="text" id="sample6_postcode" th:value="${vendor.vendorAddNo}" placeholder="우편번호">
+    <input style="width: 280px;" type="text" id="sample6_postcode" name="vendorAddNo" th:value="${vendor.vendorAddNo}" placeholder="우편번호">
     <br>
-    <input style="width: 280px;" type="text" id="sample6_address" th:value="${vendor.vendorAddress}" placeholder="주소">
+    <input style="width: 280px;" type="text" id="sample6_address" name="vendorAddress" th:value="${vendor.vendorAddress}" placeholder="주소">
     <br>
-    <input style="width: 280px;" type="text" id="sample6_detailAddress" th:value="${vendor.vendorDetailAdd}" placeholder="상세주소">
+    <input style="width: 280px;" type="text" id="sample6_detailAddress" name="vendorDetailAdd" th:value="${vendor.vendorDetailAdd}" placeholder="상세주소">
     <br>
     <input style="width: 280px;" type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 

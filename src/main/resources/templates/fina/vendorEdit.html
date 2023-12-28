@@ -9,6 +9,8 @@
 <th:block layout:fragment="addMore">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/fina/style.css}">
 
@@ -71,39 +73,47 @@
                     <dd><input style="width: 280px;" type="date" id="vendorStartDate" name="vendorStartDate"
                                th:value="${vendor.vendorStartDate}"></dd>
                 </dl>
-                <dl>
-                    <dt>거래처 주소</dt>
-                    <dd><input style="width: 280px;" type="text" id="vendorAddress" name="vendorAddress"
-                               placeholder="상세주소를 입력해주세요"
-                               th:value="${vendor.vendorAddress}"></dd>
+                <dl style="display: flex">
+                    <dt>주소</dt>
+                    <dd>
+                        <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>
+                    </dd>
                 </dl>
 
-                <dl>
-                    <dt>상세주소</dt>
-                    <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"
-                               th:value="${vendor.vendorAddress}"
-                               class="form-control"></dd>
-                </dl>
-                <!--                                <dl style="display: flex">-->
-                <!--                                    <dt>주소</dt>-->
-                <!--                                    <dd>-->
-                <!--                                        <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>-->
-                <!--                                    </dd>-->
-                <!--                                </dl>-->
+<!--                <dl>-->
+<!--                    <dt>업종</dt>-->
+<!--                    <dd>-->
+<!--                        <select style="width: 280px;" id="businessSector" name="businessSector" class="form-select">-->
+<!--                            <option th:each="sector : ${businessSectors}" th:value="${sector}"-->
+<!--                                    th:text="${sector.description}"-->
+<!--                                    th:selected="${vendor.vendorBusinessSector == sector}"></option>-->
+<!--                        </select>-->
+<!--                    </dd>-->
+<!--                </dl>-->
 
                 <dl>
-                    <dt>계약 여부</dt>
+                    <dt>업종</dt>
                     <dd>
                         <select style="width: 280px;" id="contractStatus" name="contractStatus" class="form-select">
-                            <option th:each="option : ${contractStatus}"
-                                    th:value="${option.name()}"
-                                    th:text="${option.getDisplayName()}"
-                                    th:selected="${vendor?.contractStatus != null and option.name() ==
-                            vendor?.contractStatus.name()}">
-                            </option>
+                            <option th:each="option : ${contractStatus}" th:value="${option}"
+                                    th:text="${option.displayName}"
+                                    th:selected="${vendor.contractStatus == option}"></option>
                         </select>
                     </dd>
                 </dl>
+
+<!--                <dl>-->
+<!--                    <dt>계약 여부</dt>-->
+<!--                    <dd>-->
+<!--                        <select style="width: 280px;" id="contractStatus" name="contractStatus" class="form-select">-->
+<!--                            <option th:each="option : ${vendor.contractStatus}"-->
+<!--                                    th:value="${option.name()}"-->
+<!--                                    th:text="${option.getDisplayName()}"-->
+<!--                                    th:selected="${vendor?.contractStatus != null and option.name() == vendor?.contractStatus.name()}">-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </dd>-->
+<!--                </dl>-->
             </div>
         </div>
         <div style="display: flex; justify-content: center; align-items: center;">
