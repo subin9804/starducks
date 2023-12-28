@@ -52,7 +52,8 @@ public class WarehouseInboundRepositoryImpl extends QuerydslRepositorySupport im
                 .selectFrom(QWarehouseInbound.warehouseInbound)
                 .where(
                         QWarehouseInbound.warehouseInbound.warehouseInboundDate.after(oneMonthAgo),
-                        QWarehouseInbound.warehouseInbound.totalPrice.gt(1000000L)
+                        QWarehouseInbound.warehouseInbound.totalQuantity.gt(100)
+
                 );
 
         // Fetch the total count before applying pagination
