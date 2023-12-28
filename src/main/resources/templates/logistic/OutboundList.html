@@ -54,11 +54,10 @@
                 <td>
                     <a th:text="${o.warehouseoutboundId}"
                        th:href="@{/logistic/outbound/warehouse/info/{Id}(Id=${o.warehouseoutboundId})}">
-                        주문 Id
+                        주문 번호
                     </a>
                 </td>
-
-                <td th:text="${o.getWarehouseOutboundDate()}">입고일자</td>
+                <td th:text="${#temporals.format(o.getWarehouseOutboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
                 <td th:text="${o.getEmployee().getEmpName()}">담당자 명</td>
                 <td th:text="${o.getTotalQuantity()}">총 입고수량</td>
                 <td>비고</td>

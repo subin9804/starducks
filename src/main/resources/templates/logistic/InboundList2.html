@@ -39,8 +39,7 @@
                             주문 Id
                         </a>
                     </td>
-
-                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
+                    <td th:text="${#temporals.format(i.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
                     <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
                     <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
                     <td >비고</td>

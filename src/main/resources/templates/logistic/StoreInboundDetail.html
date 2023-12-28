@@ -14,14 +14,14 @@
     <h1>입고 등록</h1>
     <div class="content">
 
-        <div>
-            입고 ID : <input type="text" th:value="${inbound.getStoreInboundId()}" readonly>
+        <div class="ipgodetail">
+            입고 번호<input type="text" th:value="${inbound.getStoreInboundId()}" readonly>
             <br>
-            입고 지점 : <input type="text" th:value="${inbound.getStore().getStoreName()}" readonly>
+            입고 지점<input type="text" th:value="${inbound.getStore().getStoreName()}" readonly>
             <br>
-            입고 등록인 : <input type="text" th:value="${inbound.getStore().getEmployee().getEmpName()}" readonly>
+            입고 등록인<input type="text" th:value="${inbound.getStore().getEmployee().getEmpName()}" readonly>
             <br>
-            입고 일자 : <input type="text" th:value="${inbound.getStoreInboundDate()}" readonly>
+            입고 일자<input type="text" th:value="${#temporals.format(inbound.getStoreInboundDate(), 'yyyy.MM.dd a hh:mm')}" readonly>
             <br>
         </div>
 
