@@ -4,60 +4,128 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">품목수정</th:block>
+<th:block layout:fragment="title">품목 수정</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/generalAffairs/style.css}">
     <script th:src="@{/js/generalAffairs/script.js}"></script>
+
+    <!--    추후에 css 변경 원하시면 이 태그 지우시면 됩니다.-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
 </th:block>
 
 <main layout:fragment="content">
-    <h1>품목 수정</h1>
-    <div class="content">
+    <h3>품목 수정</h3>
+    <br><br>
+    <div>
+        <div id="form">
+            <div style="display: flex;">
+                <div style="flex: 1;">
+                    <form id="addAlert" th:action="@{/general/products/update/{productCode}(productCode=${product.productCode})}"
+                          th:method="post" onsubmit="return confirmAdd()">
+                        <dl>
+                            <dt>물품 ID :</dt>
+                            <dd><input style="width: 280px;" type="text" th:value="${product.productCode}" readonly>
+                            </dd>
+                        </dl>
+                        <br>
+                        <dl>
+                            <dt>물품 이름 :</dt>
+                            <dd><input style="width: 280px;" type="text" th:value="${product.productName}" readonly>
+                            </dd>
+                        </dl>
+                        <br>
 
-    <form th:action="@{/general/products/update/{productCode}(productCode=${product.productCode})}" th:method="post">
+                        <dl>
+                            <dt><label for="productCategory">카테고리:</label></dt>
+                            <dd>
+                                <select id="productCategory" name="productCategory">
+                                    <option th:each="category : ${productCategories}"
+                                            th:value="${category}" th:text="${category}"
+                                            th:selected="${category == product.productCategory}">
 
-        <div>
-            물품 ID : <input type="text" th:value="${product.productCode}" readonly>
-            <br>
-            물품 이름 : <input type="text" th:value="${product.productName}" readonly>
-            <br>
+                                    </option>
+                                </select>
+                            </dd>
+                        </dl>
+                        <br>
 
-            <label for="productCategory">카테고리:</label>
-            <select id="productCategory" name="productCategory">
-                <option th:each="category : ${productCategories}"
-                        th:value="${category}" th:text="${category}"
-                        th:selected="${category == product.productCategory}">
+                        <dl>
+                            <dt>판매 가격 :</dt>
+                            <dd><input style="width: 280px;" type="number" th:value="${product.productPrice}"
+                                       name="productPrice"> 원
+                            </dd>
+                        </dl>
+                </div>
+                <br>
 
-                </option>
-            </select>
-            <br>
+                <div style="flex: 1;">
+                    <dl>
+                        <dt><label for="productUnit">단위:</label></dt>
+                        <dd>
+                            <select id="productUnit" name="productUnit">
+                                <option th:each="unit : ${productUnit}"
+                                        th:value="${unit}" th:text="${unit}"
+                                        th:selected="${unit == product.productUnit}"></option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <br>
 
-            판매 가격 : <input type="number" th:value="${product.productPrice}" name="productPrice" > 원
-            <br>
-            <label for="productUnit">단위:</label>
-            <select id="productUnit" name="productUnit">
-                <option th:each="unit : ${productUnit}"
-                        th:value="${unit}" th:text="${unit}"
-                        th:selected="${unit == product.productUnit}"></option>
-            </select>
-            <br>
+                    <dl>
+                        <dt>공급 업체 :</dt>
+                        <dd><input style="width: 280px;" type="text" th:value="${product.getVendor().getVendorName()}"
+                                   readonly></dd>
+                    </dl>
+                    <br>
+                    <dl>
+                        <dt>전화 번호 :</dt>
+                        <dd><input style="width: 280px;" type="text"
+                                   th:value="${product.getVendor().getVendorTelephone()}"
+                                   readonly></dd>
+                    </dl>
+                    <br>
 
-            공급 업체 : <input type="text" th:value="${product.getVendor().getVendorName()}" readonly>
-            <br>
-            전화 번호 : <input type="text" th:value="${product.getVendor().getVendorTelephone()}" readonly>
-            <br>
-
-            <!-- 거래 여부 체크박스 -->
-            <input type="checkbox" id="productSelling" name="productSelling" th:checked="${productSelling}" />
-            <label for="productSelling">거래 중</label>
-            <br>
-
+                    <dl>
+                        <dt>거래여부 :</dt>
+                        <!-- 거래 여부 체크박스 -->
+                        <dd><input type="checkbox" id="productSelling" name="productSelling"
+                                   th:checked="${productSelling}"/></dd>
+                        <dd><label for="productSelling">거래 중</label></dd>
+                    </dl>
+                    <br>
+                    </form>
+                </div>
+            </div>
+            <!--    <input type="submit" value="수정완료">-->
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <button class="commonBtn register-button" id="submitBtn" type="button"
+                        th:onclick="'confirmAdd(' + ${product.productCode} + ')'" style="margin-right: 10px;">저장
+                </button>
+                <button class="commonBtn cancel-button" type="button" onclick="location.href='/general/products/list'">
+                    목록
+                </button>
+            </div>
         </div>
 
-        <input type="submit" value="수정완료">
-    </form>
 
-
-</div>
+        <script>
+            function confirmAdd(productCode) {
+                Swal.fire({
+                    title: '저장 확인',
+                    text: '해당 정보를 수정 하시겠습니까?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('addAlert').submit();
+                    }
+                });
+            }
+        </script>
+    </div>
 </main>
 </html>

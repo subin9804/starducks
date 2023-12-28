@@ -26,8 +26,8 @@ public class Approval {
     @Enumerated(EnumType.STRING)
     private ApvStatus apvStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "emp_id", nullable = true)
     private Employee apvEmp;
 
     @ManyToOne(fetch = FetchType.LAZY)

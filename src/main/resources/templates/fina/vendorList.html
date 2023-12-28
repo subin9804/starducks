@@ -14,19 +14,21 @@
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
     <h3>거래처 목록</h3>
+    <br><br>
 
     <!-- 검색창. 제목 + 내용 검색 가능 -->
-    <form class="search-form" method="get" th:action="@{/fina/vendor/list}" style="display: flex; justify-content: center; align-items: center;">
+    <form class="search-form" method="get" th:action="@{/fina/vendor/list}"
+          style="display: flex; justify-content: center; align-items: center;">
         <input name="searchKeyword"
                placeholder="검색어 입력" type="text">
         <button type="submit">검색</button>
     </form>
 
-    <button class="btn btn-primary" type="button" onclick="location.href='/fina/vendor/new'"
+    <button class="commonBtn register-button" type="button" onclick="location.href='/fina/vendor/new'"
             style="float: right">
         추가하기
     </button>
-    <br><br>
+    <br><br><br>
 
     <!--    거래처 목록 테이블-->
     <table class="table table-hover">
@@ -79,7 +81,9 @@
             <!-- 페이지 번호 -->
             <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                 <li class="page-item" th:classappend="${page == nowPage} ? 'active' : ''">
-                    <a class="page-link" th:href="@{/fina/vendor/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+                    <a class="page-link"
+                       th:href="@{/fina/vendor/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}"
+                       th:text="${page}"></a>
                 </li>
             </th:block>
 

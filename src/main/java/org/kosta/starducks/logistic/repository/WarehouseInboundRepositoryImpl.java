@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.logistic.entity.QWarehouseInbound;
+import org.kosta.starducks.logistic.entity.QWarehouseOutbound;
 import org.kosta.starducks.logistic.entity.WarehouseInbound;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -53,6 +54,7 @@ public class WarehouseInboundRepositoryImpl extends QuerydslRepositorySupport im
                 .where(
                         QWarehouseInbound.warehouseInbound.warehouseInboundDate.after(oneMonthAgo),
                         QWarehouseInbound.warehouseInbound.totalQuantity.gt(100)
+
 
                 );
 

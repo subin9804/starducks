@@ -8,100 +8,144 @@
 <th:block layout:fragment="addMore">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
 </th:block>
 
 <main layout:fragment="content">
-    <h2>거래처 관리</h2>
-    <hr>
-    <br><br>
-    <h5>거래처 추가</h5>
+    <h3>거래처 등록</h3>
     <br>
-
     <div class="row g-3 align-items-center">
+        <div id="form">
+            <div style="display: flex;">
+                <div style="flex: 1;">
+                    <form class="container" th:action="@{/fina/vendor/create}" method="post">
+                        <dl>
+                            <dt>거래처명</dt>
+                            <dd style="width: 280px;">
+                                <input class="form-control" type="text" id="vendorName" name="vendorName"
+                                       th:value="${vendorAndProductDTO.vendorName}" placeholder="거래처명를 입력해주세요" required>
+                            </dd>
+                        </dl>
 
-        <div id="form" style="display: flex;">
-            <div style="flex: 1;">
-                <form class="container" th:action="@{/fina/vendor/create}" method="post">
-                    <dl>
-                        <dt>거래처명</dt>
-                        <dd><input class="form-control" type="text" id="vendorName" name="vendorName"
-                                   th:value="${vendorAndProductDTO.vendorName}"
-                                   placeholder="거래처명를 입력해주세요"></dd>
-                    </dl>
+                        <dl>
+                            <dt>업종</dt>
+                            <dd>
+                                <select style="width: 280px;" id="businessSector" name="businessSector"
+                                        class="form-select">
+                                    <option th:each="sector : ${businessSectors}"
+                                            th:value="${sector.name()}"
+                                            th:text="${sector.description}">
+                                    </option>
+                                </select>
+                            </dd>
+                        </dl>
 
-                    <dl>
-                        <dt>업종</dt>
+                        <dl>
+                            <dt>대표자명</dt>
+                            <dd>
+                                <input style="width: 280px;" type="text" id="vendorRepreName" name="vendorRepreName"
+                                       th:value="${vendorAndProductDTO.vendorRepreName}" placeholder="대표자명을 입력하세요"
+                                       required></dd>
+                        </dl>
+
+                        <dl>
+                            <dt>사업자 번호</dt>
+                            <dd><input style="width: 280px;" class="form-control" type="text" id="vendorRegistNum"
+                                       name="vendorRegistNum"
+                                       th:value="${vendorAndProductDTO.vendorRegistNum}"
+                                       placeholder="사업자번호 10자리를 입력해주세요" required></dd>
+                        </dl>
+                        <dl>
+                            <dt>거래처 연락처</dt>
+                            <dd>
+                                <input style="width: 280px;" type="text" id="vendorTelephone" name="vendorTelephone"
+                                       placeholder="연락처를 입력해주세요" required>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>거래 시작일</dt>
+                            <dd><input style="width: 280px;" type="date" id="vendorStartDate" name="vendorStartDate"
+                                       required>
+                            </dd>
+                        </dl>
+                </div>
+
+                <div style="flex: 1;">
+<!--                    <dl>-->
+<!--                        <dt><label for="storeAddr">주소</label></dt>-->
+<!--                        <dd><input style="width: 280px;" type="text" id="storeAddr" name="storeAddr"-->
+<!--                                   placeholder="주소를 입력해주세요"></dd>-->
+<!--                    </dl>-->
+
+<!--                    <dl>-->
+<!--                        <dt><label for="storeDetailAddr">상세주소</label></dt>-->
+<!--                        <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"-->
+<!--                                   placeholder="상세주소를 입력해주세요">-->
+<!--                        </dd>-->
+<!--                    </dl>-->
+                    <dl style="display: flex">
+                        <dt>주소</dt>
                         <dd>
-                            <select id="businessSector" name="businessSector">
-                                <option th:each="sector : ${businessSectors}"
-                                        th:value="${sector.name()}"
-                                        th:text="${sector.description}">
+                            <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><label for="storeOperationalYn">거래여부</label></dt>
+                        <dd>
+                            <select style="width: 280px;" id="storeOperationalYn" name="contractStatus"
+                                    class="form-select">
+                                <option value="CONTRACT_ACTIVE"
+                                        th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_ACTIVE'}">계약 중
+                                </option>
+                                <option value="CONTRACT_INACTIVE"
+                                        th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_INACTIVE'}">계약 중지
                                 </option>
                             </select>
                         </dd>
                     </dl>
-
-                    <dl>
-                        <dt>대표자명</dt>
-                        <dd><input type="text" id="vendorRepreName" name="vendorRepreName"
-                                   th:value="${vendorAndProductDTO.vendorRepreName}" placeholder="대표자명을 입력하세요"></dd>
-                    </dl>
-
-                    <dl>
-                        <dt>사업자 번호</dt>
-                        <dd><input class="form-control" type="text" id="vendorRegistNum" name="vendorRegistNum"
-                                   th:value="${vendorAndProductDTO.vendorRegistNum}" placeholder="숫자를 입력해주세요"></dd>
-                    </dl>
-            </div>
-
-            <div style="flex: 1;">
-                <dl>
-                    <dt>거래처 연락처</dt>
-                    <dd><input type="text" id="vendorTelephone" name="vendorTelephone" placeholder="-을 포함하여 입력해주세요">
-                    </dd>
-                </dl>
-
-                <dl>
-                    <dt>거래 시작일</dt>
-                    <dd><input type="date" id="vendorStartDate" name="vendorStartDate"></dd>
-                </dl>
-                <dl>
-                    <dt><label for="addNo">우편번호</label></dt>
-                    <dd><input type="text" id="addNo" name="addNo" placeholder="우편번호를 입력해주세요"></dd>
-                </dl>
-
-                <dl>
-                    <dt><label for="storeAddr">주소</label></dt>
-                    <dd><input type="text" id="storeAddr" name="storeAddr" placeholder="주소를 입력해주세요"></dd>
-                </dl>
-
-                <dl>
-                    <dt><label for="storeDetailAddr">상세주소</label></dt>
-                    <dd><input type="text" id="storeDetailAddr" name="storeDetailAddr" placeholder="상세주소를 입력해주세요"></dd>
-                </dl>
-
-                <dl>
-                    <dt><label for="storeOperationalYn">거래여부</label></dt>
-                    <select id="storeOperationalYn" name="contractStatus">
-                        <option value="CONTRACT_ACTIVE"
-                                th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_ACTIVE'}">계약 중
-                        </option>
-                        <option value="CONTRACT_INACTIVE"
-                                th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_INACTIVE'}">계약 중지
-                        </option>
-                    </select>
-                    <dl>
+                </div>
             </div>
             <div style="display: flex; justify-content: center; align-items: center;">
-                <button class="btn btn-primary" id="submitBtn" type="submit">등록</button>
-                <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
+                <button class="commonBtn register-button" id="submitBtn" type="submit" onclick="confirmAdd()">등록
+                </button>
+                <button class="commonBtn cancel-button" type="button" onclick="location.href='/fina/vendor/list'">
                     목록
                 </button>
+                </form>
             </div>
         </div>
     </div>
-    </form>
-    </div>
+    <script>
+        $('#vendorRegistNum').blur(function () {
+            const prodExp = /([0-9]{3})-?([0-9]{2})-?([0-9]{5})/;
+            if (!prodExp.test($('#vendorRegistNum').val())) {
+                Swal.fire({
+                    icon: 'question',
+                    title: '잘못된 입력 형식!',
+                    text: '올바른 사업자등록번호 양식을 입력해주세요',
+                }).then(function () {
+                    $('#vendorRegistNum').val("");
+                })
+                return false;
+            }
+        });
+
+        $('#vendorTelephone').blur(function () {
+            const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+            if (!prodExp.test($('#vendorTelephone').val())) {
+                Swal.fire({
+                    icon: 'question',
+                    title: '잘못된 입력 형식!',
+                    text: '올바른 전화번호 형식을 입력하세요.',
+                }).then(function () {
+                    $('#vendorTelephone').val("");
+                })
+                return false;
+            }
+        });
+
+    </script>
 </main>
 </html>

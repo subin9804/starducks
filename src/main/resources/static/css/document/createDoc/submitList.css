@@ -80,46 +80,60 @@
     position: absolute;
     bottom: 30px;
     left: 50%;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*list-style: none;*/
+    display: flex;
+    justify-content: center !important;
+    list-style: none;
+    align-items: center !important;
 }
-
 .pagination a,
 .pagination strong {
     padding: 5px 10px;
     margin: 0 2px;
-    border: 1px solid rgba(107, 77, 39, 0.3);
+    border: 1px solid rgb(107, 77, 39, 0.8);
     border-radius: 5px;
-    color: rgba(107, 77, 39, 0.4) !important;
+    color: rgb(107, 77, 39, 0.8) !important;
     text-decoration: none;
+    opacity: 1.0 !important;
+    background-color: white;
 }
-
 .pagination a:hover {
-    background-color: rgba(107, 77, 39, 0.7) !important;
+    background-color: rgb(107, 77, 39, 0.6) !important;
     color: white !important;
 }
-
-/* Style for current page */
+/* 현재 페이지 스타일링 */
 .pagination .current-page {
-    background-color: white;
-    border-color: #6B4D27;
-    color: #6B4D27 !important;
+    border: 2px solid rgb(107, 77, 39);
+    color: rgb(107, 77, 39) !important;
+    background-color: #ffffff;
     font-weight: bold;
 }
-
-/* Custom styles for first and last page links */
+/* << >> 맨처음과 끝으로 가는 버튼 스타일 */
 .pagination a:first-child,
 .pagination a:last-child {
-    background-color: rgba(107, 77, 39, 0.4);
+    background-color: rgb(107, 77, 39) !important;
     color: white !important;
 }
+/* < > 버튼 스타일링  */
+.next-page {
+    background-color: rgb(190, 158, 124) !important;
+    color: white !important;
+}
+/* 페이지 번호 부분 스타일링 */
+.page-number {
+    color : rgb(107, 77, 39, 0.6) !important;
+}
 
+/* << >> 맨처음과 끝으로 가는 버튼 스타일:hover  */
+.pagination a:first-child:hover,
+.pagination a:last-child:hover {
+    background-color: rgb(107, 77, 39, 0.6) !important;
+    color: white;
+}
 /* Styles for disabled previous and next links */
 .pagination a[disabled],
 .disabled {
-    color: grey;
-    background-color: #f4f4f4;
+    color: rgb(107, 77, 39, 0.6) !important;
+    background-color: rgb(107, 77, 39, 0.1) !important;
     pointer-events: none;
     cursor: default;
 }

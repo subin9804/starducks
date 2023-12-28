@@ -1,7 +1,6 @@
 package org.kosta.starducks.commons.menus;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,9 @@ public class MenuService {
             case "hr":
                 menus.add(new MenuDetail("emp", "사원 관리", "/hr/emp"));
                 menus.add(new MenuDetail("attend", "근태 관리", "/hr/attend"));
-                menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
+//                menus.add(new MenuDetail("vacation", "휴가 관리", "/"));
                 menus.add(new MenuDetail("dept", "부서 관리", "/hr/dept"));
-                menus.add(new MenuDetail("docu", "문서 관리", "/"));
+//                menus.add(new MenuDetail("docu", "문서 관리", "/"));
                 break;
             case "logistic":
                 menus.add(new MenuDetail("inbound", "입고 관리", "/logistic/inbound/warehouse/list"));
@@ -59,10 +58,10 @@ public class MenuService {
                 menus.add(new MenuDetail("stock", "재고 관리", "/logistic/stock/warehouse/list"));
                 break;
             case "general":
-                menus.add(new MenuDetail("schedule", "전사 일정 관리", "/general/schedule"));
-                menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
-                menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
-                menus.add(new MenuDetail("products", "품목 관리", "/general/products"));
+//                menus.add(new MenuDetail("schedule", "전사 일정 관리", "/general/schedule"));
+//                menus.add(new MenuDetail("adforum", "게시판 관리", "/"));
+//                menus.add(new MenuDetail("adconf", "회의실 관리", "/"));
+                menus.add(new MenuDetail("products", "품목 관리", "/general/products/list"));
                 break;
             case "fina" :
                 menus.add(new MenuDetail("store", "지점 정보 관리", "/fina/store/list"));

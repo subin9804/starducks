@@ -3,104 +3,84 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<title layout:fragment="title">재무부</title>
-
-<th:block layout:fragment="addMore">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/empVerification.css}"
-          href="/static/css/document/createDoc/empVerification.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
-
-</th:block>
-
 <main layout:fragment="content">
-    <h1>지점관리</h1>
-            <!-- 상세 정보를 표시하는 폼 -->
-            <div id="form" style="display: flex;">
-                <div style="flex: 1;">
-                    <form class="container">
-
-                        <dl>
-                            <dt><label for="storeName" class="col-form-label">지점명</label></dt>
-                            <dd><input type="text" id="storeName" name="storeName" th:value="${store.storeName}"
-                                       class="form-control"
-                                       readonly></dd>
-                        </dl>
-
-                        <dl>
-                            <dt><label for="businessNum">사업자 번호</label></dt>
-                            <dd><input class="form-control" type="text" id="businessNum" name="businessNum"
-                                       th:value="${store.businessNum}" readonly></dd>
-                        </dl>
-
-                        <dl>
-                            <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
-                            <dd><input type="text" id="storeManager" name="storeManager"
-                                       th:value="${store.employee.getEmpName()}"
-                                       class="form-control" readonly></dd>
-                        </dl>
-
-                        <dl>
-                            <dt><label for="storeOpenDate" class="col-form-label">개업일</label></dt>
-                            <dd><input type="text" id="storeOpenDate" name="storeOpenDate"
-                                       th:value="${store.storeOpenDate}"
-                                       class="form-control" readonly></dd>
-                        </dl>
-                </div>
-
-                <div style="flex: 1;">
+    <h3>지점 상세 정보</h3>
+    <br>
+    <!-- 상세 정보를 표시하는 폼 -->
+    <div id="form">
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <form>
                     <dl>
-                        <dt><label for="addNo">우편번호</label></dt>
-                        <dd><input type="text" id="addNo" name="addNo" th:value="${store.addNo}" class="form-control"
-                                   readonly></dd>
-                    </dl>
-
-                    <dl>
-                        <dt><label for="storeAddr">주소</label></dt>
-                        <dd><input type="text" id="storeAddr" name="storeAddr" th:value="${store.storeAddr}"
+                        <dt><label for="storeName" class="col-form-label">지점명</label></dt>
+                        <dd><input style="width: 280px;" type="text" id="storeName" name="storeName" th:value="${store.storeName}"
                                    class="form-control"
                                    readonly></dd>
                     </dl>
 
                     <dl>
-                        <dt><label for="storeDetailAddr">상세주소</label></dt>
-                        <dd><input type="text" id="storeDetailAddr" name="storeDetailAddr"
-                                   th:value="${store.storeDetailAddr}"
+                        <dt><label for="businessNum">사업자 번호</label></dt>
+                        <dd><input style="width: 280px;" class="form-control" type="text" id="businessNum" name="businessNum"
+                                   th:value="${store.businessNum}" readonly></dd>
+                    </dl>
+
+                    <dl>
+                        <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
+                        <dd><input style="width: 280px;" type="text" id="storeManager" name="storeManager"
+                                   th:value="${store.employee.getEmpName()}"
                                    class="form-control" readonly></dd>
                     </dl>
 
-                    <!-- 운영 여부 -->
                     <dl>
-                        <dt><label for="storeOperationalYn">운영여부</label></dt>
-                        <dd><input type="text" id="storeOperationalYn" name="storeOperationalYn"
-                                   th:value="${store.storeOperationalYn.description}" class="form-control" readonly>
-                        </dd>
+                        <dt><label for="storeOpenDate" class="col-form-label">개업일</label></dt>
+                        <dd><input style="width: 280px;" type="text" id="storeOpenDate" name="storeOpenDate"
+                                   th:value="${store.storeOpenDate}"
+                                   class="form-control" readonly></dd>
                     </dl>
-
-                </div>
             </div>
 
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <button class="btn btn-success" type="button"
-                        th:onclick="'confirmUpdate(' + ${store.storeNo} + ')'"
-                        style="margin-right: 10px;">
-                    수정
-                </button>
+            <div style="flex: 1;">
+                <dl>
+                    <dt>우편번호</dt>
+                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.addNo}"></dd>
+                </dl>
+                <dl>
+                    <dt>주소</dt>
+                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.storeAddr}"> </dd>
+                </dl>
+                <dl>
+                    <dt>상세주소</dt>
+                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.storeDetailAddr}"> </dd>
+                </dl>
 
-                <button class="btn btn-danger" type="button"
-                        th:onclick="'confirmDelete(' + ${store.storeNo} + ')'"
-                        style="margin-right: 10px;">
-                    삭제
-                </button>
-                <button class="btn btn-secondary" type="button" onclick="location.href='/fina/store/list'">
-                    목록
-                </button>
+                <!-- 운영 여부 -->
+                <dl>
+                    <dt><label for="storeOperationalYn">운영여부</label></dt>
+                    <dd><input style="width: 280px;" type="text" id="storeOperationalYn" name="storeOperationalYn"
+                               th:value="${store.storeOperationalYn.description}" class="form-control" readonly>
+                    </dd>
+                </dl>
             </div>
-            </form>
         </div>
-    </div>
 
+        <div style="display: flex;  justify-content: center; align-items: center;">
+            <button class="commonBtn edit-button" type="button"
+                    th:onclick="'confirmUpdate(' + ${store.storeNo} + ')'"
+                    style="margin-right: 10px;">
+                수정
+            </button>
+
+            <button class="commonBtn delete-button" type="button"
+                    th:onclick="'confirmDelete(' + ${store.storeNo} + ')'"
+                    style="margin-right: 10px;">
+                삭제
+            </button>
+            <button class="commonBtn cancel-button" type="button" onclick="location.href='/fina/store/list'">
+                목록
+            </button>
+        </div>
+        </form>
+    </div>
 
     <script>
         function confirmDelete(storeNo) {
@@ -141,4 +121,15 @@
     </script>
     </div>
 </main>
+
+<title layout:fragment="title">재무부</title>
+
+<th:block layout:fragment="addMore">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/empVerification.css}"
+          href="/static/css/document/createDoc/empVerification.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
+
+</th:block>
 </html>

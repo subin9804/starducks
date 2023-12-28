@@ -80,25 +80,29 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         deptRepository.saveAllAndFlush(depts);
 
         // 초기 사원 데이터
-        for (int i = 1; i < 6; i++) {
-            Employee emp = new Employee();
-            emp.setEmpId((long) i);
-            emp.setStatus(false);
-            emp.setBirth(LocalDate.parse("2023-12-2" + i));
-            emp.setEmpTel("010-9999-999" + i);
-            emp.setGender("woman");
-            emp.setEmail("sdf@Aasdf.com");
-            emp.setAddr("부천시");
-            emp.setEmpName("사원0" + i);
-            emp.setPostNo("00025");
-            emp.setDAddr("용인시 오리구");
-            emp.setPosition(Position.ROLE_EMPLOYEE);
-            emp.setJoinDate(LocalDate.parse("2022-12-2" + i));
-            emp.setPwd(passwordEncoder.encode("1"));
-            emp.setDept(deptRepository.findById(i).orElse(null));
+        List<Employee> emps = new ArrayList<>();
+        emps.add(Employee.builder().empId(1L).empName("최필립").birth(LocalDate.parse("1985-11-05"))
+                .joinDate(LocalDate.parse("2017-12-25")).email("lib@monster.com").dept(depts.get(0))
+                .gender("man").position(Position.ROLE_DEPTLEADER).pwd(passwordEncoder.encode("1")).status(false).postNo("08374").addr("서울 구로구 오리로 1063-2")
+                .dAddr("길동빌딩 302호").empTel("010-2344-2345").build());
+        emps.add(Employee.builder().empId(2L).empName("배수지").birth(LocalDate.parse("1991-01-25"))
+                .joinDate(LocalDate.parse("2013-12-25")).email("suzi@monster.com").dept(depts.get(1))
+                .gender("woman").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("056936").addr("경기 남양주시 오남읍 양지로대대울1길 4")
+                .dAddr("오리오피스텔 1102호").empTel("010-2644-3457").build());
+        emps.add(Employee.builder().empId(3L).empName("이두나").birth(LocalDate.parse("1995-05-30"))
+                .joinDate(LocalDate.parse("2015-12-25")).email("duna@monster.com").dept(depts.get(2))
+                .gender("woman").position(Position.ROLE_TEAMLEADER).pwd(passwordEncoder.encode("1")).status(false).postNo("08853").addr("서울 서초구 과천대로 786")
+                .dAddr("두나팰리스 A동 1023호").empTel("010-1246-2241").build());
+        emps.add(Employee.builder().empId(4L).empName("김길동").birth(LocalDate.parse("1999-04-19"))
+                .joinDate(LocalDate.parse("2021-12-25")).email("kimgil@monster.com").dept(depts.get(3))
+                .gender("man").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("02866").addr("서울 강서구 강서로 375-7")
+                .dAddr("푸르지오 2차 305동 201호").empTel("010-6789-1384").build());
+        emps.add(Employee.builder().empId(5L).empName("최사원").birth(LocalDate.parse("1996-12-02"))
+                .joinDate(LocalDate.parse("2022-12-25")).email("sawon@monster.com").dept(depts.get(4))
+                .gender("man").position(Position.ROLE_EMPLOYEE).pwd(passwordEncoder.encode("1")).status(false).postNo("07316").addr("부산 강서구 가락대로 197-1")
+                .dAddr("오리빌라 102호").empTel("010-2347-0663").build());
 
-            repository.saveAndFlush(emp);
-        }
+        repository.saveAllAndFlush(emps);
 
         // 점검용 사원
         Employee specificEmp = new Employee();
@@ -253,18 +257,25 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         storeService.createStore(store);
 
         // 초기 게시글 데이터
-        for (int i = 0; i < 33; i++) {
-            ForumPost forumPost = new ForumPost();
-            forumPost.setPostDate(LocalDateTime.now());
-            forumPost.setPostTitle("제목" + i);
-            forumPost.setPostContent("내용" + i);
-            forumPost.setPostView(i);
-            forumPost.setEmployee(specificEmp);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        for (int i = 0; i < 2; i++) {
+            List<ForumPost> posts = new ArrayList<>();
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2023-12-07 00:00:00", dtf)).postTitle("건의사항과 개선 아이디어를 모아봅시다")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(1)).postNotice(true).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2023-12-07 00:00:00", dtf)).postTitle("회사 이벤트 및 축하 메시지 모음")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(2)).postNotice(true).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2023-12-03 00:00:00", dtf)).postTitle("프로젝트 기술 리뷰 및 피드백 모집")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(3)).postNotice(false).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2023-12-20 00:00:00", dtf)).postTitle("팀 전체 회식 아이디어 모집")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(4)).postNotice(false).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2022-11-30 00:00:00", dtf)).postTitle("최근 경험한 기술적인 도전과 해결")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(0)).postNotice(false).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2021-10-02 00:00:00", dtf)).postTitle("회사 문화 개선을 위한 아이디어 제안")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(1)).postNotice(false).build());
+            posts.add(ForumPost.builder().postDate(LocalDateTime.parse("2022-08-17 00:00:00", dtf)).postTitle("2024 사내기숙사 입주자 모집")
+                    .postContent("모집양식은 각 부서 팀장에게 문의바랍니다.").employee(emps.get(3)).postNotice(false).build());
 
-            //공지사항 글 5개, 나머지 일반 게시글 더미 데이터
-            forumPost.setPostNotice(i < 5);
-
-            forumPostRepository.saveAndFlush(forumPost);
+            forumPostRepository.saveAllAndFlush(posts);
         }
 
         //문서 양식 데이터
@@ -284,23 +295,29 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
                     LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
             };
 
             LocalDateTime[] endDates = {
                     LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
                     LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
             };
 
-            ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
+            ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
 
-            String[] titles = {"가가가가", "나나나나", "다다다다"};
-            String[] notes = {"내용1", "내용2", "내용3"};
+            String[] titles = {"팀 회식", "마케팅 강연", "점심약속", "팀 회식", "마케팅 강연", "점심약속"};
+            String[] notes = {"회식", "강연", "약속", "회식", "강연", "약속"};
 
-            Long[] empIds = {1L, 1L, 2L}; // Employee ID 배열
+            Long[] empIds = {1L, 1L, 2L, 3L, 3L, 3L}; // Employee ID 배열
 
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 6; j++) {
                 Schedule scheduleData = new Schedule();
                 scheduleData.setScheNo((long) (j + 1));
                 scheduleData.setScheTitle(titles[j]);
@@ -366,7 +383,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             for (int i = 0; i < 3; i++) {
                 ChatMessage msg = new ChatMessage();
                 msg.setChatRoom(chatRoom2);
-                msg.setMessage("메시지 내용 " + i);
+                msg.setMessage("밥 어떤거 드세요? " + i);
                 msg.setSender(emp11); // 사번이 11인 사원이 메시지를 보냈다고 가정
                 msg.setReadStatus(false);
                 chatMessageRepository.save(msg);

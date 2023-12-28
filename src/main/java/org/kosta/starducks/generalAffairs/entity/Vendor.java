@@ -30,7 +30,11 @@ public class Vendor {
     private String vendorRepreName; // 대표자명
     private String vendorTelephone; // 거래처 연락처('-' 포함)
     private LocalDate vendorStartDate;  // 거래시작일
-    private String vendorAddress;   // 거래처 주소
+//    private String vendorAddress;   // 거래처 주소
+
+    private String vendorAddNo; // 우편번호
+    private String vendorAddress; // 거래처 주소
+    private String vendorDetailAdd; // 상세 주소
 
     @Enumerated(EnumType.STRING)
     private ContractStatus contractStatus; // 계약 상태
