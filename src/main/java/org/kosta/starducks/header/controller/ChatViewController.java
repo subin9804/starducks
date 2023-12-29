@@ -28,21 +28,35 @@ import java.util.stream.Collectors;
 @Controller
 public class ChatViewController {
 
-  @Autowired
-  private ChatRoomService chatRoomService;
 
-  @Autowired
-  private ChatMessageService chatMessageService;
+  private final ChatRoomService chatRoomService;
+  private final ChatMessageService chatMessageService;
+  private final EmpService empService;
 
-  @Autowired
-  private EmpService empService;
+  public ChatViewController(ChatRoomService chatRoomService, ChatMessageService chatMessageService, EmpService empService) {
+    this.chatRoomService = chatRoomService;
+    this.chatMessageService = chatMessageService;
+    this.empService = empService;
+  }
 
+  /**
+   *
+   CustomUserDetails를 시큐리티 관련으로 만들어서 이것을 통해서 로그인한 사람의 정보를 가져와도 되고,
+   더 간단하게는 Principal 사용해서 principal.getName()으로 접속 ID만 가져오면 된다.
+   여기서 접속 ID는 로그인을 할 때 접속 방법에 따라서 달라진다.
+   이메일을 통해서 로그인을 하면 이메일이 principal.getName() 또는 userDetails.getUserName()으로 가져와지고
+   ID로 로그인을 하지면 ID가 가져와진다. 이 개념을 알아두기.
+   * @param model
+   * @param userDetails
+   * @return
+   */
   //  메인 페이지. 채팅방 리스트 보여줌
   @GetMapping("/chatRoomList")
-  public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+  public String chatListPage(Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
     Long userId = Long.parseLong(userDetails.getUsername());
     List<ChatRoomResponseDto> chatRoomDtos = chatRoomService.getChatRoomsForEmployee(userId);
 
+    //chatRoomDtos는 컨트롤러에서 사용된 변수명이고, "chatRooms"는 템플릿에서 사용될 이름
     model.addAttribute("chatRooms", chatRoomDtos);
     return "header/chatRoomList";
   }

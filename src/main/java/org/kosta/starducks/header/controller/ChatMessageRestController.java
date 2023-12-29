@@ -27,6 +27,4 @@ public class ChatMessageRestController {
   public ChatMessageResponseDto getMessage(@PathVariable("id") Long id) {
     return chatMessageService.findById(id);
   }
-
-  // 여기에 필요한 다른 채팅 메시지 관련 메서드 추가
 }
