@@ -13,7 +13,8 @@ import java.util.List;
 
 
 /**
- * 채팅방 생성, 수정, 조회 등과 관련된 REST API
+ * 채팅방 생성, 수정 등과 관련된 REST API
+ * 추후 채팅방 삭제 기능도 추가 가능
  */
 @RestController
 @RequestMapping("/api/chat/rooms")
