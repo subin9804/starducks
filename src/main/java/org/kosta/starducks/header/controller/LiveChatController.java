@@ -27,6 +27,7 @@ public class LiveChatController {
   /**
    * 자바스크립트에서 JSON 형식으로 전환된 메시지가 컨트롤러로 전송이 되고,
    * requestDto를 통해서 데이터를 받아서 db에 저장이 되며, reponseDto로 전환이 돼서 리턴이 된다
+   *
    * @param roomId
    * @param messageRequest
    * @return

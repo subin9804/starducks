@@ -27,10 +27,14 @@ public class ChatRoom extends BaseTimeEntity {
   //채팅방 이름
   private String roomName;
 
+  //채팅방과 연관된 사원들을 연결해 주는 채팅방-사원 리스트
+  //채팅방이 이 관계의 주인. 채팅방 엔티티에 변경이 있으면 chatRoomEmp에도 적용된다.
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
-  private List<ChatRoomEmp> chatRoomEmps; // 채팅방과 사원들의 관계를 나타내는 필드
+  private List<ChatRoomEmp> chatRoomEmps;
 
   //채팅방에 속해있는 메시지 리스트
+  //채팅방이 이 관계의 주인. 채팅방 엔티티가 삭제되면 속한 메시지들도 삭제된다.
+  //메시지들을 db에 유지하려면 cascade 없애기
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
   private List<ChatMessage> chatMessageList;
 

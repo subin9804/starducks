@@ -39,7 +39,7 @@ public class ChatRoomRestController {
     return ResponseEntity.ok().body(chatRoomId);
   }
 
-  //  채팅방 목록 페이지에서 로그인한 사원과 관련된 것만 불러오기
+  //  채팅방 목록 페이지에 로그인한 사원과 관련된 것만 불러오기
   // chatRoomList.html의 스크립트 function loadChatRooms()에서 사용 중
   @GetMapping("/my-rooms")
   public List<ChatRoomResponseDto> getMyChatRooms(@AuthenticationPrincipal UserDetails userDetails) {

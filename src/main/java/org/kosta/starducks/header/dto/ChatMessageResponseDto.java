@@ -28,7 +28,6 @@ public class ChatMessageResponseDto {
       this.senderId = chatMessage.getSender().getEmpId();
       this.senderName = chatMessage.getSender().getEmpName();
     } else {
-      // 적절한 기본값 또는 예외 처리
       this.senderId = null;
       this.senderName = "알 수 없는 사용자";
     }

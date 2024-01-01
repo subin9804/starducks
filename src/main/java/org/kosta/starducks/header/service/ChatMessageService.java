@@ -25,7 +25,9 @@ public class ChatMessageService {
   private final ChatMessageRepository chatMessageRepository;
   private final EmpRepository empRepository;
 
-  /** ChatMessage 조회 */
+  /**
+   * ChatMessage 조회
+   */
   @Transactional
   public ChatMessageResponseDto findById(final Long chatMessageId) {
     ChatMessage chatMessageEntity = this.chatMessageRepository.findById(chatMessageId).orElseThrow(
@@ -34,7 +36,9 @@ public class ChatMessageService {
     return new ChatMessageResponseDto(chatMessageEntity);
   }
 
-  /** ChatMessage 생성 */
+  /**
+   * ChatMessage 생성
+   */
   @Transactional
   public ChatMessage save(final Long chatRoomId, final ChatMessageRequestDto requestDto) {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
@@ -46,7 +50,9 @@ public class ChatMessageService {
     return chatMessageRepository.save(requestDto.toEntity(senderEntity, chatRoomEntity));
   }
 
-  /** ChatMessage 삭제 */
+  /**
+   * ChatMessage 삭제
+   */
   @Transactional
   public void delete(final Long chatMessageId) {
     ChatMessage chatMessageEntity = this.chatMessageRepository.findById(chatMessageId).orElseThrow(
@@ -55,7 +61,9 @@ public class ChatMessageService {
     this.chatMessageRepository.delete(chatMessageEntity);
   }
 
-  /** 특정 채팅방 ChatMessage 목록조회 - 작성순, List, ChatRoomId 검색 */
+  /**
+   * 특정 채팅방 ChatMessage 목록조회 - 작성순, List, ChatRoomId 검색
+   */
   @Transactional
   public List<ChatMessageResponseDto> findAllByChatRoomIdAsc(final Long chatRoomId) {
     ChatRoom chatRoomEntity = this.chatRoomRepository.findById(chatRoomId).orElseThrow(
@@ -67,7 +75,12 @@ public class ChatMessageService {
   }
 
 
-  //  채팅방의 메시지를 작성순으로 조회
+  /**
+   * 채팅방에 속한 메시지를 최신 것부터 db에서 불러온다. reverse 사용해서 출력은 밑일수록 최신이 되도록 함
+   *
+   * @param chatRoomId
+   * @return
+   */
   @Transactional(readOnly = true)
   public List<ChatMessageResponseDto> getMessagesForChatRoom(final Long chatRoomId) {
     ChatRoom chatRoomEntity = chatRoomRepository.findById(chatRoomId)
@@ -80,7 +93,9 @@ public class ChatMessageService {
         .map(ChatMessageResponseDto::new)
         .collect(Collectors.toList());
 
-    // 메시지 목록을 역순으로 정렬. 메시지를 서버에서 최신 것부터 불러오면서 그걸 타임리프에서 출력할 떄는 아래가 최신이게 하기 위해서
+    // 메시지 목록을 역순으로 정렬. 메시지를 서버에서 최신 것부터 가져온 다음에 그걸 타임리프에서 출력할 떄는 아래일수록 최신이 된다.
+    // 옛날 메시지부터 db에서 가져오면 비효율적
+    // 더 최적화를 한다면 최신 10개만 불러와지고, 위로 스크롤하면 과거 10개 추가적으로 더 가져온다든지 가능
     Collections.reverse(responseDtos);
 
     return responseDtos;

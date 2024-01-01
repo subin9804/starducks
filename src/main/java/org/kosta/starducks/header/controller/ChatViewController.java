@@ -35,19 +35,19 @@ public class ChatViewController {
   }
 
   /**
+   * CustomUserDetails를 시큐리티 관련으로 만들어서 이것을 통해서 로그인한 사람의 정보를 가져와도 되고,
+   * 더 간단하게는 Principal 사용해서 principal.getName()으로 접속 ID만 가져오면 된다.
+   * 여기서 접속 ID는 로그인을 할 때 접속 방법에 따라서 달라진다.
+   * 이메일을 통해서 로그인을 하면 이메일이 principal.getName() 또는 userDetails.getUserName()으로 가져와지고
+   * ID로 로그인을 하지면 ID가 가져와진다. 이 개념을 알아두기.
    *
-   CustomUserDetails를 시큐리티 관련으로 만들어서 이것을 통해서 로그인한 사람의 정보를 가져와도 되고,
-   더 간단하게는 Principal 사용해서 principal.getName()으로 접속 ID만 가져오면 된다.
-   여기서 접속 ID는 로그인을 할 때 접속 방법에 따라서 달라진다.
-   이메일을 통해서 로그인을 하면 이메일이 principal.getName() 또는 userDetails.getUserName()으로 가져와지고
-   ID로 로그인을 하지면 ID가 가져와진다. 이 개념을 알아두기.
    * @param model
    * @param userDetails
    * @return
    */
   //  메인 페이지. 채팅방 리스트 보여줌
   @GetMapping("/chatRoomList")
-  public String chatListPage(Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
+  public String chatListPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
     Long userId = Long.parseLong(userDetails.getUsername());
     List<ChatRoomResponseDto> chatRoomDtos = chatRoomService.getChatRoomsForEmployee(userId);
 
@@ -57,6 +57,7 @@ public class ChatViewController {
   }
 
   // 사원 목록 페이지
+  // 부서별로 사원들을 정리해서 갖고온다.
   @GetMapping("/chatEmpList")
   public String chatEmpListPage(Model model, Principal principal) {
     Long loggedInUserId = Long.parseLong(principal.getName());
@@ -67,6 +68,7 @@ public class ChatViewController {
   }
 
   // 채팅방 상세 페이지. 메시지를 주고 받는 곳
+  // 채팅방에 속한 메시지들만 갖고 온다. currentUserId는 로그인한 사원꺼와 그외 사원의 메시지를 구분하는 용도
   @GetMapping("/chatRoom/{roomId}")
   public String chatRoomPage(@PathVariable("roomId") Long roomId, Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
     List<ChatMessageResponseDto> messages = chatMessageService.getMessagesForChatRoom(roomId);
