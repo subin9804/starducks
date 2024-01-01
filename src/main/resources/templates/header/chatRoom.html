@@ -75,6 +75,7 @@
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       console.log('Connected: ' + frame);
+      // stomp를 통해서 밑의 주소를 subscribe 유지 중. 그래서 새로운 메시지를 실시간으로 수신한다.
       stompClient.subscribe('/topic/chatroom/' + roomId, function (messageOutput) {
         showMessage(JSON.parse(messageOutput.body));
       });

@@ -24,7 +24,8 @@ public class ChatRoomResponseDto {
     this.createdDate = chatRoom.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
     this.updatedDate = (chatRoom.getModifiedAt() != null) ?
         chatRoom.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")) :
-        "N/A"; // 'N/A' 또는 다른 기본값을 사용
+        "N/A";
+
     // 채팅방에 속한 사원들의 이름 목록을 추가
     this.empNames = chatRoom.getChatRoomEmps().stream()
         .map(ChatRoomEmp::getEmployee)
