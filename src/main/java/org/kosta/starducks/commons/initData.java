@@ -1,7 +1,7 @@
 package org.kosta.starducks.commons;
 
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.commons.notify.NotifyService;
+import org.kosta.starducks.commons.notify.service.NotifyService;
 import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.fina.entity.ContractStatus;

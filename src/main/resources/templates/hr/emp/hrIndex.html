@@ -16,9 +16,9 @@
     <h1>사원관리</h1>
     <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
         <div>
-            All <input type="radio" name="status" value="all" th:field="*{status}" checked>
-            재직 <input type="radio" name="status" value="running" th:field="*{status}">
-            퇴사 <input type="radio" name="status" value="stopped" th:field="*{status}">
+            <label for="every">All</label> <input type="radio" id="every" name="status" value="all" th:field="*{status}" checked>
+            <label for="runopt">재직</label> <input type="radio" id="runopt" name="status" value="running" th:field="*{status}">
+                <label for="stopopt">퇴사</label> <input type="radio" id="stopopt" name="status" value="stopped" th:field="*{status}">
         </div>
 
         <select name="sopt">

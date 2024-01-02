@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.dto;
 
 public enum NotifyMessage {
     DOCUMENT_NEW_REQUEST("새로운 결재 문서가 있습니다."),

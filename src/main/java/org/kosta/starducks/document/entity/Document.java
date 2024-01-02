@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.kosta.starducks.commons.notify.Notify;
-import org.kosta.starducks.commons.notify.NotifyInfo;
+import org.kosta.starducks.commons.notify.entity.Notify;
+import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
 import org.kosta.starducks.hr.entity.Employee;
 

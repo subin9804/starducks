@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.entity;
 
 
 import jakarta.persistence.*;

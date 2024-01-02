@@ -1,7 +1,8 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
+import org.kosta.starducks.commons.notify.service.NotifyService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
