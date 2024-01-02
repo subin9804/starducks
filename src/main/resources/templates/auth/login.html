@@ -13,7 +13,7 @@
     <form method="post" th:action="@{/login}">
       <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
       <div class="form-floating">
-<!--        스프링 시큐리티에서 username으로 등록된 것을 식별 id로 인식한다-->
+        <!--        스프링 시큐리티에서 username으로 등록된 것을 식별 id로 인식한다-->
         <input id="empId" name="username" required type="text">
         <label for="empId">사번</label>
       </div>
@@ -30,6 +30,63 @@
 
     <a class="forgot-password" href="/forgotPwd">비밀번호 찾기</a>
   </div>
+
+  <!-- 접속하는 모든 분들에게 로그인 정보 공유용 -->
+  <table class="uniqueTableStyle">
+    <thead>
+    <tr>
+      <th>아이디</th>
+      <th>비밀번호</th>
+      <th>부서</th>
+      <th>직급</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>사장실</td>
+      <td>부장</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>재무부</td>
+      <td>사원</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>총무부</td>
+      <td>팀장</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>물류유통부</td>
+      <td>사원</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>인사부</td>
+      <td>사원</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>1q</td>
+      <td>물류유통부</td>
+      <td>점장</td>
+    </tr>
+    <tr>
+      <td>1004</td>
+      <td>1004</td>
+      <td>마스터계정</td>
+      <td>사장</td>
+    </tr>
+    </tbody>
+  </table>
+
 </div>
 <!-- 비밀번호 찾기 페이지에서 이메일 전송이 성공하고, 로그인 페이지로 이동되면 뜨는 알림 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
