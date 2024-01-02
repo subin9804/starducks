@@ -73,12 +73,14 @@ public class NotifyService {
      * @param url
      */
     public void send(Employee receiver, Notify.NotificationType notificationType, String content, String url) {
+        // DB에 알림내용 저장
         Notify notification = notifyRepository.save(createNotification(receiver, notificationType, content, url));
 
         String receiverId = receiver.getEmpId().toString();
         String eventId = receiverId + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByEmpId(receiverId);
 
+        // 클라이언트에 이벤트 전송
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);

@@ -72,15 +72,16 @@ public class Document implements NotifyInfo {
         for(Approval app : approvals) {
             receivers.add(app.getApvEmp());
         }
-
         return receivers;
     }
 
+    // 이동할 url
     @Override
     public String getGoUrl() {
-        return "/document/receiveDoc/draft/" + docId;
+        return "/document/receiveDoc/" + docForm.getFormNameEn() + "/" + docId;
     }
 
+    // 알림 type
     @Override
     public Notify.NotificationType getNotificationType() {
         return Notify.NotificationType.DOCUMENT;

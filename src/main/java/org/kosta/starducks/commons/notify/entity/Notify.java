@@ -31,6 +31,7 @@ public class Notify extends BaseTimeEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)  // Employee가 삭제될 때 해당 Notify도 삭제됨
     private Employee receiver;
 
+    @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
     public enum NotificationType {

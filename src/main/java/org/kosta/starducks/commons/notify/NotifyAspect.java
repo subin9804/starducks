@@ -53,7 +53,7 @@ public class NotifyAspect {
                     notifyProxy.getGoUrl()
             );
 
-        log.info("result = {}", emp.getEmpName());
+        log.info("result = {}", notifyProxy.getGoUrl());
         }
     }
 }
