@@ -96,10 +96,10 @@ public class ForumPostController {
             .anyMatch(grantedAuthority -> "ROLE_BOSS".equals(grantedAuthority.getAuthority()));
         model.addAttribute("isBoss", isBoss);
 
-//        인사부 직원인 게 확인되면 공지 버튼이 보인다
-        boolean isHrDepartment = employeeWithDept != null &&
-            "인사부".equals(employeeWithDept.getDept().getDeptName());
-        model.addAttribute("isHrDepartment", isHrDepartment);
+//        총무부 직원인 게 확인되면 공지 버튼이 보인다
+        boolean isGADepartment = employeeWithDept != null &&
+            "총무부".equals(employeeWithDept.getDept().getDeptName());
+        model.addAttribute("isGADepartment", isGADepartment);
 
         return "forum/forumAddPost";
     }
@@ -140,10 +140,10 @@ public class ForumPostController {
             .anyMatch(grantedAuthority -> "ROLE_BOSS".equals(grantedAuthority.getAuthority()));
         model.addAttribute("isBoss", isBoss);
 
-//        인사부 직원인 게 확인되면 공지 버튼이 보인다
-        boolean isHrDepartment = employeeWithDept != null &&
-            "인사부".equals(employeeWithDept.getDept().getDeptName());
-        model.addAttribute("isHrDepartment", isHrDepartment);
+//        총무부 직원인 게 확인되면 공지 버튼이 보인다
+        boolean isGADepartment = employeeWithDept != null &&
+            "총무부".equals(employeeWithDept.getDept().getDeptName());
+        model.addAttribute("isGADepartment", isGADepartment);
 
         return "forum/forumEditPost";
     }
