@@ -58,41 +58,29 @@
                         <dd><input style="width: 280px;" type="text" id="vendorRepreName" name="vendorRepreName"
                                    th:value="${vendor.vendorRepreName}" required></dd>
                     </dl>
+                    <dl>
+                        <dt>연락처</dt>
+                        <dd><input style="width: 280px;" type="text" id="vendorTelephone" name="vendorTelephone"
+                                   placeholder="-를 포함해서 입력해주세요"
+                                   th:value="${vendor.vendorTelephone}">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><label for="vendorStartDate">거래시작일</label></dt>
+                        <dd><input style="width: 280px;" type="date" id="vendorStartDate" name="vendorStartDate"
+                                   th:value="${vendor.vendorStartDate}"></dd>
+                    </dl>
             </div>
 
             <div style="flex: 1;">
-                <dl>
-                    <dt>연락처</dt>
-                    <dd><input style="width: 280px;" type="text" id="vendorTelephone" name="vendorTelephone"
-                               placeholder="-를 포함해서 입력해주세요"
-                               th:value="${vendor.vendorTelephone}">
-                    </dd>
-                </dl>
-                <dl>
-                    <dt><label for="vendorStartDate">거래시작일</label></dt>
-                    <dd><input style="width: 280px;" type="date" id="vendorStartDate" name="vendorStartDate"
-                               th:value="${vendor.vendorStartDate}"></dd>
-                </dl>
                 <dl style="display: flex">
                     <dt>주소</dt>
                     <dd>
                         <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>
                     </dd>
                 </dl>
-
-<!--                <dl>-->
-<!--                    <dt>업종</dt>-->
-<!--                    <dd>-->
-<!--                        <select style="width: 280px;" id="businessSector" name="businessSector" class="form-select">-->
-<!--                            <option th:each="sector : ${businessSectors}" th:value="${sector}"-->
-<!--                                    th:text="${sector.description}"-->
-<!--                                    th:selected="${vendor.vendorBusinessSector == sector}"></option>-->
-<!--                        </select>-->
-<!--                    </dd>-->
-<!--                </dl>-->
-
                 <dl>
-                    <dt>업종</dt>
+                    <dt>계약 여부</dt>
                     <dd>
                         <select style="width: 280px;" id="contractStatus" name="contractStatus" class="form-select">
                             <option th:each="option : ${contractStatus}" th:value="${option}"
@@ -101,30 +89,17 @@
                         </select>
                     </dd>
                 </dl>
-
-<!--                <dl>-->
-<!--                    <dt>계약 여부</dt>-->
-<!--                    <dd>-->
-<!--                        <select style="width: 280px;" id="contractStatus" name="contractStatus" class="form-select">-->
-<!--                            <option th:each="option : ${vendor.contractStatus}"-->
-<!--                                    th:value="${option.name()}"-->
-<!--                                    th:text="${option.getDisplayName()}"-->
-<!--                                    th:selected="${vendor?.contractStatus != null and option.name() == vendor?.contractStatus.name()}">-->
-<!--                            </option>-->
-<!--                        </select>-->
-<!--                    </dd>-->
-<!--                </dl>-->
             </div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <button class="commonBtn register-button" type="submit">저장
-            </button>
-            <button class="commonBtn cancel-button" type="button"
-                    onclick="confirmCancel()">
-                이전
-            </button>
-            </form>
-        </div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <button class="commonBtn register-button" type="submit">저장
+        </button>
+        <button class="commonBtn cancel-button" type="button"
+                onclick="confirmCancel()">
+            이전
+        </button>
+        </form>
+    </div>
     </div>
 
     <script>

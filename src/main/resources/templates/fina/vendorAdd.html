@@ -73,34 +73,33 @@
                 </div>
 
                 <div style="flex: 1;">
-<!--                    <dl>-->
-<!--                        <dt><label for="storeAddr">주소</label></dt>-->
-<!--                        <dd><input style="width: 280px;" type="text" id="storeAddr" name="storeAddr"-->
-<!--                                   placeholder="주소를 입력해주세요"></dd>-->
-<!--                    </dl>-->
+                    <!--                    <dl>-->
+                    <!--                        <dt><label for="storeAddr">주소</label></dt>-->
+                    <!--                        <dd><input style="width: 280px;" type="text" id="storeAddr" name="storeAddr"-->
+                    <!--                                   placeholder="주소를 입력해주세요"></dd>-->
+                    <!--                    </dl>-->
 
-<!--                    <dl>-->
-<!--                        <dt><label for="storeDetailAddr">상세주소</label></dt>-->
-<!--                        <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"-->
-<!--                                   placeholder="상세주소를 입력해주세요">-->
-<!--                        </dd>-->
-<!--                    </dl>-->
+                    <!--                    <dl>-->
+                    <!--                        <dt><label for="storeDetailAddr">상세주소</label></dt>-->
+                    <!--                        <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"-->
+                    <!--                                   placeholder="상세주소를 입력해주세요">-->
+                    <!--                        </dd>-->
+                    <!--                    </dl>-->
                     <dl style="display: flex">
                         <dt>주소</dt>
                         <dd>
                             <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>
                         </dd>
                     </dl>
+
                     <dl>
-                        <dt><label for="storeOperationalYn">거래여부</label></dt>
+                        <dt>거래여부</dt>
                         <dd>
                             <select style="width: 280px;" id="storeOperationalYn" name="contractStatus"
                                     class="form-select">
-                                <option value="CONTRACT_ACTIVE"
-                                        th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_ACTIVE'}">계약 중
-                                </option>
-                                <option value="CONTRACT_INACTIVE"
-                                        th:selected="${vendorAndProductDTO.contractStatus == 'CONTRACT_INACTIVE'}">계약 중지
+                                <option th:each="selector : ${contractStatus}"
+                                        th:value="${selector.name()}"
+                                        th:text="${selector.displayName}"
                                 </option>
                             </select>
                         </dd>
@@ -132,19 +131,19 @@
             }
         });
 
-        $('#vendorTelephone').blur(function () {
-            const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-            if (!prodExp.test($('#vendorTelephone').val())) {
-                Swal.fire({
-                    icon: 'question',
-                    title: '잘못된 입력 형식!',
-                    text: '올바른 전화번호 형식을 입력하세요.',
-                }).then(function () {
-                    $('#vendorTelephone').val("");
-                })
-                return false;
-            }
-        });
+        // $('#vendorTelephone').blur(function () {
+        //     const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+        //     if (!prodExp.test($('#vendorTelephone').val())) {
+        //         Swal.fire({
+        //             icon: 'question',
+        //             title: '잘못된 입력 형식!',
+        //             text: '올바른 전화번호 형식을 입력하세요.',
+        //         }).then(function () {
+        //             $('#vendorTelephone').val("");
+        //         })
+        //         return false;
+        //     }
+        // });
 
     </script>
 </main>

@@ -158,7 +158,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendor1.setVendorId(1);
         vendor1.setVendorName("빈로스터리");
         vendor1.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
-        vendor1.setVendorRegistNum("12458921");
+        vendor1.setVendorRegistNum("124-58-92123");
         vendor1.setVendorRepreName("장총명");
         vendor1.setVendorTelephone("010-1212-3434");
         vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
@@ -170,7 +170,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendor2.setVendorId(2);
         vendor2.setVendorName("대성산업");
         vendor2.setVendorBusinessSector(VendorBusinessSector.FARMINGANDCULTIVATION);
-        vendor2.setVendorRegistNum("46952029");
+        vendor2.setVendorRegistNum("469-52-02963");
         vendor2.setVendorRepreName("김찬구");
         vendor2.setVendorTelephone("010-7122-8152");
         vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));

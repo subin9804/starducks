@@ -47,6 +47,7 @@ public class VendorController {
 
         model.addAttribute("vendorAndProductDTO", vendorAndProductDTO);
         model.addAttribute("businessSectors", VendorBusinessSector.values());
+        model.addAttribute("contractStatus", ContractStatus.values());
         return "fina/vendorAdd";
     }
 
@@ -127,8 +128,6 @@ public class VendorController {
         List<Vendor> vendorList = vendorService.findAll();
         model.addAttribute("vendorList", vendorList);
         return "fina/vendorList";
-
-//        return "fina/vendorList";
     }
 
     @GetMapping("/edit/{vendorId}")
