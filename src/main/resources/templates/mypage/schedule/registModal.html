@@ -8,7 +8,8 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.10/index.global.min.js'></script>
 
     <script th:src="@{/js/mypage/schedule/ScheduleScript.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/schedule.css}">
+    <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/schedule.css}">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </th:block>
@@ -16,40 +17,58 @@
 <main layout:fragment="content">
     <div th:fragment="addModal">
         <div class="addModal" id="addModal" style="display: none;">
-            <form class="modal-content" th:action="@{/mypage/schedule/add}" method="post" th:id="addForm">
-                <span class="close" id="closeModalBtn">&times;</span>
-                <h3>일정 등록</h3>
-                <div style="padding: 40px">
-                    <input type="hidden" id="scheNo" name="scheNo" disabled>
+            <div style="display: flex;">
+                <div style="flex: 1;">
+                    <form class="modal-content" th:action="@{/mypage/schedule/add}" method="post" th:id="addForm">
+                        <span class="close" id="closeModalBtn">X</span>
+                        <h3>일정 등록</h3>
+                        <div style="padding: 40px">
+                            <input type="hidden" id="scheNo" name="scheNo" disabled>
 
-                    <span style="display: inline-block; width: 60px;">일정명</span>
-                    <input type="text" id="scheTitle" name="scheTitle" style="display: inline-block; width: 200px;">
-                    <br>
+                            <dl style="display: flex;">
+                                <dt style="margin-right: 38px;">일정명</dt>
+                                <dd>
+                                    <input type="text" id="scheTitle" name="scheTitle" style="width: 280px;">
+                                </dd>
+                            </dl>
 
-                    <span>시작 일시</span>
-                    <input type="datetime-local" name="scheStartDate">
-                    <br>
+                            <dl style="display: flex;">
+                                <dt style="margin-right: 20px;">시작 일시</dt>
+                                <dd>
+                                    <input style="width: 280px;" type="date" name="scheStartDate">
+                                </dd>
+                            </dl>
+                            <br>
 
-                    <span>종료 일시</span>
-                    <input type="datetime-local" name="scheEndDate">
-                    <br>
+                            <dl style="display: flex;">
+                                <dt style="margin-right: 20px;">종료 일시</dt>
+                                <dd><input style="width: 280px;" type="date" name="scheEndDate"></dd>
+                            </dl>
+                            <br>
 
-                    <span>일정 종류</span>
-                    <select id="scheType" name="scheduleType">
-                        <option th:value="PERSONAL_SCHEDULE" name="PERSONAL_SCHEDULE">개인일정</option>
-                        <option th:value="OFFICIAL_SCHEDULE" name="OFFICIAL_SCHEDULE">공식일정</option>
-                    </select>
-                    <br>
+                            <dl style="display: flex;">
+                                <dt style="margin-right: 20px;">일정 종류</dt>
+                                <dd>
+                                    <select style="width: 280px;" id="scheType" name="scheduleType">
+                                        <option th:value="PERSONAL_SCHEDULE" name="PERSONAL_SCHEDULE">개인일정</option>
+                                        <option th:value="OFFICIAL_SCHEDULE" name="OFFICIAL_SCHEDULE">공식일정</option>
+                                    </select></dd>
+                            </dl>
+                            <br>
 
-                    <span>참고사항</span>
-                    <textarea id="text" rows="5" cols="62" name="notes"></textarea>
-                    <br>
+                            <dl style="display: flex;">
+                                <dt style="margin-right: 20px;">참고사항</dt>
+                                <dd><textarea id="text" rows="5" cols="62" name="notes"></textarea></dd>
+                            </dl>
+                            <br>
 
-                    <div class="btns" id="btns">
-                        <button class="commonBtn register-button" id="registBtn">등록</button>
-                    </div>
+                            <div class="btns" id="btns">
+                                <button class="commonBtn register-button" id="registBtn">등록</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </main>

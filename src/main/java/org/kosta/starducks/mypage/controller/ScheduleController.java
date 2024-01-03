@@ -45,7 +45,7 @@ public class ScheduleController {
         }
 
         Long empId = Long.parseLong(principal.getName());
-        log.info("누가 로그인했니!!!!!!!!! ==> " + empId);
+//        log.info("누가 로그인했니!!!!!!!!! ==> " + empId);
 
         List<Schedule> scheduleList = scheduleService.findByEmployeeEmpId(empId);
 

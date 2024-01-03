@@ -28,11 +28,11 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final EnumPath<ScheduleType> scheduleType = createEnum("scheduleType", ScheduleType.class);
 
-    public final DateTimePath<java.time.LocalDateTime> scheEndDate = createDateTime("scheEndDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> scheEndDate = createDate("scheEndDate", java.time.LocalDate.class);
 
     public final NumberPath<Long> scheNo = createNumber("scheNo", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> scheStartDate = createDateTime("scheStartDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> scheStartDate = createDate("scheStartDate", java.time.LocalDate.class);
 
     public final StringPath scheTitle = createString("scheTitle");
 

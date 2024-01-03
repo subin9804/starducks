@@ -64,6 +64,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ChatRoomRepository chatRoomRepository;
 
     private final NotifyService notifyService;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         //배포 서버 JVM 시간 설정
@@ -71,11 +72,11 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         // 초기 부서 데이터
         List<Department> depts = new ArrayList<>();
-        depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
-        depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
-        depts.add(new Department(3, "총무부","general", "010-3333-3333"));
-        depts.add(new Department(4, "물류유통부","logistic", "010-4444-4444"));
-        depts.add(new Department(5, "인사부","hr", "010-5555-5555"));
+        depts.add(new Department(1, "사장실", "boss", "010-1111-1111"));
+        depts.add(new Department(2, "재무부", "fina", "010-2222-2222"));
+        depts.add(new Department(3, "총무부", "general", "010-3333-3333"));
+        depts.add(new Department(4, "물류유통부", "logistic", "010-4444-4444"));
+        depts.add(new Department(5, "인사부", "hr", "010-5555-5555"));
 
         deptRepository.saveAllAndFlush(depts);
 
@@ -321,8 +322,8 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 Schedule scheduleData = new Schedule();
                 scheduleData.setScheNo((long) (j + 1));
                 scheduleData.setScheTitle(titles[j]);
-                scheduleData.setScheStartDate(startDates[j]);
-                scheduleData.setScheEndDate(endDates[j]);
+                scheduleData.setScheStartDate(LocalDate.from(startDates[j]));
+                scheduleData.setScheEndDate(LocalDate.from(endDates[j]));
                 scheduleData.setNotes(notes[j]);
 
                 scheduleData.setScheduleType(scheduleTypes[j]);
