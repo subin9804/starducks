@@ -9,8 +9,7 @@ import org.kosta.starducks.header.entity.ChatRoom;
 import java.util.List;
 
 /**
- * 채팅방과 관련된 '요청'에 사용됨
- * 채팅방 생성, 수정
+ * 채팅방 생성 '요청'에 사용됨
  */
 
 @Getter

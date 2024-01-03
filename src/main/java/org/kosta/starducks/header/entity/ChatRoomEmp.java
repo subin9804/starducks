@@ -34,6 +34,5 @@ public class ChatRoomEmp {
   }
 
   public ChatRoomEmp() {
-
   }
 }

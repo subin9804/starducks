@@ -43,6 +43,43 @@ body {
     align-content: center;
 }
 
+/* 접속하는 분들에게 로그인 정보 공유용 */
+.uniqueTableStyle {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+.uniqueTableStyle th, .uniqueTableStyle td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    font-size: 10px;
+
+}
+
+.uniqueTableStyle th {
+    background-color: #f2f2f2;
+    color: black;
+    font-size: 10px;
+    text-align: center;
+}
+
+.uniqueTableStyle tr:nth-child(even) {
+    background-color: #f9f9f9;
+    font-size: 10px;
+    text-align: center;
+}
+
+.uniqueTableStyle td {
+    background-color: white;
+    color: black;
+    font-size: 10px;
+    text-align: center;
+}
+
+
 /* 비밀번호 찾기 제목 스타일 */
 .findPwdTitle {
     font-size: 24px; /* 크기 증가 */

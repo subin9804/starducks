@@ -21,13 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class ChatRoomService {
 
-  @Autowired
   private final ChatRoomRepository chatRoomRepository;
-
-  @Autowired
   private final EmpRepository empRepository;
-
-  @Autowired
   private final ChatRoomEmpRepository chatRoomEmpRepository;
 
   //  채팅방 조회
@@ -39,7 +34,7 @@ public class ChatRoomService {
     return new ChatRoomResponseDto(chatRoom);
   }
 
-  //채팅방 id를 통해서 이름 조회
+  //채팅방 id를 통해서 채팅방 이름 조회
   public String getRoomName(final Long id) {
     ChatRoom chatRoom = this.chatRoomRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("해당 채팅방이 존재하지 않습니다. id=" + id));
@@ -55,6 +50,7 @@ public class ChatRoomService {
     chatRoom = chatRoomRepository.save(chatRoom);
 
     // 사원 ID 리스트를 반복하면서 각 사원과 채팅방의 관계 설정
+    // 채팅방 requestDto에 있는 사원 목록이 있는 만큼 반복돼서 그만큼 ChatRoomEmp가 생성이 된다.
     for (Long empId : requestDto.getEmpIds()) {
       Employee employee = empRepository.findById(empId)
           .orElseThrow(() -> new IllegalArgumentException("사원이 존재하지 않습니다. ID: " + empId));
@@ -82,11 +78,11 @@ public class ChatRoomService {
     this.chatRoomRepository.delete(chatRoom);
   }
 
+  // 로그인한 사원과 관련된 채팅방 목록 가져오기
   public List<ChatRoomResponseDto> getChatRoomsForEmployee(Long empId) {
     List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByEmployeeId(empId);
     return chatRooms.stream()
         .map(ChatRoomResponseDto::new)
         .collect(Collectors.toList());
   }
-
 }
