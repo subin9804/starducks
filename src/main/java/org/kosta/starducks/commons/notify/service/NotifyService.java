@@ -21,7 +21,6 @@ public class NotifyService {
     private final EmitterRepository emitterRepository;
     private final NotifyRepository notifyRepository;
 
-
     @NeedNotify
     public void methodWithAnt() {
         // 해당 메서드가 실행될 때 NotifyAspect의 checkValue 메서드가 실행되어야 함

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
+import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.document.repository.OrderItemRepository;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DocumentService {
     private final DocumentRepository documentRepository;
+    private final DocFormRepository formRepository;
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
     private final VendorService vendorService;
@@ -239,7 +241,7 @@ public class DocumentService {
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
     @NeedNotify
-    public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
+    public Document saveDocumentAndApvAndRef(Document document, String code, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -255,12 +257,17 @@ public class DocumentService {
 //            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
         }
 
+        // DocForm 객체 가져오기
+        DocForm form = formRepository.findByFormNameEn(code).get();
+
+
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
         document.setDocStatus(DocStatus.PENDING_DOC);
         document.setApprovals(approvalList);
+        document.setDocForm(form);
         document.setRefEmpIds(refEmpIdList.toString());
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);

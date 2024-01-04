@@ -1,6 +1,7 @@
 package org.kosta.starducks.document.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -76,9 +77,10 @@ public class Document implements NotifyInfo {
     }
 
     // 이동할 url
+    @Transactional
     @Override
     public String getGoUrl() {
-        return "/document/receiveDoc/" + docForm.getFormNameEn() + "/" + docId;
+        return "/document/receiveDoc/" + (docForm.getFormNameEn() != null ? docForm.getFormNameEn() : "실패") + "/" + docId;
     }
 
     // 알림 type
