@@ -100,8 +100,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var scheNo = document.getElementById('scheNo').value;
         var scheTitle = document.getElementById('scheTitle').value;
-        var scheStartDate = document.getElementsByName('scheStartDate')[0].value;
-        var scheEndDate = document.getElementsByName('scheEndDate')[0].value;
+        var scheStartDateInput = document.getElementsByName('scheStartDate')[0];
+        var scheEndDateInput = document.getElementsByName('scheEndDate')[0];
+
+        // LocalDate 객체 생성
+        var scheStartDate = new Date(scheStartDateInput.value);
+        var scheEndDate = new Date(scheEndDateInput.value);
+
+        // 종료일에 하루를 더해줌
+        scheEndDate.setDate(scheEndDate.getDate() + 1);
+
         var scheduleType = document.getElementsByName('scheduleType')[0].value;
         var notes = document.getElementsByName('notes')[0].value;
 
@@ -133,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // 서버로부터 반환받은 일정 ID를 사용하여 새 이벤트의 URL을 설정
                 var newEvent = {
-                    empId: empId, // 이 부분을 수정
+                    empId: empId,
                     title: scheTitle,
                     start: scheStartDate,
                     end: scheEndDate,
@@ -160,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
             end: 'today'
         },
         locale: "ko",
-        initialDate: '2023-12-27',
         navLinks: true,
         selectable: true,
         selectMirror: true,
@@ -172,13 +179,20 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         editable: false,        // 툴바 이동 금지
         dayMaxEvents: true,
-    });
+        displayEventTime: false // 시간 표시 x
+});
 
 // 일정을 캘린더에 추가하는 함수
     function addEventsToCalendar(events) {
-        if (events && Array.isArray(events)) { // events가 정의되었고 배열인지 확인
+        if (events && Array.isArray(events)) {
             events.forEach(function (eventData) {
-                console.log("eventData:", eventData); // 이벤트 데이터 전체를 로그에 출력
+                console.log("eventData:", eventData);
+
+                // 종료일에 하루를 더해주는 조건 추가
+                if (eventData.allDay) {
+                    eventData.end = moment(eventData.end).add(1, 'days');
+                }
+
                 var newEvent = {
                     empId: eventData.empId,
                     title: eventData.scheTitle,
@@ -223,5 +237,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     calendar.render();
-})
-;
+});

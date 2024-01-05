@@ -42,15 +42,29 @@
             <div style="flex: 1;">
                 <dl>
                     <dt>우편번호</dt>
-                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.addNo}"></dd>
+                    <dd style="text-align: left">
+                        <input style="width: 280px;" type="text" id="addNo" name="addNo"
+                               th:value="${store.addNo}"
+                               class="form-control"
+                               readonly>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>주소</dt>
-                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.storeAddr}"> </dd>
+                    <dd style="text-align: left">
+                        <input style="width: 280px;" type="text" id="storeAddr" name="storeAddr"
+                               th:value="${store.storeAddr}"
+                               class="form-control"
+                               readonly>
                 </dl>
                 <dl>
                     <dt>상세주소</dt>
-                    <dd style="text-align: left"><p style="width: 280px;" th:text="*{store.storeDetailAddr}"> </dd>
+                    <dd style="text-align: left">
+                        <input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"
+                               th:value="${store.storeDetailAddr}"
+                               class="form-control"
+                               readonly>
+                    </dd>
                 </dl>
 
                 <!-- 운영 여부 -->

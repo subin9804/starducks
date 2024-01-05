@@ -291,24 +291,22 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
             docFormRepository.saveAndFlush(docForm);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
-//            Schedule 데이터 생성
-            LocalDateTime[] startDates = {
-
-                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter)
+            LocalDate[] startDates = {
+                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-06 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-10 00:00:00.000000", formatter).toLocalDate()
             };
 
-            LocalDateTime[] endDates = {
-                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter),
-                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter)
+            LocalDate[] endDates = {
+                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-07 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter).toLocalDate(),
+                    LocalDateTime.parse("2023-12-11 00:00:00.000000", formatter).toLocalDate()
             };
 
             ScheduleType[] scheduleTypes = {ScheduleType.PERSONAL_SCHEDULE, ScheduleType.OFFICIAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE, ScheduleType.PERSONAL_SCHEDULE};
@@ -322,8 +320,8 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
                 Schedule scheduleData = new Schedule();
                 scheduleData.setScheNo((long) (j + 1));
                 scheduleData.setScheTitle(titles[j]);
-                scheduleData.setScheStartDate(LocalDate.from(startDates[j]));
-                scheduleData.setScheEndDate(LocalDate.from(endDates[j]));
+                scheduleData.setScheStartDate(startDates[j]);
+                scheduleData.setScheEndDate(endDates[j]);
                 scheduleData.setNotes(notes[j]);
 
                 scheduleData.setScheduleType(scheduleTypes[j]);

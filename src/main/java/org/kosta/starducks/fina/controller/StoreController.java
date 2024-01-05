@@ -52,11 +52,13 @@ public class StoreController {
      * @return
      */
     @PostMapping("/create")
-    public String createStore(@ModelAttribute Store store, @RequestParam("storeManager") String storeManager) {
+    public String createStore(@ModelAttribute("store") Store store, @RequestParam("storeManager") String storeManager) {
         Employee storeEmpName = empRepository.findByEmpName(storeManager);
         store.setEmployee(storeEmpName);
-        log.info(storeEmpName.getEmpName());
+//        log.info(storeEmpName.getEmpName());
         storeService.createStore(store);
+
+        log.info("나오냐????????? ==> " + store.toString());
         return "redirect:/fina/store/list";
     }
 
