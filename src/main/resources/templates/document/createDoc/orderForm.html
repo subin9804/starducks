@@ -83,7 +83,7 @@
 
                 <div class="input-wrap">
                     <div style="margin-bottom: 5px;">
-                        <label for="product" style="float: left; margin-right: 39px;">품목 : </label>
+                        <label for="product" style="float: left; margin-right: 37px;">품목 : </label>
                         <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
                         <select id="product" name="productCode">
                             <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
@@ -137,12 +137,8 @@
                 <div class="hr">
                     <hr>
                 </div>
-
-
                 <!--                제목 : <input type="text" th:field="*{docTitle}">-->
                 <!--                <textarea th:field="*{docContent}"></textarea>-->
-
-
                 <div class="input-wrap2">
                     <button class="cancel-button" type="button" th:onclick="|location.href='@{/document/createDoc}'|"
                             th:text="목록으로">목록으로
@@ -263,14 +259,11 @@
 
                         <tr class="doc-info">
                             <td>상기와 같이 발주합니다.
-                                <br>
-                                <br>
-                                <br>
-                                <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}"></span>
+                                <br><br><br>
+                                <span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월 dd일')}" />
                                 <br>
                                 <br>
                             </td>
-
                         </tr>
 
                         </tbody>
@@ -342,8 +335,6 @@
         let num = 1;
 
         function addInList() {
-
-
             const productSelect = document.getElementById("product");
             const quantityInput = document.getElementById("quantity");
             const orderTableBody = document.getElementById("orderTableBody")
@@ -459,12 +450,8 @@
                 //발주서 테이블의 순서를 재 정렬함.
                 rows2[i].cells[0].innerHTML = newNum;
                 rows2[i].id = `realTableRow_${newNum}`;
-
-
             }
-
         }
-
         function submitForm() {
             //orderList를 Json 문자열로 변환
             const orderListData = JSON.stringify(orderList);

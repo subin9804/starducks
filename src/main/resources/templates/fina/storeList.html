@@ -25,7 +25,8 @@
     <br><br>
 
     <!-- 검색창. 제목 + 내용 검색 가능 -->
-    <form class="search-form" method="get" th:action="@{/fina/store/list}" style="display: flex; justify-content: center; align-items: center;">
+    <form class="search-form" method="get" th:action="@{/fina/store/list}"
+          style="display: flex; justify-content: center; align-items: center;">
         <input name="searchKeyword"
                placeholder="검색어 입력" type="text">
         <button type="submit">검색</button>
@@ -59,7 +60,9 @@
             <td th:text="${store.businessNum}">사업자 번호</td>
             <td th:text="${store.getEmployee().getEmpName()}">지점장</td>
             <td th:text="${store.storeAddr}">주소</td>
-            <td th:text="${store.storeOperationalYn.equals(T(org.kosta.starducks.fina.entity.StoreOperationalYn).storeOperationalY) ? '운영' : '미운영'}">운영여부</td>
+            <td th:text="${store.storeOperationalYn.equals(T(org.kosta.starducks.fina.entity.StoreOperationalYn).storeOperationalY) ? '운영' : '미운영'}">
+                운영여부
+            </td>
         </tr>
         </tbody>
     </table>
@@ -74,7 +77,9 @@
            class="next-page" th:href="@{/fina/store/list(page=${nowPage - 2})}"> < </a>
 
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a class="page-number" th:href="@{/fina/store/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
+            <a class="page-number"
+               th:href="@{/fina/store/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}"
+               th:if="${page != nowPage}"
                th:text="${page}"></a>
             <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
         </th:block>
@@ -87,43 +92,43 @@
         <a th:href="@{/fina/store/list(page=${totalPages - 1})}"> >> </a>
     </div>
     <!-- 페이지네이션 -->
-<!--    <nav aria-label="Page navigation example" style="display: flex; justify-content: center; align-items: center;">-->
-<!--        <ul class="pagination">-->
-<!--            &lt;!&ndash; 첫 번째 페이지로 이동 &ndash;&gt;-->
-<!--            <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">-->
-<!--                <a class="page-link" th:href="@{/fina/store/list(page=0)}" aria-label="First">-->
-<!--                    <span aria-hidden="true">&laquo;&laquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
+    <!--    <nav aria-label="Page navigation example" style="display: flex; justify-content: center; align-items: center;">-->
+    <!--        <ul class="pagination">-->
+    <!--            &lt;!&ndash; 첫 번째 페이지로 이동 &ndash;&gt;-->
+    <!--            <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">-->
+    <!--                <a class="page-link" th:href="@{/fina/store/list(page=0)}" aria-label="First">-->
+    <!--                    <span aria-hidden="true">&laquo;&laquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
 
-<!--            &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-<!--            <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">-->
-<!--                <a class="page-link" th:href="@{/fina/store/list(page=${nowPage - 2})}" aria-label="Previous">-->
-<!--                    <span aria-hidden="true">&laquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
+    <!--            &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
+    <!--            <li class="page-item" th:classappend="${nowPage == 1} ? 'disabled' : ''">-->
+    <!--                <a class="page-link" th:href="@{/fina/store/list(page=${nowPage - 2})}" aria-label="Previous">-->
+    <!--                    <span aria-hidden="true">&laquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
 
-<!--            &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
-<!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
-<!--                <li class="page-item" th:classappend="${page == nowPage} ? 'active' : ''">-->
-<!--                    <a class="page-link" th:href="@{/fina/store/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>-->
-<!--                </li>-->
-<!--            </th:block>-->
+    <!--            &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
+    <!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
+    <!--                <li class="page-item" th:classappend="${page == nowPage} ? 'active' : ''">-->
+    <!--                    <a class="page-link" th:href="@{/fina/store/list(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>-->
+    <!--                </li>-->
+    <!--            </th:block>-->
 
-<!--            &lt;!&ndash; 다음 페이지 이동 &ndash;&gt;-->
-<!--            <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">-->
-<!--                <a class="page-link" th:href="@{/fina/store/list(page=${nowPage})}" aria-label="Next">-->
-<!--                    <span aria-hidden="true">&raquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
+    <!--            &lt;!&ndash; 다음 페이지 이동 &ndash;&gt;-->
+    <!--            <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">-->
+    <!--                <a class="page-link" th:href="@{/fina/store/list(page=${nowPage})}" aria-label="Next">-->
+    <!--                    <span aria-hidden="true">&raquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
 
-<!--            &lt;!&ndash; 마지막 페이지로 이동 &ndash;&gt;-->
-<!--            <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">-->
-<!--                <a class="page-link" th:href="@{/fina/store/list(page=${totalPages - 1})}" aria-label="Last">-->
-<!--                    <span aria-hidden="true">&raquo;&raquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
+    <!--            &lt;!&ndash; 마지막 페이지로 이동 &ndash;&gt;-->
+    <!--            <li class="page-item" th:classappend="${nowPage == totalPages} ? 'disabled' : ''">-->
+    <!--                <a class="page-link" th:href="@{/fina/store/list(page=${totalPages - 1})}" aria-label="Last">-->
+    <!--                    <span aria-hidden="true">&raquo;&raquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--    </nav>-->
 </main>
 </html>

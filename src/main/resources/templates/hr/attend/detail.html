@@ -21,20 +21,20 @@
             <h3 class="sum-month"><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
             <div class="attd-sum-wrap">
-                <div class="attd-sum-num-box" th:text="${workDays}">18</div>
                 <div>근무</div>
+                <div class="attd-sum-num-box" th:text="${workDays}">18</div>
             </div>
             <div class="attd-sum-wrap">
-                <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
                 <div>지각</div>
+                <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
             </div>
             <div class="attd-sum-wrap">
-                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
                 <div>결근</div>
+                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
             </div>
             <div class="attd-sum-wrap">
-                <div class="attd-sum-num-box">12/15</div>
                 <div>연차</div>
+                <div class="attd-sum-num-box">12/15</div>
             </div>
         </div>
     </div>
