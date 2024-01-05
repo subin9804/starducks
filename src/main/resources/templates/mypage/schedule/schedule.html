@@ -11,9 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
+    <h1 class="page-title" style="margin-bottom: 50px;">| 일정 관리</h1>
     <!-- modal을 포함시키는 부분 -->
     <div th:replace="~{mypage/schedule/registModal::addModal}"></div>
     <!-- 캘린더를 표시하는 영역 -->

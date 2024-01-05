@@ -10,10 +10,18 @@
     <script th:src="@{/js/hr/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
     <script th:if="${result}" th:utext="${result}"></script>
 
-    <h1>사원관리</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 관리</h1>
     <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
         <div>
             All <input type="radio" name="status" value="all" th:field="*{status}" checked>

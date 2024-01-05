@@ -11,9 +11,17 @@
     <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <!-- 메인 콘텐츠 영역 -->
 <main layout:fragment="content">
-    <h3>지점 목록</h3>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 지점 목록</h1>
     <br><br>
 
     <!-- 검색창. 제목 + 내용 검색 가능 -->

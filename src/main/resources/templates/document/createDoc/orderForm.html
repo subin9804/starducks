@@ -11,7 +11,7 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
+    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">| 기안서 작성</h1>
     <div class="preview-layout">
         <div class="inputs-div page-shadow">
             <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>

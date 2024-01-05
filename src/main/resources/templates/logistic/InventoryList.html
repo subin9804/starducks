@@ -10,8 +10,16 @@
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>재고 목록</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 재고 목록</h1>
     <div class="content">
 
         <div class="top-btn">
