@@ -42,19 +42,6 @@ window.document.addEventListener("DOMContentLoaded", function() {
 
     // 푸시알림 허용 요청
     const apiUrl = '/api/v1/notify/subscribe';
-    //
-    // if (Notification.permission === 'granted') {
-    //     setupNotifications(apiUrl)
-    // } else if (Notification.permission === 'denied') {
-    //     return;
-    // } else {
-    //     // 알림 권한 요청
-    //     Notification.requestPermission().then(function(permission) {
-    //         if (permission === 'granted') {
-    //             setupNotifications(apiUrl)
-    //         }
-    //     });
-    // };
 
     setupNotifications(apiUrl)
 
@@ -94,19 +81,24 @@ window.document.addEventListener("DOMContentLoaded", function() {
         function handleEventUpdate(eventData) {
             const notificationData = JSON.parse(eventData);
 
-            // const notification = new Notification("새로운 알림", {
-            //     body: notificationData.content
-            // });
-            //
-            // // 클릭 시 지정된 URL로 이동
-            // notification.onclick = function () {
-            //     window.open(notificationData.url, "_self");
-            // };
-            //
-            // // 2초 후에 알림창 닫기
-            // setTimeout(() => {
-            //     notification.close();
-            // }, 5000);
+            // 알림창 띄우기
+            $("#sideAlert").click(function () {
+                window.location.href = notificationData.url;
+            }).css({
+                "width": "350px",
+                "box-shadow" : "0 0 8px 6px rgba(255, 0, 0, 0.3)",
+                "padding" : "10px"
+            });
+
+
+            // 5초 후에 알림창 닫기
+            setTimeout(() => {
+                $("#sideAlert").css({
+                    "width": "0px",
+                    "box-shadow" : "none",
+                    "padding" : "0"
+                });
+            }, 5000);
 
             // 알림 리스트에 등록
             $("#notify").addClass("notify");

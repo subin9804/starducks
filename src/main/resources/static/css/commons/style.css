@@ -292,3 +292,16 @@ a p.commonBtn {
 #profile-box {
     font-size: 14px;
 }
+
+#sideAlert {
+    position: fixed;
+    bottom: 10%;
+    right: 0;
+    width: 0px;
+    padding: 0;
+    height: auto;
+    overflow: hidden;
+    background-color: #fefefe;
+    z-index: 10;
+    transition: 0.2s;
+}
