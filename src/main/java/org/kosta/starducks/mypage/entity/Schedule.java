@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.kosta.starducks.hr.entity.Employee;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,10 +24,10 @@ public class Schedule {
     private String scheTitle;
 
     @Column(name = "sche_start_date")
-    private LocalDate scheStartDate;
+    private LocalDateTime scheStartDate;
 
     @Column(name = "sche_end_date")
-    private LocalDate scheEndDate;
+    private LocalDateTime scheEndDate;
 
     // ScheduleType 열거형 타입 추가
     @Enumerated(EnumType.STRING)
