@@ -9,8 +9,16 @@
     <script th:src="@{/js/hr/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>부서 정보 조회</h1>
+    <h1 class="page-title">| 부서 정보 조회</h1>
     <div id="dept-container">
         <th:block th:replace="~{hr/dept/_deptInfo::info}"></th:block>
         <th:block th:replace="~{hr/dept/_deptEdit::edit}"></th:block>

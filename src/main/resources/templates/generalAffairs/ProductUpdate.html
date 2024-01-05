@@ -3,8 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--title-->
-<th:block layout:fragment="title">품목 수정</th:block>
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/generalAffairs/style.css}">
     <script th:src="@{/js/generalAffairs/script.js}"></script>
@@ -13,9 +11,16 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h3>품목 수정</h3>
-    <br><br>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 품목 수정</h1>
     <div>
         <div id="form">
             <div style="display: flex;">
@@ -28,6 +33,7 @@
                             </dd>
                         </dl>
                         <br>
+
                         <dl>
                             <dt>물품 이름 :</dt>
                             <dd><input style="width: 280px;" type="text" th:value="${product.productName}" readonly>
