@@ -4,8 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--<th:block layout:fragment="title">title</th:block>-->
-
 <th:block layout:fragment="addMore">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -15,8 +13,16 @@
 
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h3>지점 관리</h3>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 지점 정보 수정</h1>
     <br>
     <div id="form">
         <div style="display: flex;">

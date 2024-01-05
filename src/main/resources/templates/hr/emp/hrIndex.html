@@ -21,7 +21,7 @@
 <main layout:fragment="content">
     <script th:if="${result}" th:utext="${result}"></script>
 
-    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 관리</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 목록</h1>
     <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
         <div>
             All <input type="radio" name="status" value="all" th:field="*{status}" checked>
