@@ -40,13 +40,14 @@ public class VendorController {
      */
     @GetMapping("/new")
     public String newVendorForm(Model model) {
-        log.info("여기는 컨트롤러");
+//        log.info("여기는 컨트롤러");
         VendorAndProductDTO vendorAndProductDTO = new VendorAndProductDTO();
 
         model.addAttribute("vendor", new VendorAndProductDTO());
 
         model.addAttribute("vendorAndProductDTO", vendorAndProductDTO);
         model.addAttribute("businessSectors", VendorBusinessSector.values());
+        model.addAttribute("contractStatus", ContractStatus.values());
         return "fina/vendorAdd";
     }
 
@@ -58,14 +59,14 @@ public class VendorController {
     }
 
     /**
-     * 거래처 추가 폼 데이터 받기
      *
+     * 거래처 추가 폼 데이터 받기
      * @param vendorAndProductDTO
      * @return
      */
     @PostMapping("/create")
     public String newVendor(VendorAndProductDTO vendorAndProductDTO) {
-        log.info("vendorAndProductDTO.toString() ==> " + vendorAndProductDTO.toString());
+//        log.info("vendorAndProductDTO.toString() ==> " + vendorAndProductDTO.toString());
         // 1. DTO를 엔티티로 변환
         Vendor vendor = VendorEntity(vendorAndProductDTO);
         // 2. 리파지터리로 엔티티를 DB에 저장
@@ -127,8 +128,6 @@ public class VendorController {
         List<Vendor> vendorList = vendorService.findAll();
         model.addAttribute("vendorList", vendorList);
         return "fina/vendorList";
-
-//        return "fina/vendorList";
     }
 
     @GetMapping("/edit/{vendorId}")

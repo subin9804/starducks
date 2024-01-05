@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
@@ -15,6 +17,8 @@ import java.util.List;
 /**
  * 게시판 작성글
  */
+@Setter
+@Getter
 @Entity @Builder
 @AllArgsConstructor
 public class ForumPost {
@@ -48,88 +52,8 @@ public class ForumPost {
   @OneToMany(mappedBy = "forumPost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<PostComment> comments = new ArrayList<>();
 
-  public List<PostComment> getComments() {
-    return comments;
-  }
-
-  public void setComments(List<PostComment> comments) {
-    this.comments = comments;
-  }
-
-
 
   public ForumPost() {
   }
 
-  public Long getPostId() {
-    return postId;
-  }
-
-  public void setPostId(Long postId) {
-    this.postId = postId;
-  }
-
-  public String getPostTitle() {
-    return postTitle;
-  }
-
-  public void setPostTitle(String postTitle) {
-    this.postTitle = postTitle;
-  }
-
-  public String getPostContent() {
-    return postContent;
-  }
-
-  public void setPostContent(String postContent) {
-    this.postContent = postContent;
-  }
-
-  public LocalDateTime getPostDate() {
-    return postDate;
-  }
-
-  public void setPostDate(LocalDateTime postDate) {
-    this.postDate = postDate;
-  }
-
-  public LocalDateTime getUpdateDate() {
-    return updateDate;
-  }
-
-  public void setUpdateDate(LocalDateTime updateDate) {
-    this.updateDate = updateDate;
-  }
-
-  public int getPostView() {
-    return postView;
-  }
-
-  public void setPostView(int postView) {
-    this.postView = postView;
-  }
-
-  public boolean isPostDelete() {
-    return postDelete;
-  }
-
-  public void setPostDelete(boolean postDelete) {
-    this.postDelete = postDelete;
-  }
-
-  public Employee getEmployee() {
-    return employee;
-  }
-
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
-  }
-
-  public boolean isPostNotice() {
-    return postNotice;
-  }
-
-  public void setPostNotice(boolean postNotice) {
-    this.postNotice = postNotice;
-  }
 }

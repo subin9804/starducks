@@ -42,10 +42,11 @@
     <tbody>
     <!-- 최신 공지사항 2개 표시. 공지사항2개, 전체 게시글 목록 따로 불러와서 표시 -->
     <th:block th:each="notice : ${topNotices}">
-      <tr class="notice">
+      <tr class="notice" th:onclick="'location.href=\'' + @{/forum/post/{id}(id=${notice.postId})} + '\''"
+          style="cursor:pointer">
         <td th:text="${notice.postId}">ID</td>
         <td>공지</td>
-        <td><a th:href="@{/forum/post/{id}(id=${notice.postId})}" th:text="${notice.postTitle}">제목</a></td>
+        <td th:text="${notice.postTitle}">제목</td>
         <td th:text="${notice.employee?.empName} ?: '로그인 필요'">작성자</td>
         <td th:text="${#temporals.format(notice.postDate, 'yyyy.MM.dd')}">작성일</td>
         <td th:text="${notice.postView}">조회수</td>
@@ -53,10 +54,11 @@
     </th:block>
     <!-- 전체 게시글 목록 (공지 포함) -->
     <th:block th:each="post : ${posts}">
-      <tr>
+      <tr th:onclick="'location.href=\'' + @{/forum/post/{id}(id=${post.postId})} + '\''"
+          style="cursor:pointer">
         <td th:text="${post.postId}">ID</td>
         <td th:text="${post.postNotice} ? '공지' : '일반'">카테고리</td>
-        <td><a th:href="@{/forum/post/{id}(id=${post.postId})}" th:text="${post.postTitle}">제목</a></td>
+        <td th:text="${post.postTitle}">제목</td>
         <td th:text="${post.employee?.empName} ?: '로그인 필요'">작성자</td>
         <td th:text="${#temporals.format(post.postDate, 'yyyy.MM.dd')}">작성일</td>
         <td th:text="${post.postView}">조회수</td>

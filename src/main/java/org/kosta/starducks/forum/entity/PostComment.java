@@ -2,6 +2,8 @@ package org.kosta.starducks.forum.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.kosta.starducks.hr.entity.Employee;
 
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 /**
  * 게시판 게시글에 달리는 댓글 엔티티
  */
+@Setter
+@Getter
 @Entity
 public class PostComment {
 
@@ -35,51 +39,4 @@ public class PostComment {
   private boolean commentDelete; //댓글 삭제 여부
 
 
-  public Long getCommentId() {
-    return commentId;
-  }
-
-  public void setCommentId(Long commentId) {
-    this.commentId = commentId;
-  }
-
-  public String getCommentContent() {
-    return commentContent;
-  }
-
-  public void setCommentContent(String commentContent) {
-    this.commentContent = commentContent;
-  }
-
-  public LocalDateTime getCommentDate() {
-    return commentDate;
-  }
-
-  public void setCommentDate(LocalDateTime commentDate) {
-    this.commentDate = commentDate;
-  }
-
-  public ForumPost getForumPost() {
-    return forumPost;
-  }
-
-  public void setForumPost(ForumPost forumPost) {
-    this.forumPost = forumPost;
-  }
-
-  public Employee getEmployee() {
-    return employee;
-  }
-
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
-  }
-
-  public boolean isCommentDelete() {
-    return commentDelete;
-  }
-
-  public void setCommentDelete(boolean commentDelete) {
-    this.commentDelete = commentDelete;
-  }
 }

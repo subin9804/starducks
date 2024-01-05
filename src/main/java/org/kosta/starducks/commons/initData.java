@@ -64,6 +64,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
     private final ChatRoomRepository chatRoomRepository;
 
     private final NotifyService notifyService;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         //배포 서버 JVM 시간 설정
@@ -71,11 +72,11 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
 
         // 초기 부서 데이터
         List<Department> depts = new ArrayList<>();
-        depts.add(new Department(1, "사장실","boss", "010-1111-1111"));
-        depts.add(new Department(2, "재무부","fina", "010-2222-2222"));
-        depts.add(new Department(3, "총무부","general", "010-3333-3333"));
-        depts.add(new Department(4, "물류유통부","logistic", "010-4444-4444"));
-        depts.add(new Department(5, "인사부","hr", "010-5555-5555"));
+        depts.add(new Department(1, "사장실", "boss", "010-1111-1111"));
+        depts.add(new Department(2, "재무부", "fina", "010-2222-2222"));
+        depts.add(new Department(3, "총무부", "general", "010-3333-3333"));
+        depts.add(new Department(4, "물류유통부", "logistic", "010-4444-4444"));
+        depts.add(new Department(5, "인사부", "hr", "010-5555-5555"));
 
         deptRepository.saveAllAndFlush(depts);
 
@@ -158,7 +159,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendor1.setVendorId(1);
         vendor1.setVendorName("빈로스터리");
         vendor1.setVendorBusinessSector(VendorBusinessSector.COFFEEBEANSUPPLIERS);
-        vendor1.setVendorRegistNum("12458921");
+        vendor1.setVendorRegistNum("124-58-92123");
         vendor1.setVendorRepreName("장총명");
         vendor1.setVendorTelephone("010-1212-3434");
         vendor1.setVendorStartDate(LocalDate.parse("2023-08-11"));
@@ -170,7 +171,7 @@ public class initData implements ApplicationListener<ApplicationReadyEvent> {
         vendor2.setVendorId(2);
         vendor2.setVendorName("대성산업");
         vendor2.setVendorBusinessSector(VendorBusinessSector.FARMINGANDCULTIVATION);
-        vendor2.setVendorRegistNum("46952029");
+        vendor2.setVendorRegistNum("469-52-02963");
         vendor2.setVendorRepreName("김찬구");
         vendor2.setVendorTelephone("010-7122-8152");
         vendor2.setVendorStartDate(LocalDate.parse("2023-07-13"));

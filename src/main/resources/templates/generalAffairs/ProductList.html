@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-<th:block layout:fragment="title">품목조회</th:block>
+<!--<th:block layout:fragment="title">품목조회</th:block>-->
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/generalAffairs/style.css}">
     <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
@@ -55,6 +55,7 @@
             </tr>
             </tbody>
         </table>
+
         <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
             <a th:if="${page != nowPage}"
                th:href="@{/general/products/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}"

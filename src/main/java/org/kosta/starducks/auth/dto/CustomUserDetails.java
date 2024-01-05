@@ -45,7 +45,6 @@ public Collection<? extends GrantedAuthority> getAuthorities() {
     authorities.add(new SimpleGrantedAuthority("ROLE_BOSS"));
   }
 
-
   return authorities;
 }
 
@@ -59,19 +58,17 @@ public Collection<? extends GrantedAuthority> getAuthorities() {
     return String.valueOf(employee.getEmpId());
   }
 
-
-
-  @Override //계정이 만료되었는가? 우리는 안 필요할듯
+  @Override //계정이 만료되었는가?
   public boolean isAccountNonExpired() {
     return true;
   }
 
-  @Override //계정이 잠겼는가? 우리는 안 필요할듯
+  @Override //계정이 잠겼는가?
   public boolean isAccountNonLocked() {
     return true;
   }
 
-  @Override //비밀번호?가 만료되었는가? 우리는 안 필요할듯
+  @Override //만료되었는가?
   public boolean isCredentialsNonExpired() {
     return true;
   }
