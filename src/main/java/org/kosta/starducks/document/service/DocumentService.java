@@ -507,11 +507,22 @@ public class DocumentService {
     /**
      * ApvState에 따라 DocState 변경
      */
-    public void updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
+    @NeedNotify
+    public Document updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
         List<String> requiredStep2 = Arrays.asList("draft", "reqForVac"); //결재 두 단계인 양식명
-        documentRepository.findById(docId).ifPresent(document -> {
-            if (approval.getApvStatus() == ApvStatus.APPROVED && requiredStep2.contains(document.getDocForm().getFormNameEn())) {
+        Document document = documentRepository.findById(docId).orElse(null);
+
+        // Document가 존재할 경우
+        if(document != null){
+            // 수신자가 승인한 상태 && 문서 양식이 draft나 reqForVac인 경우
+            if ((approval.getApvStatus() == ApvStatus.APPROVED) && (requiredStep2.contains(document.getDocForm().getFormNameEn()))) {
                 document.setDocStatus(existingApv.getApvStep() == 1 ? DocStatus.IN_PROGRESS : DocStatus.APPROVED_DOC);
+
+                List<Approval> approvals = approvalRepository.findByDocument_DocId(docId);
+                document.setApprovals(approvals);
+
+                return document;
+
             } else if (approval.getApvStatus() == ApvStatus.APPROVED) {
                 //결재 한 단계인 경우는 1단계 승인 시 문서 최종 승인 상태로 변경
                 document.setDocStatus(DocStatus.APPROVED_DOC);
@@ -519,6 +530,7 @@ public class DocumentService {
                 document.setDocStatus(DocStatus.REJECTED_DOC);
             }
             documentRepository.save(document);
-        });
+        }
+        return null;
     }
 }

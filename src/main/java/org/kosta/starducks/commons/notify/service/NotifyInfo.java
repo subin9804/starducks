@@ -8,5 +8,7 @@ import java.util.List;
 public interface NotifyInfo {
     List<Employee> getReceivers();
     String getGoUrl();
+
+    String getMsg();
     Notify.NotificationType getNotificationType();
 }

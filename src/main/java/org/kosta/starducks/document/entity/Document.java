@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.kosta.starducks.commons.notify.dto.NotifyMessage;
 import org.kosta.starducks.commons.notify.entity.Notify;
 import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.generalAffairs.entity.Vendor;
@@ -70,9 +71,16 @@ public class Document implements NotifyInfo {
     @Override
     public List<Employee> getReceivers() {
         List<Employee> receivers = new ArrayList<>();
-        for(Approval app : approvals) {
-            receivers.add(app.getApvEmp());
+
+        if(docStatus == DocStatus.PENDING_DOC) {
+            receivers.add(approvals.get(0).getApvEmp());
+        } else if(docStatus == DocStatus.IN_PROGRESS) {
+
+
+            System.out.println("값이 없을까? " + this.approvals.get(1).getApvEmp().getEmpName());
+            receivers.add(approvals.get(1).getApvEmp());
         }
+
         return receivers;
     }
 
@@ -81,6 +89,11 @@ public class Document implements NotifyInfo {
     @Override
     public String getGoUrl() {
         return "/document/receiveDoc/" + (docForm.getFormNameEn() != null ? docForm.getFormNameEn() : "실패") + "/" + docId;
+    }
+
+    @Override
+    public String getMsg() {
+        return docWriter.getEmpName() + "님으로부터 " + NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage();
     }
 
     // 알림 type

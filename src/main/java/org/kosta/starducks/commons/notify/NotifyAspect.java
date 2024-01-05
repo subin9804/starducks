@@ -6,8 +6,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.kosta.starducks.commons.notify.dto.NotifyMessage;
-import org.kosta.starducks.commons.notify.entity.Notify;
 import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.commons.notify.service.NotifyService;
 import org.kosta.starducks.hr.entity.Employee;
@@ -36,20 +34,11 @@ public class NotifyAspect {
 //        System.out.println("this is join point" + joinPoint);
         NotifyInfo notifyProxy = (NotifyInfo) result;
 
-        String message = NotifyMessage.DOCUMENT_NEW_REQUEST.getMessage();
-        if(notifyProxy.getNotificationType() == Notify.NotificationType.CHAT) {
-            message = NotifyMessage.CHAT_NEW_REQUEST.getMessage();
-        } else if (notifyProxy.getNotificationType() == Notify.NotificationType.POST) {
-            message = NotifyMessage.POST_NEW_REQUEST.getMessage();
-        } else if (notifyProxy.getNotificationType() == Notify.NotificationType.CHAT) {
-            message = NotifyMessage.SCHEDULE_NEW_REQUEST.getMessage();
-        }
-
         for(Employee emp : notifyProxy.getReceivers()) {
             notifyService.send(
                     emp,
                     notifyProxy.getNotificationType(),
-                    message,
+                    notifyProxy.getMsg(),
                     notifyProxy.getGoUrl()
             );
 
