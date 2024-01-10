@@ -34,7 +34,8 @@
             </button>
         </div>
         <br><br>
-        <table>
+
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>품목 Code</th>
@@ -46,12 +47,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="p : ${products}">
+            <tr th:each="p : ${products}"
+                th:onclick="'location.href=\'' + @{/general/products/info/{id}(id=${p.productCode})} + '\''"
+                style="cursor:pointer">
                 <td th:text="${p.productCode}">p.productCode</td>
-                <td>
-                    <a th:text="${p.productName}"
-                       th:href="@{/general/products/info/{id}(id=${p.productCode})}">p.name</a>
-                </td>
+                <td th:text="${p.productName}">p.productName</td>
                 <td th:text="${p.productCategory}">카테고리</td>
                 <td th:text="${p.productUnit}">p.unit</td>
                 <td th:text="${p.vendor.vendorName}">거래처 이름</td>

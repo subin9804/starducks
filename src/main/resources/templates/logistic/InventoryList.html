@@ -19,7 +19,7 @@
 </style>
 
 <main layout:fragment="content">
-    <h1 class="page-title" style="margin-bottom: 50px;">| 재고 목록</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 창고 재고 목록</h1>
     <div class="content">
 
         <div class="top-btn">
@@ -53,15 +53,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="p : ${products}">
+            <tr th:each="p : ${products}"
+                th:onclick="'location.href=\'' + @{/logistic/stock/warehouse/info/{code}(code=${p.productCode})} + '\''"
+                style="cursor:pointer">
                 <td th:text="${p.productCode}">p.productCode</td>
-                <td>
-                    <a th:text="${p.productName}"
-                       th:href="@{/logistic/stock/warehouse/info/{code}(code=${p.productCode})}">p.name</a>
-
-                </td>
+                <td th:text="${p.productName}">p.name</td>
                 <td th:text="${p.productCategory}">카테고리</td>
-
                 <td th:text="${p.productCnt}">창고 보유재고</td>
                 <td th:text="${p.productUnit}">p.unit</td>
                 <td>

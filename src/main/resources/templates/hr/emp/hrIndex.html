@@ -51,7 +51,6 @@
             </tr>
         </thead>
         <tbody th:each="emp : ${employees}" th:object="${emp}">
-
             <tr th:onclick="'location.href=\'' + @{/hr/emp/{empId}(empId=*{empId})} + '\''">
                 <td th:text="*{empId}"></td>
                 <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>

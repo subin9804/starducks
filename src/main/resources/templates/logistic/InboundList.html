@@ -19,7 +19,7 @@
 </style>
 
 <main layout:fragment="content">
-    <h1 class="page-title" style="margin-bottom: 50px;">| 입고 목록</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 창고 입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
             <a th:href="@{/logistic/inbound/warehouse/add}">
@@ -39,13 +39,11 @@
                 <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" th:checked="${checkbox}"
                        onchange="handleCheckboxClick()">
                 <input type="hidden" name="_bulkInboundCheckbox" value="on">
-                 대량 입고
+                대량 입고
             </label>
         </form>
 
         <table class="list-table">
-
-
             <thead>
             <tr>
                 <th>입고번호</th>
@@ -56,14 +54,11 @@
             </tr>
             </thead>
             <tbody th:fragment="inboundTableBody" id="inboundTableBody">
-            <tr th:each="i:${inbounds}">
+            <tr th:each="i:${inbounds}"
+                th:onclick="'location.href=\'' + @{/logistic/inbound/warehouse/info/{Id}(Id=${i.warehouseInboundId})} + '\''"
+                style="cursor:pointer">
 
-                <td>
-                    <a th:text="${i.warehouseInboundId}"
-                       th:href="@{/logistic/inbound/warehouse/info/{Id}(Id=${i.warehouseInboundId})}">
-                        주문 Id
-                    </a>
-                </td>
+                <td th:text="${i.warehouseInboundId}"></td>
                 <td th:text="${#temporals.format(i.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
                 <td th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
                 <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
@@ -93,7 +88,7 @@
                    th:text="${page}"></a>
                 <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
 
-                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}" ></strong>
+                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
 
             </th:block>
 
@@ -105,11 +100,6 @@
 
             <a th:href="@{/logistic/inbound/warehouse/list(page =${totalPages -1})}"> >> </a>
         </div>
-
-
-
-
-
 
 
     </div>

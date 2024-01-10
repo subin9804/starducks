@@ -302,14 +302,20 @@ table tr:hover {
 /* 전체글 보기 버튼 */
 .listBtn {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 27px;
-    width: 70px;
-    height: 30px;
-    padding: 5px;
+    width: 120px;
+    height: 50px;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
     cursor: pointer;
     background-color: #AF9A63;
-    border-radius: 5px;
+    color: white;
+}
+
+.listBtn:hover {
+    background-color: #6B4D27;
     color: white;
 }
 
