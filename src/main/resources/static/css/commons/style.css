@@ -296,12 +296,14 @@ a p.commonBtn {
 #sideAlert {
     position: fixed;
     bottom: 10%;
-    right: 0;
-    width: 0px;
-    padding: 0;
+    cursor: pointer;
+    right: -350px;
+    padding: 20px;
+    width: 350px;
     height: auto;
     overflow: hidden;
-    background-color: #fefefe;
+    box-shadow : 0px 5px 3px 4px rgba(0, 0, 0, 0.3);
+    background-color: #f7f8fa;
     z-index: 10;
-    transition: 0.2s;
+    transition: 0.3s;
 }
