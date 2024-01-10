@@ -6,9 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.kosta.starducks.commons.BaseTimeEntity;
+import org.kosta.starducks.commons.notify.dto.NotifyMessage;
+import org.kosta.starducks.commons.notify.entity.Notify;
+import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
+import org.kosta.starducks.hr.entity.Employee;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 채팅방 엔티티
@@ -18,7 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChatRoom extends BaseTimeEntity {
+public class ChatRoom extends BaseTimeEntity implements NotifyInfo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +52,30 @@ public class ChatRoom extends BaseTimeEntity {
   public Long updateRoomName(ChatRoomRequestDto requestDto) {
     this.roomName = requestDto.getRoomName();
     return this.id;
+  }
+
+  @Override
+  public List<Employee> getReceivers() {
+    List<Employee> emps = chatRoomEmps.stream()
+            .map(ChatRoomEmp::getEmployee)
+            .collect(Collectors.toList());
+    System.out.println(emps);
+
+    return emps;
+  }
+
+  @Override
+  public String getGoUrl() {
+    return "/chatRoom/" + id;
+  }
+
+  @Override
+  public String getMsg() {
+    return NotifyMessage.CHAT_NEW_REQUEST.getMessage();
+  }
+
+  @Override
+  public Notify.NotificationType getNotificationType() {
+    return Notify.NotificationType.CHAT;
   }
 }

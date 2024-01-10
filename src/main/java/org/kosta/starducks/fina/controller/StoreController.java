@@ -58,7 +58,6 @@ public class StoreController {
 //        log.info(storeEmpName.getEmpName());
         storeService.createStore(store);
 
-        log.info("나오냐????????? ==> " + store.toString());
         return "redirect:/fina/store/list";
     }
 
@@ -71,7 +70,7 @@ public class StoreController {
      */
     @GetMapping("/single/{storeNo}")
     public String showSingleStore(@PathVariable("storeNo") Long storeNo, Model model) {
-        log.info("storeNo ==> " + storeNo); // storeNo를 잘 받았는지 확인하는 로그
+//        log.info("storeNo ==> " + storeNo); // storeNo를 잘 받았는지 확인하는 로그
 //        1. id를 조회해 데이터 가져오기
         Store storeEntity = storeService.findById(storeNo);
 //        2. 모델에 데이터 등록하기

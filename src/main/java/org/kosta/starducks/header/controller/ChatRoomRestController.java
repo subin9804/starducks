@@ -2,6 +2,7 @@ package org.kosta.starducks.header.controller;
 
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
 import org.kosta.starducks.header.dto.ChatRoomResponseDto;
+import org.kosta.starducks.header.entity.ChatRoom;
 import org.kosta.starducks.header.service.ChatRoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +35,8 @@ public class ChatRoomRestController {
     Long userId = Long.parseLong(principal.getName()); // 로그인한 사용자의 ID를 가져옴
     requestDto.getEmpIds().add(userId); // 사용자 ID를 사원 ID 리스트에 추가
 
-    Long chatRoomId = chatRoomService.createChatRoom(requestDto);
+    ChatRoom chatRoom = chatRoomService.createChatRoom(requestDto);
+    Long chatRoomId = chatRoom.getId();
 
     return ResponseEntity.ok().body(chatRoomId);
   }

@@ -1,5 +1,6 @@
 package org.kosta.starducks.forum.service;
 
+import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.repository.ForumPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,18 @@ public class ForumPostServiceImpl implements ForumPostService {
     this.forumPostRepository = forumPostRepository;
   }
 
+  // 공지 알림을 위해 공지포스트와 일반 포스트 create 및 update 분리
+  // 일반 포스트
   @Override
   public ForumPost createOrUpdateForumPost(ForumPost forumPost) {
+    return forumPostRepository.save(forumPost);
+  }
+
+  // 공지 알림을 위해 공지포스트와 일반 포스트 create 및 update 분리
+  // 일반 포스트
+  @NeedNotify
+  @Override
+  public ForumPost noticeCreateOrUpdateForumPost(ForumPost forumPost) {
     return forumPostRepository.save(forumPost);
   }
 

@@ -1,6 +1,7 @@
 package org.kosta.starducks.header.service;
 
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.header.dto.ChatRoomRequestDto;
 import org.kosta.starducks.header.dto.ChatRoomResponseDto;
 import org.kosta.starducks.header.entity.ChatRoom;
@@ -9,11 +10,10 @@ import org.kosta.starducks.header.repository.ChatRoomEmpRepository;
 import org.kosta.starducks.header.repository.ChatRoomRepository;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,23 +42,29 @@ public class ChatRoomService {
   }
 
   //  채팅방 생성
+  @NeedNotify
   @Transactional
-  public Long createChatRoom(ChatRoomRequestDto requestDto) {
+  public ChatRoom createChatRoom(ChatRoomRequestDto requestDto) {
     // 채팅방 엔티티 생성 및 저장
     ChatRoom chatRoom = new ChatRoom();
     chatRoom.setRoomName(requestDto.getRoomName());
-    chatRoom = chatRoomRepository.save(chatRoom);
+
 
     // 사원 ID 리스트를 반복하면서 각 사원과 채팅방의 관계 설정
     // 채팅방 requestDto에 있는 사원 목록이 있는 만큼 반복돼서 그만큼 ChatRoomEmp가 생성이 된다.
+    List<ChatRoomEmp> chatRoomEmps = new ArrayList<ChatRoomEmp>();
     for (Long empId : requestDto.getEmpIds()) {
       Employee employee = empRepository.findById(empId)
           .orElseThrow(() -> new IllegalArgumentException("사원이 존재하지 않습니다. ID: " + empId));
       ChatRoomEmp chatRoomEmp = new ChatRoomEmp(chatRoom, employee);
+      chatRoomEmps.add(chatRoomEmp);
       chatRoomEmpRepository.save(chatRoomEmp);
     }
 
-    return chatRoom.getId();
+
+    chatRoom.setChatRoomEmps(chatRoomEmps);
+    chatRoom = chatRoomRepository.save(chatRoom);
+    return chatRoom;
   }
 
   //  채팅방 이름 수정

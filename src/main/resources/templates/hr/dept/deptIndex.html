@@ -9,8 +9,16 @@
     <script th:src="@{/js/hr/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
     <main layout:fragment="content">
-        <h1>부서 관리</h1>
+        <h1 class="page-title" style="margin-bottom: 50px;">| 부서 목록</h1>
         <table>
             <thead>
                 <tr>
@@ -74,7 +82,7 @@
             </nav>
         </div>
 
-    <button id="addBtn" class="commonBtn register-button">+부서등록</button>
+    <button id="addBtn" class="commonBtn register-button">부서 등록</button>
         <div id="add" class="w-50 dept-table d-none">
             <form th:action="@{/hr/dept/add}" method="post" th:object="${newDept}">
                 <table>

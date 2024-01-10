@@ -11,7 +11,16 @@
 
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
+    <h1 class="page-title" style="margin-bottom: 50px;">| 회의실 예약</h1>
     <div id="roomList">
         <ul>
             <li class="rooms selected" id="ROOM1">ROOM1</li>
@@ -25,7 +34,6 @@
     <div class="customModal" id="bookingModal" style="display: none;">
         <form class="modal-content" id="bookingForm">
             <span class="close" id="closeModalBtn">&times;</span>
-            <h3>회의실 예약</h3>
             <div>
                 <span>회의실 선택</span>
                 <select id="room" name="room">

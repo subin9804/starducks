@@ -3,7 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<title layout:fragment="title">기안서 작성</title>
+<title layout:fragment="title">전자결재</title>
+
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/document/createDoc/draft.css}" href="/static/css/document/createDoc/draft.css">
@@ -11,7 +19,8 @@
 </th:block>
 
 <main layout:fragment="content">
-    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>
+<!--    <h1 class="page-title" th:text="|${docForm?.formName} 작성|">기안서 작성</h1>-->
+    <h1 style="margin-bottom: 50px;" class="page-title" th:text="'| ' + ${docForm?.formName} + ' 작성'">기안서 작성</h1>
     <div class="preview-layout">
         <div class="inputs-div page-shadow">
 <!--            <h2 th:if="${param.status}" th:text="'상신 되었습니다.'"></h2>-->
@@ -147,8 +156,8 @@
                 <table class="approver-box">
                     <tr>
                         <th rowspan="3">승인</th>
-                        <th>직급</th>
-                        <th>직급</th>
+                        <th>결재자</th>
+                        <th>결재자</th>
                     </tr>
                     <tr>
                         <td class="stamp-box"></td>

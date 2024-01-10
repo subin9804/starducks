@@ -81,7 +81,7 @@ public class VendorController {
      */
     @GetMapping("/single/{vendorId}")
     public String showSingleVendor(@PathVariable("vendorId") int vendorId, Model model) {
-        log.info("vendorId를 잘 받았는지 확인 ==> " + vendorId);
+//        log.info("vendorId를 잘 받았는지 확인 ==> " + vendorId);
 //        1. id를 조회해 데이터 가져오기
         Vendor vendorEntity = vendorService.findById(vendorId);
 //        2. 모델에 데이터 등록하기

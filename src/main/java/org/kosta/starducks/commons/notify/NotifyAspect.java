@@ -6,12 +6,16 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.kosta.starducks.commons.notify.entity.Notify;
 import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.commons.notify.service.NotifyService;
 import org.kosta.starducks.hr.entity.Employee;
+import org.kosta.starducks.hr.service.EmpService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j  // 로그 기록
 @Aspect // 횡단적인 관심사를 분리하여 코드를 더 모듈화하고 유지보수하기 쉽게 만듦(생명주기, 예외처리, 메서드 호출 등)
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Component;
 public class NotifyAspect {
 
     private final NotifyService notifyService;
+    private final EmpService empService;
 
     @Pointcut("@annotation(org.kosta.starducks.commons.notify.NeedNotify)")
     public void annotationPointcut() {
@@ -30,11 +35,15 @@ public class NotifyAspect {
     @AfterReturning(pointcut = "annotationPointcut()", returning = "result") //대상 메소드가 예외를 던지지 않고 정상적으로 반환되었을 때 실행
     public void checkValue(JoinPoint joinPoint, Object result) {
         System.out.println("aspect 호출!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//        System.out.println("After Returning Advice: " + (result != null));
-//        System.out.println("this is join point" + joinPoint);
+
         NotifyInfo notifyProxy = (NotifyInfo) result;
 
-        for(Employee emp : notifyProxy.getReceivers()) {
+        List<Employee> receivers = notifyProxy.getReceivers();
+        if(notifyProxy.getNotificationType() == Notify.NotificationType.POST) {
+            receivers = empService.getAllEmp();
+        }
+
+        for(Employee emp : receivers) {
             notifyService.send(
                     emp,
                     notifyProxy.getNotificationType(),

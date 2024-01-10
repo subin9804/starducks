@@ -3,16 +3,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 
-<!--title-->
-<!--<th:block layout:fragment="title">품목조회</th:block>-->
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/generalAffairs/style.css}">
     <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
     <script th:src="@{/js/generalAffairs/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h3>품목 관리</h3>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 품목 목록</h1>
     <br><br>
     <div>
         <!-- 검색 폼 추가 -->

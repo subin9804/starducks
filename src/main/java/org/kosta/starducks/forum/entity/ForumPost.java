@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.kosta.starducks.commons.notify.dto.NotifyMessage;
+import org.kosta.starducks.commons.notify.entity.Notify;
+import org.kosta.starducks.commons.notify.service.NotifyInfo;
 import org.kosta.starducks.hr.entity.Employee;
 
 import java.time.LocalDateTime;
@@ -21,7 +24,7 @@ import java.util.List;
 @Getter
 @Entity @Builder
 @AllArgsConstructor
-public class ForumPost {
+public class ForumPost implements NotifyInfo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,4 +59,23 @@ public class ForumPost {
   public ForumPost() {
   }
 
+  @Override
+  public List<Employee> getReceivers() {
+    return null;
+  }
+
+  @Override
+  public String getGoUrl() {
+    return "/forum/post/" + postId;
+  }
+
+  @Override
+  public String getMsg() {
+    return NotifyMessage.POST_NEW_REQUEST.getMessage();
+  }
+
+  @Override
+  public Notify.NotificationType getNotificationType() {
+    return Notify.NotificationType.POST;
+  }
 }
