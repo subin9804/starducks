@@ -23,11 +23,9 @@
 
     <h1 class="page-title" style="margin-bottom: 50px;">| 사원 목록</h1>
     <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
-        <div>
-            All <input type="radio" name="status" value="all" th:field="*{status}" checked>
-            재직 <input type="radio" name="status" value="running" th:field="*{status}">
-            퇴사 <input type="radio" name="status" value="stopped" th:field="*{status}">
-        </div>
+            <label for="every">All</label> <input type="radio" id="every" name="status" value="all" th:field="*{status}" checked>
+            <label for="runopt">재직</label> <input type="radio" id="runopt" name="status" value="running" th:field="*{status}">
+            <label for="stopopt">퇴사</label> <input type="radio" id="stopopt" name="status" value="stopped" th:field="*{status}">
 
         <select name="sopt">
             <option value=null th:field="*{sopt}" selected>전체</option>
@@ -68,7 +66,6 @@
 
         </tbody>
     </table>
-
     <a th:href="@{/hr/emp/register}"><button class="commonBtn register-button">사원등록</button></a>
 </main>
 </html>

@@ -3,7 +3,6 @@ package org.kosta.starducks.forum.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.kosta.starducks.auth.dto.CustomUserDetails;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.forum.dto.ForumPostUpdateDto;
 import org.kosta.starducks.forum.entity.ForumPost;
 import org.kosta.starducks.forum.entity.PostComment;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -113,7 +111,14 @@ public class ForumPostController {
         }
         forumPost.setEmployee(employee);
         forumPost.setPostNotice(postNotice);
-        forumPostService.createOrUpdateForumPost(forumPost);
+
+        // 공지 알림을 위해 일반 포스트와 공지 포스트 저장 메서드 분리
+        if(postNotice) {
+            forumPostService.noticeCreateOrUpdateForumPost(forumPost);
+        } else {
+            forumPostService.createOrUpdateForumPost(forumPost);
+        }
+
         return "redirect:/forum";
     }
 

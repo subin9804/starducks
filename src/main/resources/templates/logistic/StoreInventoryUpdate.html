@@ -4,14 +4,21 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>매장 재고 수정</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 매장 재고 수정</h1>
 
     <div class="content">
         <form th:action="@{/logistic/stock/store/update/{productCode}/{storeNo}(productCode=${inventory.getProduct().productCode},storeNo=${inventory.getStore().getStoreNo()})}" th:method="post" class="inventoryUpdate-form">

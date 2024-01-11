@@ -3,13 +3,15 @@ package org.kosta.starducks.hr.service;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.kosta.starducks.hr.dto.EmpDto;
 import org.kosta.starducks.hr.dto.EmpSearchCond;
 import org.kosta.starducks.hr.entity.Department;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -85,51 +87,46 @@ public class EmpService {
 
     /**
      * 직원 추가
-     * @param emp
+     * @param dto
      * @return
      */
     @Transactional
-    public Employee saveEmp(Employee emp) {
+    public Employee save(EmpDto dto) {
 
-        System.out.println("NEW!!:" + emp);
-        if(emp.getEmpId() == null) {
+        if(dto.getEmpId() == null) {
+            Employee employee = new ModelMapper().map(dto, Employee.class);
+
             // 현재 존재하는 가장 높은 번호의 사원보다 1 높은 숫자를 부여
             Long id = getLastEmpId();
-            emp.setEmpId(id + 1);
+            employee.setEmpId(id + 1);
 
-//            비밀번호 암호화해서 사원 등록~~~
-            String newPassword = "PASS_" + emp.getEmpId();
-
-//            자동으로 등록되는 임시 사원들은 그냥 그대로 쓰면 됨
-            if(emp.getPwd() != null) {
-                newPassword = emp.getPwd();
-            }
-            System.out.println("비밀번ㄴ호!!!!!!!!!!" + newPassword);
-
+            // 비밀번호 암호화해서 사원 등록~~~
+            String newPassword = "PASS_" + dto.getEmpId();
             String encodedPassword = passwordEncoder.encode(newPassword);
-            emp.setPwd(encodedPassword);
+            employee.setPwd(encodedPassword);
 
             System.out.println("등록한다");
 
-            return repository.save(emp);
+            return repository.save(employee);
 
 
         } else {
+            // 직원 정보 수정
+            Employee employee = repository.findById(dto.getEmpId()).orElse(null);
+            employee.setEmpName(dto.getEmpName());
+            employee.setBirth(dto.getBirth());
+            employee.setGender(dto.getGender());
+            employee.setEmpTel(dto.getEmpTel());
+            employee.setEmail(dto.getEmail());
+            employee.setPosition(dto.getPosition());
+            employee.setPostNo(dto.getPostNo());
+            employee.setAddr(dto.getAddr());
+            employee.setDAddr(dto.getDAddr());
+            employee.setDept(dto.getDept());
 
-            Employee employee = repository.findById(emp.getEmpId()).orElse(null);
-            employee.setEmpName(emp.getEmpName());
-            employee.setBirth(emp.getBirth());
-            employee.setGender(emp.getGender());
-            employee.setEmpTel(emp.getEmpTel());
-            employee.setEmail(emp.getEmail());
-            employee.setPosition(emp.getPosition());
-            employee.setPostNo(emp.getPostNo());
-            employee.setAddr(emp.getAddr());
-            employee.setDAddr(emp.getDAddr());
-            employee.setDept(emp.getDept());
-
-            if(emp.isStatus() != employee.isStatus()) {
-                employee.setStatus(emp.isStatus());
+            // 퇴사 여부가 true일 경우
+            if ((dto.isStatus() != employee.isStatus()) && dto.isStatus() == true) {
+                employee.setStatus(dto.isStatus());
                 employee.setLeaveDate(LocalDate.now());
             }
 

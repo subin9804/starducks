@@ -34,14 +34,30 @@
   </div>
 
 
-  <!-- 드롭다운 리스트 -->
+  <!-- 알림 리스트 -->
   <ul id="notify-drop" style="display: none;">
     <li th:each="notify : ${notifies}">
-      <a th:href="${notify.url}">
+      <div th:name="${notify.url}" onclick="openUrl(this.getAttribute('name'))">
         <p th:text="${notify.content}"></p>
         <p class="s-font" th:text="${notify.createdAt}"></p>
-      </a>
+      </div>
     </li>
   </ul>
+
+  <script>
+    // 알림 리스트 클릭 시 채팅일 경우에만 팝업창으로 오픈
+    function openUrl(url) {
+      // console.log(url)
+      if(url.startsWith("/chat")) {
+          window.open(url, 'ChatPopup', 'width=450 ,height=600');
+      } else {
+          window.location.href = url;
+      }
+    }
+  </script>
+
+  <!--사이드알림창-->
+  <div id="sideAlert"></div>
+
 </header>
 </html>

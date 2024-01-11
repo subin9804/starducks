@@ -4,7 +4,6 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -39,7 +38,6 @@
                 <button class="commonBtn register-button" type="submit">발주 신청</button>
             </a>
         </div>
-
 
         <table class="list-table">
             <thead>
@@ -95,10 +93,8 @@
                th:href="@{/logistic/stock/warehouse/list(page =${nowPage})}"> > </a>
 
 <!--            마지막 페이지 이동-->
-
             <a th:href="@{/logistic/stock/warehouse/list(page =${totalPages -1})}"> >> </a>
         </div>
     </div>
-
 </main>
 </html>

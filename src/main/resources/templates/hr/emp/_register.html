@@ -11,7 +11,7 @@
 
 <th:block th:fragment="register">
     <h1 class="page-title" style="margin-bottom: 50px;">| 사원 정보 등록</h1>
-    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
+    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${empDto}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
         <div class="photos">
             <div class="photo">
                 <img class="img" id="profileImg" src="#" alt="Profile Image">
@@ -132,7 +132,7 @@
 
                 <dl>
                     <dt>퇴사일자</dt>
-                    <dd><input type="date" th:field="*{leaveDate}" disabled></dd>
+                    <dd><input type="date" disabled></dd>
                 </dl>
                 <dl>
                     <dt>주소</dt>

@@ -216,7 +216,7 @@ header a {
 
 /** ----- 버튼 S------ */
 /* 버튼 공통 디자인 */
-.commonBtn, .register-button, .cancel-button, .edit-button, .delete-button{
+.commonBtn, .register-button, .cancel-button, .edit-button, .delete-button {
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
@@ -290,4 +290,19 @@ a p.commonBtn {
 
 #profile-box {
     font-size: 14px;
+}
+
+#sideAlert {
+    position: fixed;
+    bottom: 10%;
+    cursor: pointer;
+    right: -350px;
+    padding: 20px;
+    width: 350px;
+    height: auto;
+    overflow: hidden;
+    box-shadow : 0px 5px 3px 4px rgba(0, 0, 0, 0.3);
+    background-color: #f7f8fa;
+    z-index: 10;
+    transition: 0.3s;
 }

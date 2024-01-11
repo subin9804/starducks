@@ -12,7 +12,9 @@ import java.util.Optional;
  */
 public interface ForumPostService {
 
-  ForumPost createOrUpdateForumPost(ForumPost forumPost); //게시글 생성과 수정
+  ForumPost createOrUpdateForumPost(ForumPost forumPost); // 일반 게시글 생성과 수정
+
+  ForumPost noticeCreateOrUpdateForumPost(ForumPost forumPost); // 공지 게시글 생성과 수정 (공지 알림을 위해 일반 포스트와 분리)
 
   void deleteForumPost(Long id); //게시글 삭제
 
