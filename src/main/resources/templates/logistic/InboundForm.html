@@ -20,47 +20,60 @@
     <h1 class="page-title" style="margin-bottom: 50px;">| 창고 입고 정보 등록</h1>
     <div class="content">
         <form id="addForm" action="/logistic/inbound/warehouse/add" method="post">
-            <div>
-                담당자명 : <span th:text="${employee.empName}"></span>
-                <input type="hidden" id="employee" name="empId" th:value="${employee.empId}">
-            </div>
-            <button type="submit" id="submitBtn" value="입고등록">입고등록</button>
+
+            <table id="titleTable">
+                <tbody>
+                <tr>
+                    <td class="title">담당자 명</td>
+                    <td> <span th:text="${employee.empName}"></span>
+                        <input type="hidden" id="employee" name="empId" th:value="${employee.empId}">
+                    </td>
+                </tr>
             <!-- JSON 데이터를 저장할 숨겨진 입력 필드 -->
             <input type="hidden" id="warehouseInboundDtos" name="warehouseInboundDtos" value="">
-        </form>
-
-        <form id="itemForm">
-            <label for="product">입고상품 : </label>
-            <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
-            <select id="product" name="productCode">
+                <tr>
+                    <td class="title">
+                        <label for="product" >입고 상품 </label>
+                    <!-- 여기서 레이블은 select값의 id와 매핑시켜주어서 select와 매핑시켜주는 것이다.-->
+                    </td>
+                    <td>
+                        <select id="product" name="productCode">
                 <!-- Post를 통해서 컨트롤러로 넘어가는 것은? select의 name값이 넘어간다.-->
-                <option value="">상품 선택하세요</option>
-                <option th:each="p :${products}"
-                        th:value="${p.productCode}"
-                        th:data-name="${p.productName}"
-                        th:data-category="${p.productCategory}"
-                        th:data-price="${p.productPrice}"
-                        th:data-cnt="${p.productCnt}"
-                        th:text="${p.productName}">
-                    고객명
-                </option>
-            </select>
+                        <option value="">상품 선택하세요</option>
+                        <option th:each="p :${products}"
+                                th:value="${p.productCode}"
+                                th:data-name="${p.productName}"
+                                th:data-category="${p.productCategory}"
+                                th:data-price="${p.productPrice}"
+                                th:data-cnt="${p.productCnt}"
+                                th:text="${p.productName}">
+                                상품명
+                        </option>
+                        </select>
+                    </td>
+                    <td class="title">
+                        <label for="quantity"> 입고 수량</label>
+                    </td>
+                    <td>
+                        <input type="number" id="quantity" name="inboundQuantity">
+                        <button  type="button" id="addBtn">추가</button>
+                    </td>
+                </tr>
 
-            <label for="quantity"> 입고 수량</label>
-            <input type="number" id="quantity" name="inboundQuantity">
 
             <!--            <p>가격 * 수량 <span id="result"></span></p>-->
-            <button type="button" id="addBtn">추가</button>
+                </tbody>
+            </table>
 
 
-        </form>
 
-        <!--        <ul id="contentList">-->
 
-        <!--        </ul>-->
+
 
         <table id="contentTable">
+
             <thead>
+
             <tr>
                 <th>No.</th>
                 <th>카테고리</th>
@@ -73,6 +86,9 @@
             </thead>
             <tbody id="contentTableBody"></tbody>
         </table>
+            <button   class="commonBtn submitBtn" type="submit" id="submitBtn" value="입고등록">입고등록</button>
+
+        </form>
     </div>
 </main>
 </html>
