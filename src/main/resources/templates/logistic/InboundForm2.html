@@ -4,7 +4,6 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -15,7 +14,6 @@
     <div class="content">
         <div class="topipgo">
         <form id="addForm"  action="/logistic/inbound/warehouse/add" method="post" >
-
                 <div>
                     <label for="employee">담당자명 : </label>
                     <select id="employee" name="empId">

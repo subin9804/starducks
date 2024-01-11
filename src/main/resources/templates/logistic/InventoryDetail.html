@@ -62,15 +62,13 @@
         </div>
 
         <div class="bottom-button">
-            <a th:href="@{/logistic/stock/warehouse/list}">
-                <button class="commonBtn cancel-button"> 목록으로</button>
-            </a>
             <a th:href="@{/logistic/stock/warehouse/update/{code}(code=${inventory.getProductCode()})}">
-                <button class="commonBtn edit-button"> 수정하기</button>
+                <button class="commonBtn edit-button">수정</button>
+            </a>
+            <a th:href="@{/logistic/stock/warehouse/list}">
+                <button class="commonBtn cancel-button">목록으로</button>
             </a>
         </div>
     </div>
 </main>
-
-
 </html>
