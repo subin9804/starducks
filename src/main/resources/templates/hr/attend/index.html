@@ -34,6 +34,8 @@
         <input type="text" th:field="*{text}" class="d-inline-block">
         <button class="search-button">조회</button>
     </form>
+
+    <p>TODAY : [[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]</p>
     <table>
         <thead>
         <tr>
@@ -41,6 +43,10 @@
             <th>이름</th>
             <th>부서</th>
             <th>직급</th>
+
+            <th>출근</th>
+            <th>퇴근</th>
+
             <th>연락처</th>
             <th>이메일</th>
         </tr>
@@ -58,11 +64,36 @@
                 <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
                 <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
             </td>
+            <td th:text="${attend.get(emp.empId).getStartTime()}"></td>
+            <td></td>
             <td th:text="*{empTel}"></td>
             <td th:text="*{email}"></td>
         </tr>
 
         </tbody>
     </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        <!-- 첫 번째 페이지로 이동 -->
+        <a th:href="@{/hr/dept(page=0)}"> << </a>
+
+        <!-- 이전 페이지로 이동 -->
+        <a th:classappend="${nowPage == 1} ? 'disabled' : ''"
+           class="next-page" th:href="@{/hr/dept(page=${nowPage - 2})}"> < </a>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-number" th:href="@{/hr/dept(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
+               th:text="${page}"></a>
+            <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
+        </th:block>
+
+        <!-- 다음 페이지 이동 -->
+        <a th:classappend="${nowPage == totalPages} ? 'disabled' : ''"
+           class="next-page" th:href="@{/hr/dept(page=${nowPage})}"> > </a>
+
+        <!-- 마지막 페이지로 이동 -->
+        <a th:href="@{/hr/dept(page=${totalPages - 1})}"> >> </a>
+    </div>
 </main>
 </html>

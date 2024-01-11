@@ -70,5 +70,28 @@
     </table>
 
     <a th:href="@{/hr/emp/register}"><button class="commonBtn register-button">사원등록</button></a>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        <!-- 첫 번째 페이지로 이동 -->
+        <a th:href="@{/hr/emp(page=0)}"> << </a>
+
+        <!-- 이전 페이지로 이동 -->
+        <a th:classappend="${nowPage == 1} ? 'disabled' : ''"
+           class="next-page" th:href="@{/hr/emp(page=${nowPage - 2})}"> < </a>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-number" th:href="@{/hr/emp(page=${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}"
+               th:text="${page}"></a>
+            <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
+        </th:block>
+
+        <!-- 다음 페이지 이동 -->
+        <a th:classappend="${nowPage == totalPages} ? 'disabled' : ''"
+           class="next-page" th:href="@{/hr/emp(page=${nowPage})}"> > </a>
+
+        <!-- 마지막 페이지로 이동 -->
+        <a th:href="@{/hr/emp(page=${totalPages - 1})}"> >> </a>
+    </div>
 </main>
 </html>
