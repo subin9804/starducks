@@ -1,7 +1,7 @@
 package org.kosta.starducks.commons;
 
-import org.kosta.starducks.commons.notify.Notify;
-import org.kosta.starducks.commons.notify.NotifyRepository;
+import org.kosta.starducks.commons.notify.entity.Notify;
+import org.kosta.starducks.commons.notify.repository.NotifyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

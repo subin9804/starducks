@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kosta.starducks.commons.notify.NeedNotify;
 import org.kosta.starducks.document.entity.*;
 import org.kosta.starducks.document.repository.ApprovalRepository;
+import org.kosta.starducks.document.repository.DocFormRepository;
 import org.kosta.starducks.document.repository.DocumentRepository;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.document.repository.OrderItemRepository;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DocumentService {
     private final DocumentRepository documentRepository;
+    private final DocFormRepository formRepository;
     private final ApprovalRepository approvalRepository;
     private final EmpRepository empRepository;
     private final VendorService vendorService;
@@ -239,7 +241,7 @@ public class DocumentService {
      * document와 자식 객체인 Approval, RefEmployee 객체 저장 - 첫 submit
      */
     @NeedNotify
-    public Document saveDocumentAndApvAndRef(Document document, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
+    public Document saveDocumentAndApvAndRef(Document document, String code, List<Long> apvEmpIdList, List<Long> refEmpIdList, Long empId) {
         //Document에 저장할 Approval을 저장
         List<Approval> approvalList = new ArrayList<>();
         int i = 1;
@@ -255,12 +257,17 @@ public class DocumentService {
 //            System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡapprovalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+approval);
         }
 
+        // DocForm 객체 가져오기
+        DocForm form = formRepository.findByFormNameEn(code).get();
+
+
         //폼에서 저장한 urgent, docTitle, docContent 제외하고 set
         empRepository.findById(empId)
                 .ifPresent(document::setDocWriter);
         document.setDocDate(LocalDateTime.now());
         document.setDocStatus(DocStatus.PENDING_DOC);
         document.setApprovals(approvalList);
+        document.setDocForm(form);
         document.setRefEmpIds(refEmpIdList.toString());
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdocumentㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+document);
         Document savedDoc = documentRepository.save(document);
@@ -500,11 +507,22 @@ public class DocumentService {
     /**
      * ApvState에 따라 DocState 변경
      */
-    public void updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
+    @NeedNotify
+    public Document updateDocStatusByApv(Approval approval, Approval existingApv, Long docId) {
         List<String> requiredStep2 = Arrays.asList("draft", "reqForVac"); //결재 두 단계인 양식명
-        documentRepository.findById(docId).ifPresent(document -> {
-            if (approval.getApvStatus() == ApvStatus.APPROVED && requiredStep2.contains(document.getDocForm().getFormNameEn())) {
+        Document document = documentRepository.findById(docId).orElse(null);
+
+        // Document가 존재할 경우
+        if(document != null){
+            // 수신자가 승인한 상태 && 문서 양식이 draft나 reqForVac인 경우
+            if ((approval.getApvStatus() == ApvStatus.APPROVED) && (requiredStep2.contains(document.getDocForm().getFormNameEn()))) {
                 document.setDocStatus(existingApv.getApvStep() == 1 ? DocStatus.IN_PROGRESS : DocStatus.APPROVED_DOC);
+
+                List<Approval> approvals = approvalRepository.findByDocument_DocId(docId);
+                document.setApprovals(approvals);
+
+                return document;
+
             } else if (approval.getApvStatus() == ApvStatus.APPROVED) {
                 //결재 한 단계인 경우는 1단계 승인 시 문서 최종 승인 상태로 변경
                 document.setDocStatus(DocStatus.APPROVED_DOC);
@@ -512,6 +530,7 @@ public class DocumentService {
                 document.setDocStatus(DocStatus.REJECTED_DOC);
             }
             documentRepository.save(document);
-        });
+        }
+        return null;
     }
 }

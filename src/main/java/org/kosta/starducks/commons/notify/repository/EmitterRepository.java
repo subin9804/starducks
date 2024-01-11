@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.repository;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 

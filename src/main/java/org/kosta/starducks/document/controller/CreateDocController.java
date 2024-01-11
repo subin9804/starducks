@@ -191,19 +191,23 @@ public class CreateDocController {
                                  @RequestParam(name = "apvEmpId2", required = false) Long apvEmpId2, //2차 결재자는 없을 수 있음 - 화면에서 유효성 처리
                                  @RequestParam(name = "refEmpIdList", required = false) List<Long> refEmpIdList,
                                  RedirectAttributes redirectAttributes) {
-        String formNameEn = "draft";
+
+
         Long empId = Long.parseLong(principal.getName()); //로그인 한 사원 번호
 
         //Document 객체 정보 저장 : document, apvEmpIdList, refEmpIdList
         List<Long> apvEmpIdList = Arrays.asList(apvEmpId1, apvEmpId2);
         refEmpIdList = refEmpIdList != null ? refEmpIdList : Collections.emptyList();
 //        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡrefEmpIdListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+refEmpIdList);
-        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, apvEmpIdList, refEmpIdList, empId);
+
+        String code = "draft";
+        Document savedDoc = documentService.saveDocumentAndApvAndRef(document, code, apvEmpIdList, refEmpIdList, empId);
+
 
         redirectAttributes.addAttribute("docId", savedDoc.getDocId());
         redirectAttributes.addAttribute("status", true);
 
-        return "redirect:/document/submitDoc/" + formNameEn + "/{docId}";
+        return "redirect:/document/submitDoc/" + code + "/{docId}";
     }
 
 

@@ -1,15 +1,15 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.repository;
 
+import org.kosta.starducks.commons.notify.repository.EmitterRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
-public class EmitterRepositoryImpl implements EmitterRepository{
+public class EmitterRepositoryImpl implements EmitterRepository {
 
     // ConcurrentHashMap: 여러 스레드에서 동시에 안전하게 데이터에 접근할 수 있는 맵 구현체\
     // 맵 형태를 사용함으로서 데이터 저장, 고유성 보장, 성능 등의 이점을 얻으며 효율적으로 객체를 관리

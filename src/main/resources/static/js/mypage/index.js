@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // console.log(schedules)
         let events = [];
 
-
         for(let schedule of schedules) {
             let event = {
                 id: schedule.scheNo,
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // 이벤트 요소의 내용을 title로 설정
                 eventElement.innerHTML = info.event.title;
-            },
+            }
             // FullCalendar가 월을 변경할 때 호출되는 콜백 함수
             // viewRender: function (view, element) {
             //
@@ -74,10 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: "/mypage/api/show",
                 method: 'GET',
                 dataType: 'json',
-                // headers: {
-                //     'Content-Type': 'application/json',
-                //     [csrfHeader]: csrfToken // CSRF 토큰을 헤더에 추가
-                // },
                 success: function (data) {
                     schedules = data;
                     // console.log(data)

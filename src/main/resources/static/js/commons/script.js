@@ -40,21 +40,22 @@ window.document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // 푸시알림 허용 요청
+    // 서버에 알림을 구독하는 url
     const apiUrl = '/api/v1/notify/subscribe';
-    //
-    // if (Notification.permission === 'granted') {
-    //     setupNotifications(apiUrl)
-    // } else if (Notification.permission === 'denied') {
-    //     return;
-    // } else {
-    //     // 알림 권한 요청
-    //     Notification.requestPermission().then(function(permission) {
-    //         if (permission === 'granted') {
-    //             setupNotifications(apiUrl)
-    //         }
-    //     });
-    // };
+
+    // 새로운 알림 표시
+    let notifyStatus = localStorage.getItem("classNotify");
+
+    if(notifyStatus == null || notifyStatus == undefined) {
+        localStorage.setItem("classNotify", "false")
+    } else {
+        if (notifyStatus == "true") {
+            $("#notify").addClass("notify");
+        } else {
+            $("#notify").removeClass("notify");
+        }
+    }
+
 
     setupNotifications(apiUrl)
 
@@ -72,7 +73,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         // SSE 이벤트에 대한 이벤트 리스너
         eventSource.onmessage = (event) => {
             const eventData = event.data;
-            // console.log('받은 SSE 메시지: ', eventData);
+            console.log('받은 SSE 메시지: ', eventData);
 
             // 받은 데이터를 사용하여 푸시 알림창을 생성
             handleEventUpdate(eventData);
@@ -94,24 +95,41 @@ window.document.addEventListener("DOMContentLoaded", function() {
         function handleEventUpdate(eventData) {
             const notificationData = JSON.parse(eventData);
 
-            // const notification = new Notification("새로운 알림", {
-            //     body: notificationData.content
-            // });
-            //
-            // // 클릭 시 지정된 URL로 이동
-            // notification.onclick = function () {
-            //     window.open(notificationData.url, "_self");
-            // };
-            //
-            // // 2초 후에 알림창 닫기
-            // setTimeout(() => {
-            //     notification.close();
-            // }, 5000);
+            // 알림 표시
+            localStorage.setItem("classNotify", "true")
+            $("#notify").addClass("notify");
+
+            // 알림창 띄우기
+            $("#sideAlert").click(function () {
+                // 채팅일 경우에만 팝업창으로 오픈
+                if(notificationData.type == "CHAT") {
+                    window.open(notificationData.url, 'ChatPopup', 'width=450 ,height=600');
+                } else {
+                    window.location.href = notificationData.url;
+                }
+            }).css({
+                "transform": "translateX(-350px)",
+            }).append(
+                "<p>" + notificationData.content + "</p>" +
+                "<p class='s-font'>" + notificationData.createdAt + "</p>"
+            )
+
+            // 5초 후에 알림창 닫기
+            setTimeout(() => {
+                $("#sideAlert").css("transform", "translateX(350px)")
+
+                // 알림창 초기화 (clear text content)
+                $("#sideAlert").text("");
+            }, 5000)
 
             // 알림 리스트에 등록
-            $("#notify").addClass("notify");
             let newLi = $("<li>").click(function () {
-                window.location.href = notificationData.url;
+                // 채팅일 경우에만 팝업창으로 오픈
+                if(notificationData.type == "CHAT") {
+                    window.open(notificationData.url, 'ChatPopup', 'width=450 ,height=600');
+                } else {
+                    window.location.href = notificationData.url;
+                }
             }).hover(
                 function () {
                     // 마우스가 올라갔을 때의 스타일
@@ -137,6 +155,7 @@ window.document.addEventListener("DOMContentLoaded", function() {
         event.stopPropagation(); // 클릭 이벤트 전파 방지
         $("#notify").removeClass("notify");
         $("#notify-drop").toggle(); // toggle() 메서드를 사용하여 토글
+        localStorage.setItem("classNotify", "false")
     });
 
     // 문서 클릭 시 리스트 숨김
@@ -146,6 +165,8 @@ window.document.addEventListener("DOMContentLoaded", function() {
         }
     });
 })
+
+
 
 
 

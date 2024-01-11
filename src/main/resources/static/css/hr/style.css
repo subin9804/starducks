@@ -254,6 +254,6 @@ table tr:hover {
     font-size: 13px;
 }
 
-#form label {
+#form label, .search label {
     display: inline-block;
 }
