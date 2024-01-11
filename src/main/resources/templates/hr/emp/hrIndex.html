@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -24,83 +23,9 @@
 
     <h1 class="page-title" style="margin-bottom: 50px;">| 사원 목록</h1>
     <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
-            All <input type="radio" name="status" value="all" th:field="*{status}" checked>
-            재직 <input type="radio" name="status" value="running" th:field="*{status}">
-            퇴사 <input type="radio" name="status" value="stopped" th:field="*{status}">
-
-        <select name="sopt">
-            <option value=null th:field="*{sopt}" selected>전체</option>
-            <option value="dept" th:field="*{sopt}">부서명</option>
-            <option value="empName" th:field="*{sopt}">사원명</option>
-            <option value="email" th:field="*{sopt}">사번</option>
-        </select>
-
-        <input type="text" th:field="*{text}" class="d-inline-block">
-        <button class="search-button ">조회</button>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>사번</th>
-                <th>이름</th>
-                <th>부서</th>
-                <th>직급</th>
-                <th>연락처</th>
-                <th>이메일</th>
-            </tr>
-        </thead>
-        <tbody th:each="emp : ${employees}" th:object="${emp}">
-            <tr th:onclick="'location.href=\'' + @{/hr/emp/{empId}(empId=*{empId})} + '\''">
-                <td th:text="*{empId}"></td>
-                <td><a th:href="@{/hr/emp/{empId}(empId=*{empId})}" th:text="*{empName}"></a></td>
-                <td th:text="*{dept.deptName}"></td>
-                <td>
-                    <p th:if="*{position.toString() == 'ROLE_EMPLOYEE'}">사원</p>
-                    <p th:if="*{position.toString() == 'ROLE_TEAMLEADER'}">팀장</p>
-                    <p th:if="*{position.toString() == 'ROLE_DEPTLEADER'}">부장</p>
-                    <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
-                    <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
-                </td>
-                <td th:text="*{empTel}"></td>
-                <td th:text="*{email}"></td>
-            </tr>
-
-        </tbody>
-    </table>
-
-    <a th:href="@{/hr/emp/register}"><button class="commonBtn register-button">사원등록</button></a>
-</main>
-=======
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
-
-<!--title-->
-<title layout:fragment="title">HR</title>
-<th:block layout:fragment="addMore">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
-    <script th:src="@{/js/hr/script.js}"></script>
-</th:block>
-
-<style>
-    /* 상단의 페이지 제목 */
-    .page-title {
-        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
-        color: #6B4D27;
-    }
-</style>
-
-<main layout:fragment="content">
-    <script th:if="${result}" th:utext="${result}"></script>
-
-    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 목록</h1>
-    <form method="get" th:action="@{/hr/emp}" class="search" th:object="${empSearch}">
-        <div>
             <label for="every">All</label> <input type="radio" id="every" name="status" value="all" th:field="*{status}" checked>
             <label for="runopt">재직</label> <input type="radio" id="runopt" name="status" value="running" th:field="*{status}">
             <label for="stopopt">퇴사</label> <input type="radio" id="stopopt" name="status" value="stopped" th:field="*{status}">
-        </div>
 
         <select name="sopt">
             <option value=null th:field="*{sopt}" selected>전체</option>
@@ -144,5 +69,4 @@
 
     <a th:href="@{/hr/emp/register}"><button class="commonBtn register-button">사원등록</button></a>
 </main>
->>>>>>> a92d6eaab6cec20c2ef5d2e26ab3b498363ab968
 </html>

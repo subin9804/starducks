@@ -1,4 +1,4 @@
-package org.kosta.starducks.commons.notify;
+package org.kosta.starducks.commons.notify.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QNotify extends EntityPathBase<Notify> {
 
-    private static final long serialVersionUID = -1260917434L;
+    private static final long serialVersionUID = -402463913L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
