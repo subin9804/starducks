@@ -56,6 +56,7 @@ $(document).ready(function () {
             resources: resources,
             selectable: true,
             events: events,
+            locale: "ko",
             eventRender: function (info) {
                 // console.log(info.el.style.color);
                 // 각 이벤트에 대한 스타일 지정

@@ -15,7 +15,6 @@ import java.time.LocalDate;
 
 @Data
 public class EmpDto {
-    @Id
     private Long empId; // 사원번호
 
     @NotBlank

@@ -1,9 +1,16 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <th:block th:fragment="register">
-    <h1 th:text="사원정보수정"></h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 정보 수정</h1>
     <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${empDto}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
         <div class="photos">
             <div class="photo">
@@ -123,158 +130,7 @@
                 <dl>
                     <dt>퇴사일자</dt>
                     <dd>
-                        <p th:text="${leaveDate != null} ? ${leaveDate} : '0000-00-00'">
-<!--                        <p th:if="*{leaveDate == null}" th:text="">-->
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>주소</dt>
-                    <dd>
-                        <div th:replace="~{hr/emp/_postNo::searchPost}"></div>
-                    </dd>
-                </dl>
-            </section>
-        </div>
-        <div class="btns">
-            <button class="commonBtn register-button">저장</button>
-            <a th:href="@{/hr/emp}"><p class="commonBtn cancel-button">취소</p></a>
-        </div>
-    </form>
-</th:block>
-=======
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<style>
-    /* 상단의 페이지 제목 */
-    .page-title {
-        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
-        color: #6B4D27;
-    }
-</style>
-
-<th:block th:fragment="register">
-    <h1 class="page-title" style="margin-bottom: 50px;">| 사원 정보 수정</h1>
-    <form id="form" th:action="@{/hr/emp/save}" method="post" th:object="${employee}" onsubmit="return confirmAdd()" enctype="multipart/form-data" autocomplete="off">
-        <div class="photos">
-            <div class="photo">
-                <img class="img" id="profileImg" th:src="${profile}" alt="Profile Image">
-                <input type="file" name="profile" id="profile" accept="image/*" style="display: none">
-                <p>프로필사진</p>
-            </div>
-            <div class="photo">
-                <img class="img" id="stampImg" th:src="${stamp}" alt="Stamp Image">
-                <input type="file" name="stamp" id="stamp" accept="image/*" style="display: none">
-                <p>도장사진</p>
-            </div>
-        </div>
-        <div id="formSection">
-            <section>
-                <dl>
-                    <dt>사원번호</dt>
-                    <dd>
-                        <input type="text" th:field="*{empId}" disabled>
-                        <input type="hidden" th:field="*{empId}">
-                    </dd>
-                </dl>
-<!--                <dl>-->
-<!--                    <dt>초기비밀번호</dt>-->
-<!--                    <dd><input type="text" th:field="*{pwd}" disabled></dd>-->
-<!--                    <input type="hidden" th:field="*{pwd}">-->
-<!--                </dl>-->
-                <dl>
-                    <dt>사원이름</dt>
-                    <dd>
-                        <input type="text" th:field="*{empName}">
-                        <div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>연락처</dt>
-                    <dd>
-                        <input type="text" th:field="*{empTel}">
-                        <div class="error" th:each="err : ${#fields.errors('empTel')}" th:text="${err}"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>이메일</dt>
-                    <dd>
-                        <input type="text" th:field="*{email}">
-                        <div class="error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>성별</dt>
-                    <dd>
-                        <label for="man">남</label> <input type="radio" id="man" name="a" value="man" th:field="*{gender}">
-                        <label for="woman">여</label>  <input type="radio" id="woman" name="a" value="woman" th:field="*{gender}">
-                        <div class="error" th:each="err : ${#fields.errors('gender')}" th:text="${err}"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>생년월일</dt>
-                    <dd>
-                        <input type="date" th:value="*{birth}" th:field="*{birth}">
-                    </dd>
-                </dl>
-            </section>
-            <section>
-                <dl>
-                    <dt>부서</dt>
-                    <dd>
-                        <input type="checkbox" id="all1" class="selectbox box1">
-                        <label for="all1" id="allLabel1" th:text="*{dept.deptName}">전체<img th:src="@{/images/dropdown.png}" class="drop"></label>
-
-                        <ul id="options1">
-                            <li class="option1" th:each="dept : ${depts}" th:field="${dept}" th:value="${dept.deptId}">
-                                <th:block th:text="${dept.deptName}"></th:block>
-                            </li>
-                        </ul>
-                        <input id="dept" type="hidden" th:field="*{dept}">
-                        <div class="error" th:each="err : ${#fields.errors('dept')}" th:text="${err}"></div>
-                    </dd>
-                </dl>
-
-                <dl>
-                    <dt>직급</dt>
-                    <dd>
-                        <input type="checkbox" id="all2" class="selectbox box2">
-                        <label for="all2" id="allLabel2" th:text="*{position.toString()}">전체<img th:src="@{/images/dropdown.png}" class="drop"></img></label>
-
-                        <ul id="options2">
-                            <li class="option2" th:each="position : ${positions}" th:field="${position}" th:value="${position}">
-                                <th:block th:if="${position.toString() == 'ROLE_BOSS'}" th:text="사장"></th:block>
-                                <th:block th:if="${position.toString() == 'ROLE_DEPTLEADER'}" th:text="부장"></th:block>
-                                <th:block th:if="${position.toString() == 'ROLE_TEAMLEADER'}" th:text="팀장"></th:block>
-                                <th:block th:if="${position.toString() == 'ROLE_EMPLOYEE'}" th:text="사원"></th:block>
-                                <th:block th:if="${position.toString() == 'ROLE_STOREMANAGER'}" th:text="점장"></th:block>
-                            </li>
-                        </ul>
-                        <input id="position" type="hidden" th:field="*{position}">
-                        <div class="error" th:each="err : ${#fields.errors('position')}" th:text="${err}"></div>
-                    </dd>
-                </dl>
-
-                <dl>
-                    <dt>입사일자</dt>
-                    <dd>
-                        <input type="text" th:field="*{joinDate}" disabled>
-                        <input type="hidden" th:field="*{joinDate}">
-                    </dd>
-                </dl>
-
-                <dl>
-                    <dt>퇴사여부</dt>
-                    <dd>
-                        <label for="stopped">퇴사</label> <input id="stopped" type="radio" name="a" value="true" th:field="*{status}">
-                        <label for="running">재직</label> <input id="running" type="radio" name="a" value="false" th:field="*{status}">
-                    </dd>
-                </dl>
-
-                <dl>
-                    <dt>퇴사일자</dt>
-                    <dd>
-                        <p th:text="*{leaveDate != null} ? *{leaveDate} : '0000-00-00'">
+                        <p th:text="${leaveDate != null} ? ${leaveDate} : '0000-00-00'"></p>
 <!--                        <p th:if="*{leaveDate == null}" th:text="">-->
                     </dd>
                 </dl>

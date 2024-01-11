@@ -2,19 +2,25 @@
 <html layout:decorate="~{layouts/main}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
-
 <title layout:fragment="title">게시글 상세</title>
 
 <th:block layout:fragment="addMore">
-
   <link rel="stylesheet" th:href="@{/css/forum/style.css}" type="text/css">
   <script th:src="@{/js/forum/script.js}"></script>
-
 </th:block>
 
+<style>
+  /* 상단의 페이지 제목 */
+  .page-title {
+    text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+    color: #6B4D27;
+  }
+</style>
+
 <main layout:fragment="content">
+  <h1 class="page-title" style="margin-bottom: 50px;">| 게시글 상세 조회</h1>
   <div class="detail-page-container" th:object="${post}">
-    <p class="detail-page-title">게시글 상세정보</p>
+
     <div class="detail-content-section">
       <!-- 게시글 상세 정보 표시 -->
       <div class="detail-info-table">

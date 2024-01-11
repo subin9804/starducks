@@ -81,6 +81,8 @@ public class EmpController {
     public String save(@Valid EmpDto dto, BindingResult result, Model model,
                        @RequestParam("profile") MultipartFile profile,
                        @RequestParam("stamp") MultipartFile stamp) {
+        // register에서 자동으로 등록되는 아이디
+        Long id = service.getLastEmpId() + 1;
 
         if (result.hasErrors()) {
             log.error("result: {}", result.getAllErrors().toString());
@@ -93,8 +95,7 @@ public class EmpController {
             } else {
                 // register
                 // 자동으로 저장되는 사번을 미리 알려줌
-                Long id = service.getLastEmpId();
-                model.addAttribute("id", id + 1);
+                model.addAttribute("id", id);
                 model.addAttribute("positions", Position.values());
                 model.addAttribute("depts", deptRepository.findAll());
                 model.addAttribute("name", "register");
@@ -103,12 +104,21 @@ public class EmpController {
         }
 
         Employee savedEmp = service.save(dto);
-        fileService.upload(profile, "profile", dto.getEmpId());
-        fileService.upload(stamp, "stamp", dto.getEmpId());
 
-        Long id = savedEmp.getEmpId();
+        if(dto.getEmpId() != null) {
+            // update
+            fileService.upload(profile, "profile", dto.getEmpId());
+            fileService.upload(stamp, "stamp", dto.getEmpId());
+        } else {
+            // register
+            fileService.upload(profile, "profile", id);
+            fileService.upload(stamp, "stamp", id);
+        }
 
-        return "redirect:/hr/emp/" + id;
+
+        Long savedId = savedEmp.getEmpId();
+
+        return "redirect:/hr/emp/" + savedId;
     }
 
     /**

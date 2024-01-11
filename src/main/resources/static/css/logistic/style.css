@@ -123,7 +123,6 @@
 
 /*디테일 페이지의 표에 대한 스타일 적용*/
 .detail-table {
-
     width: 80%;
     margin: 30px auto;
     border-collapse: collapse;
@@ -132,8 +131,6 @@
     box-shadow: 0 0 0 2px #6B4D27;
     font-size: 18px;
     text-align: center;
-
-
 }
 
 .detail-table tfoot tr:first-child td {
@@ -154,19 +151,16 @@
 
 .detail-table tfoot {
     font-weight: bold;
-
 }
 
 
 /*타임리프와 JS연동된 form 부분에 있는 표에 대한 스타일 적용*/
 #contentTable {
-
     width: 80%;
     margin: 100px auto;
     border-radius: 20px;
     background-color: #6B4D27;
     color: #FFF;
-
 }
 
 #contentTable th, #contentTable td {

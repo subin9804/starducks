@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'prev title next',
             left: ''
         },
+        locale: "ko",
         // eventContent: 'some text',
 
         eventContent: function (arg) {
