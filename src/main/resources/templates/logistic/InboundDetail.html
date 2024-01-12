@@ -17,7 +17,7 @@
 </style>
 
 <main layout:fragment="content">
-    <h1 class="page-title" style="margin-bottom: 50px;">| 창고 입고 정보 조회</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 창고 입고 정보 상세 조회</h1>
     <div class="content">
 
         <div class="ipgodetail">
@@ -48,7 +48,7 @@
                 <td th:text="${i.getProduct().productCode}">품목 code</td>
                 <td th:text="${i.getProduct().productName}">품목명</td>
                 <td th:text="${i.getProduct().getVendor().getVendorName()}">거래처</td>
-                <td th:text="${#numbers.formatDecimal(i.getProduct().productPrice, 0, 'COMMA', 0, 'POINT')}">거래 단가</td>
+                <td th:text="${#numbers.formatDecimal(i.getProduct().productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}">거래 단가</td>
                 <td th:text="${#numbers.formatDecimal(i.getInboundQuantity(), 0, 'COMMA', 0, 'POINT')}">입고 수량</td>
                 <td th:text="${i.getProduct().productUnit}">단위</td>
                 <td th:text="${#numbers.formatDecimal(i.getInboundPrice(), 0, 'COMMA', 0, 'POINT')}">입고 금액</td>

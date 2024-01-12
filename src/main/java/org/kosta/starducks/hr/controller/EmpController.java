@@ -41,13 +41,26 @@ public class EmpController {
      * @return
      */
     @GetMapping
-    public String index(Model model, EmpSearchCond empSearch) {
+    public String index(@RequestParam(name = "page", required = false) Integer page, Model model, EmpSearchCond empSearch) {
+        if(page == null || page == 0) {
+            page = 1;
+        }
+
         model.addAttribute("empSearch", empSearch);
         System.out.println(empSearch);
 
         Page<Employee> emps = service.toSearchEmp(empSearch);
         System.out.println(emps.stream().toList());
         model.addAttribute("employees", emps);
+
+        int startPage= Math.max(page-4, 1);
+        int endPage= Math.min(page+5, emps.getTotalPages());
+
+        model.addAttribute("nowPage", page);
+        model.addAttribute("employees", emps.getContent());
+        model.addAttribute("totalPages", emps.getTotalPages());
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
 
         return "hr/emp/hrIndex";
     }

@@ -2,10 +2,8 @@ package org.kosta.starducks.mypage.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kosta.starducks.auth.dto.CustomUserDetails;
 import org.kosta.starducks.mypage.entity.Attendance;
 import org.kosta.starducks.mypage.service.AttendanceService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/mypage/attendance")
@@ -60,6 +57,7 @@ public class AttendanceController {
         model.addAttribute("workDays", workDays);
         model.addAttribute("lateDays", lateDays);
         model.addAttribute("absentDays", absentDays);
+        model.addAttribute("vacDays", vacDays);
 
         return "mypage/attendance/attendance";
     }
