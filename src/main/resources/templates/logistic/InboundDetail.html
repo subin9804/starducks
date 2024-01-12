@@ -34,29 +34,29 @@
         <table class="detail-table">
             <thead>
             <tr>
-                <th>품목Code</th>
-                <th>품목 이름</th>
+                <th>품목 Code</th>
+                <th>품목명</th>
                 <th>거래처</th>
-                <th>거래단가</th>
-                <th>입고수량</th>
+                <th>거래 단가</th>
+                <th>입고 수량</th>
                 <th>단위</th>
-                <th>입고금액</th>
+                <th>입고 금액</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="i:${inbound.getInboundProducts()}">
                 <td th:text="${i.getProduct().productCode}">품목 code</td>
-                <td th:text="${i.getProduct().productName}">품목 이름</td>
+                <td th:text="${i.getProduct().productName}">품목명</td>
                 <td th:text="${i.getProduct().getVendor().getVendorName()}">거래처</td>
-                <td th:text="${#numbers.formatDecimal(i.getProduct().productPrice, 0, 'COMMA', 0, 'POINT')}">거래단가</td>
-                <td th:text="${#numbers.formatDecimal(i.getInboundQuantity(), 0, 'COMMA', 0, 'POINT')}">입고수량</td>
+                <td th:text="${#numbers.formatDecimal(i.getProduct().productPrice, 0, 'COMMA', 0, 'POINT')}">거래 단가</td>
+                <td th:text="${#numbers.formatDecimal(i.getInboundQuantity(), 0, 'COMMA', 0, 'POINT')}">입고 수량</td>
                 <td th:text="${i.getProduct().productUnit}">단위</td>
-                <td th:text="${#numbers.formatDecimal(i.getInboundPrice(), 0, 'COMMA', 0, 'POINT')}">입고금액</td>
+                <td th:text="${#numbers.formatDecimal(i.getInboundPrice(), 0, 'COMMA', 0, 'POINT')}">입고 금액</td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-                <td th:text="거래합계"></td>
+                <td th:text="거래 합계"></td>
                 <td colspan="3"></td>
                 <td th:text="${#numbers.formatDecimal(inbound.getTotalQuantity(), 0, 'COMMA', 0, 'POINT')}">Total Quantity</td>
                 <td></td>

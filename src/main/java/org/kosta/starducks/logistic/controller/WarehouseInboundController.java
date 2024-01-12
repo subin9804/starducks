@@ -3,7 +3,6 @@ package org.kosta.starducks.logistic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.generalAffairs.entity.Product;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.generalAffairs.service.VendorService;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Parameter;
 import java.security.Principal;
 import java.util.List;
 
@@ -67,9 +65,8 @@ public class WarehouseInboundController {
 
     @GetMapping("/warehouse/list")
     public String getAllInbounds(Model m,
-                                 @PageableDefault(page = 0,size = 5) Pageable pageable,
-                                 @RequestParam(name = "bulkInboundCheckbox", required = false)Boolean bulkInboundCheckbox)
-    {
+                                 @PageableDefault(page = 0, size = 5) Pageable pageable,
+                                 @RequestParam(name = "bulkInboundCheckbox", required = false) Boolean bulkInboundCheckbox) {
 
         log.info(String.valueOf(bulkInboundCheckbox));
 
@@ -98,60 +95,48 @@ public class WarehouseInboundController {
         }
 
         m.addAttribute("inbounds", inbounds);
-        m.addAttribute("checkbox",bulkInboundCheckbox);
+        m.addAttribute("checkbox", bulkInboundCheckbox);
         m.addAttribute("nowPage", nowPage);
         m.addAttribute("startPage", startPage);
         m.addAttribute("endPage", endPage);
         m.addAttribute("totalPages", totalPages);
 
 
-
         return "logistic/InboundList";
     }
 
 
-
     @GetMapping("/warehouse/info/{warehouseInboundId}")
-    public String getInboundInfo(@PathVariable("warehouseInboundId") Long warehouseInboundId,
-                                 Model m)
-    {
+    public String getInboundInfo(@PathVariable("warehouseInboundId") Long warehouseInboundId, Model m) {
 
         WarehouseInbound selectedInbound = warehouseInboundService.getInboundByInboundId(warehouseInboundId);
-        m.addAttribute("inbound",selectedInbound);
+        m.addAttribute("inbound", selectedInbound);
 
 //        Optional<Product> product = productService.getProduct(productCode);
 //        Product product1 = product.get();
 //        m.addAttribute("p", product1);
 
         return "logistic/InboundDetail";
-
-
-
     }
-
 
 
     @GetMapping("/warehouse/add")
     public String addOrder(Principal p,
-                           Model m,  @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable)
-
-    {
+                           Model m, @PageableDefault(page = 0, size = 100, sort = "productCode", direction = Sort.Direction.DESC) Pageable pageable) {
 
 
         Employee emp = employeeService.getEmp(Long.parseLong(p.getName()));
-        m.addAttribute("employee",emp);
+        m.addAttribute("employee", emp);
 
         Page<Product> products = productService.getAllProducts(pageable);
-        m.addAttribute("products",products);
+        m.addAttribute("products", products);
 
         return "logistic/InboundForm";
     }
 
 
-
-
     @PostMapping("/warehouse/add")
-    public String addOrder(@RequestBody List<WarehouseInboundDto> warehouseInboundDtos)  {
+    public String addOrder(@RequestBody List<WarehouseInboundDto> warehouseInboundDtos) {
         warehouseInboundService.addWarehouseInbound(warehouseInboundDtos);
         return "redirect:/logistic/inbound/warehouse/list";
     }

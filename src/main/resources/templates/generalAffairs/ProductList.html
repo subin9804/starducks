@@ -62,6 +62,8 @@
             </tr>
             </tbody>
         </table>
+
+
         <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
             <a th:if="${page != nowPage}"
                th:href="@{/general/products/list(page = ${page - 1}, searchKeyword =${param.searchKeyword})}"
@@ -69,6 +71,10 @@
             <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
             <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
         </th:block>
+
+
+
+
     </div>
 </main>
 </html>

@@ -4,17 +4,11 @@ package org.kosta.starducks.logistic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kosta.starducks.commons.menus.MenuService;
 import org.kosta.starducks.generalAffairs.dto.ProductStockUpdateDto;
-import org.kosta.starducks.generalAffairs.dto.ProductUpdateDto;
 import org.kosta.starducks.generalAffairs.entity.Product;
-import org.kosta.starducks.generalAffairs.entity.ProductCategory;
-import org.kosta.starducks.generalAffairs.entity.ProductUnit;
 import org.kosta.starducks.generalAffairs.service.ProductService;
 import org.kosta.starducks.logistic.dto.StockUpdateDto;
-import org.kosta.starducks.logistic.entity.StoreInbound;
 import org.kosta.starducks.logistic.entity.StoreInventory;
-import org.kosta.starducks.logistic.entity.StoreInventoryId;
 import org.kosta.starducks.logistic.service.StoreInventoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +27,6 @@ import java.util.Optional;
 @Slf4j
 
 public class StockController {
-
 
     private final ProductService productService;
     private final StoreInventoryService storeInventoryService;
@@ -68,7 +60,6 @@ public class StockController {
         if (totalPages == 0) {
             endPage = 1;
         }
-
 
         m.addAttribute("products", allInventory);
         m.addAttribute("nowPage", nowPage);
