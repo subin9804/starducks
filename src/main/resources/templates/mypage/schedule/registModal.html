@@ -20,7 +20,7 @@
             <div style="display: flex;">
                 <div style="flex: 1;">
                     <form class="modal-content" th:action="@{/mypage/schedule/add}" method="post" th:id="addForm">
-                        <span class="close" id="closeModalBtn">X</span>
+                        <span class="close" id="closeModalBtn" style="color: #6c757d">X</span>
                         <h3>일정 등록</h3>
                         <div style="padding: 40px">
                             <input type="hidden" id="scheNo" name="scheNo" disabled>
@@ -38,13 +38,11 @@
                                     <input style="width: 280px;" type="datetime-local" name="scheStartDate">
                                 </dd>
                             </dl>
-                            <br><br>
 
                             <dl style="display: flex;">
                                 <dt style="margin-right: 20px;">종료 일시</dt>
                                 <dd><input style="width: 280px;" type="datetime-local" name="scheEndDate"></dd>
                             </dl>
-                            <br>
 
                             <dl style="display: flex;">
                                 <dt style="margin-right: 20px;">일정 종류</dt>
@@ -54,13 +52,11 @@
                                         <option th:value="OFFICIAL_SCHEDULE" name="OFFICIAL_SCHEDULE">공식일정</option>
                                     </select></dd>
                             </dl>
-                            <br>
 
                             <dl style="display: flex;">
                                 <dt style="margin-right: 20px;">참고사항</dt>
-                                <dd><textarea id="text" rows="5" cols="62" name="notes"></textarea></dd>
+                                <dd><textarea id="text" name="notes"></textarea></dd>
                             </dl>
-                            <br>
 
                             <div class="btns" id="btns">
                                 <button class="commonBtn register-button" id="registBtn">등록</button>
