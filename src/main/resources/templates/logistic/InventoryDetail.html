@@ -36,7 +36,8 @@
                 </tr>
                 <tr>
                     <th>품목 가격</th>
-                    <td th:text="${inventory.productPrice}">p.productCode</td>
+                    <td th:text="${#numbers.formatDecimal(inventory.productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
+
                 </tr>
                 <tr>
                     <th>품목 단위</th>
@@ -44,7 +45,8 @@
                 </tr>
                 <tr>
                     <th>창고 재고 수량</th>
-                    <td th:text="${inventory.productCnt}">p.productCode</td>
+<!--                    <td th:text="${inventory.productCnt}">p.productCode</td>-->
+                    <td style="color: #036635;" th:text="${#numbers.formatDecimal(inventory.productCnt, 0, 'COMMA', 0, 'POINT')}"></td>
                 </tr>
 
                 <tr>
@@ -62,15 +64,13 @@
         </div>
 
         <div class="bottom-button">
-            <a th:href="@{/logistic/stock/warehouse/list}">
-                <button class="commonBtn cancel-button"> 목록으로</button>
-            </a>
             <a th:href="@{/logistic/stock/warehouse/update/{code}(code=${inventory.getProductCode()})}">
-                <button class="commonBtn edit-button"> 수정하기</button>
+                <button class="commonBtn edit-button">수정</button>
+            </a>
+            <a th:href="@{/logistic/stock/warehouse/list}">
+                <button class="commonBtn cancel-button">목록으로</button>
             </a>
         </div>
     </div>
 </main>
-
-
 </html>

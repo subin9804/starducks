@@ -17,7 +17,6 @@
 </style>
 
 <main layout:fragment="content">
-    <h1>매장 재고 상세</h1>
     <h1 class="page-title" style="margin-bottom: 50px;">| 매장 재고 상세 조회</h1>
     <div class="content">
         <div class="small-content">
@@ -37,7 +36,9 @@
                 </tr>
                 <tr>
                     <th>품목 가격</th>
-                    <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>
+<!--                    <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>-->
+                    <td th:text="${#numbers.formatDecimal(inventory.getProduct().productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
+
                 </tr>
                 <tr>
                     <th>품목 단위</th>
@@ -53,29 +54,29 @@
                 </tr>
                 <tr>
                     <th>매장 재고 수량</th>
-                    <td th:text="${inventory.getInventoryCnt()}">p.productCode</td>
+<!--                    <td th:text="${inventory.getInventoryCnt()}">p.productCode</td>-->
+                    <td style="color: #036635" th:text="${#numbers.formatDecimal(inventory.getInventoryCnt(), 0, 'COMMA', 0, 'POINT')}"></td>
+
                 </tr>
                 <tr>
                     <th>최근 입고일</th>
-                    <td th:if="${inventory.getModifiedAt() != null}" th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
-                    <td th:if="${inventory.getModifiedAt() == null}" th:text="${#temporals.format(inventory.getCreatedAt(),'yyyy.MM.dd a hh:mm')}"></td>
-
+                    <td th:if="${inventory.getModifiedAt() != null}"
+                        th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
+                    <td th:if="${inventory.getModifiedAt() == null}"
+                        th:text="${#temporals.format(inventory.getCreatedAt(),'yyyy.MM.dd a hh:mm')}"></td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
 
         <div class="bottom-button">
-            <a th:href="@{/logistic/stock/store/list}">
-                <button class="commonBtn cancel-button"> 목록으로</button>
-            </a>
             <a th:href="@{/logistic/stock/store/update/{code}/{no}(code=${inventory.getProduct()?.productCode},no=${inventory.getStore()?.storeNo})}">
-                <button class="commonBtn edit-button"> 수정하기</button>
+                <button class="commonBtn edit-button">수정</button>
+            </a>
+            <a th:href="@{/logistic/stock/store/list}">
+                <button class="commonBtn cancel-button">목록으로</button>
             </a>
         </div>
     </div>
 </main>
-
-
 </html>

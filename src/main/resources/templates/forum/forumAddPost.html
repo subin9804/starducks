@@ -27,7 +27,7 @@
     <form method="post" th:action="@{/forum/add}" onsubmit="saveEditorContent()">
         <!-- 제목 입력란 -->
         <span style="float: left">제목 : </span>
-        <input style="margin-left: 50px; width: 80%;" id="postTitle" placeholder="제목을 입력해주세요" required th:field="*{post.postTitle}" type="text">
+        <input style="margin-left: 50px;" id="postTitle" placeholder="제목을 입력해주세요" required th:field="*{post.postTitle}" type="text">
 
         <!-- 공지사항 체크박스: 총무부 직원일 경우에만 표시 -->
         <div class="checkbox-container" th:if="${isGADepartment || isBoss}">

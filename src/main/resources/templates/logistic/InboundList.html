@@ -57,29 +57,21 @@
             <tr th:each="i:${inbounds}"
                 th:onclick="'location.href=\'' + @{/logistic/inbound/warehouse/info/{Id}(Id=${i.warehouseInboundId})} + '\''"
                 style="cursor:pointer">
-
                 <td th:text="${i.warehouseInboundId}"></td>
                 <td th:text="${#temporals.format(i.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
                 <td th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
-                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                <td th:text="${#numbers.formatDecimal(i.getTotalQuantity(), 0, 'COMMA', 0, 'POINT')}">총 입고수량</td>
                 <td>비고</td>
             </tr>
-
             </tbody>
-
         </table>
 
-
         <div class="pagination">
-
             <!--            첫 번째 페이지로 이동-->
             <a th:href="@{/logistic/inbound/warehouse/list(page =0)}"> << </a>
-
             <!--            이전 페이지로 이동-->
-
             <a th:classappend="${nowPage ==1} ? 'disabled': ''"
                th:href="@{/logistic/inbound/warehouse/list(page =${ nowPage - 2})}"> < </a>
-
 
             <th:block th:each="page :${#numbers.sequence(startPage,endPage)}">
 
@@ -127,8 +119,6 @@
             };
             xhr.send();
         }
-
-
     </script>
 </main>
 </html>

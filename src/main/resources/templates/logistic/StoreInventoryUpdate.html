@@ -4,14 +4,21 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>매장 재고 수정</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 매장 재고 수정</h1>
 
     <div class="content">
         <form th:action="@{/logistic/stock/store/update/{productCode}/{storeNo}(productCode=${inventory.getProduct().productCode},storeNo=${inventory.getStore().getStoreNo()})}" th:method="post" class="inventoryUpdate-form">
@@ -38,7 +45,8 @@
                     </tr>
                     <tr>
                         <th>품목 가격</th>
-                        <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>
+<!--                        <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>-->
+                        <td th:text="${#numbers.formatDecimal(inventory.getProduct().productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
                     </tr>
                     <tr>
                         <th>품목 단위</th>
@@ -55,7 +63,7 @@
                     <tr>
                         <th>매장 재고 수량</th>
                         <td>
-                        <input type="number" th:value="${inventory.getInventoryCnt()}" name="inventoryCnt">
+                        <input style="text-align: center; color: #b81414;" type="number" th:value="${inventory.getInventoryCnt()}" name="inventoryCnt">
                         </td>
                     </tr>
                     <tr>
@@ -65,15 +73,13 @@
                     </tr>
                     </tbody>
                 </table>
-
-
             </div>
 
             <div class="bottom-button">
+                <button type="submit" class="commonBtn edit-button"> 수정</button>
                 <a th:href="@{/logistic/stock/store/info/{code}/{no}(code=${inventory.getProduct().productCode},no=${inventory.getStore().getStoreNo()})}">
-                    <button type="button" class="commonBtn cancel-button" > 수정 취소</button>
+                    <button type="button" class="commonBtn cancel-button" >목록</button>
                 </a>
-                    <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
             </div>
         </form>
     </div>

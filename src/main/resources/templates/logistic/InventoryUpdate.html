@@ -4,16 +4,24 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>창고 재고 수정</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 창고 재고 수정</h1>
     <div class="content">
-        <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}" th:method="post" class="inventoryUpdate-form">
+        <form th:action="@{/logistic/stock/warehouse/update/{productCode}(productCode=${inventory.getProductCode()})}"
+              th:method="post" class="inventoryUpdate-form">
             <div class="small-content">
 
                 <table class="vertical-table">
@@ -33,7 +41,7 @@
                     </tr>
                     <tr>
                         <th>품목 가격</th>
-                        <td th:text="${inventory.productPrice}">p.productCode</td>
+                        <td th:text="${#numbers.formatDecimal(inventory.productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
                     </tr>
                     <tr>
                         <th>품목 단위</th>
@@ -43,7 +51,8 @@
                         <th>창고 재고 수량</th>
                         <!--                    <input type="number" th:value="${product.productPrice}" name="productPrice" >-->
                         <td>
-                            <input type="number" th:value="${inventory.productCnt}" name="productCnt">
+                            <input style="text-align: center; color: #b81414;" type="number" th:value="${inventory.productCnt}"
+                                   name="productCnt">
                         </td>
                     </tr>
 
@@ -55,27 +64,26 @@
                         <th>판매 여부</th>
                         <td th:text="${inventory.productSelling}">p.productCode</td>
                     </tr>
-
                     </tbody>
                 </table>
 
             </div>
 
             <div class="bottom-button">
+                <button type="submit" class="commonBtn edit-button">수정</button>
                 <a th:href="@{/logistic/stock/warehouse/info/{code}(code=${inventory.productCode})}">
-                    <button type="button" class="commonBtn cancel-button" > 수정 취소</button>
+                    <button type="button" class="commonBtn cancel-button">목록으로</button>
                 </a>
-                    <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
             </div>
         </form>
     </div>
-<!--    <script type="text/javascript">-->
-<!--        function cancelUpdate() {-->
-<!--            var code = document.getElementById("productCode").value;-->
+    <!--    <script type="text/javascript">-->
+    <!--        function cancelUpdate() {-->
+    <!--            var code = document.getElementById("productCode").value;-->
 
-<!--            window.location.href = "/logistic/stock/warehouse/info/"+code;-->
-<!--        }-->
-<!--    </script>-->
+    <!--            window.location.href = "/logistic/stock/warehouse/info/"+code;-->
+    <!--        }-->
+    <!--    </script>-->
 </main>
 
 

@@ -14,79 +14,77 @@
     <h1>입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
-        <a th:href="@{/logistic/warehouseinbound/add}" >
-            <button class="commonBtn register-button" type="submit"> + 입고 등록 </button>
-        </a>
+            <a th:href="@{/logistic/warehouseinbound/add}">
+                <button class="commonBtn register-button" type="submit"> + 입고 등록</button>
+            </a>
         </div>
 
-            <table class="styled-table">
-                <label>
-                    <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox" onchange="handleCheckboxClick()">
-                    대량 입고
-                </label>
+        <table class="styled-table">
+            <label>
+                <input type="checkbox" id="bulkInboundCheckbox" name="bulkInboundCheckbox"
+                       onchange="handleCheckboxClick()">
+                대량 입고
+            </label>
+            <thead>
+            <tr>
+                <th>입고번호</th>
+                <th>입고일자</th>
+                <th>담당자</th>
+                <th>총입고수량</th>
+                <th>구분</th>
+            </tr>
+            </thead>
+            <tbody th:if="${bulkInboundCheckbox}">
+            <!-- 대량 입고 체크 시에만 해당 리스트를 출력 -->
+            <tr th:each="i:${recentHighTotalPriceInbounds}">
+                <td>
+                    <a th:text="${i.warehouseInboundId}"
+                       th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
+                        주문 Id
+                    </a>
+                </td>
+                <td th:text="${#temporals.format(i.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
+                <td th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
+                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                <td>비고</td>
+                <!-- 나머지 코드 -->
+            </tr>
+            </tbody>
+            <tbody th:unless="${bulkInboundCheckbox}">
+            <!-- 대량 입고 체크 안 한 경우에만 해당 리스트를 출력 -->
+            <tr th:each="i:${allIbounds}">
+                <td>
+                    <a th:text="${i.warehouseInboundId}"
+                       th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
+                        주문 Id
+                    </a>
+                </td>
 
+                <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
+                <td th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
+                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+                <td>비고</td>
+                <!-- 나머지 코드 -->
+            </tr>
+            </tbody>
+            <!--                <tbody>-->
+            <!--                <tr th:each="i:${allIbounds}">-->
 
-                <thead>
-                <tr>
-                    <th>입고번호</th><th>입고일자</th><th>담당자</th><th>총입고수량</th><th>구분</th>
-                </tr>
-                </thead>
-                <tbody th:if="${bulkInboundCheckbox}">
-                <!-- 대량 입고 체크 시에만 해당 리스트를 출력 -->
-                <tr th:each="i:${recentHighTotalPriceInbounds}">
-                    <td>
-                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
-                            주문 Id
-                        </a>
-                    </td>
-                    <td th:text="${#temporals.format(i.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
-                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
-                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
-                    <td >비고</td>
-                    <!-- 나머지 코드 -->
-                </tr>
-                </tbody>
-                <tbody th:unless="${bulkInboundCheckbox}">
-                <!-- 대량 입고 체크 안 한 경우에만 해당 리스트를 출력 -->
-                <tr th:each="i:${allIbounds}">
-                    <td>
-                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">
-                            주문 Id
-                        </a>
-                    </td>
+            <!--                    <td>-->
+            <!--                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">-->
+            <!--                            주문 Id-->
+            <!--                        </a>-->
+            <!--                    </td>-->
 
-                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>
-                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>
-                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>
-                    <td >비고</td>
-                    <!-- 나머지 코드 -->
-                </tr>
-                </tbody>
+            <!--                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>-->
+            <!--                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>-->
+            <!--                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>-->
+            <!--                    <td >비고</td>-->
+            <!--                </tr>-->
 
+            <!--                </tbody>-->
 
-
-
-<!--                <tbody>-->
-<!--                <tr th:each="i:${allIbounds}">-->
-
-<!--                    <td>-->
-<!--                        <a th:text="${i.warehouseInboundId}" th:href="@{/logistic/warehouseinbound/info/{Id}(Id=${i.warehouseInboundId})}">-->
-<!--                            주문 Id-->
-<!--                        </a>-->
-<!--                    </td>-->
-
-<!--                    <td th:text="${i.getWarehouseInboundDate()}">입고일자</td>-->
-<!--                    <td  th:text="${i.getEmployee().getEmpName()}">담당자 명</td>-->
-<!--                    <td  th:text="${i.getTotalQuantity()}">총 입고수량</td>-->
-<!--                    <td >비고</td>-->
-<!--                </tr>-->
-
-<!--                </tbody>-->
-
-            </table>
-
-
-
+        </table>
     </div>
     <script th:inline="javascript">
         function handleCheckboxClick() {

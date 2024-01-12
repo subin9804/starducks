@@ -62,7 +62,7 @@
                 <dl>
                     <dt>판매 가격 :</dt>
 <!--                    '원' 자를 붙이면 일직선이 안맞게 되서 일단 임시로 원은 지웠습니다. 나중에 수정해주세요.-->
-                    <dd><input style="width: 280px;" type="text" th:value="${p.productPrice}" readonly></dd>
+                    <dd><input style="width: 280px;" type="text" th:value="${#numbers.formatDecimal(p.productPrice, 0, 'COMMA', 0, 'POINT')}" readonly></dd> 원
                 </dl>
                 <br>
             </div>
@@ -70,24 +70,24 @@
             <div style="flex: 1;">
                 <dl>
                     <dt>단위 :</dt>
-                    <dd><input type="text" th:value="${p.productUnit}" readonly></dd>
+                    <dd><input style="width: 280px;" type="text" th:value="${p.productUnit}" readonly></dd>
                 </dl>
                 <br>
 
                 <dl>
                     <dt>공급 업체 :</dt>
-                    <dd><input type="text" th:value="${p.getVendor().getVendorName()}" readonly></dd>
+                    <dd><input style="width: 280px;" type="text" th:value="${p.getVendor().getVendorName()}" readonly></dd>
                 </dl>
                 <br>
 
                 <dl>
                     <dt>전화 번호 :</dt>
-                    <dd><input type="text" th:value="${p.getVendor().getVendorTelephone()}" readonly></dd>
+                    <dd><input style="width: 280px;" type="text" th:value="${p.getVendor().getVendorTelephone()}" readonly></dd>
                 </dl>
                 <br>
                 <dl>
                     <dt>거래 여부 :</dt>
-                    <dd><input type="text" th:value="${p.productSelling}" readonly></dd>
+                    <dd><input style="width: 280px;" type="text" th:value="${p.productSelling}" readonly></dd>
                 </dl>
             </div>
         </div>

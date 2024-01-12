@@ -4,7 +4,6 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
@@ -40,7 +39,6 @@
             </a>
         </div>
 
-
         <table class="list-table">
             <thead>
             <tr>
@@ -59,11 +57,10 @@
                 <td th:text="${p.productCode}">p.productCode</td>
                 <td th:text="${p.productName}">p.name</td>
                 <td th:text="${p.productCategory}">카테고리</td>
-                <td th:text="${p.productCnt}">창고 보유재고</td>
+<!--                <td th:text="${p.productCnt}">창고 보유 재고</td>-->
+                <td th:text="${#numbers.formatDecimal(p.productCnt, 0, 'COMMA', 0, 'POINT')}">창고 보유 재고</td>
                 <td th:text="${p.productUnit}">p.unit</td>
-                <td>
-                    <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>
-                </td>
+                <td th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</td>
             </tr>
             </tbody>
         </table>
@@ -95,10 +92,8 @@
                th:href="@{/logistic/stock/warehouse/list(page =${nowPage})}"> > </a>
 
 <!--            마지막 페이지 이동-->
-
             <a th:href="@{/logistic/stock/warehouse/list(page =${totalPages -1})}"> >> </a>
         </div>
     </div>
-
 </main>
 </html>
