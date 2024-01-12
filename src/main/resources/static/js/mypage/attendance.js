@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    //로그인한 사용자 아이디
+    var empId = document.getElementById("empId").innerText;
+
+    fetchDailyAttendance(empId)
+        .then(datas => {
+            datas.map(data => {
+            console.log("!!!!!!!!!" + JSON.stringify(data.workDate));
+                let workDate = $("<td>").text(data.workDate)
+                let startTime = $("<td>").text(timeFormat(data.startTime))
+                let endTime = $("<td>").text(timeFormat(data.endTime))
+                let vac = $("<td>").text('휴가')
+                let absence = $("<td>").text('결근')
+
+                let tr = $("<tr>").append(workDate).append(startTime).append(endTime);
+                if (data.isVacation) {
+                    tr.append(vac)
+                } else if(startTime == null && endTime == null) {
+                    tr.append(absence)
+                } else {
+                    tr.append($("<td>").text(''))
+                }
+                $("#attendRecord").append(tr);
+            })
+        })
+        .catch(error => {
+            console.error("Error fetching daily attendance:", error);
+        });
+
+
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         height: 800,
@@ -28,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         events: function (fetchInfo, successCallback, failureCallback) {
-            var empId = document.getElementById("empId").innerText;
+
             console.log(empId);
 
             fetchDailyAttendance(empId).then(function (data) {
@@ -50,9 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 failureCallback(error);
             });
         },
-
     });
     calendar.render();
+
+
 });
 
 function fetchDailyAttendance(empId) {

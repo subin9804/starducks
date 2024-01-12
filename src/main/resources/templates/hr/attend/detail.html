@@ -7,40 +7,54 @@
 
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage/attendance.css}" href="/static/mypage/attendance.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/hr/style.css}">
     <script th:src="@{/js/mypage/attendance.js}" src="/mypage/script.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </th:block>
 
 <main layout:fragment="content">
     <h1 class="page-title" style="margin-bottom: 50px;">| 근태 관리</h1>
     <p th:text="${employee.empId}" id="empId" class="d-none"></p>
-    <div class="calendar-side">
-        <div class="page-shadow" th:replace="~{hr/attend/_profile::profile}"></div>
+    <div class="d-flex">
+        <div class="calendar-side">
+            <div class="page-shadow" th:replace="~{hr/attend/_profile::profile}"></div>
 
-        <div class="attd-sum-box page-shadow">
-            <h3 class="sum-month"><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
+            <div class="attd-sum-box page-shadow">
+                <h3 class="sum-month"><span th:text="${#dates.format(#dates.createToday(), 'yyyy년 MM월')}"></span></h3>
 
-            <div class="attd-sum-wrap">
-                <div>근무</div>
-                <div class="attd-sum-num-box" th:text="${workDays}">18</div>
-            </div>
-            <div class="attd-sum-wrap">
-                <div>지각</div>
-                <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
-            </div>
-            <div class="attd-sum-wrap">
-                <div>결근</div>
-                <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
-            </div>
-            <div class="attd-sum-wrap">
-                <div>연차</div>
-                <div class="attd-sum-num-box">12/15</div>
+                <div class="attd-sum-wrap">
+                    <div>근무</div>
+                    <div class="attd-sum-num-box" th:text="${workDays}">18</div>
+                </div>
+                <div class="attd-sum-wrap">
+                    <div>지각</div>
+                    <div class="attd-sum-num-box" th:text="${lateDays}">0</div>
+                </div>
+                <div class="attd-sum-wrap">
+                    <div>결근</div>
+                    <div class="attd-sum-num-box" th:text="${absentDays}">0</div>
+                </div>
+                <div class="attd-sum-wrap">
+                    <div>연차</div>
+                    <div class="attd-sum-num-box">12/15</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="calendar page-border">
-        <div id='calendar'></div>
+        <div>
+            <table style="min-width: 700px">
+                <thead>
+                <tr>
+                    <th>날짜</th>
+
+                    <th>출근</th>
+                    <th>퇴근</th>
+
+                    <th>비고</th>
+                </tr>
+                </thead>
+                <tbody id="attendRecord"></tbody>
+            </table>
+        </div>
     </div>
 </main>
 </html>

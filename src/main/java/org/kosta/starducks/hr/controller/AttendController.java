@@ -62,6 +62,12 @@ public class AttendController {
         return "hr/attend/index";
     }
 
+    /**
+     * 근태관리 상세페이지
+     * @param empId
+     * @param model
+     * @return
+     */
     @GetMapping("/{empId}")
     private String details(@PathVariable("empId") Long empId, Model model) {
 
