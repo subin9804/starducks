@@ -5,10 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.jdt.internal.compiler.problem.AbortType;
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.kosta.starducks.document.entity.DocForm;
 import org.kosta.starducks.document.entity.Document;
 import org.kosta.starducks.document.entity.OrderItem;
 import org.kosta.starducks.document.repository.DocFormRepository;
@@ -22,7 +18,6 @@ import org.kosta.starducks.generalAffairs.service.VendorService;
 import org.kosta.starducks.hr.entity.Employee;
 import org.kosta.starducks.hr.repository.EmpRepository;
 import org.kosta.starducks.hr.service.EmpService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/document/createDoc")
