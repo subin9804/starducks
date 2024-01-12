@@ -42,7 +42,7 @@
                     <dl>
                         <dt>업종</dt>
                         <dd>
-                            <select style="width: 280px;" id="businessSector" name="businessSector" class="form-select">
+                            <select style="width: 280px;" id="businessSector" name="businessSector">
                                 <option th:each="sector : ${businessSectors}" th:value="${sector}"
                                         th:text="${sector.description}"
                                         th:selected="${vendor.vendorBusinessSector == sector}"></option>
@@ -83,10 +83,10 @@
                         <div th:replace="~{fina/_vendorAddNo::searchAddr}"></div>
                     </dd>
                 </dl>
-                <dl>
+                <dl style="display: flex">
                     <dt>계약 여부</dt>
                     <dd>
-                        <select style="width: 280px;" id="contractStatus" name="contractStatus" class="form-select">
+                        <select style="width: 280px;" id="contractStatus" name="contractStatus">
                             <option th:each="option : ${contractStatus}" th:value="${option}"
                                     th:text="${option.displayName}"
                                     th:selected="${vendor.contractStatus == option}"></option>
@@ -95,15 +95,15 @@
                 </dl>
             </div>
         </div>
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <button class="commonBtn register-button" type="submit">저장
-        </button>
-        <button class="commonBtn cancel-button" type="button"
-                onclick="confirmCancel()">
-            이전
-        </button>
-        </form>
-    </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <button class="commonBtn register-button" type="submit">저장
+            </button>
+            <button class="commonBtn cancel-button" type="button"
+                    onclick="confirmCancel()">
+                이전
+            </button>
+            </form>
+        </div>
     </div>
 
     <script>

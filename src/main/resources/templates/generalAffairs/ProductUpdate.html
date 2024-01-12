@@ -45,7 +45,7 @@
                         <dl>
                             <dt><label for="productCategory">카테고리:</label></dt>
                             <dd>
-                                <select id="productCategory" name="productCategory">
+                                <select style="width: 280px;" id="productCategory" name="productCategory">
                                     <option th:each="category : ${productCategories}"
                                             th:value="${category}" th:text="${category}"
                                             th:selected="${category == product.productCategory}">
@@ -69,7 +69,7 @@
                     <dl>
                         <dt><label for="productUnit">단위:</label></dt>
                         <dd>
-                            <select id="productUnit" name="productUnit">
+                            <select style="width: 280px;" id="productUnit" name="productUnit">
                                 <option th:each="unit : ${productUnit}"
                                         th:value="${unit}" th:text="${unit}"
                                         th:selected="${unit == product.productUnit}"></option>

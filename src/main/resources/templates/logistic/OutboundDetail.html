@@ -45,19 +45,19 @@
                 <td th:text="${o.getProduct().productCode}">품목 code</td>
                 <td th:text="${o.getProduct().productName}">품목 이름</td>
                 <td th:text="${o.getProduct().getVendor().getVendorName()}">거래처</td>
-                <td th:text="${o.getProduct().productPrice}">거래단가</td>
-                <td th:text="${o.getOutboundQuantity()}">출고수량</td>
+                <td th:text="${#numbers.formatDecimal(o.getProduct().productPrice, 0, 'COMMA', 0, 'POINT')}">거래단가</td>
+                <td th:text="${#numbers.formatDecimal(o.getOutboundQuantity(), 0, 'COMMA', 0, 'POINT')}">출고수량</td>
                 <td th:text="${o.getProduct().productUnit}">단위</td>
-                <td th:text="${o.getOutboundPrice()}">출고금액</td>
+                <td th:text="${#numbers.formatDecimal(o.getOutboundPrice(), 0, 'COMMA', 0, 'POINT')}">출고금액</td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
                 <td th:text="거래합계"></td>
                 <td colspan="3"></td>
-                <td th:text="${outbound.getTotalQuantity()}">Total Quantity</td>
+                <td th:text="${#numbers.formatDecimal(outbound.getTotalQuantity(), 0, 'COMMA', 0, 'POINT')}">Total Quantity</td>
                 <td></td>
-                <td th:text="${outbound.getTotalPrice()}">Total Price</td>
+                <td th:text="${#numbers.formatDecimal(outbound.getTotalPrice(), 0, 'COMMA', 0, 'POINT') + ' 원'}">Total Price</td>
             </tr>
             </tfoot>
         </table>

@@ -65,10 +65,17 @@ input[type="date"],
 input[type="datetime-local"] {
     border-radius: 10px;
     border: 1px solid #6B4D27;
-    height: 30px;
+    height: 38px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: 10px;
     display: block;
+}
+
+input[type="number"] {
+    border-radius: 10px;
+    border: 1px solid #6B4D27;
+    height: 38px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 select {
@@ -76,8 +83,6 @@ select {
     border: 1px solid #6B4D27;
     height: 38px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 10px;
-    display: block;
 }
 
 textarea {

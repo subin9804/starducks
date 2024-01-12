@@ -33,20 +33,21 @@
                           onsubmit="return confirmAdd()">
                         <dl>
                             <dt><label for="storeName" class="col-form-label">지점명</label></dt>
-                            <dd><input style="width: 280px;" type="text" id="storeName" name="storeName" placeholder="지점명"
-                                       class="form-control">
+                            <dd><input style="width: 280px;" type="text" id="storeName" name="storeName"
+                                       placeholder="지점명">
                             </dd>
                         </dl>
 
                         <dl>
                             <dt><label for="businessNum">사업자 번호</label></dt>
-                            <dd><input style="width: 280px;" class="form-control" type="text" id="businessNum" name="businessNum"
+                            <dd><input style="width: 280px;" class="form-control" type="text" id="businessNum"
+                                       name="businessNum"
                                        placeholder="숫자만 입력해주세요"></dd>
                         </dl>
 
                         <dl>
-                            <dt><label for="storeManager" class="col-form-label">지점장</label></dt>
-                            <dd><select style="width: 280px;" id="storeManager" name="storeManager" class="form-select">
+                            <dt><label for="storeManager">지점장</label></dt>
+                            <dd><select style="width: 280px; height: 41px;" id="storeManager" name="storeManager">
                                 <option th:each="sm :${storeManager}"
                                         th:value="${sm}" th:text="${sm}"></option>
                             </select></dd>
@@ -65,9 +66,10 @@
                             <div th:replace="~{fina/_storeAddNo::searchAddress}"></div>
                         </dd>
                     </dl>
-                    <dl>
+                    <dl style="display: flex">
                         <dt><label for="storeOperationalYn">운영여부</label></dt>
-                        <dd><select style="width: 280px;" id="storeOperationalYn" name="storeOperationalYn" class="form-select">
+                        <dd><select style="width: 280px;" id="storeOperationalYn"
+                                    name="storeOperationalYn">
                             <option value="storeOperationalY">운영</option>
                             <option value="storeOperationalN">미운영</option>
                         </select></dd>

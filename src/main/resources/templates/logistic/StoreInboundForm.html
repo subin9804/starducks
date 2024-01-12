@@ -10,8 +10,16 @@
     <script th:src="@{/js/logistic/store/script.js}"></script>
 </th:block>
 
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
+
 <main layout:fragment="content">
-    <h1>입고 등록</h1>
+    <h1 class="page-title" style="margin-bottom: 50px;">| 매장 입고 정보 등록</h1>
     <div class="content">
         <form id="addForm"  action="/logistic/inbound/store/add" method="post">
 
@@ -56,8 +64,6 @@
 
 <!--            <p>가격 * 수량 <span id="result"></span></p>-->
             <button type="button" id="addBtn">추가</button>
-
-
         </form>
 
 <!--        <ul id="contentList">-->

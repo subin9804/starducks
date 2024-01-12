@@ -40,8 +40,7 @@
                         <dl>
                             <dt>업종</dt>
                             <dd>
-                                <select style="width: 280px;" id="businessSector" name="businessSector"
-                                        class="form-select">
+                                <select style="width: 280px;" id="businessSector" name="businessSector">
                                     <option th:each="sector : ${businessSectors}"
                                             th:value="${sector.name()}"
                                             th:text="${sector.description}">
@@ -81,18 +80,6 @@
                 </div>
 
                 <div style="flex: 1;">
-                    <!--                    <dl>-->
-                    <!--                        <dt><label for="storeAddr">주소</label></dt>-->
-                    <!--                        <dd><input style="width: 280px;" type="text" id="storeAddr" name="storeAddr"-->
-                    <!--                                   placeholder="주소를 입력해주세요"></dd>-->
-                    <!--                    </dl>-->
-
-                    <!--                    <dl>-->
-                    <!--                        <dt><label for="storeDetailAddr">상세주소</label></dt>-->
-                    <!--                        <dd><input style="width: 280px;" type="text" id="storeDetailAddr" name="storeDetailAddr"-->
-                    <!--                                   placeholder="상세주소를 입력해주세요">-->
-                    <!--                        </dd>-->
-                    <!--                    </dl>-->
                     <dl style="display: flex">
                         <dt>주소</dt>
                         <dd>
@@ -100,11 +87,10 @@
                         </dd>
                     </dl>
 
-                    <dl>
+                    <dl style="display: flex">
                         <dt>거래여부</dt>
                         <dd>
-                            <select style="width: 280px;" id="storeOperationalYn" name="contractStatus"
-                                    class="form-select">
+                            <select style="width: 280px;" id="storeOperationalYn" name="contractStatus">
                                 <option th:each="selector : ${contractStatus}"
                                         th:value="${selector.name()}"
                                         th:text="${selector.displayName}"

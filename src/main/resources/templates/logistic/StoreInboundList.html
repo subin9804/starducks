@@ -22,11 +22,9 @@
     <h1 class="page-title" style="margin-bottom: 50px;">| 매장 입고 목록</h1>
     <div class="content">
         <div class="right-top-btn">
-
             <button class="commonBtn register-button" type="submit" onclick="handleInboundRegistration()"> 입고 등록
             </button>
             <input type="hidden" th:value="${employee.getPosition()}" id="role">
-
         </div>
         <div class="middle-btn">
             <a th:href="@{/logistic/inbound/warehouse/list}">
@@ -51,25 +49,23 @@
 
             <thead>
             <tr>
-                <th>입고번호</th>
-                <th>입고일자</th>
-                <th>입고지점</th>
-                <th>총입고수량</th>
+                <th>입고 번호</th>
+                <th>입고 일자</th>
+                <th>입고 지점</th>
+                <th>총 입고 수량</th>
                 <th>구분</th>
             </tr>
             </thead>
             <tbody th:fragment="inboundTableBody" id="inboundTableBody">
-            <tr th:each="i:${inbounds}">
 
-                <td>
-                    <a th:text="${i.getStoreInboundId()}"
-                       th:href="@{/logistic/inbound/store/info/{Id}(Id=${i.getStoreInboundId()})}">
-                        주문 번호
-                    </a>
-                </td>
-                <td th:text="${#temporals.format(i.getStoreInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고일자</td>
-                <td th:text="${i.getStore().getStoreName()}">지점 명</td>
-                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>
+            <tr th:each="i:${inbounds}"
+                th:onclick="'location.href=\'' + @{/logistic/inbound/store/info/{Id}(Id=${i.getStoreInboundId()})} + '\''"
+                style="cursor:pointer">
+                <td th:text="${i.getStoreInboundId()}">주문 번호</td>
+                <td th:text="${#temporals.format(i.getStoreInboundDate(), 'yyyy.MM.dd a hh:mm')}">입고 일자</td>
+                <td th:text="${i.getStore().getStoreName()}">지점명</td>
+                <!--                <td th:text="${i.getTotalQuantity()}">총 입고수량</td>-->
+                <td th:text="${#numbers.formatDecimal(i.getTotalQuantity(), 0, 'COMMA', 0, 'POINT')}">총 입고 수량</td>
                 <td>비고</td>
             </tr>
 
@@ -95,7 +91,7 @@
                    th:text="${page}"></a>
                 <!--        param ->쿼리 스트링 중에 특정키워드 가져와서 넘겨줌-->
 
-                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}" ></strong>
+                <strong class="current-page" th:if="${page == nowPage}" th:text="${page}"></strong>
 
             </th:block>
 
