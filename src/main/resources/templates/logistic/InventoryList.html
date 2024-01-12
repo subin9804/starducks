@@ -57,11 +57,10 @@
                 <td th:text="${p.productCode}">p.productCode</td>
                 <td th:text="${p.productName}">p.name</td>
                 <td th:text="${p.productCategory}">카테고리</td>
-                <td th:text="${p.productCnt}">창고 보유재고</td>
+<!--                <td th:text="${p.productCnt}">창고 보유 재고</td>-->
+                <td th:text="${#numbers.formatDecimal(p.productCnt, 0, 'COMMA', 0, 'POINT')}">창고 보유 재고</td>
                 <td th:text="${p.productUnit}">p.unit</td>
-                <td>
-                    <span th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</span>
-                </td>
+                <td th:text="${p.productSelling} ? '판매 중' : '판매 중지'">거래 상태</td>
             </tr>
             </tbody>
         </table>

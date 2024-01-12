@@ -45,7 +45,8 @@
                     </tr>
                     <tr>
                         <th>품목 가격</th>
-                        <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>
+<!--                        <td th:text="${inventory.getProduct().productPrice}">p.productCode</td>-->
+                        <td th:text="${#numbers.formatDecimal(inventory.getProduct().productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
                     </tr>
                     <tr>
                         <th>품목 단위</th>
@@ -62,7 +63,7 @@
                     <tr>
                         <th>매장 재고 수량</th>
                         <td>
-                        <input type="number" th:value="${inventory.getInventoryCnt()}" name="inventoryCnt">
+                        <input style="text-align: center; color: #b81414;" type="number" th:value="${inventory.getInventoryCnt()}" name="inventoryCnt">
                         </td>
                     </tr>
                     <tr>
@@ -72,15 +73,13 @@
                     </tr>
                     </tbody>
                 </table>
-
-
             </div>
 
             <div class="bottom-button">
+                <button type="submit" class="commonBtn edit-button"> 수정</button>
                 <a th:href="@{/logistic/stock/store/info/{code}/{no}(code=${inventory.getProduct().productCode},no=${inventory.getStore().getStoreNo()})}">
-                    <button type="button" class="commonBtn cancel-button" > 수정 취소</button>
+                    <button type="button" class="commonBtn cancel-button" >목록</button>
                 </a>
-                    <button type="submit" class="commonBtn edit-button"> 수정 완료</button>
             </div>
         </form>
     </div>

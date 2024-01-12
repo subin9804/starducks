@@ -63,7 +63,7 @@
                 <a th:text="${i.getProduct()?.productName}" th:href="@{/logistic/stock/store/info/{productCode}/{storeNo}(productCode=${i.getProduct()?.productCode},storeNo=${i.getStore()?.storeNo})}">p.name</a>
             </td>
             <td th:text="${i.getProduct().getProductCategory()}">카테고리</td>
-            <td th:text="${i.getInventoryCnt()}">지점 보유재고</td>
+            <td th:text="${#numbers.formatDecimal(i.getInventoryCnt, 0, 'COMMA', 0, 'POINT')}">지점 재고</td>
             <td th:text="${i.getProduct().getProductUnit()}">단위</td>
             <td th:text="${i.getStore().getStoreName()}">지점 이름</td>
 

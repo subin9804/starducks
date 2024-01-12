@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <th>품목 가격</th>
-                        <td th:text="${inventory.productPrice}">p.productCode</td>
+                        <td th:text="${#numbers.formatDecimal(inventory.productPrice, 0, 'COMMA', 0, 'POINT') + ' 원'}"></td>
                     </tr>
                     <tr>
                         <th>품목 단위</th>
@@ -51,7 +51,7 @@
                         <th>창고 재고 수량</th>
                         <!--                    <input type="number" th:value="${product.productPrice}" name="productPrice" >-->
                         <td>
-                            <input style="text-align: center" type="number" th:value="${inventory.productCnt}"
+                            <input style="text-align: center; color: #b81414;" type="number" th:value="${inventory.productCnt}"
                                    name="productCnt">
                         </td>
                     </tr>
