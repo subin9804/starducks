@@ -56,13 +56,13 @@
                 </tr>
                 <tr>
                     <th>최근 입고일</th>
-                    <td th:if="${inventory.getModifiedAt() != null}" th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
-                    <td th:if="${inventory.getModifiedAt() == null}" th:text="${#temporals.format(inventory.getCreatedAt(),'yyyy.MM.dd a hh:mm')}"></td>
-
+                    <td th:if="${inventory.getModifiedAt() != null}"
+                        th:text="${#temporals.format(inventory.getModifiedAt(),'yyyy.MM.dd a hh:mm')}"></td>
+                    <td th:if="${inventory.getModifiedAt() == null}"
+                        th:text="${#temporals.format(inventory.getCreatedAt(),'yyyy.MM.dd a hh:mm')}"></td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
 
         <div class="bottom-button">
@@ -75,6 +75,4 @@
         </div>
     </div>
 </main>
-
-
 </html>

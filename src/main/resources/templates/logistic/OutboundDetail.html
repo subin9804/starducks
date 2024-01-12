@@ -4,16 +4,22 @@
       layout:decorate="~{layouts/main}">
 
 <!--title-->
-
 <th:block layout:fragment="addMore">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logistic/style.css}">
     <script th:src="@{/js/logistic/warehouse/script.js}"></script>
 </th:block>
 
-<main layout:fragment="content">
-    <h1>출고 내역 상세</h1>
-    <div class="content">
+<style>
+    /* 상단의 페이지 제목 */
+    .page-title {
+        text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.25);
+        color: #6B4D27;
+    }
+</style>
 
+<main layout:fragment="content">
+    <h1 class="page-title" style="margin-bottom: 50px;">| 출고 내역 상세 조회</h1>
+    <div class="content">
         <div class="ipgodetail">
             출고 번호<input type="text" th:value="${outbound.warehouseoutboundId}" readonly>
             <br>
@@ -22,25 +28,27 @@
             출고 일자<input type="text" th:value="${#temporals.format(outbound.getWarehouseOutboundDate(), 'yyyy.MM.dd a hh:mm')}" readonly>
             <br>
         </div>
-
         <table class="detail-table">
             <thead>
             <tr>
-                <th>품목Code</th><th>품목 이름</th><th>거래처</th><th>거래단가</th><th>출고수량</th><th>단위</th><th>출고금액</th>
+                <th>품목 Code</th>
+                <th>품목 이름</th>
+                <th>거래처</th>
+                <th>거래단가</th>
+                <th>출고수량</th>
+                <th>단위</th>
+                <th>출고금액</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="o:${outbound.getOutboundProducts()}">
-
-                <td th:text="${o.getProduct().productCode}">품목code</td>
+                <td th:text="${o.getProduct().productCode}">품목 code</td>
                 <td th:text="${o.getProduct().productName}">품목 이름</td>
                 <td th:text="${o.getProduct().getVendor().getVendorName()}">거래처</td>
                 <td th:text="${o.getProduct().productPrice}">거래단가</td>
-
                 <td th:text="${o.getOutboundQuantity()}">출고수량</td>
                 <td th:text="${o.getProduct().productUnit}">단위</td>
                 <td th:text="${o.getOutboundPrice()}">출고금액</td>
-
             </tr>
             </tbody>
             <tfoot>
@@ -53,10 +61,6 @@
             </tr>
             </tfoot>
         </table>
-
-
     </div>
 </main>
-
-
 </html>

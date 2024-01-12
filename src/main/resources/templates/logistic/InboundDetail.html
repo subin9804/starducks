@@ -25,28 +25,33 @@
             <br>
             입고 등록인<input type="text" th:value="${inbound.getEmployee().getEmpName()}" readonly>
             <br>
-            입고 일자<input type="text" th:value="${#temporals.format(inbound.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}" readonly>
+            입고 일자<input type="text"
+                        th:value="${#temporals.format(inbound.getWarehouseInboundDate(), 'yyyy.MM.dd a hh:mm')}"
+                        readonly>
             <br>
         </div>
 
         <table class="detail-table">
             <thead>
             <tr>
-                <th>품목Code</th><th>품목 이름</th><th>거래처</th><th>거래단가</th><th>입고수량</th><th>단위</th><th>입고금액</th>
+                <th>품목Code</th>
+                <th>품목 이름</th>
+                <th>거래처</th>
+                <th>거래단가</th>
+                <th>입고수량</th>
+                <th>단위</th>
+                <th>입고금액</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="i:${inbound.getInboundProducts()}">
-
                 <td th:text="${i.getProduct().productCode}">품목code</td>
                 <td th:text="${i.getProduct().productName}">품목 이름</td>
                 <td th:text="${i.getProduct().getVendor().getVendorName()}">거래처</td>
                 <td th:text="${i.getProduct().productPrice}">거래단가</td>
-
                 <td th:text="${i.getInboundQuantity()}">입고수량</td>
                 <td th:text="${i.getProduct().productUnit}">단위</td>
                 <td th:text="${i.getInboundPrice()}">입고금액</td>
-
             </tr>
             </tbody>
             <tfoot>
@@ -59,10 +64,6 @@
             </tr>
             </tfoot>
         </table>
-
-
     </div>
 </main>
-
-
 </html>
