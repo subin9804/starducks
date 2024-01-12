@@ -156,8 +156,8 @@
 
 /*타임리프와 JS연동된 form 부분에 있는 표에 대한 스타일 적용*/
 #contentTable {
-    width: 80%;
-    margin: 100px auto;
+    width: 100%;
+    margin: 70px auto;
     border-radius: 20px;
     background-color: #6B4D27;
     color: #FFF;
@@ -169,11 +169,50 @@
     border-top: 1px solid #FFF;
 }
 
+#addForm{
+    width: 80%;
+    margin: 0px auto;
+
+}
+
+#titleTable{
+    width: 100%;
+
+    margin-top: 90px;
+    margin-bottom: 90px;
+
+    border-top: 1px solid #6B4D27;
+    border-bottom: 1px solid #6B4D27;
+}
+
+#titleTable th, #titleTable td {
+    padding: 12px 15px;
+    border-top: 1px solid #6B4D27;
+}
+
+#titleTable td.title{
+    border-right: 1px solid #6B4D27;
+    background-color: #f6f6f6;
+}
+
+
+
+.submitBtn{
+    display: block;
+    margin: 20px auto;
+    width: 120px;
+    background: #4A85F6;
+    color: #FFFFFF;
+}
+.submitBtn:hover {
+    background-color: #6a4af6;
+}
+
 
 .right-top-btn {
 
     width: 100%;
-    margin-top: 40px;
+    margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
     justify-content: flex-end;
