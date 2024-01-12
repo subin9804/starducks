@@ -64,8 +64,8 @@
                 <p th:if="*{position.toString() == 'ROLE_BOSS'}">사장</p>
                 <p th:if="*{position.toString() == 'ROLE_STOREMANAGER'}">점장</p>
             </td>
-            <td th:text="${attend.get(emp.empId).getStartTime()}"></td>
-            <td></td>
+            <td th:text="${#temporals.format(attend[emp.empId]?.startTime, 'HH:mm')}"></td>
+            <td th:text="${#temporals.format(attend[emp.empId]?.endTime, 'HH:mm')}"></td>
             <td th:text="*{empTel}"></td>
             <td th:text="*{email}"></td>
         </tr>

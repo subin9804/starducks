@@ -43,14 +43,14 @@ public class AttendController {
         int startPage= Math.max(page-4, 1);
         int endPage= Math.min(page+5, emps.getTotalPages());
 
-//        페이지네이션
+        // 페이지네이션
         model.addAttribute("nowPage", page);
         model.addAttribute("employees", emps.getContent());
         model.addAttribute("totalPages", emps.getTotalPages());
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage",endPage);
 
-//        오늘 근태
+        // 오늘 근태
         Map<Long, Attendance> attendanceMap = new HashMap<Long, Attendance>();
         for(Employee emp : emps) {
             Attendance attendanceForToday = attendService.getAttendanceForToday(emp.getEmpId());
