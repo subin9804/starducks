@@ -36,3 +36,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### IntelliJ IDEA ###
+application-local.properties
+application-aws.properties
