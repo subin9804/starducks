@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  ACTIONS_RUNNER_DEBUG: true
+  ACTIONS_STEP_DEBUG: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
