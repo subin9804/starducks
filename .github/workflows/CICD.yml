@@ -58,7 +58,19 @@ jobs:
         port: 22
         source: "./build/libs/starducks-0.0.1-SNAPSHOT.jar"
         target: "/home/ubuntu/"
-        
+
+    - name: Debugging - Check JAR file on EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          echo "Listing files in /home/ubuntu/ to check JAR file"
+          ls -l /home/ubuntu/
+          echo "Checking if restart-app.sh exists and is executable"
+          ls -l /home/ubuntu/restart-app.sh
+
     - name: Restart Application on EC2
       uses: appleboy/ssh-action@master
       with:
