@@ -30,6 +30,10 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build -x test
 
+    - name: List built JAR file
+      run: ls -l ./build/libs/
+
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
