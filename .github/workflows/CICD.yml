@@ -28,7 +28,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew clean build -x test
+      run: ./gradlew build -x test
 
   deploy:
     needs: build
@@ -52,7 +52,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-        source: "build/libs/starducks-0.0.1-SNAPSHOT.jar"
+        source: "./build/libs/starducks-0.0.1-SNAPSHOT.jar"
         target: "/home/ubuntu/"
         
     - name: Restart Application on EC2
