@@ -36,16 +36,32 @@ jobs:
           source: "./build/libs/*.jar" 
           target: "/home/ubuntu/starducksERP/build/libs"
 
-      - name: SSH into EC2 and restart application
+
+      - name: Restart Application on EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }} 
-          username: ${{ secrets.USERNAME }} 
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /path/on/ec2/
-            sudo systemctl stop your-app.service # 서비스 이름에 .service 추가
-            mv your-app.jar your-app-old.jar # 백업 파일명 변경
-            mv *.jar your-app.jar # 새로운 JAR 파일로 변경, 와일드카드 사용으로 변경
-            sudo systemctl start your-app.service # 서비스 이름에 .service 추가
+            sudo systemctl stop your-app.service
+            mv /path/on/ec2/your-app.jar /path/on/ec2/your-app-old.jar
+            cp /home/ubuntu/your-app-new.jar /path/on/ec2/your-app.jar
+            sudo systemctl start your-app.service
+
+      
+
+      # - name: SSH into EC2 and restart application
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }} 
+      #     username: ${{ secrets.USERNAME }} 
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: 22
+      #     script: |
+      #       cd /path/on/ec2/
+      #       sudo systemctl stop your-app.service # 서비스 이름에 .service 추가
+      #       mv your-app.jar your-app-old.jar # 백업 파일명 변경
+      #       mv *.jar your-app.jar # 새로운 JAR 파일로 변경, 와일드카드 사용으로 변경
+      #       sudo systemctl start your-app.service # 서비스 이름에 .service 추가
