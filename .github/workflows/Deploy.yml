@@ -45,10 +45,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            sudo systemctl stop your-app.service
-            mv /path/on/ec2/your-app.jar /path/on/ec2/your-app-old.jar
-            cp /home/ubuntu/your-app-new.jar /path/on/ec2/your-app.jar
-            sudo systemctl start your-app.service
+            # 기존 Java 애플리케이션 프로세스 종료
+            pkill -f 'starducks-0.0.1-SNAPSHOT.jar'
+
+            # 새 애플리케이션 JAR 파일로 애플리케이션 시작
+            nohup java -jar /home/ubuntu/starducks-0.0.1-SNAPSHOT.jar > /home/ubuntu/starducksERP.log 2>&1 &
 
       
 
