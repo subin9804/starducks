@@ -54,7 +54,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Copy JAR to EC2
-      uses: appleboy/scp-action@v1.0.3 
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
@@ -64,7 +64,7 @@ jobs:
         target: "/home/ubuntu/"
 
     - name: Restart Application on EC2
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
