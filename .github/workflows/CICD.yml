@@ -61,7 +61,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         source: "./build/libs/starducks-0.0.1-SNAPSHOT.jar"
-        target: "/home/ubuntu/"
+        target: "/home/ubuntu/starducksERP/build/libs"
 
 
     - name: Restart Application on EC2
