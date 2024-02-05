@@ -13,9 +13,9 @@ jobs:
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.1.4        
         with:
-          host: ${{ secrets.HOST }}          
+          host: ${{ secrets.EC2_HOST }}          
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           timeout: 40s  # 30초 기본        
           script: |
