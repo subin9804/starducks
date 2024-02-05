@@ -49,7 +49,7 @@ jobs:
             pkill -f 'starducks-0.0.1-SNAPSHOT.jar'
 
             # 새 애플리케이션 JAR 파일로 애플리케이션 시작
-            nohup java -jar /home/ubuntu/starducks-0.0.1-SNAPSHOT.jar > /home/ubuntu/starducksERP.log 2>&1 &
+            nohup java -jar /home/ubuntu/starducksERP/build/libs/starducks-0.0.1-SNAPSHOT.jar > /home/ubuntu/starducksERP.log 2>&1 &
 
       
 
