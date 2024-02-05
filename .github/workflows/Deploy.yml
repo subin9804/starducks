@@ -24,8 +24,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew clean build -x test
-        # working-directory: ./path/to/your/project # Gradle 프로젝트 경로 설정
-
+   
       - name: Copy JAR file to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -33,7 +32,7 @@ jobs:
           username: ${{ secrets.USERNAME }} 
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "./build/libs/*.jar" 
+          source: "/home/ubuntu/starducksERP/build/libs/build/libs/*.jar"
           target: "/home/ubuntu/starducksERP/build/libs"
 
 
@@ -59,7 +58,7 @@ jobs:
       #     key: ${{ secrets.SSH_PRIVATE_KEY }}
       #     port: 22
       #     script: |
-      #       cd /path/on/ec2/
+      #       cd 
       #       sudo systemctl stop your-app.service # 서비스 이름에 .service 추가
       #       mv your-app.jar your-app-old.jar # 백업 파일명 변경
       #       mv *.jar your-app.jar # 새로운 JAR 파일로 변경, 와일드카드 사용으로 변경
