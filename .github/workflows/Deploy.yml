@@ -24,8 +24,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew clean build -x test
-        working-directory: ./starducksERP  
-   
+        
       - name: Copy JAR file to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
