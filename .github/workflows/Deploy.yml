@@ -45,11 +45,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # 기존 Java 애플리케이션 프로세스 종료
+            cd starducksERP
             pkill -f 'starducks-0.0.1-SNAPSHOT.jar'
-
-            # 새 애플리케이션 JAR 파일로 애플리케이션 시작
-            nohup java -jar /home/ubuntu/starducksERP/build/libs/starducks-0.0.1-SNAPSHOT.jar > /home/ubuntu/starducksERP.log 2>&1 &
+            nohup java -jar build/libs/starducks-0.0.1-SNAPSHOT.jar > starducksERP.log 2>&1 &
 
       
 
