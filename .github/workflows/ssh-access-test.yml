@@ -4,36 +4,37 @@ on:
   push:            
     branches:
       - master
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup SSH Key and Remote Commands
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/key.pem
-          chmod 400 $HOME/key.pem
-          ssh -i $HOME/key.pem -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.EC2_HOST }} 'echo "테스트 출력"'
-        env:
-          SSH_USER: ${{ secrets.USERNAME }}
-          SSH_HOST: ${{ secrets.EC2_HOST }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PORT: ${{ secrets.PORT }}
-
-
-
-
 # jobs:
-#   ssh-action:
+#   build-and-deploy:
 #     runs-on: ubuntu-latest
-#     name: Build
 #     steps:
-#       - name: SSH Remote Commands
-#         uses: appleboy/ssh-action@v0.1.4        
-#         with: 
-#           host: ${{ secrets.EC2_HOST }}          
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.SSH_PRIVATE_KEY }}
-#           port: ${{ secrets.PORT }}
-#           timeout: 40s  # 30초 기본        
-#           script: |
-#             echo "테스트  출력"
+#       - name: Setup SSH Key and Remote Commands
+#         run: |
+#           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/key.pem
+#           chmod 400 $HOME/key.pem
+#           ssh -i $HOME/key.pem -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.EC2_HOST }} 'echo "테스트 출력"'
+#         env:
+#           SSH_USER: ${{ secrets.USERNAME }}
+#           SSH_HOST: ${{ secrets.EC2_HOST }}
+#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#           SSH_PORT: ${{ secrets.PORT }}
+
+
+
+
+jobs:
+  ssh-action:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.4        
+        with: 
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          timeout: 40s
+          script: |
+            echo "테스트 출력"
+          ssh_args: "-o StrictHostKeyChecking=no"
