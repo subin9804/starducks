@@ -12,10 +12,37 @@ jobs:
     steps:
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.1.4        
-        with:
+        with: 
           host: ${{ secrets.EC2_HOST }}          
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEowIBAAKCAQEAsSR8v9GP25CnFc6rX7+tZ78504M5jzlvfd65Pzf2c/Gkrpxx
+            511E0mW4IbX10HrFmYaMUZ6vOU3kaIW3bIwK4hKmf/zm50EyOCWJSDkT3R+XDiw3
+            UO7VNcJFGIQfLzyxbiJHWPh6QstZ7QeA4beLx409ZL6Osw5HewSRnx8FZHzQQaJx
+            q6fQrU5qEre8vbAHhhpAf4PW0zgmHsmcUJ//+H+eIGEWb75N5YjEeJNg/X6PjBLC
+            Z107hMMWAFoJS+7XROaxH4P/+x0KQPhU+ODyyq7tS/b+rj0B2KFYT8iBAbD7EYBG
+            rzzq2mdus+jKT4ouNAZymCv/5WZqR3fgGwGo1QIDAQABAoIBAHUWsBq+cz9navng
+            JKjicsVLwfZMG+TOyyJA8OOXoyDaTcdZA3Ux0kbcE4y80KGgNTKYm/FrWVkgYmSw
+            ViC6pIrwVvvsd9fN4Vr5fLeverDDq74jfeDSLT4ejjt5QX+gt4sbv1tQyseR0Hv7
+            ZLZN82fQtQ79Yid6vcbTq0mpYJAdUmcrG3ZHpCifr6SqxAHHZlJAU/ZITRT7zHqK
+            Tdb51SjUHOWBrA5OhpLjb5rgPWIjsYmazoj/xWSajh+65MxD5VEVUP0aGn1DjkPH
+            Hso8d5QvJ9vkwtGylXAr535g8uVbWAz0AXYGFYX9wwzD92XxEEcPsCBMtCxBSpUV
+            C31geYECgYEA3knI0W+eUxDhd2LX7dZPi6RGBRj6XAR8qclrFa/3wSxzN9ox2+qE
+            jhe8cSgjBb/VfqztC/u+gizIwj88sIFSxDbODeyxNTth+JN+ujp/06qohmVauFGy
+            6k2SqvxGcFGwoL8Qh5oB9to67oADRKWBAacILoK/c5p86l02TVJHdyECgYEAzAHy
+            WSCal/LidzVxEbuYh8lGyg5JZjXzcoJ3kBTTOC4ln54iaEFbEw56qz93oTDsty3f
+            pB0LJV6q+VpQ8+Ieu7jwvbTsekx7BGWNZf96gS4V66GWiElrWWPSN6nYa9YKVPFG
+            kksljRJoyOx49H0E8oRsqDR672pWPPZkDwapHzUCgYBHbKnsMdNLmYb413fOYihZ
+            FEWzaZ04Z/CulZuk8k/HcELtVVzj7uz8wz+3lE/8jvFIrMPWL+O87Crtz2fuxv8T
+            MRDwhHdERXprZuk3aYidOJ7B4FtQEmBMzPQtoLX5bSY14G6tQ50R9nktHVDvg8Z6
+            A3OrjjN6L8+ndp/2JFP2QQKBgQDDt9JjQ25M/I3bw/+X/ZvWGXm6e35besL2Rsii
+            B/ij21HpEnL8Bkdzvt5c0GTa1e8jxfTao6p/zZTF6KnlcDf/7Ou5dIuywRD8JNlE
+            05cZu7b3+mxKj/VXKvcQw/eHbS84UslbrJB4CQNST9uy4wYODJGZxc9zRVc64T8Z
+            U1CJSQKBgGz4DFq5Fezhhz5uxkuwuTIsMG0AcjEhKQM3Pc59seYAYuXkC8cl0VJO
+            e4V8ecOdL32QI9KFB7sUOWE5sfRJIBfxj7GJgbFzDoOl6FwmvUWy7RKNkQbvmcPM
+            6lo4YE0/6jnw//I3e+WAkPb6nqmeA0+LkQy4VIg0tbVCWUiRfdQp
+            -----END RSA PRIVATE KEY-----
           port: ${{ secrets.PORT }}
           timeout: 40s  # 30초 기본        
           script: |
