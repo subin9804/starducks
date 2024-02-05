@@ -54,7 +54,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Copy JAR to EC2
-      uses: appleboy/scp-action@0.1.6
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
