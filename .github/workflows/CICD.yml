@@ -53,8 +53,8 @@ jobs:
     #     java-version: '17'
     #     distribution: 'temurin'
 
-    - name: List built JAR file before deploy
-      run: ls -l ./build/libs/    
+    # - name: List built JAR file before deploy
+    #   run: ls -l ./build/libs/    
 
     - name: Copy JAR to EC2
       uses: appleboy/scp-action@master
