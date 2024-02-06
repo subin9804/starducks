@@ -21,6 +21,7 @@ configurations {
     }
 }
 
+//이걸 해줘야 jar 파일이 1개만 생긴다. plain이 붙은 jar 파일은 사용되지 않음
 jar{
     enabled = false
 }
