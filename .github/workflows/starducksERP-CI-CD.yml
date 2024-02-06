@@ -55,7 +55,7 @@ jobs:
       run: | 
           pwd
           echo ${{ secrets.DOCKER_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          sudo docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}:latest .
+          sudo docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}:${{ github.sha }} .
           sudo docker push ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
 
 
@@ -71,7 +71,7 @@ jobs:
           port: 22
           envs: GITHUB_SHA
           script: | 
-              sudo docker rm -f $(docker ps -qa)
-              sudo docker pull ${{ secrets.DOCKER_REPO }}
-              sudo docker run -d --name starducks ${{ secrets.DOCKER_REPO }}
-              sudo docker image prune -f
+                sudo docker rm -f $(docker ps -qa)
+                sudo docker pull ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+                sudo docker run -d --name starducks ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+                sudo docker image prune -f
