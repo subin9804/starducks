@@ -21,6 +21,10 @@ configurations {
     }
 }
 
+//이걸 해줘야 jar 파일이 1개만 생긴다. plain이 붙은 jar 파일은 사용되지 않음
+jar{
+    enabled = false
+}
 
 repositories {
     mavenCentral()
@@ -50,6 +54,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
+//    implementation 'com.mysql:mysql-connector-java:8.0.28'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
