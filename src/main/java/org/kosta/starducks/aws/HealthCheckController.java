@@ -12,7 +12,7 @@ public class HealthCheckController {
 
   /**
    * green blue 어떤 서버가 활성화 상태인지 확인하는 용도
-   * @return
+   *
    */
   @GetMapping("/hc")
   public ResponseEntity<?> healthCheck() {
